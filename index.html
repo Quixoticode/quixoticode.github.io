@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quixoticode – Baustelle</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html, body {
+      height: 100%;
+      background: #0d1117;
+      color: #c9d1d9;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+    }
+    h1 {
+      font-size: 3rem;
+      color: #58a6ff;
+      margin-bottom: 0.5em;
+    }
+    p {
+      font-size: 1.2rem;
+      color: #8b949e;
+      margin-bottom: 1.5em;
+    }
+    .links a {
+      display: inline-block;
+      margin: 0.4em;
+      padding: 0.7em 1.4em;
+      background: #21262d;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      color: #58a6ff;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .links a:hover {
+      background: #30363d;
+      color: #79c0ff;
+      transform: scale(1.05);
+    }
+    .glow {
+      color: #58a6ff;
+      text-shadow: 0 0 5px #58a6ff, 0 0 10px #58a6ff, 0 0 20px #58a6ff;
+      animation: glow 2s infinite alternate;
+    }
+    @keyframes glow {
+      from { text-shadow: 0 0 5px #58a6ff; }
+      to   { text-shadow: 0 0 20px #58a6ff; }
+    }
+    footer {
+      margin-top: 2em;
+      font-size: 0.9rem;
+      color: #6e7681;
+    }
+  </style>
+</head>
+<body>
+  <h1 class="glow">🚧 Noch in Arbeit ...</h1>
+  <p>Diese Seite wird gerade gebaut – schau bald wieder vorbei!</p>
+  
+  <div class="links">
+    <a href="https://quixoticode.github.io/app" target="_blank">🔗 Zu meinen Projekten</a>
+    <a href="https://chat.whatsapp.com/B8nwFOJki6qINs55WlfsQv" target="_blank">💬 WhatsApp Community</a>
+    <a href="mailto:quixoticode@proton.me">📧 E-Mail schreiben</a>
+  </div>
+
+  <footer>
+    &copy; 2025 Quixoticode – Made with <span style="color: #ff5555;">&lt;/&gt;</span>
+  </footer>
+</body>
+</html>
