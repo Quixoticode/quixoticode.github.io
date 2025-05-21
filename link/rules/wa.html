@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quixoticode – Community Regeln (WhatsApp)</title>
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0A0F1A;
+      color: #E0E0E0;
+    }
+    .glow {
+      animation: glow 2.5s infinite alternate;
+    }
+    @keyframes glow {
+      from { text-shadow: 0 0 6px #ef4444, 0 0 12px #ef4444, 0 0 18px #f87171; } /* red-500 & red-400 */
+      to   { text-shadow: 0 0 12px #f87171, 0 0 24px #fca5a5, 0 0 36px #fca5a5; } /* red-400 & red-300 */
+    }
+    .content-section h2 {
+      border-bottom: 2px solid #ef4444; /* red-500 */
+      padding-bottom: 0.5rem;
+      margin-bottom: 1.5rem;
+      color: #f87171; /* red-400 */
+    }
+    .content-section ul {
+      list-style-type: disc;
+      margin-left: 1.5rem;
+    }
+    .content-section li {
+      margin-bottom: 0.75rem;
+    }
+    .content-section strong {
+      color: #fca5a5; /* red-300 */
+    }
+    .admin-application-note {
+      background-color: rgba(239, 68, 68, 0.1); /* red-500 mit Transparenz */
+      border-left: 4px solid #ef4444; /* red-500 */
+    }
+  </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'custom-dark': '#0A0F1A',
+            'custom-card': '#1A202C', // Wird hier weniger genutzt, aber für Konsistenz
+            'custom-border': '#2D3748',
+            'custom-light': '#E0E0E0',
+            'custom-accent': '#3b82f6', // Hauptakzent (blue-500)
+            'accent-secondary': '#60a5fa', // Sekundärer Akzent (blue-400)
+            'rules-accent': '#ef4444', // Rot für Regeln (red-500)
+            'rules-light': '#f87171', // Helleres Rot (red-400)
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-custom-dark text-custom-light flex flex-col items-center min-h-screen p-4 sm:p-6 selection:bg-rules-accent selection:text-white">
+
+  <div class="max-w-4xl w-full">
+    <header class="my-10 md:my-12 text-center">
+      <a href="/link/" class="inline-block mb-6 text-custom-accent hover:text-accent-secondary transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 inline-block mr-2 align-middle">
+          <path fill-rule="evenodd" d="M9.53 2.47a.75.75 0 010 1.06L4.81 8.25H15a6.75 6.75 0 010 13.5h-3a.75.75 0 010-1.5h3a5.25 5.25 0 100-10.5H4.81l4.72 4.72a.75.75 0 11-1.06 1.06l-6-6a.75.75 0 010-1.06l6-6a.75.75 0 011.06 0z" clip-rule="evenodd" />
+        </svg>
+        Zurück zur Link-Übersicht
+      </a>
+      <h1 class="text-4xl sm:text-5xl font-extrabold text-rules-accent glow mb-4">
+        Quixoticode WhatsApp Community Regeln
+      </h1>
+      <p class="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
+        Diese Regeln dienen einem harmonischen und konstruktiven Miteinander. Ihre Einhaltung ist für alle Mitglieder verbindlich.
+      </p>
+    </header>
+
+    <main class="w-full bg-custom-card shadow-2xl rounded-xl p-6 md:p-10 text-left">
+
+      <section class="content-section mb-10">
+        <h2 class="text-2xl sm:text-3xl font-bold">§1 Allgemeine Verhaltensregeln</h2>
+        <ul class="space-y-3 text-gray-300">
+          <li><strong>Respektvoller Umgang:</strong> Behandelt alle Mitglieder und Admins stets respektvoll, höflich und freundlich. Persönliche Angriffe, Beleidigungen, Diskriminierung (jeglicher Art, z.B. aufgrund von Herkunft, Geschlecht, Religion, sexueller Orientierung etc.), Hassrede oder Mobbing sind strengstens untersagt.</li>
+          <li><strong>Konstruktive Kommunikation:</strong> Diskussionen sind erwünscht, sollten aber sachlich und konstruktiv geführt werden. Meinungsverschiedenheiten sind normal, müssen aber zivilisiert ausgetragen werden.</li>
+          <li><strong>Keine illegalen Inhalte:</strong> Das Teilen von illegalen, urheberrechtlich geschützten (ohne Erlaubnis), pornografischen, gewaltverherrlichenden oder anderweitig anstößigen Inhalten ist verboten.</li>
+          <li><strong>Kein Spam & Werbung:</strong> Unaufgeforderte Werbung für eigene Produkte, Dienstleistungen, andere Gruppen oder Webseiten ist nicht gestattet. Kurze Hinweise auf eigene Projekte im thematischen Kontext können nach Absprache mit Admins erlaubt sein. Exzessives Posten von Nachrichten (Spam) ist zu unterlassen.</li>
+          <li><strong>Themenrelevanz:</strong> Versucht, euch an die Hauptthemen der Community zu halten. Für Off-Topic-Gespräche gibt es ggf. separate Bereiche oder es sollte in Maßen geschehen.</li>
+          <li><strong>Datenschutz & Privatsphäre:</strong> Teilt keine privaten Informationen (Telefonnummern, Adressen, private Chatverläufe etc.) von euch oder anderen Mitgliedern ohne deren ausdrückliche Zustimmung. Seid vorsichtig mit dem Teilen persönlicher Daten.</li>
+          <li><strong>Profilgestaltung:</strong> Verwendet keine anstößigen oder irreführenden Profilbilder oder Namen.</li>
+        </ul>
+      </section>
+
+      <section class="content-section mb-10">
+        <h2 class="text-2xl sm:text-3xl font-bold">§2 Umgang mit Abstimmungen & Umfragen</h2>
+        <p class="text-gray-300 mb-4">Um Abstimmungen fair und effizient zu gestalten und das Admin-Team zu entlasten, gelten folgende Richtlinien:</p>
+        <ul class="space-y-3 text-gray-300">
+          <li><strong>Klare Fragestellung:</strong> Wer eine Abstimmung startet (insbesondere Admins), sollte eine klare, unmissverständliche Frage und eindeutige Antwortoptionen formulieren.</li>
+          <li><strong>Relevanz:</strong> Abstimmungen sollten für die Community relevante Themen betreffen. "Spaß-Abstimmungen" sind in Maßen okay, sollten aber nicht überhandnehmen.</li>
+          <li><strong>Keine Manipulation:</strong> Jeglicher Versuch, Abstimmungsergebnisse zu manipulieren (z.B. durch Mehrfach-Accounts, Beeinflussung außerhalb der Gruppe), ist untersagt.</li>
+          <li><strong>Akzeptanz des Ergebnisses:</strong> Das Ergebnis einer offiziellen Abstimmung (insbesondere bei wichtigen Community-Entscheidungen) ist von allen Mitgliedern zu akzeptieren, auch wenn es nicht der eigenen Präferenz entspricht. Endlose Diskussionen über bereits entschiedene Punkte sind zu vermeiden.</li>
+          <li><strong>Admin-Entscheid bei Unklarheiten:</strong> Bei unklaren Ergebnissen, Pattsituationen oder wenn eine Abstimmung zu Störungen führt, behält sich das Admin-Team das Recht vor, eine endgültige Entscheidung zu treffen oder die Abstimmung zu moderieren/beenden. Dies dient der Aufrechterhaltung der Ordnung.</li>
+          <li><strong>Vorschläge für Abstimmungen:</strong> Mitglieder können Themen für Abstimmungen vorschlagen, die Durchführung obliegt jedoch primär den Admins, um eine Flut zu vermeiden.</li>
+        </ul>
+      </section>
+
+      <section class="content-section mb-10">
+        <h2 class="text-2xl sm:text-3xl font-bold">§3 Schutz der Mitglieder</h2>
+        <ul class="space-y-3 text-gray-300">
+          <li><strong>Meldung von Verstößen:</strong> Wenn ihr Verstöße gegen diese Regeln oder unangemessenes Verhalten bemerkt, meldet dies bitte umgehend und diskret einem Admin. Erstellt Screenshots als Beweismittel, falls möglich. Greift nicht zur Selbstjustiz.</li>
+          <li><strong>Blockieren & Ignorieren:</strong> Nutzt die Blockierfunktion von WhatsApp, falls ihr euch von einzelnen Personen belästigt fühlt.</li>
+          <li><strong>Kein Doxing:</strong> Das Veröffentlichen privater Informationen anderer Mitglieder (Doxing) ohne deren Zustimmung ist streng verboten und führt zu sofortigen Konsequenzen.</li>
+          <li><strong>Schutz vor Betrug:</strong> Seid wachsam gegenüber Betrugsversuchen (Scams, Phishing). Klickt nicht auf verdächtige Links und gebt keine sensiblen Daten preis. Meldet verdächtige Aktivitäten den Admins.</li>
+        </ul>
+      </section>
+
+      <section class="content-section mb-10">
+        <h2 class="text-2xl sm:text-3xl font-bold">§4 Konsequenzen bei Verstößen</h2>
+        <p class="text-gray-300 mb-4">Verstöße gegen die Community-Regeln können je nach Schweregrad folgende Konsequenzen nach sich ziehen:</p>
+        <ul class="space-y-3 text-gray-300">
+          <li><strong>Mündliche Verwarnung:</strong> Bei geringfügigen Verstößen.</li>
+          <li><strong>Schriftliche Verwarnung:</strong> Bei wiederholten oder schwerwiegenderen Verstößen.</li>
+          <li><strong>Temporärer Ausschluss (Kick):</strong> Bei wiederholten Verwarnungen oder ernsten Verstößen. Die Dauer wird vom Admin-Team festgelegt.</li>
+          <li><strong>Permanenter Ausschluss (Bann):</strong> Bei besonders schweren oder wiederholten Verstößen (z.B. Hassrede, Doxing, illegale Inhalte, massive Störung der Community).</li>
+          <li>Entscheidungen über Konsequenzen werden vom Admin-Team getroffen und sind endgültig.</li>
+        </ul>
+      </section>
+
+      <section class="content-section mb-10">
+        <h2 class="text-2xl sm:text-3xl font-bold">§5 Admin-Team & Bewerbung</h2>
+        <p class="text-gray-300 mb-4">Das Admin-Team ist für die Moderation der Community und die Durchsetzung der Regeln zuständig. Die Anweisungen der Admins sind zu befolgen.</p>
+        
+        <h3 class="text-xl font-semibold text-rules-light mt-6 mb-3">5.1 Aufgaben der Admins</h3>
+        <ul class="space-y-2 text-gray-300">
+          <li>Moderation von Diskussionen und Inhalten.</li>
+          <li>Durchsetzung der Community-Regeln.</li>
+          <li>Ansprechpartner für Fragen, Probleme und Meldungen von Mitgliedern.</li>
+          <li>Organisation von Community-Aktivitäten (optional).</li>
+          <li>Treffen von Entscheidungen im Sinne der Community.</li>
+        </ul>
+
+        <h3 class="text-xl font-semibold text-rules-light mt-6 mb-3">5.2 Anforderungen für Admin-Bewerber</h3>
+        <p class="text-gray-300 mb-4">Um als Admin in Betracht gezogen zu werden, müssen folgende Mindestanforderungen erfüllt sein. Diese dienen der Sicherstellung einer qualitativ hochwertigen und zuverlässigen Moderation:</p>
+        <ul class="space-y-3 text-gray-300">
+          <li><strong>Mindestalter:</strong> In der Regel 18 Jahre. (Ausnahmen siehe unten)</li>
+          <li><strong>Community-Zugehörigkeit:</strong> Aktive und positive Teilnahme an der Community für einen längeren, festgelegten Zeitraum (z.B. mindestens 3-6 Monate).</li>
+          <li><strong>Regelkenntnis:</strong> Umfassende Kenntnis und Verständnis dieser Community-Regeln.</li>
+          <li><strong>Vorbildfunktion:</strong> Bisheriges Verhalten muss tadellos und im Einklang mit allen Regeln gewesen sein. Admins müssen mit gutem Beispiel vorangehen.</li>
+          <li><strong>Zeitliche Verfügbarkeit:</strong> Ausreichend Zeit für die regelmäßige Wahrnehmung der Admin-Aufgaben.</li>
+          <li><strong>Kommunikationsfähigkeit:</strong> Fähigkeit, klar, respektvoll und deeskalierend zu kommunizieren.</li>
+          <li><strong>Konfliktlösungskompetenz:</strong> Fähigkeit, Konflikte objektiv zu bewerten und zu lösen.</li>
+          <li><strong>Verantwortungsbewusstsein:</strong> Ernsthaftigkeit und Zuverlässigkeit bei der Übernahme von Verantwortung.</li>
+          <li><strong>Technische Affinität:</strong> Grundlegendes Verständnis der Plattform (WhatsApp) und ggf. Bereitschaft, sich in Moderationstools einzuarbeiten.</li>
+          <li><strong>Unparteilichkeit:</strong> Fähigkeit, Entscheidungen fair und ohne persönliche Vorlieben zu treffen.</li>
+          <li><strong>Teamfähigkeit:</strong> Bereitschaft zur engen Zusammenarbeit und Absprache mit dem bestehenden Admin-Team.</li>
+          <li><strong>Keine negativen Vorerfahrungen:</strong> Keine schwerwiegenden Regelverstöße in dieser oder anderen bekannten Communities.</li>
+        </ul>
+
+        <h3 class="text-xl font-semibold text-rules-light mt-6 mb-3">5.3 Bewerbungsprozess</h3>
+        <p class="text-gray-300 mb-4">
+          Wenn Admin-Positionen zu besetzen sind, wird dies in der Community bekannt gegeben. Interessenten, die die oben genannten Anforderungen erfüllen, können sich dann formlos bei einem bestehenden Admin melden.
+          Eine offizielle "Bewerbung" kann eine kurze Vorstellung der eigenen Person, der Motivation und der relevanten Erfahrungen beinhalten.
+          Die Entscheidung über die Aufnahme neuer Admins trifft das bestehende Admin-Team gemeinsam. Es besteht kein Anspruch auf eine Admin-Position.
+        </p>
+
+        <div class="admin-application-note p-4 rounded-md my-6">
+          <h4 class="text-lg font-semibold text-rules-light mb-2">Wichtiger Hinweis zu Ausnahmen bei Admin-Anforderungen:</h4>
+          <p class="text-gray-200 text-sm">
+            Das Admin-Team behält sich das Recht vor, in begründeten Einzelfällen Ausnahmen von den oben genannten formalen Anforderungen (z.B. Mindestalter, Dauer der Zugehörigkeit) zu machen. Dies kann der Fall sein, wenn ein Kandidat durch außergewöhnliches Engagement, besondere Fähigkeiten, hohe Reife oder Vertrauenswürdigkeit heraussticht und das Admin-Team einstimmig von seiner Eignung überzeugt ist. Solche Ausnahmen werden sorgfältig geprüft und sind nicht die Regel.
+          </p>
+        </div>
+      </section>
+
+      <section class="content-section">
+        <h2 class="text-2xl sm:text-3xl font-bold">§6 Schlusswort</h2>
+        <p class="text-gray-300">
+          Diese Regeln sollen eine positive und sichere Umgebung für alle schaffen. Wir zählen auf eure Kooperation und euer Verständnis. Bei Fragen oder Unklarheiten zu den Regeln wendet euch bitte an das Admin-Team.
+          Lasst uns gemeinsam eine großartige Community gestalten!
+        </p>
+      </section>
+
+    </main>
+
+    <footer class="mt-12 md:mt-16 py-8 border-t border-custom-border text-center">
+      <p class="text-sm text-gray-500">
+        &copy; 2025 Quixoticode – Community-Regeln.<br>
+        Diese Regeln können bei Bedarf vom Admin-Team angepasst werden.
+      </p>
+    </footer>
+  </div>
+
+</body>
+</html>
