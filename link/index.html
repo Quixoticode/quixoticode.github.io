@@ -21,36 +21,42 @@
       from { text-shadow: 0 0 6px #2563eb, 0 0 12px #2563eb, 0 0 18px #3b82f6; }
       to   { text-shadow: 0 0 12px #3b82f6, 0 0 24px #60a5fa, 0 0 36px #60a5fa; }
     }
-    .info-card, .link-card {
+    .info-card { /* Gilt für alle Karten jetzt, da keine direkten Aktionsbuttons mehr da sind, außer WA-Regeln */
         transition: all 0.3s ease-in-out;
         border: 1px solid #2D3748; /* custom-border */
     }
-    .info-card:hover, .link-card:hover {
-        transform: translateY(-4px) scale(1.02);
+    .info-card:hover {
+        transform: translateY(-2px); /* Leichterer Hover */
         border-color: #3b82f6; /* custom-accent */
-        box-shadow: 0 6px 15px -3px rgba(59, 130, 246, 0.15), 0 4px 8px -4px rgba(59, 130, 246, 0.1);
+        box-shadow: 0 4px 10px -2px rgba(59, 130, 246, 0.1);
     }
-    .rules-link-button {
+    .rules-link-button { /* Für den "Regeln durchlesen" Link bei WA */
         transition: all 0.3s ease-in-out;
+        display: inline-block; /* Damit Padding etc. greift */
     }
     .rules-link-button:hover {
+        transform: translateY(-1px);
+        text-decoration: underline;
+    }
+    .main-rules-link-button { /* Für den großen Regeln Button unten */
+        transition: all 0.3s ease-in-out;
+    }
+    .main-rules-link-button:hover {
         transform: translateY(-2px);
         box-shadow: 0 5px 15px -3px rgba(239, 68, 68, 0.3), 0 4px 6px -4px rgba(239, 68, 68, 0.2);
     }
     .tutorials-card:hover {
         border-color: #10b981; /* emerald-500 */
-        box-shadow: 0 6px 15px -3px rgba(16, 185, 129, 0.15), 0 4px 8px -4px rgba(16, 185, 129, 0.1);
+        box-shadow: 0 4px 10px -2px rgba(16, 185, 129, 0.1);
     }
-    .icon-container i, .icon-container svg { /* Styling für Font Awesome und SVG Icons */
-        font-size: 2.5rem; /* 40px, etwas kleiner als vorher für besseres Aussehen mit FA */
+    .icon-container i, .icon-container svg {
+        font-size: 2.5rem; /* 40px */
         line-height: 1;
     }
      .icon-container .fa-whatsapp { color: #25D366; }
      .icon-container .fa-instagram { color: #E4405F; }
      .icon-container .fa-discord { color: #5865F2; }
      .icon-container .fa-book-open-reader { color: #10b981; }
-
-
   </style>
   <script>
     tailwind.config = {
@@ -63,11 +69,11 @@
             'custom-light': '#E0E0E0',
             'custom-accent': '#3b82f6',
             'accent-secondary': '#60a5fa',
-            // Farben für Text neben Icons, falls benötigt, ansonsten werden sie über .fa-COLOR Klassen gesetzt
             'whatsapp-text': '#25D366',
             'instagram-text': '#E4405F',
             'discord-text': '#5865F2',
             'tutorials-text': '#10b981',
+            'rules-link-text': '#fca5a5', // red-300 für den WA-Regeln Link
           },
           fontFamily: {
             sans: ['Inter', 'sans-serif'],
@@ -100,44 +106,38 @@
         <h2 class="text-2xl sm:text-3xl font-bold text-accent-secondary mb-8">Unsere Präsenzen:</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
 
-          <div class="bg-custom-card rounded-xl p-6 link-card flex flex-col items-center text-center">
+          <div class="bg-custom-card rounded-xl p-6 info-card flex flex-col items-center text-center">
             <div class="mb-5 icon-container">
               <i class="fab fa-whatsapp"></i>
             </div>
             <h3 class="text-xl font-semibold text-whatsapp-text mb-2">WhatsApp</h3>
             <p class="text-gray-400 text-sm mb-4">
-              Tritt unserer WhatsApp-Community bei für direkte Updates und Diskussionen.
+              Informationen und Links zu unserer WhatsApp-Community.
             </p>
-            <a href="https://chat.whatsapp.com/B8nwFOJki6qINs55WlfsQv" target="_blank" rel="noopener noreferrer" class="mt-auto bg-green-500 hover:bg-green-600 text-white font-medium py-2.5 px-5 rounded-lg transition-colors text-sm">
-              Community beitreten
+            <a href="/link/rules/wa.html" class="text-rules-link-text hover:text-red-400 font-medium rules-link-button text-sm mt-auto py-1">
+              Regeln durchlesen
             </a>
           </div>
 
-          <div class="bg-custom-card rounded-xl p-6 link-card flex flex-col items-center text-center">
+          <div class="bg-custom-card rounded-xl p-6 info-card flex flex-col items-center text-center">
             <div class="mb-5 icon-container">
               <i class="fab fa-instagram"></i>
             </div>
             <h3 class="text-xl font-semibold text-instagram-text mb-2">Instagram</h3>
-            <p class="text-gray-400 text-sm mb-4">
-              Folge mir auf Instagram für visuelle Einblicke und Storys.
+            <p class="text-gray-400 text-sm">
+              Hier werden Links zu unserem Instagram-Profil geteilt.
             </p>
-             <a href="DEIN_INSTAGRAM_LINK_HIER" target="_blank" rel="noopener noreferrer" class="mt-auto bg-pink-500 hover:bg-pink-600 text-white font-medium py-2.5 px-5 rounded-lg transition-colors text-sm">
-              Profil ansehen
-            </a>
-          </div>
+            </div>
 
-          <div class="bg-custom-card rounded-xl p-6 link-card flex flex-col items-center text-center">
+          <div class="bg-custom-card rounded-xl p-6 info-card flex flex-col items-center text-center">
             <div class="mb-5 icon-container">
                <i class="fab fa-discord"></i>
             </div>
             <h3 class="text-xl font-semibold text-discord-text mb-2">Discord</h3>
-            <p class="text-gray-400 text-sm mb-4">
-              Chatte mit der Community auf unserem Discord-Server.
+            <p class="text-gray-400 text-sm">
+              Hier findest du Verlinkungen zu unserem Discord-Server.
             </p>
-             <a href="DEIN_DISCORD_LINK_HIER" target="_blank" rel="noopener noreferrer" class="mt-auto bg-indigo-500 hover:bg-indigo-600 text-white font-medium py-2.5 px-5 rounded-lg transition-colors text-sm">
-              Server beitreten
-            </a>
-          </div>
+            </div>
         </div>
       </section>
 
@@ -154,14 +154,14 @@
         </div>
       </section>
 
-      <section id="community-rules" class="w-full py-10 border-t border-custom-border">
-        <h2 class="text-2xl font-semibold text-accent-secondary mb-6">Community Regeln</h2>
+      <section id="community-rules-general" class="w-full py-10 border-t border-custom-border">
+        <h2 class="text-2xl font-semibold text-accent-secondary mb-6">Allgemeine Community Regeln</h2>
         <p class="text-gray-400 mb-6 max-w-xl mx-auto">
-          Für ein faires und freundliches Miteinander haben wir einige Regeln aufgestellt.
+          Für ein faires und freundliches Miteinander haben wir übergreifende Regeln aufgestellt.
+          Spezifische Regeln für einzelne Plattformen (wie WhatsApp) findest du ggf. direkt dort verlinkt.
         </p>
-        <a href="/link/rules/"
-           class="inline-block bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-8 rounded-lg rules-link-button">
-          Zu den Regeln
+        <a href="/link/rules/" class="inline-block bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-8 rounded-lg main-rules-link-button">
+          Zu den allgemeinen Regeln
         </a>
       </section>
     </main>
