@@ -3,15 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quixoticode – Link-Sammlung & Infos</title>
-  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <title>Quixoticode – Links, Anleitungen & Community</title>
+  <link rel="icon" href="https://quixoticode.github.io/data/icons/wissensdatenbank.png" type="image/png">
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Inter', sans-serif;
-      background-color: #0A0F1A; /* Gleicher dunkler Hintergrund wie index.html */
-      color: #E0E0E0; /* Gleiche Textfarbe */
+      background-color: #0A0F1A;
+      color: #E0E0E0;
     }
     .glow {
       animation: glow 2.5s infinite alternate;
@@ -20,23 +21,36 @@
       from { text-shadow: 0 0 6px #2563eb, 0 0 12px #2563eb, 0 0 18px #3b82f6; }
       to   { text-shadow: 0 0 12px #3b82f6, 0 0 24px #60a5fa, 0 0 36px #60a5fa; }
     }
-    .info-card { /* Angepasster Name für Klarheit */
+    .info-card, .link-card {
         transition: all 0.3s ease-in-out;
-        /* Leichterer Hover-Effekt, da keine direkte Aktion */
         border: 1px solid #2D3748; /* custom-border */
     }
-    .info-card:hover {
-        transform: translateY(-2px);
+    .info-card:hover, .link-card:hover {
+        transform: translateY(-4px) scale(1.02);
         border-color: #3b82f6; /* custom-accent */
-        box-shadow: 0 4px 10px -2px rgba(59, 130, 246, 0.1);
+        box-shadow: 0 6px 15px -3px rgba(59, 130, 246, 0.15), 0 4px 8px -4px rgba(59, 130, 246, 0.1);
     }
     .rules-link-button {
         transition: all 0.3s ease-in-out;
     }
     .rules-link-button:hover {
         transform: translateY(-2px);
-        box-shadow: 0 5px 15px -3px rgba(239, 68, 68, 0.3), 0 4px 6px -4px rgba(239, 68, 68, 0.2); /* Roter Schatten für Regeln */
+        box-shadow: 0 5px 15px -3px rgba(239, 68, 68, 0.3), 0 4px 6px -4px rgba(239, 68, 68, 0.2);
     }
+    .tutorials-card:hover {
+        border-color: #10b981; /* emerald-500 */
+        box-shadow: 0 6px 15px -3px rgba(16, 185, 129, 0.15), 0 4px 8px -4px rgba(16, 185, 129, 0.1);
+    }
+    .icon-container i, .icon-container svg { /* Styling für Font Awesome und SVG Icons */
+        font-size: 2.5rem; /* 40px, etwas kleiner als vorher für besseres Aussehen mit FA */
+        line-height: 1;
+    }
+     .icon-container .fa-whatsapp { color: #25D366; }
+     .icon-container .fa-instagram { color: #E4405F; }
+     .icon-container .fa-discord { color: #5865F2; }
+     .icon-container .fa-book-open-reader { color: #10b981; }
+
+
   </style>
   <script>
     tailwind.config = {
@@ -47,11 +61,13 @@
             'custom-card': '#1A202C',
             'custom-border': '#2D3748',
             'custom-light': '#E0E0E0',
-            'custom-accent': '#3b82f6', // Hauptakzent (blue-500)
-            'accent-secondary': '#60a5fa', // Sekundärer Akzent (blue-400)
-            'whatsapp-green': '#25D366',
-            'instagram-purple': '#C13584',
-            'discord-blurple': '#5865F2',
+            'custom-accent': '#3b82f6',
+            'accent-secondary': '#60a5fa',
+            // Farben für Text neben Icons, falls benötigt, ansonsten werden sie über .fa-COLOR Klassen gesetzt
+            'whatsapp-text': '#25D366',
+            'instagram-text': '#E4405F',
+            'discord-text': '#5865F2',
+            'tutorials-text': '#10b981',
           },
           fontFamily: {
             sans: ['Inter', 'sans-serif'],
@@ -72,67 +88,83 @@
         Zurück zur Hauptseite
       </a>
       <h1 class="text-4xl sm:text-5xl font-extrabold text-custom-accent glow mb-4">
-        Link-Übersicht & Community
+        Link-Übersicht, Anleitungen & Community
       </h1>
       <p class="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
-        Diese Seite dient als zentrale Anlaufstelle für Informationen zu unseren Community-Kanälen und wichtigen Verweisen.
-        Hier erfährst du, wo du uns finden kannst und welche Regeln gelten.
+        Diese Seite dient als zentrale Anlaufstelle für Informationen zu unseren Community-Kanälen, Anleitungen und wichtigen Verweisen.
       </p>
     </header>
 
     <main class="w-full mb-12">
-      <h2 class="text-2xl sm:text-3xl font-bold text-accent-secondary mb-8">Unsere Präsenzen:</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+      <section id="social-links" class="mb-12">
+        <h2 class="text-2xl sm:text-3xl font-bold text-accent-secondary mb-8">Unsere Präsenzen:</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
 
-        <div class="bg-custom-card rounded-xl p-6 info-card flex flex-col items-center text-center">
-          <div class="mb-4 text-whatsapp-green">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-12 h-12">
-              <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.79.46 3.48 1.32 4.95L2.05 22l5.25-1.38c1.41.79 3.03 1.21 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm0 1.82c4.53 0 8.21 3.67 8.21 8.21s-3.67 8.21-8.21 8.21c-1.5 0-2.91-.4-4.16-1.11l-.3-.18-3.07.81.83-3.01-.2-.32a8.15 8.15 0 0 1-1.26-4.41c0-4.53 3.67-8.21 8.21-8.21zm3.62 9.89c-.19-.1-.56-.26-1.05-.47-.49-.21-.85-.33-.97-.12s-.49.62-.6.74c-.11.12-.22.13-.41.03-.19-.1-.81-.3-1.54-.95-.57-.5-.95-1.12-1.06-1.31-.11-.19-.01-.3.09-.4s.22-.25.33-.38c.1-.12.17-.21.25-.35s.08-.27.04-.38c-.04-.11-.42-1.02-.58-1.4-.15-.37-.31-.32-.43-.32h-.19c-.12 0-.3.04-.46.19-.16.15-.58.56-.58 1.38 0 .81.6 1.6 1.38 2.58.78.98 1.87 1.79 3.48 2.42.37.15.67.23.92.3.3.09.7.07.97-.05.29-.13.85-.35.97-.68.12-.34.12-.62.08-.68l-.01-.01z"/>
-            </svg>
-          </div>
-          <h3 class="text-xl font-semibold text-whatsapp-green mb-2">WhatsApp</h3>
-          <p class="text-gray-400 text-sm">
-            Informationen und Links für unsere WhatsApp-Community werden hier bereitgestellt.
-            Ideal für schnelle Updates und direkten Austausch.
-          </p>
-          </div>
-
-        <div class="bg-custom-card rounded-xl p-6 info-card flex flex-col items-center text-center">
-          <div class="mb-4 text-instagram-purple">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-12 h-12">
-              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.172.052 1.791.218 2.175.395.484.226.828.518 1.15.944.32.426.618.766.944 1.15.177.384.343.993.395 2.175.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.052 1.172-.218 1.791-.395 2.175-.226.484-.518.828-.944 1.15-.426.32-.766.618-1.15.944-.384.177-.993.343-2.175.395-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.172-.052-1.791-.218-2.175-.395-.484-.226-.828-.518-1.15-.944-.32-.426-.618-.766-.944-1.15-.177-.384-.343-.993-.395-2.175-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.052-1.172.218-1.791.395-2.175.226-.484.518.828.944-1.15.426-.32.766.618 1.15-.944.384-.177.993.343 2.175.395C8.416 2.175 8.796 2.163 12 2.163zm0 1.802c-3.115 0-3.486.01-4.71.068-1.097.05-1.636.21-1.95.36-.402.19-.69.42-.96.78-.27.36-.5.65-.78.96-.15.32-.31.85-.36 1.95-.06 1.22-.07 1.59-.07 4.71s.01 3.49.07 4.71c.05 1.1.21 1.63.36 1.95.19.4.42.69.78.96.36.27.65.5.96.78.32.15.85.31 1.95.36 1.22.06 1.59.07 4.71.07 3.11 0 3.49-.01 4.71-.07 1.1-.05 1.63-.21 1.95-.36.4-.19.69-.42.96-.78.27-.36.5-.65.78.96.15-.32.31.85.36-1.95.06-1.22.07-1.59.07-4.71s-.01-3.49-.07-4.71c-.05-1.1-.21-1.63-.36-1.95-.19-.4-.42-.69-.78-.96-.36-.27-.65-.5-.96-.78-.32-.15-.85-.31-1.95-.36-1.22-.06-1.59-.07-4.71-.07zm0 4.667c-2.404 0-4.35 1.946-4.35 4.35s1.946 4.35 4.35 4.35 4.35-1.946 4.35-4.35-1.946-4.35-4.35-4.35zm0 7.067c-1.498 0-2.717-1.22-2.717-2.717s1.22-2.717 2.717-2.717 2.717 1.22 2.717 2.717-1.22 2.717-2.717 2.717zm4.965-7.247c-.725 0-1.312-.588-1.312-1.313s.587-1.313 1.312-1.313 1.313.588 1.313 1.313-.588 1.313-1.313 1.313z"/>
-            </svg>
-          </div>
-          <h3 class="text-xl font-semibold text-instagram-purple mb-2">Instagram</h3>
-          <p class="text-gray-400 text-sm">
-            Hier werden Links für unseren Instagram-Profil geteilt, wo du visuelle Einblicke und Storys findest.
-          </p>
+          <div class="bg-custom-card rounded-xl p-6 link-card flex flex-col items-center text-center">
+            <div class="mb-5 icon-container">
+              <i class="fab fa-whatsapp"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-whatsapp-text mb-2">WhatsApp</h3>
+            <p class="text-gray-400 text-sm mb-4">
+              Tritt unserer WhatsApp-Community bei für direkte Updates und Diskussionen.
+            </p>
+            <a href="https://chat.whatsapp.com/B8nwFOJki6qINs55WlfsQv" target="_blank" rel="noopener noreferrer" class="mt-auto bg-green-500 hover:bg-green-600 text-white font-medium py-2.5 px-5 rounded-lg transition-colors text-sm">
+              Community beitreten
+            </a>
           </div>
 
-        <div class="bg-custom-card rounded-xl p-6 info-card flex flex-col items-center text-center">
-          <div class="mb-4 text-discord-blurple">
-             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-12 h-12">
-                <path d="M19.54 0c1.356 0 2.46 1.104 2.46 2.472v14.056c0 1.368-1.104 2.472-2.46 2.472h-2.472V16.5h2.472V2.472H4.46V16.5h10.092v2.472H2.46C1.104 18.972 0 17.868 0 16.528V2.472C0 1.104 1.104 0 2.46 0h17.08zm-4.444 11.04c.12-.228.228-.468.324-.708.144-.396.228-.804.228-1.224 0-.72-.204-1.392-.588-1.992-.372-.6-.888-1.08-1.512-1.428-.624-.348-1.344-.528-2.16-.528s-1.536.18-2.16.528c-.624.348-1.14.828-1.512 1.428-.384.6-.588 1.272-.588 1.992 0 .42.084.828.228 1.224.096.24.204.48.324.708-.492.204-.96.48-1.392.816-.444.336-.804.732-1.068 1.176-.264.444-.408.924-.408 1.416 0 .228.024.444.06.66.048.216.108.42.192.624.084.204.18.396.288.576.108.18.228.348.36.492.132.144.276.276.42.396.144.12.3.228.456.324.156.096.324.18.492.252.168.072.336.132.504.18.168.048.336.084.504.108.168.024.336.036.504.036h.012c.168 0 .336-.012.504-.036.168-.024.336-.06.504-.108.168-.048.336-.108.504-.18.168-.072.336-.144.492-.252.156-.096.312-.192.456-.324.144-.12.288-.24.42-.396.132-.144.252-.312.36-.492.108-.18.204-.372.288-.576.084-.204.144-.408.192-.624.036-.216.06-.432.06-.66.012-.492-.132-.972-.396-1.416-.264-.444-.624-.84-1.068-1.176-.432-.336-.9-.612-1.392-.816zm-2.844-1.476c.492 0 .888-.396.888-.888s-.396-.888-.888-.888-.888.396-.888.888.396.888.888.888zm-4.464 0c.492 0 .888-.396.888-.888s-.396-.888-.888-.888-.888.396-.888.888.396.888.888.888z"/>
-            </svg>
+          <div class="bg-custom-card rounded-xl p-6 link-card flex flex-col items-center text-center">
+            <div class="mb-5 icon-container">
+              <i class="fab fa-instagram"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-instagram-text mb-2">Instagram</h3>
+            <p class="text-gray-400 text-sm mb-4">
+              Folge mir auf Instagram für visuelle Einblicke und Storys.
+            </p>
+             <a href="DEIN_INSTAGRAM_LINK_HIER" target="_blank" rel="noopener noreferrer" class="mt-auto bg-pink-500 hover:bg-pink-600 text-white font-medium py-2.5 px-5 rounded-lg transition-colors text-sm">
+              Profil ansehen
+            </a>
           </div>
-          <h3 class="text-xl font-semibold text-discord-blurple mb-2">Discord</h3>
-          <p class="text-gray-400 text-sm">
-            Hier findest du Verlinkungen für unseren Discord-Server für Chats und Community-Interaktionen.
-          </p>
+
+          <div class="bg-custom-card rounded-xl p-6 link-card flex flex-col items-center text-center">
+            <div class="mb-5 icon-container">
+               <i class="fab fa-discord"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-discord-text mb-2">Discord</h3>
+            <p class="text-gray-400 text-sm mb-4">
+              Chatte mit der Community auf unserem Discord-Server.
+            </p>
+             <a href="DEIN_DISCORD_LINK_HIER" target="_blank" rel="noopener noreferrer" class="mt-auto bg-indigo-500 hover:bg-indigo-600 text-white font-medium py-2.5 px-5 rounded-lg transition-colors text-sm">
+              Server beitreten
+            </a>
           </div>
-      </div>
+        </div>
+      </section>
+
+      <section id="tutorials" class="mb-12">
+        <h2 class="text-2xl sm:text-3xl font-bold text-tutorials-text mb-8">Anleitungen & Tutorials:</h2>
+        <div class="bg-custom-card rounded-xl p-6 info-card tutorials-card flex flex-col items-center text-center md:col-span-3">
+            <div class="mb-5 icon-container">
+                <i class="fas fa-book-open-reader"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-tutorials-text mb-2">Wissensdatenbank</h3>
+            <p class="text-gray-400 text-sm max-w-lg mx-auto">
+                In diesem Bereich werden zukünftig Anleitungen, Tutorials und Hilfestellungen zu verschiedenen Themen rund um Quixoticode-Projekte, Programmierung und verwandte Technologien gesammelt.
+            </p>
+        </div>
+      </section>
+
+      <section id="community-rules" class="w-full py-10 border-t border-custom-border">
+        <h2 class="text-2xl font-semibold text-accent-secondary mb-6">Community Regeln</h2>
+        <p class="text-gray-400 mb-6 max-w-xl mx-auto">
+          Für ein faires und freundliches Miteinander haben wir einige Regeln aufgestellt.
+        </p>
+        <a href="/link/rules/"
+           class="inline-block bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-8 rounded-lg rules-link-button">
+          Zu den Regeln
+        </a>
+      </section>
     </main>
-
-    <section class="w-full py-10 border-t border-custom-border">
-      <h2 class="text-2xl font-semibold text-accent-secondary mb-6">Community Regeln</h2>
-      <p class="text-gray-400 mb-6 max-w-xl mx-auto">
-        Für ein faires und freundliches Miteinander haben wir einige Regeln aufgestellt.
-        Bitte lies sie dir durch, um unsere Community bestmöglich zu unterstützen.
-      </p>
-      <a href="/rules/" class="inline-block bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-8 rounded-lg rules-link-button">
-        Zu den Regeln
-      </a>
-    </section>
 
     <footer class="mt-12 md:mt-16 py-8 border-t border-custom-border">
       <p class="text-sm text-gray-500">
