@@ -2,90 +2,184 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Quixoticode – Projekte & Community</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quixoticode – Projekte, Code & Community</title>
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
     body {
-      background-color: #0d1117;
-      color: #c9d1d9;
-      font-family: 'Segoe UI', sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      text-align: center;
-      padding: 2rem;
-    }
-    h1 {
-      font-size: 3rem;
-      color: #58a6ff;
-      margin-bottom: 1rem;
-      text-shadow: 0 0 10px #58a6ff;
-    }
-    p {
-      max-width: 700px;
-      font-size: 1.2rem;
-      line-height: 1.6;
-      color: #8b949e;
-      margin-bottom: 2rem;
-    }
-    .links a {
-      display: inline-block;
-      margin: 0.5em;
-      padding: 0.75em 1.5em;
-      background: #161b22;
-      border: 1px solid #30363d;
-      border-radius: 8px;
-      color: #58a6ff;
-      text-decoration: none;
-      transition: all 0.2s ease;
-    }
-    .links a:hover {
-      background: #21262d;
-      color: #79c0ff;
-      transform: scale(1.05);
-    }
-    footer {
-      margin-top: 3em;
-      font-size: 0.9rem;
-      color: #6e7681;
+      font-family: 'Inter', sans-serif;
+      background-color: #0A0F1A; /* Noch dunklerer Blauton */
+      color: #E0E0E0; /* Leicht gebrochenes Weiß für Text */
     }
     .glow {
-      animation: glow 2s infinite alternate;
+      animation: glow 2.5s infinite alternate;
     }
     @keyframes glow {
-      from { text-shadow: 0 0 5px #58a6ff; }
-      to   { text-shadow: 0 0 20px #58a6ff; }
+      from { text-shadow: 0 0 6px #2563eb, 0 0 12px #2563eb, 0 0 18px #3b82f6; } /* Tailwind blue-600 & blue-500 */
+      to   { text-shadow: 0 0 12px #3b82f6, 0 0 24px #60a5fa, 0 0 36px #60a5fa; } /* Tailwind blue-500 & blue-400 */
     }
+    .fallback-icon-container {
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .fallback-icon {
+        display: none;
+        width: 40px; /* Etwas kleiner für besseren Look im Container */
+        height: 40px;
+        border-radius: 0.375rem; /* rounded-md */
+        background-color: #3b82f6; /* bg-blue-500 */
+        color: white;
+        font-weight: bold;
+        font-size: 1.25rem; /* text-xl */
+        align-items: center;
+        justify-content: center;
+        line-height: 1; /* Zentriert den Buchstaben besser */
+    }
+    .link-card-icon img.favicon,
+    .link-card-icon img.profile-pic {
+        width: 40px;
+        height: 40px;
+        border-radius: 0.375rem; /* rounded-md */
+    }
+    .link-card-icon img.profile-pic {
+        border-radius: 9999px; /* rounded-full für Profilbild */
+        border: 2px solid #3b82f6; /* blauer Rand */
+    }
+    .link-card-icon svg {
+        width: 36px; /* Icons etwas größer */
+        height: 36px;
+    }
+    .card-hover-effect {
+        transition: all 0.3s ease-in-out;
+    }
+    .card-hover-effect:hover {
+        transform: translateY(-4px) scale(1.02);
+        box-shadow: 0 10px 20px -5px rgba(59, 130, 246, 0.2), 0 6px 12px -8px rgba(59, 130, 246, 0.15);
+    }
+    /* Spezifische Schattenfarben pro Karte beim Hover */
+    .hover\:shadow-qhub:hover { box-shadow: 0 10px 20px -5px rgba(59, 130, 246, 0.3), 0 6px 12px -8px rgba(59, 130, 246, 0.25); }
+    .hover\:shadow-info:hover { box-shadow: 0 10px 20px -5px rgba(96, 165, 250, 0.3), 0 6px 12px -8px rgba(96, 165, 250, 0.25); }
+    .hover\:shadow-whatsapp:hover { box-shadow: 0 10px 20px -5px rgba(34, 197, 94, 0.3), 0 6px 12px -8px rgba(34, 197, 94, 0.25); }
+    .hover\:shadow-email:hover { box-shadow: 0 10px 20px -5px rgba(139, 92, 246, 0.3), 0 6px 12px -8px rgba(139, 92, 246, 0.25); }
+    .hover\:shadow-error:hover { box-shadow: 0 10px 20px -5px rgba(239, 68, 68, 0.3), 0 6px 12px -8px rgba(239, 68, 68, 0.25); }
+    .hover\:shadow-github:hover { box-shadow: 0 10px 20px -5px rgba(107, 114, 128, 0.3), 0 6px 12px -8px rgba(107, 114, 128, 0.25); }
+
   </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'custom-dark': '#0A0F1A', // Dunklerer Hintergrund
+            'custom-card': '#1A202C', // Dunklere Karten
+            'custom-border': '#2D3748', // Dunklere Grenzen
+            'custom-light': '#E0E0E0', // Textfarbe
+            'custom-accent': '#3b82f6', // Hauptakzent (blue-500)
+            'accent-secondary': '#60a5fa', // Sekundärer Akzent (blue-400)
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
 </head>
-<body>
+<body class="bg-custom-dark text-custom-light flex flex-col items-center justify-center min-h-screen p-4 sm:p-6 selection:bg-custom-accent selection:text-white">
 
-  <h1 class="glow">Willkommen bei <strong>Quixoticode</strong></h1>
+  <div class="max-w-6xl w-full text-center">
+    <header class="mb-12 md:mb-16 pt-8">
+      <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-custom-accent glow mb-5">
+        Willkommen bei <strong>Quixoticode</strong>
+      </h1>
+      <p class="text-lg sm:text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed px-2">
+        Dein Portal zu einem Universum aus <span class="text-accent-secondary font-medium">innovativen Tools, kreativen Projekten und digitalen Ideen</span>.
+        Entdecke maßgeschneiderte Software, interaktive Webanwendungen und die Community dahinter.
+      </p>
+    </header>
 
-  <p>
-    Diese Domain ist Teil eines stetig wachsenden Netzwerks aus <span style="color:#58a6ff;">Tools, Projekten und Ideen</span>.<br>
-    Ich entwickle Software, Webseiten und interaktive Anwendungen – kreativ, unabhängig, und technisch anspruchsvoll.<br><br>
-    <strong>Dies ist dein Einstiegspunkt in meine Welt.</strong>
-  </p>
+    <main class="w-full">
+      <h2 class="text-2xl sm:text-3xl font-bold text-accent-secondary mb-10">Entdecke die Welt von Quixoticode:</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
 
-  <div class="links">
-    <a href="https://quixoticode.github.io/app" target="_blank">📂 Zu den Projekten</a>
-    <a href="https://chat.whatsapp.com/B8nwFOJki6qINs55WlfsQv" target="_blank">💬 WhatsApp Community</a>
-    <a href="mailto:quixoticode@proton.me">📧 E-Mail schreiben</a>
-    <a href="/404.html">🧪 Fehlerseite ansehen</a>
+        <a href="https://quixoticode.github.io/app" target="_blank" rel="noopener noreferrer"
+           class="bg-custom-card border border-custom-border rounded-xl p-6 group card-hover-effect hover:shadow-qhub flex flex-col items-center text-center">
+          <div class="link-card-icon mb-4 fallback-icon-container">
+            <img src="https://quixoticode.github.io/data/qhub/favicon-96x96.png" alt="QHub Icon" class="favicon"
+                 onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-icon').style.display='flex'">
+            <div class="fallback-icon">Q</div>
+          </div>
+          <h3 class="text-xl font-semibold text-custom-accent mb-2 group-hover:text-accent-secondary">QHub Anwendungen</h3>
+          <p class="text-gray-400 text-sm">Meine neuesten Programme und Tools.</p>
+        </a>
+
+        <a href="https://github.com/Quixoticode/" target="_blank" rel="noopener noreferrer"
+           class="bg-custom-card border border-custom-border rounded-xl p-6 group card-hover-effect hover:shadow-github flex flex-col items-center text-center">
+          <div class="link-card-icon mb-4">
+            <img src="https://github.com/Quixoticode.png" alt="GitHub Profilbild Quixoticode" class="profile-pic"
+                 onerror="this.style.display='none'; this.parentElement.innerHTML = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor' class='w-9 h-9 text-gray-500'><path fill-rule='evenodd' d='M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.483 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.026 2.747-1.026.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.338 4.695-4.566 4.942.359.309.678.922.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z' clip-rule='evenodd' /></svg>`;">
+          </div>
+          <h3 class="text-xl font-semibold text-custom-accent mb-2 group-hover:text-accent-secondary">Mein GitHub Profil</h3>
+          <p class="text-gray-400 text-sm">Code, Projekte und Beiträge ansehen.</p>
+        </a>
+
+        <a href="/link.html" class="bg-custom-card border border-custom-border rounded-xl p-6 group card-hover-effect hover:shadow-info flex flex-col items-center text-center">
+          <div class="link-card-icon mb-4 text-accent-secondary group-hover:text-custom-accent">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v2h-2zm0 4h2v6h-2z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-custom-accent mb-2 group-hover:text-accent-secondary">Regeln & Infos</h3>
+          <p class="text-gray-400 text-sm">Community-Richtlinien und nützliche Links.</p>
+        </a>
+
+        <a href="https://chat.whatsapp.com/B8nwFOJki6qINs55WlfsQv" target="_blank" rel="noopener noreferrer"
+           class="bg-custom-card border border-custom-border rounded-xl p-6 group card-hover-effect hover:shadow-whatsapp flex flex-col items-center text-center">
+          <div class="link-card-icon mb-4 text-green-500 group-hover:text-green-400">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.79.46 3.48 1.32 4.95L2.05 22l5.25-1.38c1.41.79 3.03 1.21 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm0 1.82c4.53 0 8.21 3.67 8.21 8.21s-3.67 8.21-8.21 8.21c-1.5 0-2.91-.4-4.16-1.11l-.3-.18-3.07.81.83-3.01-.2-.32a8.15 8.15 0 0 1-1.26-4.41c0-4.53 3.67-8.21 8.21-8.21zm3.62 9.89c-.19-.1-.56-.26-1.05-.47-.49-.21-.85-.33-.97-.12s-.49.62-.6.74c-.11.12-.22.13-.41.03-.19-.1-.81-.3-1.54-.95-.57-.5-.95-1.12-1.06-1.31-.11-.19-.01-.3.09-.4s.22-.25.33-.38c.1-.12.17-.21.25-.35s.08-.27.04-.38c-.04-.11-.42-1.02-.58-1.4-.15-.37-.31-.32-.43-.32h-.19c-.12 0-.3.04-.46.19-.16.15-.58.56-.58 1.38 0 .81.6 1.6 1.38 2.58.78.98 1.87 1.79 3.48 2.42.37.15.67.23.92.3.3.09.7.07.97-.05.29-.13.85-.35.97-.68.12-.34.12-.62.08-.68l-.01-.01z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-green-500 mb-2 group-hover:text-green-400">WhatsApp Community</h3>
+          <p class="text-gray-400 text-sm">Tritt unserer Community bei und tausche dich aus.</p>
+        </a>
+
+        <a href="mailto:quixoticode@proton.me"
+           class="bg-custom-card border border-custom-border rounded-xl p-6 group card-hover-effect hover:shadow-email flex flex-col items-center text-center">
+          <div class="link-card-icon mb-4 text-indigo-500 group-hover:text-indigo-400">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-indigo-500 mb-2 group-hover:text-indigo-400">E-Mail Kontakt</h3>
+          <p class="text-gray-400 text-sm">Schreib mir eine Nachricht für Anfragen.</p>
+        </a>
+
+        <a href="/404.html"
+           class="bg-custom-card border border-custom-border rounded-xl p-6 group card-hover-effect hover:shadow-error flex flex-col items-center text-center">
+          <div class="link-card-icon mb-4 text-red-500 group-hover:text-red-400">
+             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path fill-rule="evenodd" d="M9.401 3.003c1.155-2 4.043-2 5.197 0l7.516 12.992a3 3 0 01-2.598 4.504H4.483a3 3 0 01-2.598-4.504L9.4 3.003zm0 2.691L4.483 18.2h15.034L14.598 5.694a1 1 0 00-1.732 0L9.4 5.694zM12 15a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zm0-5a1 1 0 011 1v2a1 1 0 11-2 0v-2a1 1 0 011-1z" clip-rule="evenodd" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-red-500 mb-2 group-hover:text-red-400">Fehlerseite (404)</h3>
+          <p class="text-gray-400 text-sm">Ein Blick hinter die Kulissen des Nichts.</p>
+        </a>
+      </div>
+    </main>
+
+    <footer class="mt-16 md:mt-24 py-10 border-t border-custom-border">
+      <p class="text-sm text-gray-500">
+        &copy; 2025 Quixoticode – Wo Code auf Kreativität trifft.<br>
+        Mit Leidenschaft entwickelt und auf GitHub Pages gehostet.
+      </p>
+    </footer>
   </div>
-
-  <footer>
-    &copy; 2025 Quixoticode – Code trifft Kreativität<br>
-    Hosted on GitHub Pages
-  </footer>
 
 </body>
 </html>
