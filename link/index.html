@@ -21,42 +21,53 @@
       from { text-shadow: 0 0 6px #2563eb, 0 0 12px #2563eb, 0 0 18px #3b82f6; }
       to   { text-shadow: 0 0 12px #3b82f6, 0 0 24px #60a5fa, 0 0 36px #60a5fa; }
     }
-    .info-card { /* Gilt für alle Karten jetzt, da keine direkten Aktionsbuttons mehr da sind, außer WA-Regeln */
-        transition: all 0.3s ease-in-out;
-        border: 1px solid #2D3748; /* custom-border */
+    .info-card { 
+      transition: all 0.3s ease-in-out;
+      border: 1px solid #2D3748; 
     }
     .info-card:hover {
-        transform: translateY(-2px); /* Leichterer Hover */
-        border-color: #3b82f6; /* custom-accent */
-        box-shadow: 0 4px 10px -2px rgba(59, 130, 246, 0.1);
+      transform: translateY(-2px); 
+      border-color: #3b82f6; 
+      box-shadow: 0 4px 10px -2px rgba(59, 130, 246, 0.1);
     }
-    .rules-link-button { /* Für den "Regeln durchlesen" Link bei WA */
-        transition: all 0.3s ease-in-out;
-        display: inline-block; /* Damit Padding etc. greift */
+    .rules-link-button { 
+      transition: all 0.3s ease-in-out;
+      display: inline-block; 
     }
     .rules-link-button:hover {
-        transform: translateY(-1px);
-        text-decoration: underline;
+      transform: translateY(-1px);
+      text-decoration: underline;
     }
-    .main-rules-link-button { /* Für den großen Regeln Button unten */
-        transition: all 0.3s ease-in-out;
+    .main-rules-link-button { 
+      transition: all 0.3s ease-in-out;
     }
     .main-rules-link-button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px -3px rgba(239, 68, 68, 0.3), 0 4px 6px -4px rgba(239, 68, 68, 0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px -3px rgba(239, 68, 68, 0.3), 0 4px 6px -4px rgba(239, 68, 68, 0.2);
     }
     .tutorials-card:hover {
-        border-color: #10b981; /* emerald-500 */
-        box-shadow: 0 4px 10px -2px rgba(16, 185, 129, 0.1);
+      border-color: #10b981; 
+      box-shadow: 0 4px 10px -2px rgba(16, 185, 129, 0.1);
     }
     .icon-container i, .icon-container svg {
-        font-size: 2.5rem; /* 40px */
-        line-height: 1;
+      font-size: 2.5rem; 
+      line-height: 1;
     }
-     .icon-container .fa-whatsapp { color: #25D366; }
-     .icon-container .fa-instagram { color: #E4405F; }
-     .icon-container .fa-discord { color: #5865F2; }
-     .icon-container .fa-book-open-reader { color: #10b981; }
+    .icon-container .fa-whatsapp { color: #25D366; }
+    .icon-container .fa-instagram { color: #E4405F; }
+    .icon-container .fa-discord { color: #5865F2; }
+    .icon-container .fa-book-open-reader { color: #10b981; }
+
+    /* Stellt sicher, dass der Link die Karte vollständig ausfüllt und Standard-Link-Stile entfernt */
+    a.card-link {
+        display: block;
+        text-decoration: none;
+        color: inherit; /* Erbt die Textfarbe vom Elternelement */
+    }
+    a.card-link:hover .info-card { /* Stellt sicher, dass Hover-Effekte auf der Karte bleiben */
+        /* Hover-Effekte sind bereits durch .info-card:hover definiert */
+    }
+
   </style>
   <script>
     tailwind.config = {
@@ -73,7 +84,7 @@
             'instagram-text': '#E4405F',
             'discord-text': '#5865F2',
             'tutorials-text': '#10b981',
-            'rules-link-text': '#fca5a5', // red-300 für den WA-Regeln Link
+            'rules-link-text': '#fca5a5', 
           },
           fontFamily: {
             sans: ['Inter', 'sans-serif'],
@@ -131,7 +142,7 @@
 
           <div class="bg-custom-card rounded-xl p-6 info-card flex flex-col items-center text-center">
             <div class="mb-5 icon-container">
-               <i class="fab fa-discord"></i>
+                <i class="fab fa-discord"></i>
             </div>
             <h3 class="text-xl font-semibold text-discord-text mb-2">Discord</h3>
             <p class="text-gray-400 text-sm">
@@ -143,15 +154,17 @@
 
       <section id="tutorials" class="mb-12">
         <h2 class="text-2xl sm:text-3xl font-bold text-tutorials-text mb-8">Anleitungen & Tutorials:</h2>
-        <div class="bg-custom-card rounded-xl p-6 info-card tutorials-card flex flex-col items-center text-center md:col-span-3">
-            <div class="mb-5 icon-container">
-                <i class="fas fa-book-open-reader"></i>
+        <a href="/knowledge/" class="card-link">
+            <div class="bg-custom-card rounded-xl p-6 info-card tutorials-card flex flex-col items-center text-center md:col-span-3">
+                <div class="mb-5 icon-container">
+                    <i class="fas fa-book-open-reader"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-tutorials-text mb-2">Wissensdatenbank</h3>
+                <p class="text-gray-400 text-sm max-w-lg mx-auto">
+                    In diesem Bereich werden zukünftig Anleitungen, Tutorials und Hilfestellungen zu verschiedenen Themen rund um Quixoticode-Projekte, Programmierung und verwandte Technologien gesammelt.
+                </p>
             </div>
-            <h3 class="text-xl font-semibold text-tutorials-text mb-2">Wissensdatenbank</h3>
-            <p class="text-gray-400 text-sm max-w-lg mx-auto">
-                In diesem Bereich werden zukünftig Anleitungen, Tutorials und Hilfestellungen zu verschiedenen Themen rund um Quixoticode-Projekte, Programmierung und verwandte Technologien gesammelt.
-            </p>
-        </div>
+        </a>
       </section>
 
       <section id="community-rules-general" class="w-full py-10 border-t border-custom-border">

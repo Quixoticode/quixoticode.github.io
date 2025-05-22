@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wissensdatenbank - Quixoticode</title>
+    <link rel="icon" href="https://quixoticode.github.io/data/icons/wissensdatenbank.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet">
+    <link rel="icon" type="image/png" href="https://quixoticode.github.io/data/icons/wissensdatenbank.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="https://quixoticode.github.io/data/icons/wissensdatenbank.png" />
+    <link rel="shortcut icon" href="https://quixoticode.github.io/data/icons/wissensdatenbank.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="https://quixoticode.github.io/data/icons/wissensdatenbank.png" />
+    <link rel="manifest" href="https://quixoticode.github.io/data/icons/wissensdatenbank.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="QHub">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0A0F1A; /* custom-dark */
+      color: #E0E0E0; /* custom-light */
+    }
+    .glow {
+      animation: glow 2.5s infinite alternate;
+    }
+    @keyframes glow {
+      from { text-shadow: 0 0 6px #2563eb, 0 0 12px #2563eb, 0 0 18px #3b82f6; }
+      to   { text-shadow: 0 0 12px #3b82f6, 0 0 24px #60a5fa, 0 0 36px #60a5fa; }
+    }
+    .tutorial-card {
+      background-color: #1A202C; /* custom-card */
+      border: 1px solid #2D3748; /* custom-border */
+      transition: all 0.3s ease-in-out;
+    }
+    .tutorial-card:hover {
+      transform: translateY(-4px);
+      border-color: #3b82f6; /* custom-accent */
+      box-shadow: 0 6px 15px -3px rgba(59, 130, 246, 0.15), 0 4px 8px -4px rgba(59, 130, 246, 0.1);
+    }
+    .tag-badge {
+      background-color: #2D3748; /* custom-border */
+      color: #9CA3AF; /* gray-400 */
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+    .tag-badge:hover {
+      background-color: #3b82f6; /* custom-accent */
+      color: white;
+    }
+    .search-input {
+        background-color: #2D3748; /* custom-border */
+        border: 1px solid #4A5568; /* gray-600 */
+        color: #E0E0E0; /* custom-light */
+    }
+    .search-input:focus {
+        border-color: #3b82f6; /* custom-accent */
+        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.4);
+        outline: none;
+    }
+  </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'custom-dark': '#0A0F1A',
+            'custom-card': '#1A202C',
+            'custom-border': '#2D3748',
+            'custom-light': '#E0E0E0',
+            'custom-accent': '#3b82f6', /* blue-500 */
+            'accent-secondary': '#60a5fa', /* blue-400 */
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+</head>
+<body class="flex flex-col items-center min-h-screen p-4 sm:p-6 selection:bg-custom-accent selection:text-white">
+
+  <div class="max-w-5xl w-full text-center">
+    <header class="my-10 md:my-12">
+      <a href="../" class="inline-block mb-6 text-custom-accent hover:text-accent-secondary transition-colors text-sm">
+        <span class="material-icons-outlined inline-block mr-1 align-middle text-base">arrow_back</span>
+        Zurück zur Link-Übersicht
+      </a>
+      <h1 class="text-4xl sm:text-5xl font-extrabold text-custom-accent glow mb-4">
+        <span class="material-icons-outlined inline-block mr-3 align-middle text-4xl sm:text-5xl" style="transform: translateY(-2px);">school</span>
+        Wissensdatenbank
+      </h1>
+      <p class="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
+        Durchsuche und finde Anleitungen, Tutorials und Hilfestellungen zu Quixoticode-Projekten und mehr.
+      </p>
+    </header>
+
+    <main class="w-full mb-12">
+        <div class="mb-8">
+            <input type="text" id="searchInput" placeholder="Anleitungen durchsuchen (Titel, Beschreibung, Tags)..." class="w-full max-w-2xl mx-auto p-3 rounded-lg search-input text-sm">
+        </div>
+
+        <div id="tutorialsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            <p id="noResultsMessage" class="text-gray-400 md:col-span-2 lg:col-span-3 text-center py-8 hidden">Keine Anleitungen gefunden, die Ihrer Suche entsprechen.</p>
+        </div>
+    </main>
+
+    <footer class="mt-12 md:mt-16 py-8 border-t border-custom-border">
+      <p class="text-sm text-gray-500">
+        &copy; <span id="currentYear"></span> Quixoticode – Wissensbasis
+      </p>
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+    const tutorialsContainer = document.getElementById('tutorialsContainer');
+    const searchInput = document.getElementById('searchInput');
+    const noResultsMessage = document.getElementById('noResultsMessage');
+    let allTutorials = [];
+
+    async function loadTutorials() {
+        try {
+            const response = await fetch('tutorials.json?t=' + new Date().getTime()); // Cache busting
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            allTutorials = await response.json();
+            renderTutorials(allTutorials);
+        } catch (error) {
+            console.error("Fehler beim Laden der Tutorials:", error);
+            tutorialsContainer.innerHTML = '<p class="text-red-400 md:col-span-2 lg:col-span-3 text-center py-8">Fehler beim Laden der Anleitungen. Bitte versuchen Sie es später erneut.</p>';
+        }
+    }
+
+    function renderTutorials(tutorialsToRender) {
+        tutorialsContainer.innerHTML = ''; // Vorherige Einträge löschen
+        if (tutorialsToRender.length === 0) {
+            noResultsMessage.classList.remove('hidden');
+            return;
+        }
+        noResultsMessage.classList.add('hidden');
+
+        tutorialsToRender.forEach(tutorial => {
+            const card = document.createElement('a');
+            card.href = tutorial.file; // Link zur jeweiligen HTML-Datei
+            card.className = 'tutorial-card rounded-xl p-6 flex flex-col text-left'; // text-left für Karteninhalt
+
+            let tagsHTML = '';
+            if (tutorial.tags && tutorial.tags.length > 0) {
+                tagsHTML = `<div class="mt-4 flex flex-wrap gap-2">
+                                ${tutorial.tags.map(tag => `<span class="tag-badge text-xs px-2 py-1 rounded-full">${tag}</span>`).join('')}
+                            </div>`;
+            }
+
+            card.innerHTML = `
+                <div class="flex items-center mb-3">
+                    <span class="material-icons-outlined text-custom-accent text-3xl mr-3">${tutorial.icon || 'article'}</span>
+                    <h3 class="text-xl font-semibold text-custom-light">${tutorial.title}</h3>
+                </div>
+                <p class="text-gray-400 text-sm mb-3 flex-grow">${tutorial.description}</p>
+                ${tagsHTML}
+                <span class="mt-auto text-xs text-custom-accent hover:text-accent-secondary pt-2">Anleitung öffnen &rarr;</span>
+            `;
+            tutorialsContainer.appendChild(card);
+        });
+    }
+
+    function filterTutorials() {
+        const searchTerm = searchInput.value.toLowerCase().trim();
+        if (!allTutorials) return;
+
+        const filtered = allTutorials.filter(tutorial => {
+            const titleMatch = tutorial.title.toLowerCase().includes(searchTerm);
+            const descriptionMatch = tutorial.description.toLowerCase().includes(searchTerm);
+            const tagsMatch = tutorial.tags && tutorial.tags.some(tag => tag.toLowerCase().includes(searchTerm));
+            return titleMatch || descriptionMatch || tagsMatch;
+        });
+        renderTutorials(filtered);
+    }
+
+    searchInput.addEventListener('input', filterTutorials);
+    document.addEventListener('DOMContentLoaded', loadTutorials);
+  </script>
+
+</body>
+</html>

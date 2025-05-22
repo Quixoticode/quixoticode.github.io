@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>QHub Premium - Entdecke die Vorteile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet">
+    <link rel="icon" type="image/png" href="https://quixoticode.github.io/data/icons/data.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="https://quixoticode.github.io/data/icons/data.png" />
+    <link rel="shortcut icon" href="https://quixoticode.github.io/data/icons/data.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="https://quixoticode.github.io/data/icons/data.png" />
+    <meta name="apple-mobile-web-app-title" content="QHub Premium">
+    <meta name="theme-color" id="themeColorMetaLight" content="#6750A4">
+    <meta name="theme-color" id="themeColorMetaDark" media="(prefers-color-scheme: dark)" content="#4F378B">
+
+    <style>
+        :root {
+            --font-family-sans: 'Roboto', sans-serif;
+            
+            /* Farbpalette (konsistent mit QHub) */
+            --qhub-color-primary: #6750A4; 
+            --qhub-color-on-primary: #FFFFFF;
+            --qhub-color-primary-container: #EADDFF;
+            --qhub-color-on-primary-container: #21005D;
+
+            --qhub-color-secondary: #625B71; 
+            --qhub-color-on-secondary: #FFFFFF;
+            --qhub-color-secondary-container: #E8DEF8;
+            --qhub-color-on-secondary-container: #1D192B;
+            
+            --qhub-color-tertiary: #7D5260; 
+            --qhub-color-on-tertiary: #FFFFFF;
+            --qhub-color-tertiary-container: #FFD8E4;
+            --qhub-color-on-tertiary-container: #31111D;
+
+            --qhub-color-surface: #FFFBFE; 
+            --qhub-color-surface-variant: #E7E0EC; 
+            --qhub-color-surface-container-low: #F7F2FA; 
+            --qhub-color-surface-container: #F3EDF7;
+            --qhub-color-surface-container-high: #ECE6F0;
+            --qhub-color-surface-container-highest: #E6E0E9;
+            
+            --qhub-color-on-surface: #1C1B1F;
+            --qhub-color-on-surface-variant: #49454F; 
+            
+            --qhub-color-background: #FFFBFE; 
+            --qhub-color-on-background: #1C1B1F;
+            
+            --qhub-color-outline: #79747E;
+            --qhub-color-outline-variant: #CAC4D0; 
+
+            --qhub-color-premium: #FFAB00; 
+            --qhub-color-on-premium: #212121;
+
+            --elevation-1: 0px 1px 2px rgba(0, 0, 0, 0.1), 0px 1px 3px 1px rgba(0, 0, 0, 0.08);
+            --elevation-2: 0px 2px 4px rgba(0, 0, 0, 0.1), 0px 2px 6px 2px rgba(0, 0, 0, 0.08);
+            
+            --border-radius-small: 4px;
+            --border-radius-medium: 12px; 
+            --border-radius-large: 16px;
+            --border-radius-xlarge: 28px;
+        }
+
+        [data-theme="dark"] {
+            --qhub-color-primary: #D0BCFF;
+            --qhub-color-on-primary: #381E72;
+            --qhub-color-primary-container: #4F378B;
+            --qhub-color-on-primary-container: #EADDFF;
+
+            --qhub-color-secondary: #CCC2DC;
+            --qhub-color-on-secondary: #332D41;
+            --qhub-color-secondary-container: #4A4458;
+            --qhub-color-on-secondary-container: #E8DEF8;
+
+            --qhub-color-tertiary: #EFB8C8;
+            --qhub-color-on-tertiary: #492532;
+            --qhub-color-tertiary-container: #633B48;
+            --qhub-color-on-tertiary-container: #FFD8E4;
+
+            --qhub-color-surface: #141218; 
+            --qhub-color-surface-variant: #49454F;
+            --qhub-color-surface-container-low: #1F2937; 
+            --qhub-color-surface-container: #211F26;
+            --qhub-color-surface-container-high: #2B2930;
+            --qhub-color-surface-container-highest: #36343B;
+            
+            --qhub-color-on-surface: #E6E1E5;
+            --qhub-color-on-surface-variant: #CAC4D0;
+            
+            --qhub-color-background: #1C1B1F;
+            --qhub-color-on-background: #E6E1E5;
+
+            --qhub-color-outline: #938F99;
+            --qhub-color-outline-variant: #444746;
+            --qhub-color-premium: #FFCA28; 
+            --qhub-color-on-premium: #000000;
+        }
+
+        body {
+            font-family: var(--font-family-sans);
+            background-color: var(--qhub-color-background);
+            color: var(--qhub-color-on-background);
+            margin: 0; padding: 0;
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        .page-header {
+            background-color: var(--qhub-color-primary-container);
+            color: var(--qhub-color-on-primary-container);
+            padding: 3rem 1rem 2rem 1rem;
+            text-align: center;
+        }
+        .page-header h1 {
+            font-size: 2.25rem; /* 36px */
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--qhub-color-primary);
+        }
+        [data-theme="dark"] .page-header h1 { color: var(--qhub-color-primary); }
+        .page-header .premium-star {
+            color: var(--qhub-color-premium);
+            font-size: 2.5rem;
+            vertical-align: middle;
+        }
+        .page-header p {
+            font-size: 1.125rem; /* 18px */
+            color: var(--qhub-color-on-primary-container);
+            margin-top: 0.5rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .content-wrapper {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .feature-section {
+            margin-bottom: 2.5rem;
+        }
+        .feature-section h2 {
+            font-size: 1.75rem; /* 28px */
+            font-weight: 600;
+            color: var(--qhub-color-primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--qhub-color-primary-container);
+            display: flex;
+            align-items: center;
+        }
+        .feature-section h2 .material-icons {
+            margin-right: 0.75rem;
+            font-size: 2rem; /* 32px */
+        }
+
+        .feature-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .feature-list li {
+            background-color: var(--qhub-color-surface-container-low);
+            padding: 1rem 1.25rem;
+            border-radius: var(--border-radius-medium);
+            margin-bottom: 0.75rem;
+            box-shadow: var(--elevation-1);
+            display: flex;
+            align-items: flex-start;
+        }
+        .feature-list li .material-icons {
+            color: var(--qhub-color-secondary);
+            margin-right: 1rem;
+            margin-top: 0.125rem; /* Kleine Anpassung für vertikale Ausrichtung */
+            font-size: 1.5rem; /* 24px */
+        }
+        .feature-list li strong {
+            font-weight: 600;
+            color: var(--qhub-color-on-surface);
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+        .feature-list li p {
+            font-size: 0.9rem;
+            color: var(--qhub-color-on-surface-variant);
+            line-height: 1.6;
+        }
+
+        .cta-section {
+            background-color: var(--qhub-color-primary-container);
+            color: var(--qhub-color-on-primary-container);
+            padding: 2rem;
+            border-radius: var(--border-radius-large);
+            text-align: center;
+            margin-top: 3rem;
+        }
+        .cta-section h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+        .cta-section p {
+            margin-bottom: 1.5rem;
+        }
+        .cta-button {
+            background-color: var(--qhub-color-primary);
+            color: var(--qhub-color-on-primary);
+            padding: 0.75rem 2rem;
+            border-radius: var(--border-radius-full);
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.2s ease;
+            display: inline-block;
+        }
+        .cta-button:hover {
+            background-color: var(--qhub-color-primary-variant);
+        }
+
+        .page-footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            font-size: 0.875rem;
+            color: var(--qhub-color-on-surface-variant);
+            border-top: 1px solid var(--qhub-color-outline-variant);
+            margin-top: 3rem;
+        }
+        
+        #themeToggleContainer {
+            position: fixed; bottom: calc(env(safe-area-inset-bottom) + 1rem); right: 1rem; z-index: 1500;
+        }
+        #themeToggleButton {
+            background-color: var(--qhub-color-primary-container); color: var(--qhub-color-on-primary-container);
+            border: none; width: 56px; height: 56px; border-radius: var(--border-radius-large);
+            box-shadow: var(--elevation-2); display: flex; align-items: center; justify-content: center; cursor: pointer;
+        }
+        #themeToggleButton .material-icons { font-size: 24px; }
+
+    </style>
+</head>
+<body data-theme="light">
+
+    <header class="page-header">
+        <h1>
+            <span class="material-icons premium-star" style="font-size: 2.8rem; margin-right: 0.5rem;">stars</span>
+            QHub Premium
+        </h1>
+        <p>Schalte exklusive Funktionen und Vorteile frei, um das Beste aus dem Q-Ökosystem herauszuholen!</p>
+    </header>
+
+    <div class="content-wrapper">
+        <section class="feature-section">
+            <h2><span class="material-icons">rocket_launch</span> Exklusive App-Zugänge</h2>
+            <ul class="feature-list">
+                <li>
+                    <span class="material-icons">pets</span>
+                    <div>
+                        <strong>Pet's Life Early Access</strong>
+                        <p>Sei unter den Ersten, die "Pet's Life" spielen können – unser neues virtuelles Haustierspiel. Erlebe neue Features und gib direktes Feedback!</p>
+                    </div>
+                </li>
+                <li>
+                    <span class="material-icons">science</span>
+                    <div>
+                        <strong>Beta-Archiv & Prototypen</strong>
+                        <p>Erhalte Zugang zu einem speziellen Bereich mit frühen Prototypen und Beta-Versionen kommender Apps und Features der Q-Series.</p>
+                    </div>
+                </li>
+                 <li>
+                    <span class="material-icons">new_releases</span>
+                    <div>
+                        <strong>Vorabzugriff auf neue Apps</strong>
+                        <p>Teste neue Apps der Q-Series, bevor sie offiziell veröffentlicht werden, und gestalte die Entwicklung aktiv mit.</p>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <section class="feature-section">
+            <h2><span class="material-icons">visibility</span> Insider-Informationen</h2>
+            <ul class="feature-list">
+                <li>
+                    <span class="material-icons">article</span>
+                    <div>
+                        <strong>Exklusive Nachrichten & Updates</strong>
+                        <p>Erfahre als Erster von wichtigen Entwicklungen, Plänen und erhalte tiefere Einblicke in die Entstehung der Q-Apps.</p>
+                    </div>
+                </li>
+                <li>
+                    <span class="material-icons">developer_mode</span>
+                    <div>
+                        <strong>Entwickler-Tagebuch (Auszüge)</strong>
+                        <p>Erhalte gelegentlich Einblicke in den Entwicklungsprozess, Herausforderungen und spannende Entdeckungen hinter den Kulissen.</p>
+                    </div>
+                </li>
+                 <li>
+                    <span class="material-icons">groups</span>
+                    <div>
+                        <strong>Premium Community-Zugang (Zukunft)</strong>
+                        <p>Geplanter Zugang zu einem exklusiven Bereich für Premium-Nutzer zum Austausch und für direktes Feedback an den Entwickler.</p>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <section class="feature-section">
+            <h2><span class="material-icons">tune</span> Erweiterte Anpassung & Tools</h2>
+            <ul class="feature-list">
+                <li>
+                    <span class="material-icons">filter_list</span>
+                    <div>
+                        <strong>Filterbare Aktivitätsleiste</strong>
+                        <p>Behalte den Überblick mit erweiterten Filteroptionen für die Aktivitätsleiste, um genau die Informationen zu sehen, die dich interessieren.</p>
+                    </div>
+                </li>
+                <li>
+                    <span class="material-icons">palette</span>
+                    <div>
+                        <strong>Erweiterter Theme-Editor</strong>
+                        <p>Personalisiere das Aussehen von QHub noch detaillierter, indem du zusätzlich die Tertiärfarbe anpassen kannst.</p>
+                    </div>
+                </li>
+                <li>
+                    <span class="material-icons">view_quilt</span>
+                    <div>
+                        <strong>Anpassbares Layout</strong>
+                        <p>Bestimme selbst die Reihenfolge der Informationsblöcke auf deiner QHub-Startseite für ein perfekt zugeschnittenes Erlebnis.</p>
+                    </div>
+                </li>
+                 <li>
+                    <span class="material-icons">cloud_download</span>
+                    <div>
+                        <strong>Exklusive Downloads</strong>
+                        <p>Zugriff auf spezielle digitale Goodies wie Wallpaper-Packs, Beta-Versionen oder andere exklusive Inhalte.</p>
+                    </div>
+                </li>
+            </ul>
+        </section>
+        
+        <section class="feature-section">
+            <h2><span class="material-icons">support_agent</span> Priorisierter Support & Feedback</h2>
+            <ul class="feature-list">
+                <li>
+                    <span class="material-icons">contact_support</span>
+                    <div>
+                        <strong>Bevorzugter Support-Kanal (Zukunft)</strong>
+                        <p>Geplanter direkterer Draht für Fragen, Feedback und Support-Anfragen für Premium-Nutzer.</p>
+                    </div>
+                </li>
+                 <li>
+                    <span class="material-icons">rule</span>
+                    <div>
+                        <strong>Mitgestaltung durch Umfragen</strong>
+                        <p>Nimm an exklusiven Umfragen teil und beeinflusse die zukünftige Entwicklung von Apps der Q-Series.</p>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <section class="cta-section">
+            <h3>Bereit für das Upgrade?</h3>
+            <p>Löse deinen Premium-Code direkt in der QHub App ein, um sofort von allen Vorteilen zu profitieren!</p>
+            <a href="javascript:void(0);" onclick="alert('Bitte löse deinen Code in der QHub App ein (Sidebar > Konto > Premium-Code einlösen).');" class="cta-button">
+                Code in QHub einlösen (Hinweis)
+            </a>
+        </section>
+    </div>
+
+    <div id="themeToggleContainer">
+        <button id="themeToggleButton" aria-label="Theme umschalten">
+            <span class="material-icons">brightness_6</span>
+        </button>
+    </div>
+
+    <footer class="page-footer">
+        <p>&copy; <span id="currentYear"></span> Quixoticode - Alle Rechte vorbehalten.</p>
+    </footer>
+
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Theme Toggle Logic
+        const themeToggleButton = document.getElementById('themeToggleButton');
+        const themeColorMetaLight = document.getElementById('themeColorMetaLight');
+        const themeColorMetaDark = document.getElementById('themeColorMetaDark');
+
+        function applySavedDarkLightModePreference() {
+            const savedPreference = localStorage.getItem('qhub_premium_page_theme_preference');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const initialTheme = savedPreference || (prefersDark ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', initialTheme);
+            updateThemeMetaColors(initialTheme);
+        }
+
+        function updateThemeMetaColors(theme) {
+            // Diese Farben sollten mit den --qhub-color-primary und --qhub-color-primary-container
+            // der jeweiligen Themes in den CSS-Variablen übereinstimmen.
+            if (theme === 'light') {
+                themeColorMetaLight.content = '#6750A4'; 
+                themeColorMetaDark.content = '#4F378B'; // Fallback, falls prefers-color-scheme nicht greift
+            } else {
+                themeColorMetaLight.content = '#D0BCFF';
+                themeColorMetaDark.content = '#4F378B'; 
+            }
+        }
+
+        function toggleDarkLightMode() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('qhub_premium_page_theme_preference', newTheme);
+            updateThemeMetaColors(newTheme);
+        }
+
+        if (themeToggleButton) {
+            themeToggleButton.addEventListener('click', toggleDarkLightMode);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            applySavedDarkLightModePreference();
+        });
+    </script>
+
+</body>
+</html>

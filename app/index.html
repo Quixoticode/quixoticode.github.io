@@ -609,12 +609,13 @@
 
         const initialAppData = {
             version: "1.2.0", 
-            webApps: [ 
-                { name: "QSounds", url: "https://quixoticode.github.io/app/qsounds/", icon: "graphic_eq" },
-                { name: "QCode", url: "https://quixoticode.github.io/app/qcode/", icon: "code" },
-                { name: "QHub", url: "https://quixoticode.github.io/app/qhub/", icon: "hub" },
-                { name: "Pet's Life", url: "https://quixoticode.github.io/app/pl/", icon: "pets", premium: true },
-                { name: "Beta-Archiv", url: "#", icon: "science", premium: true, action: "showBetaArchiveModal" } 
+            webApps: [
+                { name: "Web", url: "https://quixoticode.github.io/", icon: "main"}, 
+                { name: "QSounds", url: "/qsounds/", icon: "graphic_eq" },
+                { name: "QCode", url: "/qcode/", icon: "code" },
+                { name: "QHub", url: "/qhub/", icon: "hub" },
+                { name: "Tamagotchi", url: "/pl/", icon: "pets", premium: true },
+                { name: "Beta-Archiv", url: "https://quixoticode.github.io/data/s/baustelle.html", icon: "science", premium: true, action: "showBetaArchiveModal" } 
             ],
             nachrichten: [
                 { 
@@ -624,36 +625,41 @@
                 },
                 { 
                   id: "msg_qhub_120_002", title: "Exklusive Premium-News", 
-                  content: "Als Premium-Mitglied erhalten Sie frühzeitig Zugang zu Informationen über kommende Projekte und spezielle Entwickler-Einblicke im neuen 'Insider-Infos'-Bereich.", 
+                  content: "Verstehe mehr über deine neuen Funktionen in PREMIUM: https://quixoticode.github.io/link/knowledge/qhub-premium.html", 
                   date: "2025-05-22", type: "Premium", premium: true
                 }
             ],
             insiderInfos: [ 
-                { id: "ins_001", title: "Geheimes Projekt 'Titan'", content: "Die Konzeptphase für Projekt 'Titan' hat begonnen. Es wird eine revolutionäre neue App im Bereich Produktivität sein. Mehr Details bald exklusiv hier.", date: "2025-05-22", premium: true}
+                { id: "ins_001", title: "Tamagotchi", content: "Tamagotchi wird immer weiter entwickelt. Die nächste Funktion wird die Uhrzeitlogik sein", date: "2025-05-22", premium: true},
+                { id: "ins_002", title: "Umstrukturierung", content: "Diese App wird wahrscheinlich noch an einen anderen Ort verschoben. Eine Neuinstallation wäre dann fällig. Dies dient der Verbesserung der UX", date: "2025-05-22", premium: true}
             ],
             premiumDownloads: [ 
-                { id: "dl_001", name: "QHub Wallpaper Pack", description: "Exklusive Wallpapers für Desktop & Mobile.", url: "#download_link_1", icon: "wallpaper", premium: true },
-                { id: "dl_002", name: "QSounds Beta v1.3", description: "Vorabzugriff auf die nächste QSounds Version.", url: "#download_link_2", icon: "biotech", premium: true }
+                { id: "dl_001", name: "QHub Wallpaper Pack [🚧]", description: "Exklusive Wallpapers für Desktop & Mobile.", url: "https://quixoticode.github.io/data/s/baustelle.html", icon: "wallpaper", premium: true },
+                { id: "dl_002", name: "QSounds Beta v1.3 [🚧]", description: "Vorabzugriff auf die nächste QSounds Version.", url: "https://quixoticode.github.io/data/s/baustelle.html", icon: "biotech", premium: true }
             ],
             ankuendigungen: [
                 { 
                   id: "ank_qhub_120_001", title: "Premium-Layout Anpassung", 
                   content: "Premium-Nutzer können jetzt die Reihenfolge der Sektionen auf der Startseite anpassen!", 
                   date: "2025-05-22" 
+                },
+                { 
+                  id: "ank_qhub_120_002", title: "Wissensdatenbank gestartet", 
+                  content: "Schaut jetzt im Web in die Wissensdatenbank!", 
+                  date: "2025-05-22" 
                 }
             ],
             aktivitaetsleiste: [
                 { id: "act_qhub_120_001", product: "QHub v1.2.0", description: "Premium-Features implementiert", releaseDate: "22. Mai 2025", status: "ready-online" },
-                { id: "act_qhub_120_002", product: "Pets Life v0.2", description: "Neue Interaktionen (Premium)", releaseDate: "Juni 2025", status: "in-progress" },
-                { id: "act_qhub_120_003", product: "QSounds v1.3", description: "Dateiverschlüsselung", releaseDate: "Q3 2025", status: "queue" },
-                { id: "act_qhub_120_004", product: "QCode 'JavaScript Pro'", description: "Neuer Lernpfad", releaseDate: "Q3 2025", status: "paused" }, 
-                { id: "act_qhub_120_005", product: "Geheimes Projekt 'Omega'", description: "Konzeptphase (Premium Info)", releaseDate: "Unbekannt", status: "queue", premium: true }
+                { id: "act_qhub_120_002", product: "Tamagotchi v0.2", description: "Neue Interaktionen (Premium)", releaseDate: "Juni 2025", status: "in-progress", premium: true },
+                { id: "act_qhub_120_003", product: "QSounds v1.3", description: "Dateiverschlüsselung", releaseDate: "Q3 2025", status: "paused" },
+                { id: "act_qhub_120_004", product: "QCode 'YouProjects'", description: "Neuer Lernpfad", releaseDate: "Q3 2025", status: "queue" }, 
             ],
             popupNachrichten: [ 
                 {
                   id: "popup_qhub_premium_v120",
                   titel: "QHub " + CURRENT_APP_VERSION + " ist da!",
-                  inhalt: "Entdecken Sie viele neue Premium-Funktionen und Anpassungsmöglichkeiten. Lösen Sie Ihren Code ein, falls noch nicht geschehen.",
+                  inhalt: "Entdecken Sie viele neue Premium-Funktionen und Anpassungsmöglichkeiten. Mehr unter https://quixoticode.github.io/link/knowledge/qhub-premium.html",
                   aktiv: true, 
                   datum: "2025-05-22",
                   icon: "workspace_premium",
