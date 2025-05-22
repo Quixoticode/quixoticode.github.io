@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>QHub v1.1.0</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet">
+    <link rel="icon" type="image/png" href="https://quixoticode.github.io/data/qhub/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="https://quixoticode.github.io/data/qhub/favicon.svg" />
+    <link rel="shortcut icon" href="https://quixoticode.github.io/data/qhub/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="https://quixoticode.github.io/data/qhub/apple-touch-icon.png" />
+    <link rel="manifest" href="https://quixoticode.github.io/data/qhub/site.webmanifest" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="QHub">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="theme-color" id="themeColorMetaLight" content="#6750A4">
+    <meta name="theme-color" id="themeColorMetaDark" media="(prefers-color-scheme: dark)" content="#4F378B">
+
+    <style>
+        :root {
+            --font-family-sans: 'Roboto', sans-serif;
+            
+            --qhub-color-primary: #6750A4; 
+            --qhub-color-on-primary: #FFFFFF;
+            --qhub-color-primary-container: #EADDFF;
+            --qhub-color-on-primary-container: #21005D;
+
+            --qhub-color-secondary: #625B71; 
+            --qhub-color-on-secondary: #FFFFFF;
+            --qhub-color-secondary-container: #E8DEF8;
+            --qhub-color-on-secondary-container: #1D192B;
+            
+            --qhub-color-tertiary: #7D5260; 
+            --qhub-color-on-tertiary: #FFFFFF;
+            --qhub-color-tertiary-container: #FFD8E4;
+            --qhub-color-on-tertiary-container: #31111D;
+
+            --qhub-color-surface: #FFFBFE; 
+            --qhub-color-surface-variant: #E7E0EC; 
+            --qhub-color-surface-container-low: #F7F2FA; 
+            --qhub-color-surface-container: #F3EDF7;
+            --qhub-color-surface-container-high: #ECE6F0;
+            --qhub-color-surface-container-highest: #E6E0E9;
+            
+            --qhub-color-on-surface: #1C1B1F;
+            --qhub-color-on-surface-variant: #49454F; 
+            
+            --qhub-color-background: #FFFBFE; 
+            --qhub-color-on-background: #1C1B1F;
+            
+            --qhub-color-outline: #79747E;
+            --qhub-color-outline-variant: #CAC4D0; 
+
+            --qhub-color-error: #B3261E;
+            --qhub-color-on-error: #FFFFFF;
+            --qhub-color-error-container: #F9DEDC;
+            --qhub-color-on-error-container: #410E0B;
+
+            --qhub-color-success: #38A169; 
+            --qhub-color-warning: #FFC107; 
+            --qhub-color-queued: #79747E; 
+            --qhub-color-premium: #FFAB00; 
+            --qhub-color-on-premium: #212121;
+
+
+            --elevation-1: 0px 1px 2px rgba(0, 0, 0, 0.1), 0px 1px 3px 1px rgba(0, 0, 0, 0.08);
+            --elevation-2: 0px 2px 4px rgba(0, 0, 0, 0.1), 0px 2px 6px 2px rgba(0, 0, 0, 0.08);
+            
+            --border-radius-small: 4px;
+            --border-radius-medium: 12px; 
+            --border-radius-large: 16px;
+            --border-radius-xlarge: 28px;
+
+            --sidebar-width: 280px;
+            --sidebar-bg: var(--qhub-color-surface-container-low); 
+            --sidebar-text-color: var(--qhub-color-on-surface);
+            --sidebar-icon-color: var(--qhub-color-on-surface-variant);
+            --sidebar-link-hover-bg: var(--qhub-color-surface-container-high);
+            --sidebar-link-active-bg: var(--qhub-color-secondary-container); 
+            --sidebar-link-active-text: var(--qhub-color-on-secondary-container);
+            --sidebar-border-color: var(--qhub-color-outline-variant);
+            --sidebar-transition-speed: 0.3s;
+        }
+
+        [data-theme="dark"] {
+            --qhub-color-primary: #D0BCFF;
+            --qhub-color-on-primary: #381E72;
+            --qhub-color-primary-container: #4F378B;
+            --qhub-color-on-primary-container: #EADDFF;
+
+            --qhub-color-secondary: #CCC2DC;
+            --qhub-color-on-secondary: #332D41;
+            --qhub-color-secondary-container: #4A4458;
+            --qhub-color-on-secondary-container: #E8DEF8;
+
+            --qhub-color-tertiary: #EFB8C8;
+            --qhub-color-on-tertiary: #492532;
+            --qhub-color-tertiary-container: #633B48;
+            --qhub-color-on-tertiary-container: #FFD8E4;
+
+            --qhub-color-surface: #141218; 
+            --qhub-color-surface-variant: #49454F;
+            --qhub-color-surface-container-low: #1F2937; 
+            --qhub-color-surface-container: #211F26;
+            --qhub-color-surface-container-high: #2B2930;
+            --qhub-color-surface-container-highest: #36343B;
+            
+            --qhub-color-on-surface: #E6E1E5;
+            --qhub-color-on-surface-variant: #CAC4D0;
+            
+            --qhub-color-background: #1C1B1F;
+            --qhub-color-on-background: #E6E1E5;
+
+            --qhub-color-outline: #938F99;
+            --qhub-color-outline-variant: #444746;
+
+            --qhub-color-error: #F2B8B5;
+            --qhub-color-on-error: #601410;
+            --qhub-color-error-container: #8C1D18;
+            --qhub-color-on-error-container: #F9DEDC;
+
+            --qhub-color-success: #6EE7B7; 
+            --qhub-color-warning: #FFD600;
+            --qhub-color-queued: #B0BEC5; 
+            --qhub-color-premium: #FFCA28; 
+            --qhub-color-on-premium: #000000;
+            
+            --sidebar-bg: var(--qhub-color-surface-container); 
+            --sidebar-link-hover-bg: var(--qhub-color-surface-container-high);
+            --sidebar-link-active-bg: var(--qhub-color-secondary-container);
+            --sidebar-link-active-text: var(--qhub-color-on-secondary-container);
+            --sidebar-border-color: var(--qhub-color-outline-variant);
+        }
+
+        body {
+            font-family: var(--font-family-sans);
+            background-color: var(--qhub-color-background);
+            color: var(--qhub-color-on-background);
+            margin: 0; padding: 0;
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
+            overscroll-behavior-y: contain;
+            transition: background-color 0.3s, color 0.3s, margin-left var(--sidebar-transition-speed) ease-in-out;
+            overflow-x: hidden; 
+        }
+        
+        .main-scroll-container {
+            height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+            overflow-y: auto;
+            scroll-snap-type: y mandatory;
+            margin-left: 0; 
+            padding-top: calc(env(safe-area-inset-top) + 0.5rem); 
+            transition: margin-left var(--sidebar-transition-speed) ease-in-out;
+            box-sizing: border-box;
+        }
+        body.sidebar-open .main-scroll-container { margin-left: var(--sidebar-width); }
+        @media (max-width: 768px) { 
+            body.sidebar-open .main-scroll-container { margin-left: 0; }
+        }
+
+        .snap-child { scroll-snap-align: start; }
+
+        #notificationArea {
+            position: fixed; top: env(safe-area-inset-top); left: 0; right: 0;
+            z-index: 2001; 
+        }
+        #notificationArea > div {
+            text-align: center; padding: 0.6rem; font-size: 0.8rem; font-weight: 500;
+            display: none; 
+        }
+        #offlineStatusMessage { background-color: var(--qhub-color-error-container); color: var(--qhub-color-on-error-container); }
+        #resetNotification { background-color: var(--qhub-color-primary-container); color: var(--qhub-color-on-primary-container); }
+
+        #offlineIconContainer {
+            position: fixed;
+            bottom: calc(env(safe-area-inset-bottom) + 1rem + 56px + 1rem); 
+            right: 1rem;
+            z-index: 1499; 
+            display: none; 
+        }
+        #offlineStatusIcon {
+            background-color: var(--qhub-color-error-container);
+            color: var(--qhub-color-on-error-container);
+            border: 1px solid var(--qhub-color-error);
+            width: 48px; height: 48px;
+            border-radius: var(--border-radius-full); box-shadow: var(--elevation-2);
+            display: flex; align-items: center; justify-content: center; cursor: pointer;
+        }
+         #offlineStatusIcon .material-icons { font-size: 24px; }
+
+        .sidebar-toggle-button {
+            position: fixed; 
+            top: calc(env(safe-area-inset-top) + 0.8rem); 
+            left: 1rem; 
+            z-index: 2002; 
+            background-color: var(--qhub-color-surface-container-high); color: var(--qhub-color-primary);
+            border: 1px solid var(--qhub-color-outline-variant);
+            cursor: pointer; padding: 0.6rem; display: flex; align-items: center; justify-content: center;
+            border-radius: var(--border-radius-xlarge); box-shadow: var(--elevation-2);
+            transition: background-color 0.2s ease, color 0.2s ease, opacity 0.3s ease-in-out; opacity: 1;
+        }
+        .sidebar-toggle-button.hidden-when-sidebar-open { opacity: 0; pointer-events: none; }
+        .sidebar-toggle-button:hover { background-color: var(--qhub-color-surface-container-highest); }
+        .sidebar-toggle-button .material-icons { font-size: 24px; }
+
+        .q-sidebar {
+            position: fixed; top: 0; left: 0; height: 100vh;
+            width: var(--sidebar-width); background-color: var(--sidebar-bg);
+            color: var(--sidebar-text-color); padding-top: env(safe-area-inset-top);
+            box-shadow: var(--elevation-3); transform: translateX(-100%);
+            transition: transform var(--sidebar-transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 3000; display: flex; flex-direction: column; 
+            border-right: 1px solid var(--sidebar-border-color);
+        }
+        .q-sidebar.open { transform: translateX(0); }
+
+        .q-sidebar-header {
+            padding: 1rem 1rem 1rem 1.5rem; display: flex; align-items: center;
+            justify-content: space-between; border-bottom: 1px solid var(--sidebar-border-color);
+            min-height: calc(3.5rem + env(safe-area-inset-top)); 
+            box-sizing: border-box;
+        }
+        .logo-title-group { display: flex; align-items: center; }
+        .q-sidebar-header .logo-icon { font-size: 2rem; margin-right: 0.75rem; color: var(--qhub-color-primary); }
+        .q-sidebar-header h2 { margin: 0; font-size: 1.35em; font-weight: 500; color: var(--sidebar-text-color); }
+        .premium-badge-sidebar {
+            color: var(--qhub-color-premium); font-size: 1.1em; margin-left: 0.4rem;
+        }
+        
+        .sidebar-internal-toggle {
+            background: none; border: none; color: var(--sidebar-icon-color);
+            cursor: pointer; padding: 0.5rem; display: flex; align-items: center;
+            justify-content: center; border-radius: var(--border-radius-full);
+        }
+        .sidebar-internal-toggle:hover { background-color: var(--sidebar-link-hover-bg); color: var(--qhub-color-primary); }
+        .sidebar-internal-toggle .material-icons { font-size: 24px; }
+
+        .q-sidebar-nav { flex-grow: 1; overflow-y: auto; padding: 0 0.75rem; }
+        .q-sidebar-nav ul { list-style: none; padding: 0; margin: 0; }
+        .q-sidebar-nav li a {
+            display: flex; align-items: center; padding: 0.8rem 1rem;
+            color: var(--sidebar-text-color); text-decoration: none;
+            transition: background-color 0.2s ease, color 0.2s ease;
+            border-radius: var(--border-radius-xlarge); margin: 0.3rem 0; font-weight: 500;
+        }
+        .q-sidebar-nav li a:hover { background-color: var(--sidebar-link-hover-bg); color: var(--qhub-color-primary); }
+        .q-sidebar-nav li a.active {
+            background-color: var(--sidebar-link-active-bg); color: var(--sidebar-link-active-text); font-weight: 700;
+        }
+        .q-sidebar-nav li a .material-icons {
+            margin-right: 1.25rem; color: var(--sidebar-icon-color); font-size: 22px; transition: color 0.2s ease;
+        }
+        .q-sidebar-nav li a:hover .material-icons, .q-sidebar-nav li a.active .material-icons { color: inherit; }
+        
+        .q-sidebar-nav li a.reset-link { color: var(--qhub-color-error); }
+        .q-sidebar-nav li a.reset-link:hover { background-color: var(--qhub-color-error-container); color: var(--qhub-color-on-error-container); }
+        .q-sidebar-nav li a.reset-link .material-icons { color: var(--qhub-color-error); }
+        .q-sidebar-nav li a.reset-link:hover .material-icons { color: var(--qhub-color-on-error-container); }
+
+        .q-sidebar-section-title {
+            padding: 1.5rem 1rem 0.5rem 1rem; font-size: 0.8rem; font-weight: 700;
+            color: var(--qhub-color-primary); text-transform: uppercase; letter-spacing: 0.075em;
+        }
+        .q-sidebar-footer { padding: 1rem 0.75rem calc(env(safe-area-inset-bottom) + 1rem) 0.75rem; border-top: 1px solid var(--sidebar-border-color); }
+
+        .content-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.4); backdrop-filter: blur(4px);
+            z-index: 1999; opacity: 0; visibility: hidden;
+            transition: opacity var(--sidebar-transition-speed) ease-in-out, visibility var(--sidebar-transition-speed) ease-in-out;
+        }
+        .content-overlay.active { opacity: 1; visibility: visible; }
+
+        .app-title-header {
+            text-align: center; padding: 1.5rem 1rem 1rem 1rem; position: relative;
+        }
+        .app-title-header h1 {
+            font-size: 1.75rem; font-weight: 700; color: var(--qhub-color-primary);
+            display: inline-flex; align-items: center; position: relative;
+        }
+        .premium-badge-main { 
+            color: var(--qhub-color-premium); font-size: 1.1rem; font-weight: 700;
+            margin-left: 0.5rem; vertical-align: middle;
+        }
+
+        .content-section { padding: 0 1rem 1rem 1rem; margin-bottom: 0.5rem; } 
+        .section-title {
+            font-size: 1.25rem; font-weight: 700; color: var(--qhub-color-primary);
+            margin-bottom: 1rem; padding-left: 0.5rem; border-left: 4px solid var(--qhub-color-primary);
+            display: flex; align-items: center;
+        }
+        .section-title .material-icons { margin-right: 0.5rem; font-size: 1.4em; }
+
+
+        .card {
+            background-color: var(--qhub-color-surface); 
+            border-radius: var(--border-radius-large); padding: 1.25rem; margin-bottom: 1rem;
+            box-shadow: var(--elevation-1); color: var(--qhub-color-on-surface);
+        }
+        [data-theme="dark"] .card { background-color: var(--qhub-color-surface-container-low); }
+
+        .card-title { font-size: 1.125rem; font-weight: 600; color: var(--qhub-color-on-surface); margin-bottom: 0.5rem; }
+        .card-content { font-size: 0.875rem; line-height: 1.5; color: var(--qhub-color-on-surface-variant); }
+        .card-date { font-size: 0.75rem; color: var(--qhub-color-outline); margin-top: 0.75rem; display: block; }
+        .card-type-badge {
+            display: inline-block; padding: 0.25rem 0.6rem; font-size: 0.7rem; font-weight: 500;
+            border-radius: var(--border-radius-small); margin-bottom: 0.5rem;
+            background-color: var(--qhub-color-secondary-container); color: var(--qhub-color-on-secondary-container);
+        }
+        .premium-content-lock {
+            border: 2px dashed var(--qhub-color-premium); padding: 1rem;
+            border-radius: var(--border-radius-medium); text-align: center; margin-top: 0.5rem;
+        }
+        .premium-content-lock .material-icons { color: var(--qhub-color-premium); font-size: 1.8rem; }
+        .premium-content-lock p { color: var(--qhub-color-on-surface-variant); font-size: 0.85rem; }
+        .premium-content-lock button {
+            margin-top: 0.75rem; background-color: var(--qhub-color-premium); color: var(--qhub-color-on-premium);
+            padding: 0.4rem 1rem; font-size: 0.8rem; border-radius: var(--border-radius-full);
+        }
+
+        .activity-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0.75rem 0; border-bottom: 1px solid var(--qhub-color-outline-variant);
+        }
+        .activity-item:last-child { border-bottom: none; }
+        .activity-info { flex-grow: 1; }
+        .activity-product { font-weight: 500; color: var(--qhub-color-on-surface); }
+        .activity-description { font-size: 0.8rem; color: var(--qhub-color-on-surface-variant); }
+        .activity-date { font-size: 0.8rem; font-weight: 500; color: var(--qhub-color-tertiary); margin-top: 0.25rem; }
+
+        .status-indicator { width: 24px; height: 24px; margin-right: 0.75rem; flex-shrink: 0; }
+        .status-ready-online .circle-bg { fill: var(--qhub-color-success); }
+        .status-ready-online .checkmark { stroke: var(--qhub-color-on-primary); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; fill: none; animation: drawCheck 0.5s ease-out forwards; }
+        @keyframes drawCheck { 0% { stroke-dasharray: 0 50; } 100% { stroke-dasharray: 50 50; } }
+        .status-ready .circle-bg { fill: var(--qhub-color-success); opacity: 0.6; }
+        .status-in-progress .circle-bg { fill: var(--qhub-color-warning); }
+        .status-in-progress .spinner-arc { fill: none; stroke: var(--qhub-color-on-background); stroke-width: 2.5; stroke-linecap: round; animation: spin 1.2s linear infinite; transform-origin: center; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .status-failed .circle-bg { fill: var(--qhub-color-error); }
+        .status-failed .cross-line { stroke: var(--qhub-color-on-error); stroke-width: 2.5; stroke-linecap: round; }
+        .status-queue .circle-bg { fill: var(--qhub-color-queued); animation: pulse 1.5s infinite ease-in-out; }
+        .status-paused .circle-bg { fill: var(--qhub-color-paused); opacity: 0.7; } 
+        .status-paused .pause-lines line { stroke: var(--qhub-color-on-primary); stroke-width: 2.5; stroke-linecap: round; }
+
+
+        @keyframes pulse { 0%, 100% { opacity: 0.5; transform: scale(0.9); } 50% { opacity: 1; transform: scale(1); } }
+
+        .placeholder-text { text-align: center; padding: 2rem; color: var(--qhub-color-on-surface-variant); }
+
+        .modal-backdrop {
+            position: fixed; inset: 0; background-color: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+            z-index: 4000; display: flex; align-items: center; justify-content: center; padding: 1rem;
+            opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .modal-backdrop.visible { opacity: 1; visibility: visible; }
+        .modal-content {
+            background-color: var(--qhub-color-surface-container-high); color: var(--qhub-color-on-surface);
+            padding: 1.5rem; border-radius: var(--border-radius-xlarge);
+            box-shadow: var(--elevation-3); max-width: 90%; width: 400px;
+        }
+        .modal-content .material-icons { font-size: 2.5rem; color: var(--qhub-color-primary); margin-bottom: 0.75rem; }
+        .modal-title { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; text-align: center; }
+        .modal-text { font-size: 0.9rem; color: var(--qhub-color-on-surface-variant); margin-bottom: 1.5rem; text-align: center; }
+        .modal-button {
+            background-color: var(--qhub-color-primary); color: var(--qhub-color-on-primary);
+            padding: 0.6rem 1.2rem; border-radius: var(--border-radius-full); font-weight: 500;
+            border: none; cursor: pointer; width: 100%;
+        }
+         .modal-button.danger { background-color: var(--qhub-color-error); color: var(--qhub-color-on-error); }
+         .modal-button.secondary { background-color: var(--qhub-color-surface-variant); color: var(--qhub-color-on-surface); margin-top: 0.5rem;}
+
+        #themeToggleContainer {
+            position: fixed; bottom: calc(env(safe-area-inset-bottom) + 1rem); right: 1rem; z-index: 1500;
+        }
+        #themeToggleButton {
+            background-color: var(--qhub-color-primary-container); color: var(--qhub-color-on-primary-container);
+            border: none; width: 56px; height: 56px; border-radius: var(--border-radius-large);
+            box-shadow: var(--elevation-2); display: flex; align-items: center; justify-content: center; cursor: pointer;
+        }
+        #themeToggleButton .material-icons { font-size: 24px; }
+
+        #themeEditorPopup .modal-content label { display: block; margin-bottom: 0.5rem; color: var(--qhub-color-on-surface-variant); }
+        #themeEditorPopup .modal-content input[type="color"] { 
+            width: 100%; height: 40px; border: 1px solid var(--qhub-color-outline); 
+            border-radius: var(--border-radius-small); padding: 0.25rem; margin-bottom: 1rem;
+        }
+        #themeEditorPopup .modal-content .flex { display: flex; gap: 0.5rem; margin-top: 1rem; }
+        
+        #premiumCodeModal .modal-input {
+            width: 100%; padding: 0.75rem; border-radius: var(--border-radius-medium);
+            border: 1px solid var(--qhub-color-outline); background-color: var(--qhub-color-surface);
+            color: var(--qhub-color-on-surface); margin-bottom: 1rem;
+        }
+        #premiumCodeModal .modal-input:focus { border-color: var(--qhub-color-primary); box-shadow: 0 0 0 2px color-mix(in srgb, var(--qhub-color-primary) 30%, transparent); }
+        #premiumCodeModal .modal-message { font-size: 0.8rem; margin-top: 0.5rem; min-height: 1.2em; }
+        #premiumCodeModal .success { color: var(--qhub-color-success); }
+        #premiumCodeModal .error { color: var(--qhub-color-error); }
+
+        #activityFilterContainer { margin-bottom: 1rem; padding: 0.5rem; background-color: var(--qhub-color-surface-container); border-radius: var(--border-radius-medium); }
+        #activityFilterContainer label { font-size: 0.8rem; color: var(--qhub-color-on-surface-variant); margin-right: 0.5rem;}
+        #activityFilterContainer select {
+            padding: 0.4rem 0.6rem; border-radius: var(--border-radius-small);
+            border: 1px solid var(--qhub-color-outline);
+            background-color: var(--qhub-color-surface);
+            color: var(--qhub-color-on-surface);
+        }
+    </style>
+</head>
+<body data-theme="light"> 
+
+    <div id="notificationArea">
+        <div id="resetNotification"></div>
+    </div>
+
+    <button class="sidebar-toggle-button" id="sidebarToggle" aria-label="Navigation öffnen/schließen" aria-expanded="false">
+        <span class="material-icons">menu</span>
+    </button>
+
+    <nav class="q-sidebar" id="qHubSidebar">
+        <div class="q-sidebar-header">
+            <div class="logo-title-group">
+                <span class="material-icons logo-icon">hub</span> 
+                <h2>QHub <span id="premiumBadgeSidebar" class="premium-badge-sidebar hidden">★</span></h2>
+            </div>
+            <button class="sidebar-internal-toggle" id="sidebarInternalToggle" aria-label="Navigation schließen">
+                <span class="material-icons">close</span>
+            </button>
+        </div>
+
+        <div class="q-sidebar-nav">
+            <div class="q-sidebar-section-title">Meine Apps</div>
+            <ul id="sidebarAppList">
+                <li><a href="javascript:void(0)" class="placeholder-text" style="padding: 0.8rem 1rem; color: var(--sidebar-icon-color);">Lade Apps...</a></li>
+            </ul>
+            
+            <div id="premiumDownloadsSection" class="hidden">
+                <div class="q-sidebar-section-title">Premium Downloads</div>
+                <ul id="premiumDownloadsList"></ul>
+            </div>
+
+
+            <div class="q-sidebar-section-title">Konto</div>
+            <ul>
+                 <li><a href="#" id="redeemPremiumLink"><span class="material-icons">workspace_premium</span> Premium-Code einlösen</a></li>
+            </ul>
+
+            <div class="q-sidebar-section-title">Einstellungen</div>
+            <ul>
+                <li><a href="#" id="themeEditorLink"><span class="material-icons">palette</span> Theme Editor</a></li>
+                <li><a href="#" id="layoutCustomizationLink" class="hidden"><span class="material-icons">view_quilt</span> Layout anpassen (Premium)</a></li>
+                <li><a href="#" id="resetSystemLink" class="reset-link"><span class="material-icons">dangerous</span> System-Reset</a></li>
+            </ul>
+        </div>
+        <div class="q-sidebar-footer">
+            <span class="text-xs" style="color: var(--sidebar-icon-color); padding: 0 1rem;">QHub v<span id="appVersionDisplay">1.2.0</span></span>
+        </div>
+    </nav>
+    <div class="content-overlay" id="contentOverlay"></div>
+
+    <div id="offlineIconContainer">
+        <button id="offlineStatusIcon" aria-label="Offline-Status">
+            <span class="material-icons">wifi_off</span>
+        </button>
+    </div>
+
+    <div class="main-scroll-container">
+        <header class="app-title-header">
+            <h1>QHub <span id="premiumBadgeMain" class="premium-badge-main hidden">★</span></h1>
+        </header>
+        <main id="mainContentArea"> 
+            <section id="nachrichtenSection" class="content-section snap-child">
+                <h2 class="section-title"><span class="material-icons">feed</span>Nachrichten</h2>
+                <div id="nachrichtenContainer">
+                    <div class="placeholder-text">Lade Nachrichten...</div>
+                </div>
+            </section>
+
+            <section id="insiderInfosSection" class="content-section snap-child hidden">
+                <h2 class="section-title"><span class="material-icons">visibility</span>Insider-Infos (Premium)</h2>
+                <div id="insiderInfosContainer">
+                     <div class="placeholder-text">Keine Insider-Infos verfügbar.</div>
+                </div>
+            </section>
+
+            <section id="ankuendigungenSection" class="content-section snap-child">
+                <h2 class="section-title"><span class="material-icons">campaign</span>Ankündigungen</h2>
+                <div id="ankuendigungenContainer">
+                    <div class="placeholder-text">Lade Ankündigungen...</div>
+                </div>
+            </section>
+
+            <section id="aktivitaetsleisteSection" class="content-section snap-child">
+                <div class="flex justify-between items-center">
+                    <h2 class="section-title mb-2"><span class="material-icons">checklist</span>Aktivitätsleiste</h2>
+                    <div id="activityFilterContainer" class="hidden">
+                        <label for="statusFilter">Filter:</label>
+                        <select id="statusFilter">
+                            <option value="all">Alle</option>
+                            <option value="ready-online">Online</option>
+                            <option value="ready">Bereit</option>
+                            <option value="in-progress">In Arbeit</option>
+                            <option value="queue">Warteschlange</option>
+                            <option value="paused">Pausiert</option>
+                            <option value="failed">Fehlgeschlagen</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="aktivitaetsleisteContainer" class="card" style="padding-top: 0.5rem; padding-bottom: 0.5rem;">
+                    <div class="placeholder-text">Lade Aktivitäten...</div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="infoPopupBackdrop" class="modal-backdrop">
+        <div class="modal-content">
+            <span class="material-icons" id="infoPopupIcon"></span>
+            <h3 class="modal-title" id="infoPopupTitle"></h3>
+            <p class="modal-text" id="infoPopupText"></p>
+            <button class="modal-button" id="infoPopupButton"></button>
+        </div>
+    </div>
+
+    <div id="themeEditorPopup" class="modal-backdrop">
+        <div class="modal-content">
+            <h3 class="modal-title" style="text-align:left; display:flex; align-items:center;"><span class="material-icons" style="margin-right:0.5rem;">palette</span>Theme Editor</h3>
+            <div>
+                <label for="primaryColorPicker">Primärfarbe:</label>
+                <input type="color" id="primaryColorPicker">
+            </div>
+            <div>
+                <label for="secondaryColorPicker">Sekundärfarbe (UI-Akzente):</label>
+                <input type="color" id="secondaryColorPicker">
+            </div>
+            <div id="tertiaryColorPickerContainer" class="hidden">
+                <label for="tertiaryColorPicker">Tertiärfarbe (Premium):</label>
+                <input type="color" id="tertiaryColorPicker">
+            </div>
+            <div class="flex">
+                <button class="modal-button secondary" style="flex-grow:1;" id="closeThemeEditor">Abbrechen</button>
+                <button class="modal-button" style="flex-grow:1;" id="saveThemeButton">Speichern</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="resetConfirmPopup" class="modal-backdrop">
+        <div class="modal-content">
+            <span class="material-icons" style="color: var(--qhub-color-error); font-size: 2.5rem; margin-bottom: 0.75rem; display: block; text-align: center;">warning</span>
+            <h3 class="modal-title">System-Reset Bestätigen</h3>
+            <p class="modal-text">
+                Sind Sie sicher, dass Sie alle lokalen Daten (LocalStorage) für <strong>quixoticode.github.io</strong> löschen möchten?
+                Dies betrifft QHub, QSounds, QCode und alle anderen Apps unter dieser Domain.
+                Zusätzlich wird versucht, den Browser-Cache für diese Seite zu leeren. Diese Aktion kann nicht rückgängig gemacht werden.
+            </p>
+            <div style="display: flex; gap: 0.75rem; margin-top: 1rem;">
+                <button class="modal-button secondary" style="flex-grow:1;" id="cancelResetButton">Abbrechen</button>
+                <button class="modal-button danger" style="flex-grow:1;" id="confirmResetButton">JA, ALLES LÖSCHEN</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="premiumCodeModal" class="modal-backdrop">
+        <div class="modal-content">
+            <span class="material-icons" style="display:block; text-align:center;">workspace_premium</span>
+            <h3 class="modal-title">Premium-Code einlösen</h3>
+            <p class="modal-text">Geben Sie Ihren einmaligen Premium-Code ein, um zusätzliche Funktionen freizuschalten.</p>
+            <input type="text" id="premiumCodeInput" class="modal-input" placeholder="PREMIUM-CODE-HIER">
+            <button id="submitPremiumCodeButton" class="modal-button">Code prüfen & einlösen</button>
+            <p id="premiumCodeMessage" class="modal-message"></p>
+            <button id="closePremiumCodeModal" class="modal-button secondary" style="margin-top:0.75rem;">Schließen</button>
+        </div>
+    </div>
+
+    <div id="layoutCustomizationModal" class="modal-backdrop">
+        <div class="modal-content">
+            <h3 class="modal-title" style="text-align:left; display:flex; align-items:center;"><span class="material-icons" style="margin-right:0.5rem;">view_quilt</span>Layout Anpassen (Premium)</h3>
+            <p class="modal-text" style="text-align:left; margin-bottom:1rem;">Wählen Sie die Reihenfolge der Sektionen auf der Startseite. Änderungen werden nach dem Speichern und Neuladen der Seite wirksam.</p>
+            <div id="sectionOrderContainer" class="space-y-2 mb-4">
+                </div>
+            <div class="flex">
+                <button class="modal-button secondary" style="flex-grow:1;" id="closeLayoutModal">Abbrechen</button>
+                <button class="modal-button" style="flex-grow:1;" id="saveLayoutButton">Reihenfolge speichern</button>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="themeToggleContainer">
+        <button id="themeToggleButton" aria-label="Theme umschalten">
+            <span class="material-icons">brightness_6</span>
+        </button>
+    </div>
+    
+    <script>
+        const CURRENT_APP_VERSION = '1.2.0'; 
+        const APP_SETTINGS_PREFIX = 'qhub_settings_'; 
+        const LOCAL_APP_DATA_KEY = APP_SETTINGS_PREFIX + 'app_data_cache_v1_2'; 
+        const SEEN_POPUPS_KEY = APP_SETTINGS_PREFIX + 'seen_popups_' + CURRENT_APP_VERSION;
+        const LAST_APP_VERSION_KEY = APP_SETTINGS_PREFIX + 'last_version';
+        const THEME_SETTINGS_KEY = APP_SETTINGS_PREFIX + 'theme_v1_2';
+        const PREMIUM_STATUS_KEY = APP_SETTINGS_PREFIX + 'premium_status';
+        const REDEEMED_CODES_KEY = APP_SETTINGS_PREFIX + 'redeemed_codes';
+        const SECTION_ORDER_KEY = APP_SETTINGS_PREFIX + 'section_order_v1_2';
+        const PREMIUM_CODE_SOURCE_URL = 'https://quixoticode.github.io/data/s/name.json'; 
+
+        const initialAppData = {
+            version: "1.2.0", 
+            webApps: [ 
+                { name: "QSounds", url: "https://quixoticode.github.io/app/qsounds/", icon: "graphic_eq" },
+                { name: "QCode", url: "https://quixoticode.github.io/app/qcode/", icon: "code" },
+                { name: "QHub", url: "https://quixoticode.github.io/app/qhub/", icon: "hub" },
+                { name: "Pet's Life", url: "https://quixoticode.github.io/app/pl/", icon: "pets", premium: true },
+                { name: "Beta-Archiv", url: "#", icon: "science", premium: true, action: "showBetaArchiveModal" } 
+            ],
+            nachrichten: [
+                { 
+                  id: "msg_qhub_120_001", title: "QHub v" + CURRENT_APP_VERSION + " ist da!", 
+                  content: "Viele neue Premium-Funktionen warten auf Sie! Entdecken Sie exklusive Inhalte, Anpassungsmöglichkeiten und mehr.", 
+                  date: "2025-05-22", type: "Release" 
+                },
+                { 
+                  id: "msg_qhub_120_002", title: "Exklusive Premium-News", 
+                  content: "Als Premium-Mitglied erhalten Sie frühzeitig Zugang zu Informationen über kommende Projekte und spezielle Entwickler-Einblicke im neuen 'Insider-Infos'-Bereich.", 
+                  date: "2025-05-22", type: "Premium", premium: true
+                }
+            ],
+            insiderInfos: [ 
+                { id: "ins_001", title: "Geheimes Projekt 'Titan'", content: "Die Konzeptphase für Projekt 'Titan' hat begonnen. Es wird eine revolutionäre neue App im Bereich Produktivität sein. Mehr Details bald exklusiv hier.", date: "2025-05-22", premium: true}
+            ],
+            premiumDownloads: [ 
+                { id: "dl_001", name: "QHub Wallpaper Pack", description: "Exklusive Wallpapers für Desktop & Mobile.", url: "#download_link_1", icon: "wallpaper", premium: true },
+                { id: "dl_002", name: "QSounds Beta v1.3", description: "Vorabzugriff auf die nächste QSounds Version.", url: "#download_link_2", icon: "biotech", premium: true }
+            ],
+            ankuendigungen: [
+                { 
+                  id: "ank_qhub_120_001", title: "Premium-Layout Anpassung", 
+                  content: "Premium-Nutzer können jetzt die Reihenfolge der Sektionen auf der Startseite anpassen!", 
+                  date: "2025-05-22" 
+                }
+            ],
+            aktivitaetsleiste: [
+                { id: "act_qhub_120_001", product: "QHub v1.2.0", description: "Premium-Features implementiert", releaseDate: "22. Mai 2025", status: "ready-online" },
+                { id: "act_qhub_120_002", product: "Pets Life v0.2", description: "Neue Interaktionen (Premium)", releaseDate: "Juni 2025", status: "in-progress" },
+                { id: "act_qhub_120_003", product: "QSounds v1.3", description: "Dateiverschlüsselung", releaseDate: "Q3 2025", status: "queue" },
+                { id: "act_qhub_120_004", product: "QCode 'JavaScript Pro'", description: "Neuer Lernpfad", releaseDate: "Q3 2025", status: "paused" }, 
+                { id: "act_qhub_120_005", product: "Geheimes Projekt 'Omega'", description: "Konzeptphase (Premium Info)", releaseDate: "Unbekannt", status: "queue", premium: true }
+            ],
+            popupNachrichten: [ 
+                {
+                  id: "popup_qhub_premium_v120",
+                  titel: "QHub " + CURRENT_APP_VERSION + " ist da!",
+                  inhalt: "Entdecken Sie viele neue Premium-Funktionen und Anpassungsmöglichkeiten. Lösen Sie Ihren Code ein, falls noch nicht geschehen.",
+                  aktiv: true, 
+                  datum: "2025-05-22",
+                  icon: "workspace_premium",
+                  buttonText: "Entdecken"
+                }
+            ]
+        };
+
+        const qHubSidebar = document.getElementById('qHubSidebar');
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const contentOverlay = document.getElementById('contentOverlay');
+        const sidebarInternalToggle = document.getElementById('sidebarInternalToggle');
+        const appVersionDisplay = document.getElementById('appVersionDisplay');
+        const notificationArea = document.getElementById('notificationArea');
+        const offlineStatusMessage = document.getElementById('offlineStatusMessage');
+        const resetNotification = document.getElementById('resetNotification');
+        const offlineIconContainer = document.getElementById('offlineIconContainer');
+        const offlineStatusIcon = document.getElementById('offlineStatusIcon');
+        const premiumBadgeSidebar = document.getElementById('premiumBadgeSidebar');
+        const premiumBadgeMain = document.getElementById('premiumBadgeMain');
+        
+        const themeEditorLink = document.getElementById('themeEditorLink');
+        const themeEditorPopup = document.getElementById('themeEditorPopup');
+        const primaryColorPicker = document.getElementById('primaryColorPicker');
+        const secondaryColorPicker = document.getElementById('secondaryColorPicker');
+        const tertiaryColorPickerContainer = document.getElementById('tertiaryColorPickerContainer');
+        const tertiaryColorPicker = document.getElementById('tertiaryColorPicker');
+        const saveThemeButton = document.getElementById('saveThemeButton');
+        const closeThemeEditorButton = document.getElementById('closeThemeEditor');
+        
+        const resetSystemLink = document.getElementById('resetSystemLink');
+        const resetConfirmPopup = document.getElementById('resetConfirmPopup');
+        const cancelResetButton = document.getElementById('cancelResetButton');
+        const confirmResetButton = document.getElementById('confirmResetButton');
+
+        const redeemPremiumLink = document.getElementById('redeemPremiumLink');
+        const premiumCodeModal = document.getElementById('premiumCodeModal');
+        const premiumCodeInput = document.getElementById('premiumCodeInput');
+        const submitPremiumCodeButton = document.getElementById('submitPremiumCodeButton');
+        const premiumCodeMessage = document.getElementById('premiumCodeMessage');
+        const closePremiumCodeModalButton = document.getElementById('closePremiumCodeModal');
+
+        const activityFilterContainer = document.getElementById('activityFilterContainer');
+        const statusFilterSelect = document.getElementById('statusFilter');
+        const mainContentArea = document.getElementById('mainContentArea');
+        const layoutCustomizationLink = document.getElementById('layoutCustomizationLink');
+        const layoutCustomizationModal = document.getElementById('layoutCustomizationModal');
+        const sectionOrderContainer = document.getElementById('sectionOrderContainer');
+        const saveLayoutButton = document.getElementById('saveLayoutButton');
+        const closeLayoutModalButton = document.getElementById('closeLayoutModal');
+        const insiderInfosSection = document.getElementById('insiderInfosSection');
+        const premiumDownloadsSection = document.getElementById('premiumDownloadsSection');
+        const premiumDownloadsList = document.getElementById('premiumDownloadsList');
+
+
+        function getStatusIndicatorSVG(status) {
+            const size = 24;
+            let svgContent = `<svg class="status-indicator status-${status}" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg">`;
+            svgContent += `<circle class="circle-bg" cx="${size/2}" cy="${size/2}" r="${size/2 - 2}"/>`;
+            switch (status) {
+                case 'ready-online':
+                    svgContent += `<polyline class="checkmark" points="7,12.5 10.5,16 17,9.5" style="stroke-dasharray: 50; stroke-dashoffset: 0;"/>`; break;
+                case 'in-progress':
+                    svgContent += `<circle class="spinner-arc" cx="${size/2}" cy="${size/2}" r="${size/2 - 2.5}" stroke-dasharray="30 15" />`; break;
+                case 'failed':
+                    svgContent += `<line class="cross-line" x1="8" y1="8" x2="16" y2="16"/><line class="cross-line" x1="16" y1="8" x2="8" y2="16"/>`; break;
+                case 'paused':
+                    svgContent += `<g class="pause-lines"><line x1="9" y1="8" x2="9" y2="16"></line><line x1="15" y1="8" x2="15" y2="16"></line></g>`; break;
+                case 'queue': break;
+            }
+            svgContent += `</svg>`;
+            return svgContent;
+        }
+        
+        function displayData(data, sectionOrder) {
+            if (!data) { data = initialAppData; }
+            const isPremium = getPremiumStatus();
+
+            renderSidebarAppList(data.webApps || [], isPremium);
+            renderNachrichten(data.nachrichten || [], isPremium);
+            renderAnkuendigungen(data.ankuendigungen || [], isPremium);
+            renderAktivitaetsleiste(data.aktivitaetsleiste || [], isPremium, statusFilterSelect ? statusFilterSelect.value : 'all');
+            renderInsiderInfos(data.insiderInfos || [], isPremium);
+            renderPremiumDownloads(data.premiumDownloads || [], isPremium);
+            
+            const currentSectionOrder = isPremium ? (sectionOrder || getSectionOrder()) : defaultSectionOrder;
+            reorderSections(currentSectionOrder);
+
+
+            checkAndShowAppDefinedPopups(data.popupNachrichten || []);
+            if(appVersionDisplay) appVersionDisplay.textContent = CURRENT_APP_VERSION;
+            updatePremiumUI(isPremium);
+        }
+
+        function renderSidebarAppList(webApps, isPremium) {
+            const container = document.getElementById('sidebarAppList');
+            if (!container) return;
+            container.innerHTML = ''; 
+            const appsToShow = webApps.filter(app => !app.premium || (app.premium && isPremium));
+
+            if (appsToShow.length === 0) { 
+                container.innerHTML = '<li><a href="javascript:void(0)" class="placeholder-text" style="padding: 0.8rem 1rem; color: var(--sidebar-icon-color);">Keine Apps verfügbar.</a></li>';
+                return; 
+            }
+            appsToShow.forEach(app => {
+                const listItem = document.createElement('li');
+                const link = document.createElement('a');
+                link.href = app.url;
+                if (app.action) { 
+                    link.href = "javascript:void(0)";
+                    link.onclick = () => window[app.action] ? window[app.action]() : console.warn("Aktion nicht definiert:", app.action);
+                } else {
+                    link.target = "_blank"; 
+                    link.rel = "noopener noreferrer";
+                }
+                link.innerHTML = `<span class="material-icons">${app.icon || 'launch'}</span> ${app.name}`;
+                if (app.premium) {
+                    link.innerHTML += ` <span style="color: var(--qhub-color-premium); font-size:0.7em; vertical-align:super;">★</span>`;
+                }
+                listItem.appendChild(link);
+                container.appendChild(listItem);
+            });
+        }
+
+        function renderNachrichten(nachrichten, isPremium) {
+            const container = document.getElementById('nachrichtenContainer');
+            if (!container) return; container.innerHTML = ''; 
+            const nachrichtenToShow = nachrichten.filter(item => !item.premium || (item.premium && isPremium));
+            if (nachrichtenToShow.length === 0) { container.innerHTML = '<p class="placeholder-text">Keine aktuellen Nachrichten.</p>'; return; }
+            
+            nachrichtenToShow.forEach(item => {
+                const card = document.createElement('div'); card.className = 'card';
+                let typeBadgeHTML = item.type ? `<span class="card-type-badge">${item.type}</span>` : '';
+                if (item.premium) typeBadgeHTML += ` <span class="card-type-badge" style="background-color:var(--qhub-color-premium); color:var(--qhub-color-on-premium);">Premium</span>`;
+                card.innerHTML = `${typeBadgeHTML}<h3 class="card-title">${item.title}</h3><p class="card-content">${item.content}</p><span class="card-date">${new Date(item.date).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' })}</span>`;
+                container.appendChild(card);
+            });
+        }
+        
+        function renderInsiderInfos(infos, isPremium) {
+            const section = document.getElementById('insiderInfosSection');
+            const container = document.getElementById('insiderInfosContainer');
+            if (!section || !container) return;
+
+            if (!isPremium || !infos || infos.length === 0) {
+                section.classList.add('hidden');
+                container.innerHTML = '';
+                return;
+            }
+            section.classList.remove('hidden');
+            container.innerHTML = '';
+
+            infos.forEach(item => {
+                const card = document.createElement('div'); card.className = 'card';
+                card.innerHTML = `<h3 class="card-title">${item.title}</h3><p class="card-content">${item.content}</p><span class="card-date">${new Date(item.date).toLocaleDateString('de-DE', { day: 'numeric', month: 'long' })}</span>`;
+                container.appendChild(card);
+            });
+        }
+
+        function renderPremiumDownloads(downloads, isPremium) {
+            const section = document.getElementById('premiumDownloadsSection');
+            const list = document.getElementById('premiumDownloadsList');
+            if (!section || !list) return;
+
+            if (!isPremium || !downloads || downloads.length === 0) {
+                section.classList.add('hidden');
+                list.innerHTML = '';
+                return;
+            }
+            section.classList.remove('hidden');
+            list.innerHTML = '';
+            downloads.forEach(item => {
+                const listItem = document.createElement('li');
+                const link = document.createElement('a');
+                link.href = item.url; 
+                link.target = "_blank";
+                link.rel = "noopener noreferrer";
+                link.innerHTML = `<span class="material-icons">${item.icon || 'download'}</span> ${item.name}`;
+                if (item.description) {
+                    link.innerHTML += `<br><small style="color:var(--sidebar-icon-color); padding-left: calc(22px + 1.25rem); display: block; font-size: 0.8em;">${item.description}</small>`;
+                }
+                listItem.appendChild(link);
+                list.appendChild(listItem);
+            });
+        }
+
+
+        function renderAnkuendigungen(ankuendigungen, isPremium) {
+            const container = document.getElementById('ankuendigungenContainer');
+            if (!container) return; container.innerHTML = '';
+            const ankuendigungenToShow = ankuendigungen.filter(item => !item.premium || (item.premium && isPremium));
+            if (ankuendigungenToShow.length === 0) { container.innerHTML = '<p class="placeholder-text">Keine Ankündigungen vorhanden.</p>'; return; }
+            
+            ankuendigungenToShow.forEach(item => {
+                const card = document.createElement('div'); card.className = 'card';
+                 let premiumBadgeHTML = item.premium ? ` <span class="card-type-badge" style="background-color:var(--qhub-color-premium); color:var(--qhub-color-on-premium); float:right;">Premium</span>` : '';
+                card.innerHTML = `${premiumBadgeHTML}<h3 class="card-title">${item.title}</h3><p class="card-content">${item.content}</p><span class="card-date">${new Date(item.date).toLocaleDateString('de-DE', { day: 'numeric', month: 'long' })}</span>`;
+                container.appendChild(card);
+            });
+        }
+
+        function renderAktivitaetsleiste(aktivitaetsleiste, isPremium, filterStatus = 'all') {
+            const container = document.getElementById('aktivitaetsleisteContainer');
+            if (!container) return; container.innerHTML = '';
+            
+            let aktivitaetenToShow = aktivitaetsleiste.filter(item => !item.premium || (item.premium && isPremium));
+            if (filterStatus !== 'all') {
+                aktivitaetenToShow = aktivitaetenToShow.filter(item => item.status === filterStatus);
+            }
+
+            if (aktivitaetenToShow.length === 0) { 
+                container.innerHTML = `<p class="placeholder-text">${filterStatus === 'all' ? 'Keine Aktivitäten geplant.' : 'Keine Aktivitäten mit diesem Status.'}</p>`; 
+                return; 
+            }
+            aktivitaetenToShow.forEach(item => {
+                const activityDiv = document.createElement('div'); activityDiv.className = 'activity-item';
+                let premiumStar = item.premium ? ` <span style="color: var(--qhub-color-premium); font-size:0.8em;">★</span>` : '';
+                activityDiv.innerHTML = `${getStatusIndicatorSVG(item.status)}<div class="activity-info"><div class="activity-product">${item.product}${premiumStar}</div><div class="activity-description">${item.description}</div></div><div class="activity-date">${item.releaseDate}</div>`;
+                container.appendChild(activityDiv);
+            });
+        }
+        
+        function saveAppDataToLocal(data) {
+            try { localStorage.setItem(LOCAL_APP_DATA_KEY, JSON.stringify(data)); } 
+            catch (e) { console.error("Fehler beim Speichern der App-Daten im LocalStorage:", e); }
+        }
+
+        function loadAppDataFromLocal() {
+            const localDataString = localStorage.getItem(LOCAL_APP_DATA_KEY);
+            if (localDataString) {
+                try { return JSON.parse(localDataString); } 
+                catch (e) { console.error("Fehler beim Parsen der App-Daten aus LocalStorage:", e); return null; }
+            }
+            return null;
+        }
+        
+        function updateOfflineStatus() {
+            const isOffline = !navigator.onLine;
+            if (offlineStatusMessage) offlineStatusMessage.style.display = 'none'; 
+            if (offlineIconContainer) offlineIconContainer.style.display = isOffline ? 'flex' : 'none';
+
+            if (isOffline) {
+                console.log("App ist offline. Zeige gecachte Daten.");
+                const cachedData = loadAppDataFromLocal();
+                displayData(cachedData || initialAppData, getSectionOrder()); 
+            } else {
+                console.log("App ist online.");
+                const cachedData = loadAppDataFromLocal();
+                if (!cachedData || cachedData.version !== initialAppData.version) {
+                    console.log("Lokale Daten veraltet oder nicht vorhanden, 'aktualisiere' mit initialAppData.");
+                    saveAppDataToLocal(initialAppData);
+                    displayData(initialAppData, getSectionOrder());
+                     checkAndShowAppDefinedPopups(initialAppData.popupNachrichten || []);
+                } else {
+                    console.log("Lokale Daten sind aktuell.");
+                    displayData(cachedData, getSectionOrder()); 
+                     checkAndShowAppDefinedPopups(cachedData.popupNachrichten || []);
+                }
+            }
+        }
+
+        function getSeenPopups() {
+            const seen = localStorage.getItem(SEEN_POPUPS_KEY);
+            return seen ? JSON.parse(seen) : [];
+        }
+        function markPopupAsSeen(popupId) {
+            const seen = getSeenPopups();
+            if (!seen.includes(popupId)) { seen.push(popupId); localStorage.setItem(SEEN_POPUPS_KEY, JSON.stringify(seen)); }
+        }
+        function showCustomInfoPopup(title, text, icon = 'info', buttonTxt = 'OK', onConfirm = null) {
+            const backdrop = document.getElementById('infoPopupBackdrop');
+            if (!backdrop) return;
+            document.getElementById('infoPopupIcon').textContent = icon;
+            document.getElementById('infoPopupTitle').textContent = title;
+            document.getElementById('infoPopupText').innerHTML = text.replace(/\n/g, '<br>'); 
+            const button = document.getElementById('infoPopupButton');
+            button.textContent = buttonTxt;
+            button.onclick = () => { backdrop.classList.remove('visible'); if (onConfirm) onConfirm(); };
+            backdrop.classList.add('visible');
+        }
+
+        function checkAndShowAppDefinedPopups(popupNachrichten) {
+            const seenPopups = getSeenPopups();
+            const activePopupData = popupNachrichten.find(p => p.aktiv && !seenPopups.includes(p.id));
+            if (activePopupData) {
+                showCustomInfoPopup(
+                    activePopupData.titel, activePopupData.inhalt,
+                    activePopupData.icon || 'campaign', activePopupData.buttonText || 'Schließen',
+                    () => markPopupAsSeen(activePopupData.id)
+                );
+            }
+        }
+        
+        if (offlineStatusIcon) {
+            offlineStatusIcon.addEventListener('click', () => {
+                showCustomInfoPopup( "Offline-Status", "Sie sind derzeit offline.\nDie angezeigten Inhalte sind der zuletzt gespeicherte Stand.", "wifi_off", "Verstanden");
+            });
+        }
+
+        function toggleSidebar() {
+            const isOpen = qHubSidebar.classList.toggle('open');
+            contentOverlay.classList.toggle('active', isOpen);
+            document.body.classList.toggle('sidebar-open', isOpen && window.innerWidth >= 768); 
+            sidebarToggle.setAttribute('aria-expanded', isOpen.toString());
+            sidebarToggle.classList.toggle('hidden-when-sidebar-open', isOpen && window.innerWidth < 768);
+        }
+
+        sidebarToggle.addEventListener('click', toggleSidebar);
+        sidebarInternalToggle.addEventListener('click', toggleSidebar);
+        contentOverlay.addEventListener('click', toggleSidebar);
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && qHubSidebar.classList.contains('open')) { toggleSidebar(); }
+        });
+
+        function applyThemeColors(primary, secondary, tertiary) {
+            document.documentElement.style.setProperty('--qhub-color-primary', primary);
+            document.documentElement.style.setProperty('--qhub-color-secondary', secondary); 
+            document.documentElement.style.setProperty('--qhub-color-tertiary', tertiary); 
+            if(primaryColorPicker) primaryColorPicker.value = primary;
+            if(secondaryColorPicker) secondaryColorPicker.value = secondary;
+            if(tertiaryColorPicker) tertiaryColorPicker.value = tertiary;
+        }
+
+        function saveThemeToLocalStorage() {
+            const primary = primaryColorPicker.value;
+            const secondary = secondaryColorPicker.value;
+            const tertiary = getPremiumStatus() && tertiaryColorPicker ? tertiaryColorPicker.value : getComputedStyle(document.documentElement).getPropertyValue('--qhub-color-tertiary').trim();
+            applyThemeColors(primary, secondary, tertiary);
+            localStorage.setItem(THEME_SETTINGS_KEY, JSON.stringify({ primary, secondary, tertiary }));
+            themeEditorPopup.classList.remove('visible');
+        }
+
+        function loadThemeFromLocalStorage() {
+            const themeSettings = localStorage.getItem(THEME_SETTINGS_KEY);
+            let currentPrimary = getComputedStyle(document.documentElement).getPropertyValue('--qhub-color-primary').trim();
+            let currentSecondary = getComputedStyle(document.documentElement).getPropertyValue('--qhub-color-secondary').trim();
+            let currentTertiary = getComputedStyle(document.documentElement).getPropertyValue('--qhub-color-tertiary').trim();
+
+            if (themeSettings) {
+                try { 
+                    const { primary, secondary, tertiary } = JSON.parse(themeSettings); 
+                    currentPrimary = primary; 
+                    currentSecondary = secondary;
+                    currentTertiary = tertiary || currentTertiary; 
+                } 
+                catch(e) { console.error("Fehler beim Laden des Themes aus LocalStorage", e); }
+            }
+            applyThemeColors(currentPrimary, currentSecondary, currentTertiary);
+        }
+        
+        function toggleDarkLightMode() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem(APP_SETTINGS_PREFIX + 'theme_preference', newTheme);
+            document.getElementById('themeColorMetaLight').content = newTheme === 'light' ? getComputedStyle(document.documentElement).getPropertyValue('--qhub-color-primary') : getComputedStyle(document.documentElement).getPropertyValue('--qhub-color-primary-container');
+            document.getElementById('themeColorMetaDark').content = newTheme === 'dark' ? getComputedStyle(document.documentElement).getPropertyValue('--qhub-color-primary-container') : getComputedStyle(document.documentElement).getPropertyValue('--qhub-color-primary');
+        }
+
+        function applySavedDarkLightModePreference() {
+            const savedPreference = localStorage.getItem(APP_SETTINGS_PREFIX + 'theme_preference');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const initialTheme = savedPreference || (prefersDark ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', initialTheme);
+            document.getElementById('themeColorMetaLight').content = initialTheme === 'light' ? getComputedStyle(document.documentElement).getPropertyValue('--qhub-color-primary') : getComputedStyle(document.documentElement).getPropertyValue('--qhub-color-primary-container');
+            document.getElementById('themeColorMetaDark').content = initialTheme === 'dark' ? getComputedStyle(document.documentElement).getPropertyValue('--qhub-color-primary-container') : getComputedStyle(document.documentElement).getPropertyValue('--qhub-color-primary');
+        }
+
+        if (themeEditorLink) {
+            themeEditorLink.addEventListener('click', (e) => {
+                e.preventDefault(); loadThemeFromLocalStorage(); 
+                if(tertiaryColorPickerContainer) tertiaryColorPickerContainer.classList.toggle('hidden', !getPremiumStatus());
+                themeEditorPopup.classList.add('visible');
+                if (qHubSidebar.classList.contains('open')) toggleSidebar();
+            });
+        }
+        if (closeThemeEditorButton) closeThemeEditorButton.addEventListener('click', () => themeEditorPopup.classList.remove('visible'));
+        if (saveThemeButton) saveThemeButton.addEventListener('click', saveThemeToLocalStorage);
+
+        async function clearSiteCache() {
+            let clearedSomething = false;
+            if ('serviceWorker' in navigator) {
+                try {
+                    const registrations = await navigator.serviceWorker.getRegistrations();
+                    for (const registration of registrations) {
+                        if (registration.scope.startsWith(window.location.origin)) { 
+                            await registration.unregister(); clearedSomething = true;
+                        }
+                    }
+                } catch (e) { console.error("Fehler Service Worker Deregistrierung:", e); }
+            }
+            if ('caches' in window) {
+                try {
+                    const keys = await caches.keys();
+                    for (const key of keys) { await caches.delete(key); clearedSomething = true; }
+                } catch (e) { console.error("Fehler Cache Löschung:", e); }
+            }
+            return clearedSomething;
+        }
+
+        function performSystemReset() {
+            try { localStorage.clear(); } 
+            catch (e) { console.error("Fehler LocalStorage Löschung:", e); }
+            
+            clearSiteCache().then(cacheCleared => {
+                let message = "Alle lokalen Daten (LocalStorage) wurden gelöscht. ";
+                message += cacheCleared ? "Service Worker und Cache API wurden ebenfalls zurückgesetzt. " : "Keine aktiven Service Worker/Cache API Einträge gefunden/gelöscht. ";
+                message += "Für einen vollständigen Cache-Reset laden Sie die Seite bitte mit Strg+Shift+R (oder Cmd+Shift+R) neu oder leeren Sie den Browser-Cache manuell.";
+                resetNotification.textContent = message; resetNotification.style.display = 'block';
+                setTimeout(() => { resetNotification.style.display = 'none'; location.reload(true); }, 8000);
+            }).catch(e => {
+                 resetNotification.textContent = "Fehler beim Cache-Reset: " + e.message; resetNotification.style.display = 'block';
+                 setTimeout(() => { resetNotification.style.display = 'none'; }, 8000);
+            });
+        }
+
+        if(resetSystemLink) {
+            resetSystemLink.addEventListener('click', (e) => {
+                e.preventDefault(); resetConfirmPopup.classList.add('visible');
+                if (qHubSidebar.classList.contains('open')) toggleSidebar();
+            });
+        }
+        if(cancelResetButton) cancelResetButton.addEventListener('click', () => resetConfirmPopup.classList.remove('visible'));
+        if(confirmResetButton) confirmResetButton.addEventListener('click', () => {
+            resetConfirmPopup.classList.remove('visible'); performSystemReset();
+        });
+
+        function checkAndClearCacheOnUpdate() {
+            const lastVersion = localStorage.getItem(LAST_APP_VERSION_KEY);
+            if (lastVersion !== CURRENT_APP_VERSION) {
+                console.log(`App-Update: ${lastVersion || 'unbekannt'} -> ${CURRENT_APP_VERSION}. Leere Cache.`);
+                clearSiteCache().then(cleared => {
+                    if (cleared) {
+                        resetNotification.textContent = `Cache für App-Update auf v${CURRENT_APP_VERSION} geleert.`;
+                        resetNotification.style.display = 'block';
+                        setTimeout(() => resetNotification.style.display = 'none', 5000);
+                    }
+                });
+                localStorage.setItem(LAST_APP_VERSION_KEY, CURRENT_APP_VERSION);
+                localStorage.removeItem(SEEN_POPUPS_KEY); 
+            }
+        }
+        
+        function getPremiumStatus() {
+            return localStorage.getItem(PREMIUM_STATUS_KEY) === 'true';
+        }
+
+        function setPremiumStatus(isPremium) {
+            localStorage.setItem(PREMIUM_STATUS_KEY, isPremium.toString());
+            const currentLocalData = loadAppDataFromLocal() || initialAppData; 
+            displayData(currentLocalData, getSectionOrder()); 
+        }
+
+        function getRedeemedCodes() {
+            const codes = localStorage.getItem(REDEEMED_CODES_KEY);
+            return codes ? JSON.parse(codes) : [];
+        }
+
+        function addRedeemedCode(code) {
+            const codes = getRedeemedCodes();
+            const numericCode = /^\d+$/.test(code) ? parseInt(code, 10) : code.toString().toUpperCase();
+            if (!codes.includes(numericCode)) {
+                codes.push(numericCode);
+                localStorage.setItem(REDEEMED_CODES_KEY, JSON.stringify(codes));
+            }
+        }
+        
+        function updatePremiumUI(isPremium) { 
+            if (premiumBadgeSidebar) premiumBadgeSidebar.classList.toggle('hidden', !isPremium);
+            if (premiumBadgeMain) premiumBadgeMain.classList.toggle('hidden', !isPremium);
+            
+            if (redeemPremiumLink) redeemPremiumLink.style.display = isPremium ? 'none' : 'flex';
+            if (activityFilterContainer) activityFilterContainer.classList.toggle('hidden', !isPremium);
+            if (tertiaryColorPickerContainer) tertiaryColorPickerContainer.classList.toggle('hidden', !isPremium);
+            if (layoutCustomizationLink) layoutCustomizationLink.classList.toggle('hidden', !isPremium);
+            if (insiderInfosSection) insiderInfosSection.classList.toggle('hidden', !isPremium);
+            if (premiumDownloadsSection) premiumDownloadsSection.classList.toggle('hidden', !isPremium);
+        }
+
+        async function validateAndRedeemCode(enteredCodeString) {
+            premiumCodeMessage.textContent = 'Prüfe Code...';
+            premiumCodeMessage.className = 'modal-message';
+
+            const enteredCode = /^\d+$/.test(enteredCodeString) ? parseInt(enteredCodeString, 10) : enteredCodeString.toUpperCase();
+
+            const redeemedCodes = getRedeemedCodes();
+            if (redeemedCodes.includes(enteredCode)) {
+                premiumCodeMessage.textContent = 'Dieser Code wurde bereits eingelöst.';
+                premiumCodeMessage.classList.add('error');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${PREMIUM_CODE_SOURCE_URL}?t=${new Date().getTime()}`); 
+                if (!response.ok) throw new Error('Premium-Code-Server nicht erreichbar.');
+                const data = await response.json();
+                
+                if (data.one_time_codes && Array.isArray(data.one_time_codes) && data.one_time_codes.includes(enteredCode)) {
+                    setPremiumStatus(true); 
+                    addRedeemedCode(enteredCode);
+                    premiumCodeMessage.textContent = 'Premium erfolgreich aktiviert!';
+                    premiumCodeMessage.classList.add('success');
+                    setTimeout(() => { premiumCodeModal.classList.remove('visible'); }, 2000);
+                } else {
+                    premiumCodeMessage.textContent = 'Ungültiger oder abgelaufener Code.';
+                    premiumCodeMessage.classList.add('error');
+                }
+            } catch (error) {
+                console.error("Fehler beim Einlösen des Premium-Codes:", error);
+                premiumCodeMessage.textContent = 'Fehler bei der Code-Prüfung. Bitte später erneut versuchen.';
+                premiumCodeMessage.classList.add('error');
+            }
+        }
+
+        if (redeemPremiumLink) {
+            redeemPremiumLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                premiumCodeInput.value = '';
+                premiumCodeMessage.textContent = '';
+                premiumCodeMessage.className = 'modal-message';
+                premiumCodeModal.classList.add('visible');
+                if (qHubSidebar.classList.contains('open')) toggleSidebar();
+            });
+        }
+        if (closePremiumCodeModalButton) closePremiumCodeModalButton.addEventListener('click', () => premiumCodeModal.classList.remove('visible'));
+        if (submitPremiumCodeButton) submitPremiumCodeButton.addEventListener('click', () => {
+            const code = premiumCodeInput.value.trim(); 
+            if (code) {
+                validateAndRedeemCode(code);
+            } else {
+                premiumCodeMessage.textContent = 'Bitte geben Sie einen Code ein.';
+                premiumCodeMessage.classList.add('error');
+            }
+        });
+        
+        const defaultSectionOrder = ['nachrichtenSection', 'insiderInfosSection', 'ankuendigungenSection', 'aktivitaetsleisteSection'];
+
+        function getSectionOrder() {
+            const storedOrder = localStorage.getItem(SECTION_ORDER_KEY);
+            return storedOrder ? JSON.parse(storedOrder) : defaultSectionOrder;
+        }
+
+        function saveSectionOrder(order) {
+            localStorage.setItem(SECTION_ORDER_KEY, JSON.stringify(order));
+        }
+
+        function reorderSections(order) {
+            order.forEach(sectionId => {
+                const sectionElement = document.getElementById(sectionId);
+                if (sectionElement && mainContentArea) { // Sicherstellen, dass mainContentArea existiert
+                    mainContentArea.appendChild(sectionElement);
+                }
+            });
+        }
+
+        function populateLayoutCustomizationModal() {
+            if (!sectionOrderContainer) return;
+            sectionOrderContainer.innerHTML = '';
+            const currentOrder = getSectionOrder();
+            currentOrder.forEach((sectionId, index) => {
+                const sectionElement = document.getElementById(sectionId);
+                if (sectionElement) {
+                    const sectionTitleElement = sectionElement.querySelector('.section-title');
+                    let sectionTitle = sectionId;
+                    if (sectionTitleElement) {
+                         // Klonen Sie den Titel, um das Icon zu erhalten, aber entfernen Sie den Filter-Teil
+                        const tempTitle = sectionTitleElement.cloneNode(true);
+                        const filterDiv = tempTitle.querySelector('#activityFilterContainer');
+                        if(filterDiv) filterDiv.remove();
+                        sectionTitle = tempTitle.textContent.replace('(Premium)','').trim();
+                    }
+
+                    const div = document.createElement('div');
+                    div.className = 'flex justify-between items-center p-2 bg-gray-100 dark:bg-gray-700 rounded mb-1';
+                    div.innerHTML = `
+                        <span>${sectionTitle}</span>
+                        <div class="space-x-1">
+                            <button class="text-sm p-1 ${index === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-200 dark:hover:bg-gray-600'}" ${index === 0 ? 'disabled' : ''} onclick="moveSection('${sectionId}', 'up')">▲</button>
+                            <button class="text-sm p-1 ${index === currentOrder.length - 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-200 dark:hover:bg-gray-600'}" ${index === currentOrder.length - 1 ? 'disabled' : ''} onclick="moveSection('${sectionId}', 'down')">▼</button>
+                        </div>
+                    `;
+                    sectionOrderContainer.appendChild(div);
+                }
+            });
+        }
+
+        function moveSection(sectionId, direction) {
+            let currentOrder = getSectionOrder();
+            const index = currentOrder.indexOf(sectionId);
+            if (index === -1) return;
+
+            if (direction === 'up' && index > 0) {
+                [currentOrder[index-1], currentOrder[index]] = [currentOrder[index], currentOrder[index-1]];
+            } else if (direction === 'down' && index < currentOrder.length - 1) {
+                [currentOrder[index+1], currentOrder[index]] = [currentOrder[index], currentOrder[index+1]];
+            }
+            saveSectionOrder(currentOrder);
+            populateLayoutCustomizationModal(); 
+        }
+
+        if (layoutCustomizationLink) {
+            layoutCustomizationLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                populateLayoutCustomizationModal();
+                layoutCustomizationModal.classList.add('visible');
+                if (qHubSidebar.classList.contains('open')) toggleSidebar();
+            });
+        }
+        if (closeLayoutModalButton) closeLayoutModalButton.addEventListener('click', () => layoutCustomizationModal.classList.remove('visible'));
+        if (saveLayoutButton) {
+            saveLayoutButton.addEventListener('click', () => {
+                const currentOrder = getSectionOrder(); 
+                reorderSections(currentOrder);
+                layoutCustomizationModal.classList.remove('visible');
+                showCustomInfoPopup("Layout Gespeichert", "Die neue Reihenfolge der Sektionen wurde angewendet.", "done");
+            });
+        }
+
+        if (statusFilterSelect) {
+            statusFilterSelect.addEventListener('change', (event) => {
+                const currentLocalData = loadAppDataFromLocal() || initialAppData;
+                renderAktivitaetsleiste(currentLocalData.aktivitaetsleiste || [], getPremiumStatus(), event.target.value);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            applySavedDarkLightModePreference(); 
+            loadThemeFromLocalStorage(); 
+            checkAndClearCacheOnUpdate(); 
+            
+            let currentData = loadAppDataFromLocal();
+            if (!currentData || currentData.version !== initialAppData.version) {
+                currentData = initialAppData;
+                saveAppDataToLocal(currentData);
+                localStorage.removeItem(SEEN_POPUPS_KEY);
+            }
+            const sectionOrder = getPremiumStatus() ? getSectionOrder() : defaultSectionOrder;
+            displayData(currentData, sectionOrder); 
+            checkAndShowAppDefinedPopups(currentData.popupNachrichten || []);
+
+            const themeToggleButton = document.getElementById('themeToggleButton');
+            if (themeToggleButton) themeToggleButton.addEventListener('click', toggleDarkLightMode);
+            
+            updateOfflineStatus(); 
+        });
+
+        window.addEventListener('offline', updateOfflineStatus);
+        window.addEventListener('online', updateOfflineStatus);
+
+    </script>
+</body>
+</html>

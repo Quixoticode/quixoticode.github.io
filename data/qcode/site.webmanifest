@@ -1,0 +1,21 @@
+{
+  "name": "QCode - Learn Coding",
+  "short_name": "QCode",
+  "icons": [
+    {
+      "src": "https://quixoticode.github.io/data/qcode/web-app-manifest-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "https://quixoticode.github.io/data/qcode/web-app-manifest-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "theme_color": "#000000",
+  "background_color": "#00a0fe",
+  "display": "standalone"
+}

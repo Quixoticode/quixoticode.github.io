@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <link rel="icon" type="image/png" href="https://quixoticode.github.io/data/qcode/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="https://quixoticode.github.io/data/qcode/favicon.svg" />
+    <link rel="shortcut icon" href="https://quixoticode.github.io/data/qcode/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="https://quixoticode.github.io/data/qcode/apple-touch-icon.png" />
+    <link rel="manifest" href="https://quixoticode.github.io/data/qcode/site.webmanifest" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="QCode">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS-Funktionen Erklärt</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 1rem 0;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        nav ul {
+            padding: 0;
+            list-style: none;
+            text-align: center;
+            background: #444;
+            margin-bottom: 20px;
+        }
+
+        nav ul li {
+            display: inline;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 15px 20px;
+            display: inline-block;
+        }
+
+        nav ul li a:hover {
+            background: #555;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #e9e9e9;
+            border-left: 5px solid #333;
+        }
+
+        .section h2 {
+            color: #333;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+        }
+
+        .example {
+            background-color: #fff;
+            padding: 15px;
+            border: 1px solid #ddd;
+            margin-top: 10px;
+            overflow: auto; /* Wichtig für Float-Beispiele */
+        }
+
+        .example-code {
+            background-color: #282c34;
+            color: #abb2bf;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            white-space: pre; /* Erhält Leerzeichen und Zeilenumbrüche */
+            overflow-x: auto; /* Horizontales Scrollen für langen Code */
+        }
+
+        /* Spezifische Beispiele */
+        .text-center-example {
+            text-align: center;
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        .color-example {
+            color: green;
+        }
+
+        .background-color-example {
+            background-color: lightblue;
+            padding: 10px;
+        }
+
+        .font-family-example {
+            font-family: 'Georgia', serif;
+        }
+
+        .font-size-example {
+            font-size: 24px;
+        }
+
+        .font-weight-example {
+            font-weight: bold;
+        }
+
+        .margin-example {
+            margin: 20px;
+            background-color: lightcoral;
+            padding: 10px;
+            border: 1px solid #333;
+        }
+
+        .padding-example {
+            padding: 30px;
+            background-color: lightseagreen;
+            border: 1px solid #333;
+        }
+
+        .border-example {
+            border: 3px dashed orange;
+            padding: 10px;
+        }
+
+        .width-height-example {
+            width: 200px;
+            height: 100px;
+            background-color: gold;
+            border: 1px solid #333;
+            text-align: center;
+            line-height: 100px; /* Vertikale Zentrierung für einzeiligen Text */
+        }
+
+        .box-model-example {
+            width: 300px;
+            padding: 20px;
+            border: 5px solid navy;
+            margin: 15px;
+            background-color: lightgray;
+        }
+
+        .display-inline-example span {
+            background-color: yellow;
+            margin: 5px; /* Margin wirkt horizontal, aber nicht vertikal */
+            padding: 5px;
+        }
+
+        .display-block-example div {
+            background-color: lightgreen;
+            margin: 10px 0; /* Margin wirkt oben und unten */
+            padding: 10px;
+        }
+
+        .display-inline-block-example div {
+            display: inline-block;
+            width: 100px;
+            height: 50px;
+            background-color: lightpink;
+            margin: 5px;
+            padding: 5px;
+            text-align: center;
+            line-height: 50px;
+        }
+
+        .float-left-example {
+            float: left;
+            width: 100px;
+            height: 100px;
+            background-color: skyblue;
+            margin-right: 10px;
+            padding: 5px;
+        }
+
+        .clear-fix-example::after { /* Clearfix um den Float-Effekt zu beenden */
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        .position-relative-example {
+            position: relative;
+            width: 200px;
+            height: 100px;
+            background-color: #eee;
+            border: 1px solid #ccc;
+        }
+        .position-relative-example .inner {
+            position: relative;
+            top: 10px;
+            left: 20px;
+            background-color: lightcoral;
+            padding: 5px;
+        }
+
+        .position-absolute-example {
+            position: relative; /* Bezugspunkt für absolute Positionierung */
+            width: 200px;
+            height: 100px;
+            background-color: #eee;
+            border: 1px solid #ccc;
+            margin-top: 20px;
+        }
+        .position-absolute-example .inner {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: lightgreen;
+            padding: 5px;
+        }
+
+        .position-fixed-example {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            z-index: 1000; /* Stellt sicher, dass es über anderen Elementen liegt */
+        }
+        .position-sticky-example {
+            position: -webkit-sticky; /* Für Safari */
+            position: sticky;
+            top: 0;
+            background-color: orange;
+            padding: 10px;
+            text-align: center;
+            z-index: 500;
+            margin-bottom: 20px; /* Platzhalter für den Scroll-Effekt */
+        }
+
+
+        .flex-container-example {
+            display: flex;
+            background-color: dodgerblue;
+            padding: 10px;
+            margin-top: 10px;
+            height: 150px; /* Höhe für bessere Visualisierung */
+            align-items: center; /* Vertikale Zentrierung der Items */
+            justify-content: space-around; /* Horizontale Verteilung der Items */
+        }
+
+        .flex-item-example {
+            background-color: #f1f1f1;
+            margin: 5px;
+            padding: 20px;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .grid-container-example {
+            display: grid;
+            grid-template-columns: auto auto auto; /* Drei Spalten gleicher Breite */
+            background-color: #2196F3;
+            padding: 10px;
+            gap: 10px; /* Abstand zwischen den Grid-Items */
+            margin-top: 10px;
+        }
+
+        .grid-item-example {
+            background-color: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .pseudo-class-link-example a:link { color: blue; }
+        .pseudo-class-link-example a:visited { color: purple; }
+        .pseudo-class-link-example a:hover { color: red; font-weight: bold; }
+        .pseudo-class-link-example a:active { color: orange; }
+
+        .pseudo-element-first-line-example p::first-line {
+            color: #ff0000;
+            font-variant: small-caps;
+        }
+        .pseudo-element-first-letter-example p::first-letter {
+            color: #0000ff;
+            font-size: xx-large;
+        }
+        .pseudo-element-before-after-example .box::before {
+            content: "Anfang: ";
+            color: green;
+            font-weight: bold;
+        }
+        .pseudo-element-before-after-example .box::after {
+            content: " :Ende";
+            color: red;
+            font-style: italic;
+        }
+
+        .opacity-example img {
+            opacity: 0.5; /* 50% Deckkraft */
+        }
+        .opacity-example img:hover {
+            opacity: 1.0; /* Volle Deckkraft beim Hover */
+        }
+
+        .z-index-example .container {
+            position: relative; /* Wichtig für z-index */
+            height: 150px;
+        }
+        .z-index-example .box1 {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            top: 10px;
+            left: 10px;
+            z-index: 1;
+        }
+        .z-index-example .box2 {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: green;
+            top: 40px;
+            left: 40px;
+            z-index: 2; /* Höherer z-index, liegt also darüber */
+        }
+        .z-index-example .box3 {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: blue;
+            top: 70px;
+            left: 70px;
+            z-index: 0; /* Niedrigerer z-index als box1 */
+        }
+
+        .overflow-visible-example { overflow: visible; width: 150px; height: 50px; border: 1px solid black; margin-bottom: 70px;}
+        .overflow-hidden-example { overflow: hidden; width: 150px; height: 50px; border: 1px solid black;}
+        .overflow-scroll-example { overflow: scroll; width: 150px; height: 50px; border: 1px solid black;}
+        .overflow-auto-example  { overflow: auto; width: 150px; height: 50px; border: 1px solid black;}
+
+        .transition-example div {
+            width: 100px;
+            height: 100px;
+            background: red;
+            transition: width 2s, height 2s, transform 2s; /* Eigenschaft, Dauer */
+        }
+        .transition-example div:hover {
+            width: 200px;
+            height: 200px;
+            transform: rotate(180deg);
+        }
+
+        .animation-example div {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            position: relative; /* Für Animation der Position */
+            animation-name: exampleanimation;
+            animation-duration: 4s;
+            animation-iteration-count: infinite; /* Unendlich oft wiederholen */
+            animation-direction: alternate; /* Hin und her */
+        }
+
+        @keyframes exampleanimation {
+            0%   {background-color:red; left:0px; top:0px; transform: scale(1) rotate(0deg);}
+            25%  {background-color:yellow; left:200px; top:0px; transform: scale(1.2) rotate(90deg);}
+            50%  {background-color:blue; left:200px; top:200px; transform: scale(1) rotate(180deg);}
+            75%  {background-color:green; left:0px; top:200px; transform: scale(1.2) rotate(270deg);}
+            100% {background-color:red; left:0px; top:0px; transform: scale(1) rotate(360deg);}
+        }
+
+        /* Responsive Design Beispiel */
+        .responsive-example {
+            width: 100%;
+            height: 100px;
+            background-color: lightcyan;
+            text-align: center;
+            line-height: 100px;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        /* Media Query: Ändert die Hintergrundfarbe und Schriftgröße, wenn die Bildschirmbreite 600px oder weniger beträgt */
+        @media screen and (max-width: 768px) {
+            .container {
+                width: 95%;
+            }
+            header h1 {
+                font-size: 2rem;
+            }
+            nav ul li {
+                display: block; /* Links untereinander auf kleinen Bildschirmen */
+            }
+            nav ul li a {
+                display: block;
+            }
+            .responsive-example {
+                background-color: lightcoral;
+                font-size: 14px;
+            }
+            .flex-container-example {
+                flex-direction: column; /* Items untereinander auf kleinen Bildschirmen */
+                height: auto;
+            }
+            .grid-container-example {
+                grid-template-columns: auto; /* Nur eine Spalte auf kleinen Bildschirmen */
+            }
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: #fff;
+            margin-top: 30px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>CSS-Funktionen Leicht Erklärt</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#text">Textformatierung</a></li>
+            <li><a href="#farben">Farben & Hintergründe</a></li>
+            <li><a href="#schrift">Schriftarten</a></li>
+            <li><a href="#boxmodell">Boxmodell</a></li>
+            <li><a href="#display">Display</a></li>
+            <li><a href="#position">Positionierung</a></li>
+            <li><a href="#layout">Layout (Flex & Grid)</a></li>
+            <li><a href="#pseudo">Pseudo-Klassen & -Elemente</a></li>
+            <li><a href="#effekte">Effekte & Transformationen</a></li>
+            <li><a href="#responsive">Responsive Design</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="position-fixed-example">
+            CSS ist toll! (Fixed Position)
+        </div>
+
+        <div class="position-sticky-example">
+            Ich bin ein Sticky Header! Scroll mal!
+        </div>
+
+        <section id="text" class="section">
+            <h2>Textformatierung</h2>
+            <p>CSS bietet viele Möglichkeiten, Text zu gestalten.</p>
+
+            <h3>Text zentrieren (<code>text-align</code>)</h3>
+            <p>Mit <code>text-align: center;</code> kannst du Text horizontal zentrieren.</p>
+            <div class="example">
+                <p class="text-center-example">Dieser Text ist zentriert.</p>
+            </div>
+            <div class="example-code">
+                p {
+                    text-align: center;
+                }
+            </div>
+            <p>Weitere Werte für <code>text-align</code> sind <code>left</code> (linksbündig, Standard), <code>right</code> (rechtsbündig) und <code>justify</code> (Blocksatz).</p>
+        </section>
+
+        <section id="farben" class="section">
+            <h2>Farben und Hintergründe</h2>
+            <h3>Textfarbe (<code>color</code>)</h3>
+            <p>Mit <code>color</code> änderst du die Farbe des Textes.</p>
+            <div class="example">
+                <p class="color-example">Dieser Text ist grün.</p>
+            </div>
+            <div class="example-code">
+                p {
+                    color: green;
+                    /* Weitere Möglichkeiten: #008000 (Hex), rgb(0,128,0) */
+                }
+            </div>
+
+            <h3>Hintergrundfarbe (<code>background-color</code>)</h3>
+            <p>Mit <code>background-color</code> setzt du die Hintergrundfarbe eines Elements.</p>
+            <div class="example">
+                <p class="background-color-example">Dieser Absatz hat einen hellblauen Hintergrund.</p>
+            </div>
+            <div class="example-code">
+                p {
+                    background-color: lightblue;
+                    /* Weitere Möglichkeiten: #add8e6 (Hex), rgb(173,216,230) */
+                }
+            </div>
+             <h3>Hintergrundbild (<code>background-image</code>)</h3>
+            <p>Mit <code>background-image: url('pfad/zum/bild.jpg');</code> kannst du ein Hintergrundbild festlegen.</p>
+            <p>Zusätzliche Eigenschaften sind:</p>
+            <ul>
+                <li><code>background-repeat</code>: (<code>no-repeat</code>, <code>repeat-x</code>, <code>repeat-y</code>, <code>repeat</code>)</li>
+                <li><code>background-position</code>: (z.B. <code>center</code>, <code>top left</code>, <code>50% 50%</code>)</li>
+                <li><code>background-size</code>: (z.B. <code>cover</code>, <code>contain</code>, <code>100px 50px</code>)</li>
+                <li><code>background-attachment</code>: (<code>scroll</code>, <code>fixed</code>)</li>
+            </ul>
+            <div class="example-code">
+                div {
+                    background-image: url('pfad/zum/bild.jpg');
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    background-size: cover;
+                }
+            </div>
+        </section>
+
+        <section id="schrift" class="section">
+            <h2>Schriftarten (Fonts)</h2>
+            <h3>Schriftfamilie (<code>font-family</code>)</h3>
+            <p>Bestimmt die Schriftart des Textes. Es ist üblich, mehrere Schriftarten als Fallback anzugeben.</p>
+            <div class="example">
+                <p class="font-family-example">Dieser Text verwendet Georgia oder eine Serif-Schriftart.</p>
+            </div>
+            <div class="example-code">
+                p {
+                    font-family: 'Georgia', serif;
+                }
+            </div>
+
+            <h3>Schriftgröße (<code>font-size</code>)</h3>
+            <p>Legt die Größe der Schrift fest. Einheiten können Pixel (<code>px</code>), Punkte (<code>pt</code>), em, rem, Prozent (%) sein.</p>
+            <div class="example">
+                <p class="font-size-example">Dieser Text ist 24 Pixel groß.</p>
+            </div>
+            <div class="example-code">
+                p {
+                    font-size: 24px;
+                }
+            </div>
+
+            <h3>Schriftgewicht (<code>font-weight</code>)</h3>
+            <p>Bestimmt die Dicke der Schrift (z.B. normal, fett).</p>
+            <div class="example">
+                <p class="font-weight-example">Dieser Text ist fett.</p>
+            </div>
+            <div class="example-code">
+                p {
+                    font-weight: bold; /* auch: normal, lighter, bolder, 100-900 */
+                }
+            </div>
+
+            <h3>Weitere Schrift-Eigenschaften</h3>
+            <ul>
+                <li><code>font-style</code>: z.B. <code>italic</code> (kursiv), <code>normal</code>.</li>
+                <li><code>line-height</code>: Zeilenhöhe.</li>
+                <li><code>text-decoration</code>: z.B. <code>underline</code> (unterstrichen), <code>none</code>, <code>line-through</code>.</li>
+                <li><code>text-transform</code>: z.B. <code>uppercase</code> (Großbuchstaben), <code>lowercase</code>, <code>capitalize</code>.</li>
+                <li><code>letter-spacing</code>: Abstand zwischen Buchstaben.</li>
+                <li><code>word-spacing</code>: Abstand zwischen Wörtern.</li>
+            </ul>
+        </section>
+
+        <section id="boxmodell" class="section">
+            <h2>Das Boxmodell</h2>
+            <p>Jedes HTML-Element kann als eine rechteckige Box betrachtet werden. Das Boxmodell beschreibt, wie diese Boxen aufgebaut sind:</p>
+            <ul>
+                <li><strong>Content:</strong> Der Inhalt des Elements (Text, Bilder etc.).</li>
+                <li><strong>Padding:</strong> Der innere Abstand zwischen dem Content und dem Border.</li>
+                <li><strong>Border:</strong> Der Rahmen um das Padding und den Content.</li>
+                <li><strong>Margin:</strong> Der äußere Abstand um den Border, der das Element von anderen Elementen trennt.</li>
+            </ul>
+            <div class="example">
+                <div class="box-model-example">Dies ist der Inhalt (Content).</div>
+            </div>
+            <div class="example-code">
+                .box-model-example {
+                    width: 300px; /* Breite des Contents */
+                    padding: 20px; /* Innenabstand auf allen Seiten */
+                    border: 5px solid navy; /* Rahmen */
+                    margin: 15px; /* Außenabstand auf allen Seiten */
+                    background-color: lightgray; /* Hintergrund des Contents + Paddings */
+                }
+            </div>
+            <p>Die Gesamtbreite eines Elements ist also: <code>width + padding-left + padding-right + border-left + border-right</code>.</p>
+            <p>Mit <code>box-sizing: border-box;</code> kann man das Verhalten ändern, sodass <code>width</code> die Gesamtbreite inklusive Padding und Border definiert.</p>
+             <div class="example-code">
+                * { /* Gilt für alle Elemente */
+                    box-sizing: border-box;
+                }
+            </div>
+
+            <h3>Margin</h3>
+            <p><code>margin</code> erzeugt einen Außenabstand um ein Element.</p>
+            <div class="example">
+                <div class="margin-example">Dieses Element hat 20px Margin außen.</div>
+            </div>
+            <div class="example-code">
+                .margin-example {
+                    margin: 20px; /* Alle Seiten */
+                    /* margin-top: 10px; margin-right: 5px; margin-bottom: 10px; margin-left: 5px; */
+                    /* margin: 10px 5px; (oben/unten rechts/links) */
+                    /* margin: 10px 5px 15px; (oben rechts/links unten) */
+                    /* margin: 10px 5px 15px 20px; (oben rechts unten links) */
+                }
+            </div>
+
+            <h3>Padding</h3>
+            <p><code>padding</code> erzeugt einen Innenabstand innerhalb eines Elements, zwischen Inhalt und Rahmen.</p>
+            <div class="example">
+                <div class="padding-example">Dieses Element hat 30px Padding innen.</div>
+            </div>
+            <div class="example-code">
+                .padding-example {
+                    padding: 30px; /* Alle Seiten */
+                    /* padding-top, padding-right, padding-bottom, padding-left analog zu margin */
+                }
+            </div>
+
+            <h3>Border</h3>
+            <p><code>border</code> definiert einen Rahmen um ein Element.</p>
+            <div class="example">
+                <div class="border-example">Dieses Element hat einen gestrichelten orangen Rahmen.</div>
+            </div>
+            <div class="example-code">
+                .border-example {
+                    border: 3px dashed orange;
+                    /* border-width: 3px; */
+                    /* border-style: dashed; (solid, dotted, double, groove, ridge, inset, outset) */
+                    /* border-color: orange; */
+                    /* Auch: border-top, border-right, border-bottom, border-left */
+                    border-radius: 10px; /* Abgerundete Ecken */
+                }
+            </div>
+
+            <h3>Breite und Höhe (<code>width</code>, <code>height</code>)</h3>
+            <p>Steuert die Breite und Höhe des Content-Bereichs eines Elements (außer bei <code>box-sizing: border-box</code>).</p>
+            <div class="example">
+                <div class="width-height-example">200x100 Box</div>
+            </div>
+            <div class="example-code">
+                .width-height-example {
+                    width: 200px;
+                    height: 100px;
+                }
+                /* Weitere Eigenschaften: min-width, max-width, min-height, max-height */
+            </div>
+        </section>
+
+        <section id="display" class="section">
+            <h2>Anzeigetyp (<code>display</code>)</h2>
+            <p>Die Eigenschaft <code>display</code> legt fest, wie ein Element dargestellt wird und wie es sich im Layout verhält.</p>
+
+            <h3><code>display: inline;</code></h3>
+            <p>Inline-Elemente nehmen nur so viel Breite ein, wie ihr Inhalt benötigt und erlauben keine explizite Höhen- und Breitensetzung. Sie fließen im Text mit und erzeugen keinen Zeilenumbruch. Beispiele: <code>&lt;span&gt;</code>, <code>&lt;a&gt;</code>, <code>&lt;img&gt;</code>.</p>
+            <div class="example display-inline-example">
+                <span>Dies ist ein Span (inline).</span>
+                <span>Ein weiteres Span.</span>
+                <a href="#">Ein Link (inline).</a>
+            </div>
+            <div class="example-code">
+                span { display: inline; }
+            </div>
+
+            <h3><code>display: block;</code></h3>
+            <p>Block-Elemente nehmen standardmäßig die volle verfügbare Breite ein und beginnen immer in einer neuen Zeile. Höhe und Breite können explizit gesetzt werden. Beispiele: <code>&lt;div&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;h1&gt;</code>-<code>&lt;h6&gt;</code>, <code>&lt;ul&gt;</code>.</p>
+            <div class="example display-block-example">
+                <div>Dies ist ein Div (block).</div>
+                <div>Ein weiteres Div.</div>
+                <p>Ein Paragraph (block).</p>
+            </div>
+            <div class="example-code">
+                div { display: block; }
+            </div>
+
+            <h3><code>display: inline-block;</code></h3>
+            <p>Eine Mischung aus Inline und Block: Das Element fließt wie ein Inline-Element im Text mit, aber man kann Höhe, Breite, Margin und Padding wie bei einem Block-Element setzen.</p>
+            <div class="example display-inline-block-example">
+                <div>Box 1</div>
+                <div>Box 2</div>
+                <div>Box 3</div>
+            </div>
+            <div class="example-code">
+                div {
+                    display: inline-block;
+                    width: 100px;
+                    height: 50px;
+                }
+            </div>
+
+            <h3><code>display: none;</code></h3>
+            <p>Das Element wird komplett ausgeblendet und nimmt keinen Platz im Layout ein.</p>
+
+            <h3>Weitere Werte für <code>display</code></h3>
+            <p>Es gibt viele weitere Werte, darunter <code>flex</code> und <code>grid</code>, die für komplexe Layouts verwendet werden (siehe separater Abschnitt).</p>
+        </section>
+
+        <section id="position" class="section">
+            <h2>Positionierung (<code>position</code>)</h2>
+            <p>Die <code>position</code>-Eigenschaft bestimmt, wie ein Element im Dokument positioniert wird. In Kombination mit den Eigenschaften <code>top</code>, <code>right</code>, <code>bottom</code> und <code>left</code> kann die genaue Position festgelegt werden.</p>
+
+            <h3><code>position: static;</code> (Standard)</h3>
+            <p>Elemente werden normal im Fluss des Dokuments angeordnet. Die Eigenschaften <code>top</code>, <code>right</code>, <code>bottom</code>, <code>left</code> und <code>z-index</code> haben keine Auswirkung.</p>
+
+            <h3><code>position: relative;</code></h3>
+            <p>Das Element wird normal im Fluss des Dokuments positioniert. Mit <code>top</code>, <code>right</code>, <code>bottom</code>, <code>left</code> kann es relativ zu seiner normalen Position verschoben werden. Der ursprüngliche Platz des Elements bleibt reserviert.</p>
+            <div class="example">
+                <div class="position-relative-example">
+                    Ich bin relativ positioniert.
+                    <div class="inner">Inneres Element, relativ zum Äußeren verschoben.</div>
+                </div>
+            </div>
+            <div class="example-code">
+                .parent { position: relative; }
+                .child {
+                    position: relative; /* oder absolute, fixed */
+                    top: 10px;
+                    left: 20px;
+                }
+            </div>
+
+            <h3><code>position: absolute;</code></h3>
+            <p>Das Element wird aus dem normalen Dokumentfluss entfernt. Es wird relativ zum nächsten positionierten Elternelement (ein Element mit <code>position</code> außer <code>static</code>) positioniert. Wenn kein solches Elternelement existiert, wird es relativ zum initialen Containerblock (meistens der <code>&lt;body&gt;</code>) positioniert.</p>
+            <div class="example">
+                <div class="position-absolute-example">
+                    Bezugspunkt (relative Position)
+                    <div class="inner">Ich bin absolut positioniert.</div>
+                </div>
+            </div>
+            <div class="example-code">
+                .parent { position: relative; /* Wichtig als Bezugspunkt! */ }
+                .child {
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                }
+            </div>
+
+            <h3><code>position: fixed;</code></h3>
+            <p>Ähnlich wie <code>absolute</code>, aber das Element wird relativ zum Viewport (dem sichtbaren Fensterbereich des Browsers) positioniert. Es bleibt an seiner Position, auch wenn die Seite gescrollt wird. Ein Beispiel ist oben rechts auf dieser Seite zu sehen.</p>
+            <div class="example-code">
+                .fixed-element {
+                    position: fixed;
+                    bottom: 20px;
+                    right: 20px;
+                }
+            </div>
+
+            <h3><code>position: sticky;</code></h3>
+            <p>Eine Mischung aus <code>relative</code> und <code>fixed</code>. Das Element verhält sich zunächst wie <code>relative</code>, bis ein bestimmter Scroll-Punkt (Offset, z.B. <code>top: 0</code>) erreicht wird. Dann verhält es sich wie <code>fixed</code>. Ein Beispiel ist der orange Balken oben auf dieser Seite, der beim Scrollen oben "kleben" bleibt.</p>
+            <div class="example-code">
+                .sticky-element {
+                    position: sticky;
+                    top: 0; /* Bleibt am oberen Rand kleben, wenn gescrollt wird */
+                }
+            </div>
+
+            <h3><code>float</code> und <code>clear</code> (Ältere Methode für Layouts)</h3>
+            <p><code>float: left;</code> oder <code>float: right;</code> lässt Elemente nach links oder rechts "fließen", wobei der umgebende Inhalt sie umfließt. Früher oft für Spaltenlayouts genutzt, heute eher für das Umfließen von Bildern durch Text.</p>
+            <div class="example clear-fix-example">
+                <div class="float-left-example">Ich floate links.</div>
+                <p>Dieser Text umfließt das gefloatete Element. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
+            </div>
+            <div class="example-code">
+                .float-left { float: left; margin-right: 10px; }
+                .clear-fix::after { /* Behebt Probleme mit kollabierenden Elternelementen */
+                    content: "";
+                    clear: both;
+                    display: table;
+                }
+            </div>
+            <p><code>clear: both;</code> (oder <code>left</code>, <code>right</code>) auf einem Element sorgt dafür, dass es unterhalb aller vorherigen gefloateten Elemente positioniert wird.</p>
+        </section>
+
+        <section id="layout" class="section">
+            <h2>Layout (Flexbox & Grid)</h2>
+            <p>Moderne CSS-Layouttechniken für flexible und komplexe Anordnungen von Elementen.</p>
+
+            <h3>Flexbox (<code>display: flex;</code>)</h3>
+            <p>Flexbox ist ein eindimensionales Layoutmodell, das Elemente in einer Zeile oder Spalte anordnen kann. Es eignet sich hervorragend für Komponenten und kleinere Layoutbereiche.</p>
+            <p><strong>Eigenschaften für den Flex-Container:</strong></p>
+            <ul>
+                <li><code>display: flex;</code>: Aktiviert Flexbox.</li>
+                <li><code>flex-direction</code>: Hauptachse (<code>row</code>, <code>row-reverse</code>, <code>column</code>, <code>column-reverse</code>).</li>
+                <li><code>justify-content</code>: Ausrichtung der Items entlang der Hauptachse (z.B. <code>flex-start</code>, <code>flex-end</code>, <code>center</code>, <code>space-between</code>, <code>space-around</code>, <code>space-evenly</code>).</li>
+                <li><code>align-items</code>: Ausrichtung der Items entlang der Querachse (z.B. <code>stretch</code>, <code>flex-start</code>, <code>flex-end</code>, <code>center</code>, <code>baseline</code>).</li>
+                <li><code>flex-wrap</code>: Umbruchverhalten (<code>nowrap</code>, <code>wrap</code>, <code>wrap-reverse</code>).</li>
+                <li><code>align-content</code>: Ausrichtung der Zeilen bei mehrzeiligem Flexbox (wenn <code>flex-wrap: wrap;</code>).</li>
+                <li><code>gap</code>: Abstand zwischen Flex-Items.</li>
+            </ul>
+            <div class="example">
+                <div class="flex-container-example">
+                    <div class="flex-item-example">Item 1</div>
+                    <div class="flex-item-example">Item 2</div>
+                    <div class="flex-item-example">Item 3</div>
+                </div>
+            </div>
+            <div class="example-code">
+                .flex-container {
+                    display: flex;
+                    justify-content: space-around; /* Verteilt Items mit gleichem Abstand */
+                    align-items: center;         /* Zentriert Items vertikal */
+                    background-color: dodgerblue;
+                }
+                .flex-item {
+                    background-color: #f1f1f1;
+                    padding: 20px;
+                }
+            </div>
+            <p><strong>Eigenschaften für Flex-Items:</strong></p>
+            <ul>
+                <li><code>order</code>: Reihenfolge der Items.</li>
+                <li><code>flex-grow</code>: Faktor, um den das Item wachsen darf.</li>
+                <li><code>flex-shrink</code>: Faktor, um den das Item schrumpfen darf.</li>
+                <li><code>flex-basis</code>: Basisgröße des Items.</li>
+                <li><code>flex</code>: Kurzform für <code>flex-grow</code>, <code>flex-shrink</code> und <code>flex-basis</code>.</li>
+                <li><code>align-self</code>: Überschreibt <code>align-items</code> für ein einzelnes Item.</li>
+            </ul>
+
+            <h3>Grid (<code>display: grid;</code>)</h3>
+            <p>CSS Grid ist ein zweidimensionales Layoutmodell, das Inhalte in Zeilen und Spalten anordnet. Es ist ideal für komplexe Seitenlayouts.</p>
+            <p><strong>Eigenschaften für den Grid-Container:</strong></p>
+            <ul>
+                <li><code>display: grid;</code>: Aktiviert Grid.</li>
+                <li><code>grid-template-columns</code>: Definiert die Spalten (z.B. <code>100px 1fr 2fr;</code>).</li>
+                <li><code>grid-template-rows</code>: Definiert die Zeilen (z.B. <code>auto 100px;</code>).</li>
+                <li><code>grid-template-areas</code>: Definiert benannte Grid-Bereiche.</li>
+                <li><code>gap</code> (oder <code>grid-gap</code>, <code>row-gap</code>, <code>column-gap</code>): Abstand zwischen Grid-Zellen.</li>
+                <li><code>justify-items</code>: Ausrichtung der Items innerhalb ihrer Zelle entlang der Inline-Achse (horizontal).</li>
+                <li><code>align-items</code>: Ausrichtung der Items innerhalb ihrer Zelle entlang der Block-Achse (vertikal).</li>
+                <li><code>justify-content</code>: Ausrichtung des gesamten Grids im Container (wenn das Grid kleiner ist als der Container).</li>
+                <li><code>align-content</code>: Ausrichtung des gesamten Grids im Container (wenn das Grid kleiner ist als der Container).</li>
+            </ul>
+            <div class="example">
+                <div class="grid-container-example">
+                    <div class="grid-item-example">Item 1</div>
+                    <div class="grid-item-example">Item 2</div>
+                    <div class="grid-item-example">Item 3</div>
+                    <div class="grid-item-example">Item 4</div>
+                    <div class="grid-item-example">Item 5</div>
+                    <div class="grid-item-example">Item 6</div>
+                </div>
+            </div>
+            <div class="example-code">
+                .grid-container {
+                    display: grid;
+                    grid-template-columns: auto auto auto; /* Drei Spalten gleicher Breite */
+                    gap: 10px; /* Abstand zwischen den Zellen */
+                    background-color: #2196F3;
+                }
+                .grid-item {
+                    background-color: rgba(255, 255, 255, 0.8);
+                    padding: 20px;
+                    text-align: center;
+                }
+            </div>
+            <p><strong>Eigenschaften für Grid-Items:</strong></p>
+            <ul>
+                <li><code>grid-column-start</code>, <code>grid-column-end</code>, <code>grid-column</code>: Platzierung in Spalten.</li>
+                <li><code>grid-row-start</code>, <code>grid-row-end</code>, <code>grid-row</code>: Platzierung in Zeilen.</li>
+                <li><code>grid-area</code>: Benennt ein Item für <code>grid-template-areas</code> oder Kurzform für Zeilen/Spalten.</li>
+                <li><code>justify-self</code>: Überschreibt <code>justify-items</code> für ein einzelnes Item.</li>
+                <li><code>align-self</code>: Überschreibt <code>align-items</code> für ein einzelnes Item.</li>
+            </ul>
+        </section>
+
+        <section id="pseudo" class="section">
+            <h2>Pseudo-Klassen und Pseudo-Elemente</h2>
+            <p>Ermöglichen das Stylen von Elementen basierend auf ihrem Zustand oder das Einfügen von Inhalten.</p>
+
+            <h3>Pseudo-Klassen</h3>
+            <p>Stylen Elemente basierend auf ihrem Zustand oder ihrer Position im Dokumentbaum. Beginnen mit einem Doppelpunkt (<code>:</code>).</p>
+            <ul>
+                <li><code>:hover</code>: Element, über dem sich der Mauszeiger befindet.</li>
+                <li><code>:active</code>: Element, das gerade geklickt wird.</li>
+                <li><code>:focus</code>: Element, das den Fokus hat (z.B. ein Eingabefeld).</li>
+                <li><code>:link</code>: Noch nicht besuchter Link.</li>
+                <li><code>:visited</code>: Bereits besuchter Link.</li>
+                <li><code>:first-child</code>: Erstes Kindelement eines Elternelements.</li>
+                <li><code>:last-child</code>: Letztes Kindelement.</li>
+                <li><code>:nth-child(n)</code>: Kindelement an n-ter Position (z.B. <code>:nth-child(2n)</code> für jedes zweite Element, <code>:nth-child(odd)</code> für ungerade).</li>
+                <li><code>:disabled</code>: Deaktiviertes Formularelement.</li>
+                <li><code>:checked</code>: Aktivierte Checkbox oder Radio-Button.</li>
+                <li><code>:empty</code>: Element ohne Kindelemente oder Textinhalt.</li>
+                <li><code>:not(selector)</code>: Elemente, die nicht dem Selektor entsprechen.</li>
+            </ul>
+            <div class="example pseudo-class-link-example">
+                <a href="#">Test Link</a>
+            </div>
+            <div class="example-code">
+                a:link { color: blue; }       /* Unbesuchter Link */
+                a:visited { color: purple; }  /* Besuchter Link */
+                a:hover { color: red; }       /* Link bei Mouseover */
+                a:active { color: orange; }   /* Link während Klick */
+                input:focus { border-color: blue; } /* Eingabefeld mit Fokus */
+            </div>
+
+            <h3>Pseudo-Elemente</h3>
+            <p>Stylen bestimmte Teile eines Elements oder fügen generierten Inhalt hinzu. Beginnen mit zwei Doppelpunkten (<code>::</code>), obwohl aus Kompatibilitätsgründen oft auch ein einzelner Doppelpunkt funktioniert.</p>
+            <ul>
+                <li><code>::before</code>: Fügt Inhalt vor dem Inhalt des Elements ein.</li>
+                <li><code>::after</code>: Fügt Inhalt nach dem Inhalt des Elements ein. (Wird oft für Clearfixes verwendet).</li>
+                <li><code>::first-line</code>: Stylt die erste Zeile eines Blockelements.</li>
+                <li><code>::first-letter</code>: Stylt den ersten Buchstaben eines Blockelements.</li>
+                <li><code>::selection</code>: Stylt den vom Benutzer markierten Text.</li>
+                <li><code>::placeholder</code>: Stylt den Platzhaltertext in Formularfeldern.</li>
+            </ul>
+            <div class="example pseudo-element-first-line-example">
+                <p>Die erste Zeile dieses Absatzes wird speziell gestylt. Der Rest des Textes bleibt normal. Lorem ipsum dolor sit amet.</p>
+            </div>
+            <div class="example-code">
+                p::first-line {
+                    color: #ff0000;
+                    font-variant: small-caps;
+                }
+            </div>
+            <div class="example pseudo-element-first-letter-example">
+                <p>Der erste Buchstabe wird speziell gestylt. Lorem ipsum dolor sit amet.</p>
+            </div>
+            <div class="example-code">
+                p::first-letter {
+                    color: #0000ff;
+                    font-size: xx-large;
+                }
+            </div>
+            <div class="example pseudo-element-before-after-example">
+                <div class="box">Inhalt der Box</div>
+            </div>
+            <div class="example-code">
+                .box::before {
+                    content: "Anfang: ";
+                    color: green;
+                }
+                .box::after {
+                    content: " :Ende";
+                    color: red;
+                }
+            </div>
+        </section>
+
+        <section id="effekte" class="section">
+            <h2>Effekte, Transformationen & Animationen</h2>
+
+            <h3>Deckkraft (<code>opacity</code>)</h3>
+            <p>Steuert die Transparenz eines Elements. Wert von <code>0</code> (komplett transparent) bis <code>1</code> (komplett sichtbar).</p>
+            <div class="example opacity-example">
+                <img src="https://via.placeholder.com/150" alt="Platzhalterbild">
+                <p>Bewege die Maus über das Bild.</p>
+            </div>
+            <div class="example-code">
+                img { opacity: 0.5; }
+                img:hover { opacity: 1.0; }
+            </div>
+
+            <h3>Schatten (<code>box-shadow</code>, <code>text-shadow</code>)</h3>
+            <p><code>box-shadow</code> fügt einen Schatteneffekt zu Elementboxen hinzu.</p>
+            <div class="example">
+                <div style="width:100px; height:50px; background:lightblue; box-shadow: 5px 5px 10px #888888; text-align:center; line-height:50px;">Schatten</div>
+            </div>
+            <div class="example-code">
+                div {
+                    box-shadow: H-Offset V-Offset Weichzeichner Spreizung Farbe [inset];
+                    /* Beispiel: box-shadow: 5px 5px 10px #888; */
+                }
+            </div>
+            <p><code>text-shadow</code> fügt einen Schatteneffekt zu Text hinzu.</p>
+            <div class="example">
+                <p style="font-size:24px; text-shadow: 2px 2px 4px #555;">Text mit Schatten</p>
+            </div>
+            <div class="example-code">
+                p {
+                    text-shadow: H-Offset V-Offset Weichzeichner Farbe;
+                    /* Beispiel: text-shadow: 2px 2px 4px #555; */
+                }
+            </div>
+
+            <h3>Überlauf (<code>overflow</code>)</h3>
+            <p>Steuert, wie Inhalt behandelt wird, der die Dimensionen seines Containers überschreitet.</p>
+            <ul>
+                <li><code>visible</code> (Standard): Inhalt wird außerhalb der Box angezeigt.</li>
+                <li><code>hidden</code>: Überlaufender Inhalt wird abgeschnitten und ist nicht sichtbar.</li>
+                <li><code>scroll</code>: Scrollbalken werden immer angezeigt, auch wenn nicht nötig.</li>
+                <li><code>auto</code>: Scrollbalken werden nur angezeigt, wenn der Inhalt überläuft.</li>
+            </ul>
+            <div class="example">
+                <div class="overflow-visible-example"><b>Visible:</b> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.</div>
+                <div class="overflow-hidden-example"><b>Hidden:</b> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.</div>
+                <div class="overflow-scroll-example"><b>Scroll:</b> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.</div>
+                <div class="overflow-auto-example"><b>Auto:</b> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.</div>
+            </div>
+            <div class="example-code">
+                .element {
+                    width: 150px;
+                    height: 50px;
+                    border: 1px solid black;
+                    overflow: auto; /* oder visible, hidden, scroll */
+                }
+            </div>
+
+            <h3>Stapelanordnung (<code>z-index</code>)</h3>
+            <p>Gibt die Stapelreihenfolge von positionierten Elementen an (Elemente mit <code>position</code> außer <code>static</code>). Elemente mit höherem <code>z-index</code> liegen über Elementen mit niedrigerem <code>z-index</code>.</p>
+            <div class="example z-index-example">
+                <div class="container">
+                    <div class="box1">Box 1 (z-index: 1)</div>
+                    <div class="box2">Box 2 (z-index: 2)</div>
+                    <div class="box3">Box 3 (z-index: 0)</div>
+                </div>
+            </div>
+            <div class="example-code">
+                .box1 { position: absolute; z-index: 1; background: red; }
+                .box2 { position: absolute; z-index: 2; background: green; top: 30px; left: 30px; } /* Liegt über Box 1 */
+                .box3 { position: absolute; z-index: 0; background: blue; top: 60px; left: 60px; } /* Liegt unter Box 1 */
+            </div>
+
+
+            <h3>Transformationen (<code>transform</code>)</h3>
+            <p>Ermöglicht das Drehen, Skalieren, Verschieben oder Neigen von Elementen.</p>
+            <ul>
+                <li><code>translate(x, y)</code>: Verschiebt das Element. (z.B. <code>transform: translateX(50px);</code>)</li>
+                <li><code>rotate(angle)</code>: Dreht das Element. (z.B. <code>transform: rotate(45deg);</code>)</li>
+                <li><code>scale(x, y)</code>: Skaliert das Element. (z.B. <code>transform: scale(1.5);</code>)</li>
+                <li><code>skew(x-angle, y-angle)</code>: Neigt das Element. (z.B. <code>transform: skewX(20deg);</code>)</li>
+                <li><code>matrix(...)</code>: Kombiniert alle Transformationen.</li>
+            </ul>
+            <div class="example" style="height: 150px;"> <div style="width:100px; height:50px; background:lightcoral; transform: rotate(15deg) translateX(20px) scale(1.2); text-align:center; line-height:50px; margin: 30px;">Transformiert</div>
+            </div>
+            <div class="example-code">
+                div {
+                    transform: rotate(15deg) translateX(20px) scale(1.2);
+                }
+                /* Um den Ursprung der Transformation zu ändern: transform-origin: center; (Standard) */
+            </div>
+
+            <h3>Übergänge (<code>transition</code>)</h3>
+            <p>Ermöglicht sanfte Animationen von CSS-Eigenschaftsänderungen über eine bestimmte Zeit.</p>
+            <p>Wichtige Eigenschaften:</p>
+            <ul>
+                <li><code>transition-property</code>: Die CSS-Eigenschaft(en), die animiert werden sollen (z.B. <code>width</code>, <code>background-color</code>, <code>all</code>).</li>
+                <li><code>transition-duration</code>: Die Dauer des Übergangs (z.B. <code>2s</code>, <code>500ms</code>).</li>
+                <li><code>transition-timing-function</code>: Die Beschleunigungskurve des Übergangs (z.B. <code>ease</code>, <code>linear</code>, <code>ease-in</code>, <code>ease-out</code>, <code>ease-in-out</code>, <code>cubic-bezier(...)</code>).</li>
+                <li><code>transition-delay</code>: Eine Verzögerung, bevor der Übergang startet.</li>
+                <li><code>transition</code>: Kurzform für alle vier Eigenschaften.</li>
+            </ul>
+            <div class="example transition-example">
+                <div>Bewege die Maus hier rüber!</div>
+            </div>
+            <div class="example-code">
+                div {
+                    width: 100px;
+                    height: 100px;
+                    background: red;
+                    transition: width 2s, height 2s, transform 2s;
+                    /* Kurzform: transition: all 2s ease-in-out 0.5s; */
+                }
+                div:hover {
+                    width: 200px;
+                    height: 200px;
+                    transform: rotate(180deg);
+                }
+            </div>
+
+            <h3>Animationen (<code>@keyframes</code> und <code>animation</code>)</h3>
+            <p>Erlauben komplexere, mehrstufige Animationen.</p>
+            <p><code>@keyframes</code> definiert die einzelnen Schritte (Keyframes) einer Animation.</p>
+            <p>Die <code>animation</code>-Eigenschaft (und ihre Untereigenschaften) wendet die Keyframe-Animation auf ein Element an:</p>
+            <ul>
+                <li><code>animation-name</code>: Name der <code>@keyframes</code>-Regel.</li>
+                <li><code>animation-duration</code>: Dauer der Animation.</li>
+                <li><code>animation-timing-function</code>: Beschleunigungskurve.</li>
+                <li><code>animation-delay</code>: Verzögerung.</li>
+                <li><code>animation-iteration-count</code>: Wie oft die Animation abgespielt wird (z.B. <code>infinite</code>).</li>
+                <li><code>animation-direction</code>: Richtung (<code>normal</code>, <code>reverse</code>, <code>alternate</code>, <code>alternate-reverse</code>).</li>
+                <li><code>animation-fill-mode</code>: Welche Styles angewendet werden, bevor/nachdem die Animation läuft (<code>none</code>, <code>forwards</code>, <code>backwards</code>, <code>both</code>).</li>
+                <li><code>animation-play-state</code>: Ob die Animation läuft oder pausiert ist (<code>running</code>, <code>paused</code>).</li>
+                <li><code>animation</code>: Kurzform für alle Eigenschaften.</li>
+            </ul>
+            <div class="example animation-example">
+                <div>Ich animiere!</div>
+            </div>
+            <div class="example-code">
+                @keyframes exampleanimation {
+                    0%   {background-color:red; left:0px; top:0px; transform: scale(1) rotate(0deg);}
+                    25%  {background-color:yellow; left:100px; top:0px; transform: scale(1.2) rotate(90deg);}
+                    50%  {background-color:blue; left:100px; top:100px; transform: scale(1) rotate(180deg);}
+                    75%  {background-color:green; left:0px; top:100px; transform: scale(1.2) rotate(270deg);}
+                    100% {background-color:red; left:0px; top:0px; transform: scale(1) rotate(360deg);}
+                }
+
+                div {
+                    width: 100px;
+                    height: 100px;
+                    position: relative; /* Nötig für left/top Animation */
+                    animation-name: exampleanimation;
+                    animation-duration: 8s;
+                    animation-iteration-count: infinite;
+                    animation-direction: alternate;
+                }
+            </div>
+        </section>
+
+        <section id="responsive" class="section">
+            <h2>Responsive Webdesign & Media Queries</h2>
+            <p>Responsive Webdesign zielt darauf ab, Webseiten so zu gestalten, dass sie auf verschiedenen Gerätegrößen (Desktops, Tablets, Smartphones) optimal dargestellt werden und benutzerfreundlich sind.</p>
+            <p>Ein wichtiger Baustein dafür sind <strong>Media Queries</strong>.</p>
+
+            <h3>Meta Viewport Tag</h3>
+            <p>Zuerst sollte im <code>&lt;head&gt;</code> der HTML-Datei der Viewport Meta-Tag gesetzt werden, um die Seite auf mobilen Geräten korrekt zu skalieren:</p>
+            <div class="example-code">
+                &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+            </div>
+
+            <h3>Media Queries (<code>@media</code>)</h3>
+            <p>Mit Media Queries können CSS-Regeln definiert werden, die nur unter bestimmten Bedingungen gelten, z.B. abhängig von der Bildschirmbreite, -höhe, Ausrichtung (Hoch-/Querformat) oder Auflösung.</p>
+            <p>Syntax: <code>@media Medientyp and (Bedingung) { /* CSS-Regeln */ }</code></p>
+            <ul>
+                <li><strong>Medientypen:</strong> <code>all</code> (alle Geräte), <code>screen</code> (Bildschirme), <code>print</code> (Druckansicht), <code>speech</code> (Screenreader).</li>
+                <li><strong>Bedingungen (Media Features):</strong>
+                    <ul>
+                        <li><code>width</code>, <code>min-width</code>, <code>max-width</code> (Breite des Viewports)</li>
+                        <li><code>height</code>, <code>min-height</code>, <code>max-height</code> (Höhe des Viewports)</li>
+                        <li><code>orientation: portrait | landscape</code> (Ausrichtung)</li>
+                        <li><code>aspect-ratio</code>, <code>min-aspect-ratio</code>, <code>max-aspect-ratio</code> (Seitenverhältnis)</li>
+                        <li><code>resolution</code>, <code>min-resolution</code>, <code>max-resolution</code> (Auflösung)</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <div class="responsive-example">
+                Dieser Bereich ändert sein Aussehen bei Bildschirmbreiten unter 768px. Verändere die Fenstergröße!
+            </div>
+            <div class="example-code">
+                .responsive-example {
+                    width: 100%;
+                    background-color: lightcyan;
+                }
+
+                /* Wenn die Bildschirmbreite 768px oder weniger beträgt */
+                @media screen and (max-width: 768px) {
+                    .responsive-example {
+                        background-color: lightcoral;
+                        font-size: 14px;
+                    }
+                    /* Weitere Anpassungen für kleinere Bildschirme: */
+                    nav ul li {
+                        display: block; /* Menüpunkte untereinander */
+                    }
+                    .flex-container-example {
+                        flex-direction: column; /* Flex-Items untereinander */
+                    }
+                }
+            </div>
+            <p><strong>Mobile First Ansatz:</strong> Es ist oft sinnvoll, zuerst die Styles für mobile Geräte zu definieren und dann mit Media Queries (<code>min-width</code>) schrittweise Anpassungen für größere Bildschirme hinzuzufügen.</p>
+        </section>
+
+        <footer>
+            <p>&copy; 2025 CSS Lernressource. Erstellt, um CSS verständlicher zu machen.</p>
+        </footer>
+    </div>
+
+</body>
+</html>

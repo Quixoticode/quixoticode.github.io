@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <link rel="icon" type="image/png" href="https://quixoticode.github.io/data/qcode/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="https://quixoticode.github.io/data/qcode/favicon.svg" />
+    <link rel="shortcut icon" href="https://quixoticode.github.io/data/qcode/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="https://quixoticode.github.io/data/qcode/apple-touch-icon.png" />
+    <link rel="manifest" href="https://quixoticode.github.io/data/qcode/site.webmanifest" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="QCode">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML-Elemente Erklärt</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        .container {
+            width: 85%;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 12px rgba(0,0,0,0.1);
+        }
+
+        header {
+            background-color: #e8491d; /* HTML-Orange */
+            color: #fff;
+            padding: 1rem 0;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        nav ul {
+            padding: 0;
+            list-style: none;
+            text-align: center;
+            background: #333;
+            margin-bottom: 20px;
+        }
+
+        nav ul li {
+            display: inline;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 15px 20px;
+            display: inline-block;
+        }
+
+        nav ul li a:hover {
+            background: #e8491d;
+            color: #fff;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f0f0f0;
+            border-left: 5px solid #e8491d;
+        }
+
+        .section h2 {
+            color: #e8491d;
+            border-bottom: 2px solid #e8491d;
+            padding-bottom: 10px;
+        }
+
+        .example-display {
+            background-color: #fff;
+            padding: 15px;
+            border: 1px solid #ddd;
+            margin-top: 10px;
+            border-radius: 4px;
+        }
+
+        .example-code {
+            background-color: #282c34;
+            color: #abb2bf;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            white-space: pre; /* Erhält Leerzeichen und Zeilenumbrüche */
+            overflow-x: auto; /* Horizontales Scrollen für langen Code */
+            margin-top: 10px;
+        }
+
+        code {
+            background-color: #e7e7e7;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #e8491d;
+            color: white;
+        }
+
+        img.responsive {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .note {
+            background-color: #fffbe6;
+            border-left: 4px solid #ffc107;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: #fff;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>HTML-Elemente Leicht Erklärt</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#struktur">Grundstruktur</a></li>
+            <li><a href="#text">Textformatierung</a></li>
+            <li><a href="#listen">Listen</a></li>
+            <li><a href="#links">Links</a></li>
+            <li><a href="#bilder">Bilder</a></li>
+            <li><a href="#tabellen">Tabellen</a></li>
+            <li><a href="#formulare">Formulare</a></li>
+            <li><a href="#semantisch">Semantisches HTML</a></li>
+            <li><a href="#media">Multimedia</a></li>
+            <li><a href="#sonstiges">Sonstiges</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+
+        <section id="struktur" class="section">
+            <h2>Grundstruktur eines HTML-Dokuments</h2>
+            <p>Jedes HTML-Dokument folgt einer grundlegenden Struktur, die dem Browser mitteilt, wie die Seite aufgebaut ist und interpretiert werden soll.</p>
+            <div class="example-code">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="de"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Seitentitel&lt;/title&gt;
+    &lt;!-- Hier können auch CSS-Stylesheets und JavaScript-Dateien verlinkt werden --&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;!-- Der sichtbare Inhalt der Webseite kommt hier hin --&gt;
+    &lt;h1&gt;Hallo Welt!&lt;/h1&gt;
+    &lt;p&gt;Dies ist mein erstes HTML-Dokument.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+            </div>
+            <p><strong>Erklärung der Teile:</strong></p>
+            <ul>
+                <li><code>&lt;!DOCTYPE html&gt;</code>: Definiert den Dokumenttyp. Für HTML5 ist dies die Standarddeklaration.</li>
+                <li><code>&lt;html lang="de"&gt;</code>: Das Wurzelelement jeder HTML-Seite. Das <code>lang</code>-Attribut gibt die Sprache des Dokuments an (hier Deutsch).</li>
+                <li><code>&lt;head&gt;</code>: Enthält Meta-Informationen über das HTML-Dokument, die nicht direkt auf der Seite angezeigt werden.
+                    <ul>
+                        <li><code>&lt;meta charset="UTF-8"&gt;</code>: Definiert die Zeichenkodierung, wichtig für die korrekte Darstellung von Sonderzeichen.</li>
+                        <li><code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</code>: Konfiguriert den Viewport für responsive Webdesign, sodass die Seite auf verschiedenen Gerätegrößen gut aussieht.</li>
+                        <li><code>&lt;title&gt;Seitentitel&lt;/title&gt;</code>: Definiert den Titel der Seite, der im Browser-Tab oder Fensterbalken angezeigt wird.</li>
+                    </ul>
+                </li>
+                <li><code>&lt;body&gt;</code>: Enthält den gesamten sichtbaren Inhalt der Webseite.</li>
+            </ul>
+        </section>
+
+        <section id="text" class="section">
+            <h2>Textformatierung</h2>
+            <p>HTML bietet verschiedene Elemente zur Strukturierung und Formatierung von Text.</p>
+
+            <h3>Überschriften (<code>&lt;h1&gt;</code> bis <code>&lt;h6&gt;</code>)</h3>
+            <p>Definieren Überschriften unterschiedlicher Ebenen. <code>&lt;h1&gt;</code> ist die wichtigste Überschrift, <code>&lt;h6&gt;</code> die unwichtigste.</p>
+            <div class="example-display">
+                <h1>Das ist eine H1 Überschrift</h1>
+                <h2>Das ist eine H2 Überschrift</h2>
+                <h3>Das ist eine H3 Überschrift</h3>
+                <h4>Das ist eine H4 Überschrift</h4>
+                <h5>Das ist eine H5 Überschrift</h5>
+                <h6>Das ist eine H6 Überschrift</h6>
+            </div>
+            <div class="example-code">
+&lt;h1&gt;Das ist eine H1 Überschrift&lt;/h1&gt;
+&lt;h2&gt;Das ist eine H2 Überschrift&lt;/h2&gt;
+&lt;h3&gt;Das ist eine H3 Überschrift&lt;/h3&gt;
+            </div>
+
+            <h3>Absätze (<code>&lt;p&gt;</code>)</h3>
+            <p>Definiert einen Textabsatz.</p>
+            <div class="example-display">
+                <p>Dies ist ein Absatz. Er enthält Text, der zusammenhängend dargestellt wird.</p>
+                <p>Dies ist ein weiterer Absatz.</p>
+            </div>
+            <div class="example-code">
+&lt;p&gt;Dies ist ein Absatz.&lt;/p&gt;
+&lt;p&gt;Dies ist ein weiterer Absatz.&lt;/p&gt;
+            </div>
+
+            <h3>Hervorhebungen</h3>
+            <ul>
+                <li><code>&lt;strong&gt;</code> oder <code>&lt;b&gt;</code>: Für <strong>stark hervorgehobenen</strong> (fettgedruckten) Text. <code>&lt;strong&gt;</code> impliziert semantische Wichtigkeit.</li>
+                <li><code>&lt;em&gt;</code> oder <code>&lt;i&gt;</code>: Für <em>betonten</em> (kursiven) Text. <code>&lt;em&gt;</code> impliziert semantische Betonung.</li>
+                <li><code>&lt;u&gt;</code>: Für <u>unterstrichenen</u> Text (sparsam verwenden, da es oft mit Links verwechselt wird).</li>
+                <li><code>&lt;s&gt;</code> oder <code>&lt;del&gt;</code>: Für <s>durchgestrichenen</s> Text (z.B. veraltete Information).</li>
+                <li><code>&lt;mark&gt;</code>: Für <mark>markierten</mark> oder hervorgehobenen Text.</li>
+                <li><code>&lt;small&gt;</code>: Für <small>kleineren Text</small> (z.B. Copyright-Hinweise).</li>
+                <li><code>&lt;sup&gt;</code> und <code>&lt;sub&gt;</code>: Für hoch<sup>gestellten</sup> und tief<sub>gestellten</sub> Text.</li>
+            </ul>
+            <div class="example-display">
+                <p><strong>Wichtig!</strong> Dieser Text ist <em>kursiv</em> und <u>unterstrichen</u>. <mark>Markiert!</mark> <small>Kleiner Text.</small> E = mc<sup>2</sup>. H<sub>2</sub>O.</p>
+            </div>
+            <div class="example-code">
+&lt;p&gt;&lt;strong&gt;Wichtig!&lt;/strong&gt; Dieser Text ist &lt;em&gt;kursiv&lt;/em&gt;.&lt;/p&gt;
+            </div>
+
+            <h3>Zeilenumbruch (<code>&lt;br&gt;</code>)</h3>
+            <p>Erzwingt einen Zeilenumbruch innerhalb eines Textblocks. Es ist ein leeres Element (kein schließendes Tag in HTML5, in XHTML <code>&lt;br /&gt;</code>).</p>
+            <div class="example-display">
+                Dieser Text ist in der ersten Zeile.<br>
+                Und dieser Text ist in der zweiten Zeile.
+            </div>
+            <div class="example-code">
+Dieser Text ist in der ersten Zeile.&lt;br&gt;
+Und dieser Text ist in der zweiten Zeile.
+            </div>
+
+            <h3>Horizontale Linie (<code>&lt;hr&gt;</code>)</h3>
+            <p>Erzeugt eine horizontale Linie, die oft zur thematischen Trennung von Inhalten verwendet wird. Auch ein leeres Element.</p>
+            <div class="example-display">
+                <p>Inhalt oberhalb der Linie.</p>
+                <hr>
+                <p>Inhalt unterhalb der Linie.</p>
+            </div>
+            <div class="example-code">
+&lt;p&gt;Inhalt oberhalb der Linie.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;Inhalt unterhalb der Linie.&lt;/p&gt;
+            </div>
+
+            <h3>Vorformatierter Text (<code>&lt;pre&gt;</code>)</h3>
+            <p>Stellt Text so dar, wie er im Quellcode formatiert ist, inklusive Leerzeichen und Zeilenumbrüchen. Oft für Code-Beispiele verwendet.</p>
+            <div class="example-display">
+                <pre>
+function hallo() {
+  console.log("Hallo Welt!");
+}
+                </pre>
+            </div>
+            <div class="example-code">
+&lt;pre&gt;
+function hallo() {
+  console.log("Hallo Welt!");
+}
+&lt;/pre&gt;
+            </div>
+
+            <h3>Code (<code>&lt;code&gt;</code>)</h3>
+            <p>Markiert ein Stück Computercode. Wird oft innerhalb von <code>&lt;pre&gt;</code> für Codeblöcke oder inline in Absätzen verwendet.</p>
+            <div class="example-display">
+                <p>Die Funktion <code>alert()</code> zeigt eine Nachricht an.</p>
+            </div>
+             <div class="example-code">
+&lt;p&gt;Die Funktion &lt;code&gt;alert()&lt;/code&gt; zeigt eine Nachricht an.&lt;/p&gt;
+            </div>
+
+            <h3>Zitate</h3>
+            <ul>
+                <li><code>&lt;blockquote&gt;</code>: Für längere Zitate, die als eigener Block dargestellt werden.
+                    <div class="example-display">
+                        <blockquote cite="http://example.com">
+                            Dies ist ein längeres Zitat, das von einer anderen Quelle stammt.
+                        </blockquote>
+                    </div>
+                     <div class="example-code">
+&lt;blockquote cite="quelle.url"&gt;
+    Zitattext
+&lt;/blockquote&gt;
+                    </div>
+                </li>
+                <li><code>&lt;q&gt;</code>: Für kurze, inline Zitate. Browser fügen oft automatisch Anführungszeichen hinzu.
+                    <div class="example-display">
+                        <p>Er sagte: <q>Hallo Welt</q>.</p>
+                    </div>
+                     <div class="example-code">
+&lt;p&gt;Er sagte: &lt;q&gt;Hallo Welt&lt;/q&gt;.&lt;/p&gt;
+                    </div>
+                </li>
+                <li><code>&lt;cite&gt;</code>: Um den Titel eines Werkes (z.B. Buch, Film) zu kennzeichnen.
+                    <div class="example-display">
+                        <p>Mein Lieblingsbuch ist <cite>Der Herr der Ringe</cite>.</p>
+                    </div>
+                    <div class="example-code">
+&lt;p&gt;Mein Lieblingsbuch ist &lt;cite&gt;Der Herr der Ringe&lt;/cite&gt;.&lt;/p&gt;
+                    </div>
+                </li>
+                <li><code>&lt;abbr&gt;</code>: Für Abkürzungen oder Akronyme. Das <code>title</code>-Attribut kann die volle Bedeutung anzeigen.
+                    <div class="example-display">
+                        <p><abbr title="Hypertext Markup Language">HTML</abbr> ist toll.</p>
+                    </div>
+                     <div class="example-code">
+&lt;p&gt;&lt;abbr title="Hypertext Markup Language"&gt;HTML&lt;/abbr&gt; ist toll.&lt;/p&gt;
+                    </div>
+                </li>
+                <li><code>&lt;address&gt;</code>: Für Kontaktinformationen (Autor, Besitzer der Webseite).
+                    <div class="example-display">
+                        <address>
+                          Geschrieben von Max Mustermann.<br>
+                          Besuche uns auf:<br>
+                          Beispielweg 123, Musterstadt<br>
+                          Deutschland
+                        </address>
+                    </div>
+                    <div class="example-code">
+&lt;address&gt;
+  Geschrieben von Max Mustermann.&lt;br&gt;
+  Besuche uns auf:&lt;br&gt;
+  Beispielweg 123, Musterstadt&lt;br&gt;
+  Deutschland
+&lt;/address&gt;
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <section id="listen" class="section">
+            <h2>Listen</h2>
+            <p>HTML bietet drei Haupttypen von Listen.</p>
+
+            <h3>Ungeordnete Listen (<code>&lt;ul&gt;</code>)</h3>
+            <p>Eine Liste von Elementen, bei der die Reihenfolge keine Rolle spielt. Wird typischerweise mit Aufzählungspunkten dargestellt.</p>
+            <div class="example-display">
+                <ul>
+                    <li>Apfel</li>
+                    <li>Banane</li>
+                    <li>Orange</li>
+                </ul>
+            </div>
+            <div class="example-code">
+&lt;ul&gt;
+    &lt;li&gt;Apfel&lt;/li&gt;
+    &lt;li&gt;Banane&lt;/li&gt;
+    &lt;li&gt;Orange&lt;/li&gt;
+&lt;/ul&gt;
+            </div>
+
+            <h3>Geordnete Listen (<code>&lt;ol&gt;</code>)</h3>
+            <p>Eine Liste von Elementen, bei der die Reihenfolge wichtig ist. Wird typischerweise nummeriert dargestellt.</p>
+            <div class="example-display">
+                <ol>
+                    <li>Vorbereitung</li>
+                    <li>Durchführung</li>
+                    <li>Abschluss</li>
+                </ol>
+            </div>
+            <div class="example-code">
+&lt;ol&gt;
+    &lt;li&gt;Vorbereitung&lt;/li&gt;
+    &lt;li&gt;Durchführung&lt;/li&gt;
+    &lt;li&gt;Abschluss&lt;/li&gt;
+&lt;/ol&gt;
+            </div>
+            <p>Das Attribut <code>type</code> kann verwendet werden, um den Nummerierungsstil zu ändern (z.B. <code>type="A"</code> für Großbuchstaben, <code>type="i"</code> für kleine römische Zahlen). Das Attribut <code>start</code> kann den Startwert der Nummerierung festlegen.</p>
+
+            <h3>Beschreibungslisten (<code>&lt;dl&gt;</code>)</h3>
+            <p>Eine Liste von Begriffen und deren Beschreibungen.</p>
+            <ul>
+                <li><code>&lt;dl&gt;</code>: (Description List) Umschließt die gesamte Liste.</li>
+                <li><code>&lt;dt&gt;</code>: (Description Term) Definiert den Begriff.</li>
+                <li><code>&lt;dd&gt;</code>: (Description Details) Definiert die Beschreibung des Begriffs.</li>
+            </ul>
+            <div class="example-display">
+                <dl>
+                    <dt>HTML</dt>
+                    <dd>Hypertext Markup Language - Die Standardsprache zur Erstellung von Webseiten.</dd>
+                    <dt>CSS</dt>
+                    <dd>Cascading Style Sheets - Wird verwendet, um das Aussehen von HTML-Dokumenten zu gestalten.</dd>
+                </dl>
+            </div>
+            <div class="example-code">
+&lt;dl&gt;
+    &lt;dt&gt;HTML&lt;/dt&gt;
+    &lt;dd&gt;Hypertext Markup Language - Die Standardsprache zur Erstellung von Webseiten.&lt;/dd&gt;
+    &lt;dt&gt;CSS&lt;/dt&gt;
+    &lt;dd&gt;Cascading Style Sheets - Wird verwendet, um das Aussehen von HTML-Dokumenten zu gestalten.&lt;/dd&gt;
+&lt;/dl&gt;
+            </div>
+            <p>Listen können auch verschachtelt werden, indem eine Liste innerhalb eines <code>&lt;li&gt;</code>-Elements platziert wird.</p>
+        </section>
+
+        <section id="links" class="section">
+            <h2>Links (<code>&lt;a&gt;</code> - Anchor)</h2>
+            <p>Links sind das Herzstück des Internets und ermöglichen die Navigation zwischen Seiten und Ressourcen.</p>
+            <p>Das <code>&lt;a&gt;</code>-Element (Anchor) wird verwendet, um Links zu erstellen. Das wichtigste Attribut ist <code>href</code> (Hypertext Reference), das das Ziel des Links angibt.</p>
+
+            <h3>Externe Links</h3>
+            <p>Verlinken zu einer anderen Webseite.</p>
+            <div class="example-display">
+                <a href="https://www.google.com">Zu Google</a>
+            </div>
+            <div class="example-code">
+&lt;a href="https://www.google.com"&gt;Zu Google&lt;/a&gt;
+            </div>
+
+            <h3>Interne Links (zu anderen Seiten der eigenen Website)</h3>
+            <p>Verlinken zu einer anderen HTML-Datei auf derselben Website.</p>
+            <div class="example-display">
+                <a href="andere-seite.html">Zur anderen Seite</a>
+            </div>
+            <div class="example-code">
+&lt;a href="andere-seite.html"&gt;Zur anderen Seite&lt;/a&gt;
+            </div>
+
+            <h3>Anker-Links (zu einem bestimmten Abschnitt auf derselben Seite)</h3>
+            <p>Verlinken zu einem Element mit einer bestimmten <code>id</code> auf der aktuellen Seite.</p>
+            <div class="example-display">
+                <a href="#struktur">Zurück zum Abschnitt Grundstruktur</a>
+            </div>
+            <div class="example-code">
+&lt;!-- Ziel des Links --&gt;
+&lt;h2 id="struktur"&gt;Grundstruktur&lt;/h2&gt;
+
+&lt;!-- Der Link selbst --&gt;
+&lt;a href="#struktur"&gt;Zum Abschnitt Grundstruktur&lt;/a&gt;
+            </div>
+
+            <h3>E-Mail-Links</h3>
+            <p>Öffnet das Standard-E-Mail-Programm des Benutzers mit einer voradressierten E-Mail.</p>
+            <div class="example-display">
+                <a href="mailto:info@example.com">Sende uns eine E-Mail</a>
+            </div>
+            <div class="example-code">
+&lt;a href="mailto:info@example.com"&gt;Sende uns eine E-Mail&lt;/a&gt;
+            </div>
+
+            <h3>Telefon-Links</h3>
+            <p>Ermöglicht das Anrufen einer Telefonnummer auf Geräten, die dies unterstützen.</p>
+            <div class="example-display">
+                <a href="tel:+49123456789">Ruf uns an</a>
+            </div>
+            <div class="example-code">
+&lt;a href="tel:+49123456789"&gt;Ruf uns an&lt;/a&gt;
+            </div>
+
+            <h3>Das <code>target</code>-Attribut</h3>
+            <p>Bestimmt, wo der Link geöffnet wird:</p>
+            <ul>
+                <li><code>_self</code>: (Standard) Öffnet im selben Fenster/Tab.</li>
+                <li><code>_blank</code>: Öffnet in einem neuen Fenster/Tab. Aus Sicherheitsgründen sollte hier oft <code>rel="noopener noreferrer"</code> hinzugefügt werden.</li>
+                <li><code>_parent</code>: Öffnet im übergeordneten Frame (bei Framesets).</li>
+                <li><code>_top</code>: Öffnet im obersten Frame (bei Framesets).</li>
+            </ul>
+            <div class="example-display">
+                <a href="https://www.wikipedia.org" target="_blank" rel="noopener noreferrer">Wikipedia in neuem Tab öffnen</a>
+            </div>
+            <div class="example-code">
+&lt;a href="https://www.wikipedia.org" target="_blank" rel="noopener noreferrer"&gt;Wikipedia in neuem Tab öffnen&lt;/a&gt;
+            </div>
+
+            <h3>Das <code>title</code>-Attribut</h3>
+            <p>Gibt zusätzliche Informationen zum Link an, die oft als Tooltip angezeigt werden, wenn man mit der Maus darüberfährt.</p>
+             <div class="example-display">
+                <a href="https://www.mozilla.org" title="Zur Mozilla Homepage">Mozilla</a>
+            </div>
+            <div class="example-code">
+&lt;a href="https://www.mozilla.org" title="Zur Mozilla Homepage"&gt;Mozilla&lt;/a&gt;
+            </div>
+        </section>
+
+        <section id="bilder" class="section">
+            <h2>Bilder (<code>&lt;img&gt;</code>)</h2>
+            <p>Das <code>&lt;img&gt;</code>-Element wird verwendet, um Bilder in eine Webseite einzubetten. Es ist ein leeres Element.</p>
+            <p>Wichtige Attribute:</p>
+            <ul>
+                <li><code>src</code> (Source): Gibt den Pfad zur Bilddatei an (URL oder lokaler Pfad). **Erforderlich.**</li>
+                <li><code>alt</code> (Alternative Text): Beschreibt das Bild. Wichtig für Barrierefreiheit (Screenreader) und falls das Bild nicht geladen werden kann. **Erforderlich.**</li>
+                <li><code>width</code>: Definiert die Breite des Bildes in Pixeln.</li>
+                <li><code>height</code>: Definiert die Höhe des Bildes in Pixeln.
+                    <div class="note">
+                        <p><strong>Hinweis:</strong> Es ist besser, die Größe von Bildern mit CSS zu steuern, um Flexibilität und responsives Verhalten zu gewährleisten. Wenn <code>width</code> und <code>height</code> in HTML gesetzt werden, sollte das Seitenverhältnis beibehalten werden, um Verzerrungen zu vermeiden.</p>
+                    </div>
+                </li>
+            </ul>
+            <div class="example-display">
+                <img src="https://via.placeholder.com/300x150.png?text=Beispielbild" alt="Ein Platzhalterbild mit Text 'Beispielbild'" class="responsive">
+            </div>
+            <div class="example-code">
+&lt;img src="pfad/zum/bild.jpg" alt="Beschreibung des Bildes" width="300" height="150"&gt;
+
+&lt;!-- Responsives Bild mit CSS (Klasse .responsive oben im &lt;style&gt;-Tag definiert) --&gt;
+&lt;img src="pfad/zum/bild.jpg" alt="Beschreibung des Bildes" class="responsive"&gt;
+            </div>
+
+            <h3>Bilder als Links</h3>
+            <p>Ein Bild kann auch als Link fungieren, indem das <code>&lt;img&gt;</code>-Element in ein <code>&lt;a&gt;</code>-Element eingebettet wird.</p>
+            <div class="example-display">
+                <a href="https://www.google.com">
+                    <img src="https://via.placeholder.com/150x50.png?text=Klick+Mich" alt="Klickbares Platzhalterbild" class="responsive">
+                </a>
+            </div>
+            <div class="example-code">
+&lt;a href="ziel-url.html"&gt;
+    &lt;img src="bild.png" alt="Link-Beschreibung"&gt;
+&lt;/a&gt;
+            </div>
+
+            <h3>Das <code>&lt;figure&gt;</code> und <code>&lt;figcaption&gt;</code> Element</h3>
+            <p><code>&lt;figure&gt;</code> wird verwendet, um eigenständige Inhalte wie Diagramme, Illustrationen, Fotos, Code-Listings usw. zu umschließen. <code>&lt;figcaption&gt;</code> kann verwendet werden, um eine Beschriftung für das <code>&lt;figure&gt;</code>-Element bereitzustellen.</p>
+            <div class="example-display">
+                <figure>
+                    <img src="https://via.placeholder.com/200x100.png?text=Figur+Beispiel" alt="Beispiel für Figure und Figcaption" class="responsive">
+                    <figcaption>Abb. 1: Ein Beispielbild mit Beschriftung.</figcaption>
+                </figure>
+            </div>
+            <div class="example-code">
+&lt;figure&gt;
+    &lt;img src="bild.jpg" alt="Beschreibung"&gt;
+    &lt;figcaption&gt;Abb. 1: Bildunterschrift.&lt;/figcaption&gt;
+&lt;/figure&gt;
+            </div>
+        </section>
+
+        <section id="tabellen" class="section">
+            <h2>Tabellen</h2>
+            <p>Tabellen werden verwendet, um tabellarische Daten darzustellen.</p>
+            <ul>
+                <li><code>&lt;table&gt;</code>: Umschließt die gesamte Tabelle.</li>
+                <li><code>&lt;tr&gt;</code> (Table Row): Definiert eine Zeile in der Tabelle.</li>
+                <li><code>&lt;th&gt;</code> (Table Header): Definiert eine Kopfzelle. Der Text ist standardmäßig fett und zentriert.</li>
+                <li><code>&lt;td&gt;</code> (Table Data): Definiert eine Standardzelle (Datenzelle).</li>
+                <li><code>&lt;caption&gt;</code>: Fügt eine Beschriftung zur Tabelle hinzu (sollte das erste Kindelement von <code>&lt;table&gt;</code> sein).</li>
+                <li><code>&lt;thead&gt;</code>: Gruppiert die Kopfzeilen der Tabelle.</li>
+                <li><code>&lt;tbody&gt;</code>: Gruppiert den Hauptinhalt (Körper) der Tabelle.</li>
+                <li><code>&lt;tfoot&gt;</code>: Gruppiert die Fußzeilen der Tabelle.</li>
+            </ul>
+            <div class="note">
+                <p><strong>Wichtiger Hinweis:</strong> Tabellen sollten nur für tabellarische Daten verwendet werden, nicht für das Layout von Webseiten. Für Layoutzwecke gibt es modernere Techniken wie CSS Flexbox und Grid.</p>
+            </div>
+            <div class="example-display">
+                <table>
+                    <caption>Monatliche Ausgaben</caption>
+                    <thead>
+                        <tr>
+                            <th>Kategorie</th>
+                            <th>Betrag (€)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Miete</td>
+                            <td>800</td>
+                        </tr>
+                        <tr>
+                            <td>Lebensmittel</td>
+                            <td>300</td>
+                        </tr>
+                        <tr>
+                            <td>Transport</td>
+                            <td>100</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td>Gesamt</td>
+                            <td>1200</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="example-code">
+&lt;table&gt;
+    &lt;caption&gt;Monatliche Ausgaben&lt;/caption&gt;
+    &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th&gt;Kategorie&lt;/th&gt;
+            &lt;th&gt;Betrag (€)&lt;/th&gt;
+        &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Miete&lt;/td&gt;
+            &lt;td&gt;800&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Lebensmittel&lt;/td&gt;
+            &lt;td&gt;300&lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/tbody&gt;
+    &lt;tfoot&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Gesamt&lt;/td&gt;
+            &lt;td&gt;1100&lt;/td&gt; &lt;!-- Korrigierter Wert für das Beispiel --&gt;
+        &lt;/tr&gt;
+    &lt;/tfoot&gt;
+&lt;/table&gt;
+            </div>
+
+            <h3>Attribute <code>colspan</code> und <code>rowspan</code></h3>
+            <p><code>colspan</code>: Lässt eine Zelle sich über mehrere Spalten erstrecken.</p>
+            <p><code>rowspan</code>: Lässt eine Zelle sich über mehrere Zeilen erstrecken.</p>
+            <div class="example-display">
+                 <table>
+                    <tr>
+                        <th>Name</th>
+                        <td colspan="2">Max Mustermann</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2">Telefon</td>
+                        <td>Privat</td>
+                        <td>0123-45678</td>
+                    </tr>
+                    <tr>
+                        <td>Mobil</td>
+                        <td>0987-65432</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="example-code">
+&lt;table&gt;
+    &lt;tr&gt;
+        &lt;th&gt;Name&lt;/th&gt;
+        &lt;td colspan="2"&gt;Max Mustermann&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td rowspan="2"&gt;Telefon&lt;/td&gt;
+        &lt;td&gt;Privat&lt;/td&gt;
+        &lt;td&gt;0123-45678&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Mobil&lt;/td&gt;
+        &lt;td&gt;0987-65432&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;
+            </div>
+        </section>
+
+        <section id="formulare" class="section">
+            <h2>Formulare (<code>&lt;form&gt;</code>)</h2>
+            <p>Formulare werden verwendet, um Benutzereingaben zu sammeln.</p>
+            <p>Das <code>&lt;form&gt;</code>-Element umschließt die verschiedenen Formularfelder. Wichtige Attribute sind:</p>
+            <ul>
+                <li><code>action</code>: Die URL, an die die Formulardaten gesendet werden sollen (z.B. ein serverseitiges Skript).</li>
+                <li><code>method</code>: Die HTTP-Methode, mit der die Daten gesendet werden (üblicherweise <code>GET</code> oder <code>POST</code>).
+                    <ul>
+                        <li><code>GET</code>: Daten werden an die URL angehängt (sichtbar, begrenzt).</li>
+                        <li><code>POST</code>: Daten werden im HTTP-Body gesendet (nicht sichtbar, für größere/sensible Daten).</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>Beschriftungen (<code>&lt;label&gt;</code>)</h3>
+            <p>Das <code>&lt;label&gt;</code>-Element ordnet einem Formularfeld eine Beschriftung zu. Das <code>for</code>-Attribut des Labels sollte mit der <code>id</code> des zugehörigen Formularfelds übereinstimmen, um die Barrierefreiheit zu verbessern (Klick auf Label fokussiert das Feld).</p>
+
+            <h3>Eingabefelder (<code>&lt;input&gt;</code>)</h3>
+            <p>Das <code>&lt;input&gt;</code>-Element ist das vielseitigste Formularelement. Der Typ wird durch das <code>type</code>-Attribut bestimmt.</p>
+            <div class="example-display">
+                <form action="#" method="post">
+                    <div>
+                        <label for="username">Benutzername:</label><br>
+                        <input type="text" id="username" name="username" required placeholder="z.B. MaxMustermann">
+                    </div>
+                    <br>
+                    <div>
+                        <label for="password">Passwort:</label><br>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <br>
+                    <div>
+                        <label for="email">E-Mail:</label><br>
+                        <input type="email" id="email" name="email" placeholder="max@example.com">
+                    </div>
+                    <br>
+                    <div>
+                        <label for="birthdate">Geburtsdatum:</label><br>
+                        <input type="date" id="birthdate" name="birthdate">
+                    </div>
+                    <br>
+                    <div>
+                        <label for="quantity">Anzahl (zwischen 1 und 5):</label><br>
+                        <input type="number" id="quantity" name="quantity" min="1" max="5">
+                    </div>
+                    <br>
+                    <div>
+                        <p>Geschlecht:</p>
+                        <input type="radio" id="male" name="gender" value="male">
+                        <label for="male">Männlich</label><br>
+                        <input type="radio" id="female" name="gender" value="female">
+                        <label for="female">Weiblich</label><br>
+                        <input type="radio" id="other" name="gender" value="other">
+                        <label for="other">Andere</label>
+                    </div>
+                    <br>
+                    <div>
+                        <p>Interessen:</p>
+                        <input type="checkbox" id="interest1" name="interests" value="music">
+                        <label for="interest1">Musik</label><br>
+                        <input type="checkbox" id="interest2" name="interests" value="sports">
+                        <label for="interest2">Sport</label><br>
+                        <input type="checkbox" id="interest3" name="interests" value="reading">
+                        <label for="interest3">Lesen</label>
+                    </div>
+                    <br>
+                    <div>
+                        <label for="colorpicker">Lieblingsfarbe:</label><br>
+                        <input type="color" id="colorpicker" name="favcolor" value="#e8491d">
+                    </div>
+                    <br>
+                     <div>
+                        <label for="fileUpload">Datei hochladen:</label><br>
+                        <input type="file" id="fileUpload" name="myfile">
+                    </div>
+                    <br>
+                    <div>
+                        <input type="submit" value="Absenden">
+                        <input type="reset" value="Zurücksetzen">
+                        <button type="button" onclick="alert('Hallo!')">Klick Mich Button</button>
+                    </div>
+                </form>
+            </div>
+            <div class="example-code">
+&lt;form action="/submit-form.php" method="post"&gt;
+    &lt;!-- Textfeld --&gt;
+    &lt;label for="name"&gt;Name:&lt;/label&gt;
+    &lt;input type="text" id="name" name="user_name" required placeholder="Ihr Name"&gt;&lt;br&gt;
+
+    &lt;!-- Passwortfeld --&gt;
+    &lt;label for="pass"&gt;Passwort:&lt;/label&gt;
+    &lt;input type="password" id="pass" name="user_password" required&gt;&lt;br&gt;
+
+    &lt;!-- E-Mail-Feld --&gt;
+    &lt;label for="mail"&gt;E-Mail:&lt;/label&gt;
+    &lt;input type="email" id="mail" name="user_email"&gt;&lt;br&gt;
+
+    &lt;!-- Zahlenfeld --&gt;
+    &lt;label for="age"&gt;Alter:&lt;/label&gt;
+    &lt;input type="number" id="age" name="user_age" min="0" max="120"&gt;&lt;br&gt;
+
+    &lt;!-- Datumsfeld --&gt;
+    &lt;label for="bday"&gt;Geburtstag:&lt;/label&gt;
+    &lt;input type="date" id="bday" name="user_bday"&gt;&lt;br&gt;
+
+    &lt;!-- Radio-Buttons (nur eine Option wählbar) --&gt;
+    &lt;p&gt;Lieblingshaustier:&lt;/p&gt;
+    &lt;input type="radio" id="cat" name="pet" value="katze"&gt;
+    &lt;label for="cat"&gt;Katze&lt;/label&gt;&lt;br&gt;
+    &lt;input type="radio" id="dog" name="pet" value="hund" checked&gt; &lt;!-- vorausgewählt --&gt;
+    &lt;label for="dog"&gt;Hund&lt;/label&gt;&lt;br&gt;
+
+    &lt;!-- Checkboxen (mehrere Optionen wählbar) --&gt;
+    &lt;p&gt;Hobbys:&lt;/p&gt;
+    &lt;input type="checkbox" id="hobby1" name="hobby_music" value="Musik"&gt;
+    &lt;label for="hobby1"&gt;Musik&lt;/label&gt;&lt;br&gt;
+    &lt;input type="checkbox" id="hobby2" name="hobby_sport" value="Sport" checked&gt;
+    &lt;label for="hobby2"&gt;Sport&lt;/label&gt;&lt;br&gt;
+
+    &lt;!-- Farbwähler --&gt;
+    &lt;label for="favcolor"&gt;Lieblingsfarbe:&lt;/label&gt;
+    &lt;input type="color" id="favcolor" name="favcolor" value="#ff0000"&gt;&lt;br&gt;
+
+    &lt;!-- Datei-Upload --&gt;
+    &lt;label for="avatar"&gt;Avatar hochladen:&lt;/label&gt;
+    &lt;input type="file" id="avatar" name="avatar_file" accept="image/png, image/jpeg"&gt;&lt;br&gt; &lt;!-- accept-Attribut schränkt Dateitypen ein --&gt;
+
+    &lt;!-- Verstecktes Feld (für Daten, die der Nutzer nicht sehen soll) --&gt;
+    &lt;input type="hidden" name="session_id" value="xyz123"&gt;
+
+    &lt;!-- Absende-Button --&gt;
+    &lt;input type="submit" value="Senden"&gt;
+
+    &lt;!-- Reset-Button --&gt;
+    &lt;input type="reset" value="Formular leeren"&gt;
+
+    &lt;!-- Standard-Button (kann mit JavaScript verwendet werden) --&gt;
+    &lt;input type="button" value="Ein normaler Button" onclick="alert('Geklickt!')"&gt;
+&lt;/form&gt;
+            </div>
+            <p><strong>Weitere gängige <code>type</code>-Attribute für <code>&lt;input&gt;</code>:</strong></p>
+            <ul>
+                <li><code>text</code>: Einzeiliges Textfeld (Standard).</li>
+                <li><code>password</code>: Für Passwörter (Zeichen werden maskiert).</li>
+                <li><code>email</code>: Für E-Mail-Adressen (mit Validierung).</li>
+                <li><code>number</code>: Für Zahlen (mit Pfeilen zum Erhöhen/Verringern).</li>
+                <li><code>date</code>: Für Datumsauswahl. Weitere: <code>month</code>, <code>week</code>, <code>time</code>, <code>datetime-local</code>.</li>
+                <li><code>radio</code>: Für eine Auswahl aus mehreren Optionen, bei der nur eine gewählt werden kann (gleicher <code>name</code>-Wert erforderlich).</li>
+                <li><code>checkbox</code>: Für Optionen, bei denen mehrere ausgewählt werden können.</li>
+                <li><code>color</code>: Für Farbauswahl.</li>
+                <li><code>range</code>: Für einen Schieberegler.</li>
+                <li><code>file</code>: Für Dateiupload.</li>
+                <li><code>submit</code>: Sendet das Formular ab.</li>
+                <li><code>reset</code>: Setzt alle Formularfelder auf ihre Standardwerte zurück.</li>
+                <li><code>button</code>: Ein klickbarer Button (oft mit JavaScript verwendet).</li>
+                <li><code>hidden</code>: Ein verstecktes Feld, dessen Wert mitgesendet wird.</li>
+                <li><code>search</code>: Für Suchfelder.</li>
+                <li><code>tel</code>: Für Telefonnummern.</li>
+                <li><code>url</code>: Für URLs.</li>
+            </ul>
+            <p><strong>Wichtige Attribute für <code>&lt;input&gt;</code>:</strong></p>
+            <ul>
+                <li><code>name</code>: Notwendig, damit die Daten des Feldes gesendet werden.</li>
+                <li><code>id</code>: Eindeutiger Identifikator, wird für <code>&lt;label&gt;</code> verwendet.</li>
+                <li><code>value</code>: Der initiale Wert des Feldes (oder der gesendete Wert bei Radio/Checkbox/Submit).</li>
+                <li><code>placeholder</code>: Ein Hinweistext, der im Feld angezeigt wird, solange es leer ist.</li>
+                <li><code>required</code>: Gibt an, dass das Feld ausgefüllt werden muss.</li>
+                <li><code>disabled</code>: Deaktiviert das Feld.</li>
+                <li><code>readonly</code>: Der Wert kann nicht geändert werden, wird aber gesendet.</li>
+                <li><code>checked</code>: Wählt eine Checkbox oder einen Radio-Button standardmäßig aus.</li>
+                <li><code>min</code>, <code>max</code>, <code>step</code>: Für numerische Eingaben oder Datums-/Zeiteingaben.</li>
+                <li><code>maxlength</code>: Maximale Anzahl an Zeichen für Textfelder.</li>
+                <li><code>pattern</code>: Ein regulärer Ausdruck zur Validierung der Eingabe.</li>
+            </ul>
+
+            <h3>Textbereich (<code>&lt;textarea&gt;</code>)</h3>
+            <p>Für mehrzeilige Texteingaben.</p>
+            <div class="example-display">
+                <form action="#" method="post">
+                    <label for="message">Nachricht:</label><br>
+                    <textarea id="message" name="message" rows="5" cols="30" placeholder="Ihre Nachricht hier..."></textarea><br>
+                    <input type="submit" value="Absenden">
+                </form>
+            </div>
+            <div class="example-code">
+&lt;label for="comment"&gt;Kommentar:&lt;/label&gt;
+&lt;textarea id="comment" name="user_comment" rows="4" cols="50" placeholder="Ihr Kommentar..."&gt;&lt;/textarea&gt;
+            </div>
+
+            <h3>Auswahllisten (<code>&lt;select&gt;</code>, <code>&lt;option&gt;</code>, <code>&lt;optgroup&gt;</code>)</h3>
+            <p>Erstellt ein Dropdown-Menü oder eine Auswahlliste.</p>
+            <ul>
+                <li><code>&lt;select&gt;</code>: Umschließt die Optionen.
+                    <ul>
+                        <li><code>name</code>: Name des Select-Elements.</li>
+                        <li><code>multiple</code>: Erlaubt die Auswahl mehrerer Optionen (Liste statt Dropdown).</li>
+                        <li><code>size</code>: Anzahl der sichtbaren Optionen (bei <code>multiple</code> oder wenn größer 1).</li>
+                    </ul>
+                </li>
+                <li><code>&lt;option&gt;</code>: Definiert eine einzelne Auswahlmöglichkeit.
+                    <ul>
+                        <li><code>value</code>: Der Wert, der gesendet wird, wenn diese Option ausgewählt ist.</li>
+                        <li><code>selected</code>: Wählt diese Option standardmäßig aus.</li>
+                    </ul>
+                </li>
+                 <li><code>&lt;optgroup&gt;</code>: Gruppiert zusammengehörige Optionen.
+                    <ul>
+                        <li><code>label</code>: Die Beschriftung für die Gruppe.</li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="example-display">
+                <form action="#" method="post">
+                    <label for="country">Land:</label><br>
+                    <select id="country" name="country">
+                        <option value="">Bitte wählen...</option>
+                        <optgroup label="Europa">
+                            <option value="de">Deutschland</option>
+                            <option value="fr">Frankreich</option>
+                            <option value="es">Spanien</option>
+                        </optgroup>
+                        <optgroup label="Nordamerika">
+                            <option value="us" selected>USA</option>
+                            <option value="ca">Kanada</option>
+                        </optgroup>
+                    </select><br><br>
+
+                    <label for="cars">Autos (Mehrfachauswahl möglich):</label><br>
+                    <select id="cars" name="cars_selected" multiple size="3">
+                        <option value="volvo">Volvo</option>
+                        <option value="saab">Saab</option>
+                        <option value="mercedes">Mercedes</option>
+                        <option value="audi">Audi</option>
+                    </select><br>
+
+                    <input type="submit" value="Absenden">
+                </form>
+            </div>
+            <div class="example-code">
+&lt;label for="cars"&gt;Wähle ein Auto:&lt;/label&gt;
+&lt;select id="cars" name="car_choice"&gt;
+  &lt;option value="volvo"&gt;Volvo&lt;/option&gt;
+  &lt;option value="saab"&gt;Saab&lt;/option&gt;
+  &lt;option value="mercedes" selected&gt;Mercedes&lt;/option&gt; &lt;!-- vorausgewählt --&gt;
+  &lt;option value="audi"&gt;Audi&lt;/option&gt;
+&lt;/select&gt;
+            </div>
+
+            <h3>Button-Element (<code>&lt;button&gt;</code>)</h3>
+            <p>Eine flexiblere Alternative zu <code>&lt;input type="button"&gt;</code> oder <code>&lt;input type="submit"&gt;</code>, da es auch HTML-Inhalt (z.B. Bilder, Textformatierung) enthalten kann.</p>
+            <p>Das <code>type</code>-Attribut kann sein: <code>submit</code> (Standard), <code>reset</code> oder <code>button</code>.</p>
+            <div class="example-display">
+                <form action="#" method="post">
+                    <button type="submit">
+                        <img src="https://via.placeholder.com/20x20.png?text=S" alt="Senden Icon" style="vertical-align: middle;"> Senden
+                    </button>
+                    <button type="reset">Zurücksetzen</button>
+                    <button type="button" onclick="alert('Hallo vom Button!')">Eigener Button</button>
+                </form>
+            </div>
+            <div class="example-code">
+&lt;button type="submit"&gt;Formular &lt;strong&gt;Absenden&lt;/strong&gt;&lt;/button&gt;
+&lt;button type="button" onclick="doSomething()"&gt;Klick mich!&lt;/button&gt;
+            </div>
+
+            <h3>Weitere Formularelemente</h3>
+            <ul>
+                <li><code>&lt;fieldset&gt;</code>: Gruppiert zusammengehörige Elemente in einem Formular.</li>
+                <li><code>&lt;legend&gt;</code>: Definiert eine Überschrift für ein <code>&lt;fieldset&gt;</code>.</li>
+                <li><code>&lt;datalist&gt;</code>: Bietet eine Liste von vordefinierten Optionen für ein <code>&lt;input&gt;</code>-Feld (Autovervollständigung).
+                    <div class="example-display">
+                        <form action="#" method="post">
+                             <fieldset>
+                                <legend>Persönliche Daten:</legend>
+                                <label for="fname">Vorname:</label>
+                                <input type="text" id="fname" name="fname"><br><br>
+                                <label for="lname">Nachname:</label>
+                                <input type="text" id="lname" name="lname"><br><br>
+                                <label for="browser">Browser:</label>
+                                <input list="browsers" id="browser" name="browser">
+                                <datalist id="browsers">
+                                  <option value="Chrome">
+                                  <option value="Firefox">
+                                  <option value="Safari">
+                                  <option value="Edge">
+                                  <option value="Opera">
+                                </datalist>
+                            </fieldset>
+                            <input type="submit" value="Absenden">
+                        </form>
+                    </div>
+                    <div class="example-code">
+&lt;fieldset&gt;
+    &lt;legend&gt;Benutzerdaten:&lt;/legend&gt;
+    &lt;label for="username"&gt;Benutzername:&lt;/label&gt;
+    &lt;input type="text" id="username" name="username"&gt;
+&lt;/fieldset&gt;
+
+&lt;label for="eissorte"&gt;Lieblingseis:&lt;/label&gt;
+&lt;input list="eissorten" id="eissorte" name="eissorte"&gt;
+&lt;datalist id="eissorten"&gt;
+    &lt;option value="Vanille"&gt;
+    &lt;option value="Schokolade"&gt;
+    &lt;option value="Erdbeere"&gt;
+&lt;/datalist&gt;
+                    </div>
+                </li>
+                <li><code>&lt;output&gt;</code>: Zeigt das Ergebnis einer Berechnung oder Benutzeraktion an.</li>
+                <li><code>&lt;progress&gt;</code>: Zeigt den Fortschritt einer Aufgabe an.</li>
+                <li><code>&lt;meter&gt;</code>: Stellt einen skalaren Messwert innerhalb eines bekannten Bereichs dar (z.B. Speicherplatzbelegung).</li>
+            </ul>
+        </section>
+
+        <section id="semantisch" class="section">
+            <h2>Semantisches HTML</h2>
+            <p>Semantische HTML-Elemente beschreiben die Bedeutung oder den Zweck ihres Inhalts, anstatt nur dessen Aussehen. Dies verbessert die Barrierefreiheit, SEO (Suchmaschinenoptimierung) und die Lesbarkeit des Codes.</p>
+            <p>Viele dieser Elemente wurden mit HTML5 eingeführt.</p>
+
+            <h3>Strukturelle Elemente</h3>
+            <ul>
+                <li><code>&lt;header&gt;</code>: Definiert einen Kopfbereich für ein Dokument oder einen Abschnitt. Enthält oft Überschriften, Logos, Navigationslinks.</li>
+                <li><code>&lt;nav&gt;</code>: Definiert einen Bereich mit Navigationslinks.</li>
+                <li><code>&lt;main&gt;</code>: Definiert den Hauptinhalt eines Dokuments. Es sollte nur ein <code>&lt;main&gt;</code>-Element pro Seite geben und es sollte nicht innerhalb von <code>&lt;article&gt;</code>, <code>&lt;aside&gt;</code>, <code>&lt;footer&gt;</code>, <code>&lt;header&gt;</code> oder <code>&lt;nav&gt;</code> verschachtelt sein.</li>
+                <li><code>&lt;article&gt;</code>: Definiert einen in sich geschlossenen, unabhängigen Inhalt (z.B. Blogbeitrag, Nachrichtenartikel, Forumspost).</li>
+                <li><code>&lt;section&gt;</code>: Definiert einen thematischen Abschnitt innerhalb eines Dokuments. Hat typischerweise eine eigene Überschrift.</li>
+                <li><code>&lt;aside&gt;</code>: Definiert Inhalt, der nur lose mit dem umgebenden Inhalt in Beziehung steht (z.B. Seitenleiste, Glossar, Werbung).</li>
+                <li><code>&lt;footer&gt;</code>: Definiert einen Fußbereich für ein Dokument oder einen Abschnitt. Enthält oft Copyright-Informationen, Autor, Links zu verwandten Dokumenten.</li>
+                <li><code>&lt;address&gt;</code>: Definiert Kontaktinformationen für den Autor/Besitzer eines Dokuments oder Artikels.</li>
+            </ul>
+            <div class="example-display" style="border: 2px solid #333; padding:10px;">
+                <header style="background:#ccc; padding:5px; text-align:center;">
+                    <h1>Meine Webseite (<code>&lt;header&gt;</code>)</h1>
+                    <nav style="background:#eee; padding:5px;">
+                        <code>&lt;nav&gt;</code>: <a href="#">Home</a> | <a href="#">Über uns</a> | <a href="#">Kontakt</a>
+                    </nav>
+                </header>
+                <main style="background:#fff; padding:10px; border-top:1px solid #999; border-bottom:1px solid #999;">
+                    <p><code>&lt;main&gt;</code>: Hauptinhalt der Seite.</p>
+                    <article style="background:#f9f9f9; margin-bottom:10px; padding:5px; border:1px dashed #aaa;">
+                        <h2><code>&lt;article&gt;</code>: Titel eines Artikels</h2>
+                        <p>Dies ist der Inhalt des Artikels...</p>
+                        <section style="background:#efefef; margin-top:5px; padding:5px; border:1px dotted #bbb;">
+                            <h3><code>&lt;section&gt;</code>: Ein Abschnitt im Artikel</h3>
+                            <p>Details zu diesem Abschnitt.</p>
+                        </section>
+                    </article>
+                </main>
+                <aside style="background:#e9e9e9; padding:5px; float:right; width:30%; margin-left:10px;">
+                    <p><code>&lt;aside&gt;</code>: Seitenleisteninhalt.</p>
+                </aside>
+                <div style="clear:both;"></div>
+                <footer style="background:#ccc; padding:5px; text-align:center; margin-top:10px;">
+                    <p><code>&lt;footer&gt;</code>: &copy; 2025 Meine Webseite</p>
+                </footer>
+            </div>
+            <div class="example-code">
+&lt;body&gt;
+    &lt;header&gt;
+        &lt;h1&gt;Website Titel&lt;/h1&gt;
+        &lt;nav&gt;
+            &lt;ul&gt;
+                &lt;li&gt;&lt;a href="#"&gt;Home&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="#"&gt;Blog&lt;/a&gt;&lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/nav&gt;
+    &lt;/header&gt;
+
+    &lt;main&gt;
+        &lt;article&gt;
+            &lt;h2&gt;Titel des Blogbeitrags&lt;/h2&gt;
+            &lt;p&gt;Inhalt des Beitrags...&lt;/p&gt;
+            &lt;section&gt;
+                &lt;h3&gt;Unterabschnitt&lt;/h3&gt;
+                &lt;p&gt;Details zum Unterabschnitt...&lt;/p&gt;
+            &lt;/section&gt;
+        &lt;/article&gt;
+
+        &lt;aside&gt;
+            &lt;h3&gt;Verwandte Links&lt;/h3&gt;
+            &lt;ul&gt;
+                &lt;li&gt;&lt;a href="#"&gt;Link 1&lt;/a&gt;&lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/aside&gt;
+    &lt;/main&gt;
+
+    &lt;footer&gt;
+        &lt;p&gt;&copy; 2025 Meine Webseite&lt;/p&gt;
+        &lt;address&gt;
+            Kontakt: &lt;a href="mailto:info@example.com"&gt;info@example.com&lt;/a&gt;
+        &lt;/address&gt;
+    &lt;/footer&gt;
+&lt;/body&gt;
+            </div>
+            <p>Früher wurden oft <code>&lt;div&gt;</code>-Elemente mit IDs oder Klassen für diese Zwecke verwendet (z.B. <code>&lt;div id="header"&gt;</code>). Die semantischen Elemente machen den Code verständlicher und strukturierter.</p>
+
+            <h3>Weitere semantische Elemente</h3>
+            <ul>
+                <li><code>&lt;figure&gt;</code> und <code>&lt;figcaption&gt;</code>: Siehe Abschnitt <a href="#bilder">Bilder</a>.</li>
+                <li><code>&lt;time&gt;</code>: Definiert ein bestimmtes Datum oder eine bestimmte Uhrzeit. Das <code>datetime</code>-Attribut gibt das maschinenlesbare Format an.
+                    <div class="example-display">
+                        <p>Veröffentlicht am <time datetime="2025-05-11">11. Mai 2025</time>.</p>
+                        <p>Das Meeting ist um <time datetime="14:00">14:00 Uhr</time>.</p>
+                    </div>
+                    <div class="example-code">
+&lt;p&gt;Veröffentlicht am &lt;time datetime="2025-05-11"&gt;11. Mai 2025&lt;/time&gt;.&lt;/p&gt;
+                    </div>
+                </li>
+                <li><code>&lt;mark&gt;</code>: Text, der als markiert oder hervorgehoben dargestellt werden soll.</li>
+                <li><code>&lt;details&gt;</code> und <code>&lt;summary&gt;</code>: Erstellen ein aufklappbares Widget. <code>&lt;summary&gt;</code> ist die sichtbare Überschrift.
+                     <div class="example-display">
+                        <details>
+                            <summary>Klicken Sie hier für Details</summary>
+                            <p>Dies sind die versteckten Details, die nach einem Klick auf die Zusammenfassung sichtbar werden.</p>
+                        </details>
+                    </div>
+                    <div class="example-code">
+&lt;details&gt;
+    &lt;summary&gt;Copyright Informationen&lt;/summary&gt;
+    &lt;p&gt;- Alle Rechte vorbehalten - &lt;/p&gt;
+&lt;/details&gt;
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <section id="media" class="section">
+            <h2>Multimedia (Audio & Video)</h2>
+            <p>HTML5 bietet native Unterstützung für das Einbetten von Audio- und Videoinhalten ohne Plugins.</p>
+
+            <h3>Audio (<code>&lt;audio&gt;</code>)</h3>
+            <p>Bettet Audioinhalte ein.</p>
+            <ul>
+                <li><code>src</code>: Pfad zur Audiodatei.</li>
+                <li><code>controls</code>: Zeigt Standard-Steuerelemente an (Play, Pause, Lautstärke etc.).</li>
+                <li><code>autoplay</code>: Spielt die Audiodatei automatisch ab (oft von Browsern blockiert oder eingeschränkt).</li>
+                <li><code>loop</code>: Spielt die Audiodatei in einer Schleife ab.</li>
+                <li><code>muted</code>: Stummschaltung der Audiodatei.</li>
+                <li><code>preload</code>: Gibt an, wie die Audiodatei beim Laden der Seite geladen werden soll (<code>auto</code>, <code>metadata</code>, <code>none</code>).</li>
+            </ul>
+            <p>Das <code>&lt;source&gt;</code>-Element kann innerhalb von <code>&lt;audio&gt;</code> verwendet werden, um mehrere Audioformate anzubieten, falls ein Browser ein bestimmtes Format nicht unterstützt.</p>
+            <div class="example-display">
+                <audio controls>
+                    <source src="beispiel.mp3" type="audio/mpeg">
+                    <source src="beispiel.ogg" type="audio/ogg">
+                    Ihr Browser unterstützt das Audio-Element nicht.
+                </audio>
+                <p class="note">Hinweis: Da keine echte Audiodatei "beispiel.mp3" verlinkt ist, werden die Controls möglicherweise nicht korrekt oder gar nicht angezeigt.</p>
+            </div>
+            <div class="example-code">
+&lt;audio controls&gt;
+    &lt;source src="audiofile.mp3" type="audio/mpeg"&gt;
+    &lt;source src="audiofile.ogg" type="audio/ogg"&gt;
+    Ihr Browser unterstützt das Audio-Element nicht.
+&lt;/audio&gt;
+            </div>
+
+            <h3>Video (<code>&lt;video&gt;</code>)</h3>
+            <p>Bettet Videoinhalte ein. Hat ähnliche Attribute wie <code>&lt;audio&gt;</code>.</p>
+            <ul>
+                <li><code>src</code>: Pfad zur Videodatei.</li>
+                <li><code>controls</code>: Zeigt Standard-Steuerelemente an.</li>
+                <li><code>autoplay</code>: Spielt das Video automatisch ab (oft blockiert/eingeschränkt, oft nur mit <code>muted</code> erlaubt).</li>
+                <li><code>loop</code>: Spielt das Video in einer Schleife ab.</li>
+                <li><code>muted</code>: Stummschaltung des Videos.</li>
+                <li><code>poster</code>: Ein Bild, das angezeigt wird, während das Video lädt oder bis der Benutzer auf Play klickt.</li>
+                <li><code>width</code> und <code>height</code>: Dimensionen des Videoplayers.</li>
+                <li><code>preload</code>: (<code>auto</code>, <code>metadata</code>, <code>none</code>).</li>
+            </ul>
+            <p>Auch hier kann das <code>&lt;source&gt;</code>-Element für verschiedene Videoformate (z.B. MP4, WebM, Ogg) verwendet werden.</p>
+            <div class="example-display">
+                <video controls width="320" height="240" poster="https://via.placeholder.com/320x240.png?text=Video+Poster">
+                    <source src="beispiel.mp4" type="video/mp4">
+                    <source src="beispiel.webm" type="video/webm">
+                    Ihr Browser unterstützt das Video-Element nicht.
+                </video>
+                 <p class="note">Hinweis: Da keine echte Videodatei "beispiel.mp4" verlinkt ist, wird nur das Posterbild bzw. eine Fehlermeldung angezeigt.</p>
+            </div>
+            <div class="example-code">
+&lt;video controls width="640" height="360" poster="posterbild.jpg"&gt;
+    &lt;source src="videofile.mp4" type="video/mp4"&gt;
+    &lt;source src="videofile.webm" type="video/webm"&gt;
+    Ihr Browser unterstützt das Video-Element nicht.
+&lt;/video&gt;
+            </div>
+
+            <h3>Einbetten von externen Inhalten (<code>&lt;iframe&gt;</code>)</h3>
+            <p>Das <code>&lt;iframe&gt;</code> (Inline Frame) Element wird verwendet, um ein anderes HTML-Dokument innerhalb der aktuellen Seite einzubetten. Dies wird oft für YouTube-Videos, Google Maps Karten oder andere externe Widgets genutzt.</p>
+            <ul>
+                <li><code>src</code>: Die URL des einzubettenden Dokuments.</li>
+                <li><code>width</code> und <code>height</code>: Breite und Höhe des Frames.</li>
+                <li><code>frameborder</code>: (veraltet, besser mit CSS) Ob ein Rahmen angezeigt wird (<code>0</code> oder <code>1</code>).</li>
+                <li><code>allowfullscreen</code>: Erlaubt den Vollbildmodus für den Inhalt des iframes (z.B. bei Videos).</li>
+                <li><code>sandbox</code>: Aktiviert Sicherheitseinschränkungen für den iframe-Inhalt.</li>
+            </ul>
+             <div class="example-display">
+                <p>Beispiel: Einbetten einer Webseite (aus Sicherheitsgründen kann nicht jede Seite eingebettet werden):</p>
+                <iframe src="https://example.com" width="90%" height="200" style="border:1px solid #ccc;">
+                    Ihr Browser unterstützt iframes nicht.
+                </iframe>
+                <p style="margin-top:10px;">Beispiel: Einbetten eines YouTube-Videos (Platzhalter):</p>
+                <iframe width="320" height="180" src="https://www.youtube.com/embed/VIDEO_ID" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="example-code">
+&lt;!-- Einbetten einer Webseite --&gt;
+&lt;iframe src="https://www.wikipedia.org" width="600" height="400"&gt;&lt;/iframe&gt;
+
+&lt;!-- Einbetten eines YouTube Videos (Beispiel-Code von YouTube) --&gt;
+&lt;iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen&gt;&lt;/iframe&gt;
+            </div>
+        </section>
+
+        <section id="sonstiges" class="section">
+            <h2>Sonstige wichtige Elemente und Konzepte</h2>
+
+            <h3>Kommentare</h3>
+            <p>Kommentare werden vom Browser ignoriert und dienen dazu, den HTML-Code für Entwickler verständlicher zu machen.</p>
+            <div class="example-code">
+&lt;!-- Dies ist ein Kommentar. Er wird nicht auf der Webseite angezeigt. --&gt;
+&lt;p&gt;Dieser Text wird angezeigt.&lt;/p&gt;
+&lt;!--
+    Mehrzeilige Kommentare
+    sind auch möglich.
+--&gt;
+            </div>
+
+            <h3>Das <code>&lt;div&gt;</code>-Element</h3>
+            <p>Ein generisches Container-Element, das keine eigene semantische Bedeutung hat. Es wird verwendet, um Inhalte zu gruppieren und zu strukturieren, oft für Styling-Zwecke mit CSS oder für Manipulation mit JavaScript.</p>
+            <div class="example-display">
+                <div style="border: 1px solid blue; padding: 10px;">
+                    <h4>Ein Div-Container</h4>
+                    <p>Dieser Inhalt ist in einem Div.</p>
+                </div>
+            </div>
+            <div class="example-code">
+&lt;div class="container"&gt;
+    &lt;h1&gt;Titel im Div&lt;/h1&gt;
+    &lt;p&gt;Absatz im Div.&lt;/p&gt;
+&lt;/div&gt;
+            </div>
+
+            <h3>Das <code>&lt;span&gt;</code>-Element</h3>
+            <p>Ein generisches Inline-Container-Element, das ebenfalls keine eigene semantische Bedeutung hat. Es wird verwendet, um Teile eines Textes oder Inline-Inhalts zu gruppieren, oft für Styling oder JavaScript.</p>
+            <div class="example-display">
+                <p>Dies ist ein Satz mit einem <span style="color: red; font-weight: bold;">roten und fetten</span> Wort.</p>
+            </div>
+            <div class="example-code">
+&lt;p&gt;Ein Teil dieses Textes ist &lt;span class="hervorhebung"&gt;besonders&lt;/span&gt; formatiert.&lt;/p&gt;
+            </div>
+
+            <h3>Globale Attribute</h3>
+            <p>Es gibt einige Attribute, die für die meisten HTML-Elemente verwendet werden können:</p>
+            <ul>
+                <li><code>id</code>: Definiert einen eindeutigen Identifikator für ein Element (darf auf einer Seite nur einmal vorkommen).</li>
+                <li><code>class</code>: Weist einem Element eine oder mehrere Klassen zu (durch Leerzeichen getrennt). Klassen werden oft für CSS-Styling oder JavaScript-Selektion verwendet.</li>
+                <li><code>style</code>: Ermöglicht das direkte Anwenden von Inline-CSS-Stilen auf ein Element (sollte sparsam verwendet werden; externe oder interne Stylesheets sind meist besser).</li>
+                <li><code>title</code>: Zeigt zusätzliche Informationen als Tooltip an, wenn man mit der Maus über das Element fährt.</li>
+                <li><code>lang</code>: Gibt die Sprache des Elementinhalts an.</li>
+                <li><code>tabindex</code>: Steuert die Tabulator-Reihenfolge für die Tastaturnavigation und ob ein Element fokussierbar ist.</li>
+                <li><code>hidden</code>: Blendet ein Element aus.</li>
+                <li><code>data-*</code>: Benutzerdefinierte Datenattribute, um private Daten zu speichern, die von JavaScript genutzt werden können (z.B. <code>data-user-id="123"</code>).</li>
+            </ul>
+            <div class="example-code">
+&lt;div id="main-content" class="content-area important" style="color: blue;" title="Hauptinhaltsbereich"&gt;
+  &lt;p lang="en" data-info="Ein Beispielabsatz"&gt;This is some content.&lt;/p&gt;
+&lt;/div&gt;
+            </div>
+
+            <h3>HTML-Entitäten</h3>
+            <p>Bestimmte Zeichen haben in HTML eine spezielle Bedeutung (z.B. <code>&lt;</code>, <code>&gt;</code>, <code>&amp;</code>). Um diese Zeichen als Text darzustellen, müssen sie als Entitäten geschrieben werden:</p>
+            <ul>
+                <li><code>&amp;lt;</code> für <code>&lt;</code> (kleiner als)</li>
+                <li><code>&amp;gt;</code> für <code>&gt;</code> (größer als)</li>
+                <li><code>&amp;amp;</code> für <code>&amp;</code> (Ampersand)</li>
+                <li><code>&amp;quot;</code> für <code>"</code> (doppeltes Anführungszeichen)</li>
+                <li><code>&amp;apos;</code> für <code>'</code> (einfaches Anführungszeichen - nicht immer nötig, aber sicherer)</li>
+                <li><code>&amp;nbsp;</code> für ein geschütztes Leerzeichen (non-breaking space)</li>
+                <li><code>&amp;copy;</code> für &copy; (Copyright)</li>
+                <li><code>&amp;reg;</code> für &reg; (Registered Trademark)</li>
+                <li><code>&amp;euro;</code> für &euro; (Eurozeichen)</li>
+            </ul>
+            <div class="example-display">
+                <p>Der Code für ein Paragraphen-Tag ist <code>&amp;lt;p&amp;gt;</code>.</p>
+                <p>Kaffee &amp; Kuchen &copy; 2025.</p>
+            </div>
+            <div class="example-code">
+&lt;p&gt;Das &amp;lt;p&amp;gt;-Tag wird für Absätze verwendet.&lt;/p&gt;
+&lt;p&gt;Kosten: 10&amp;nbsp;&amp;euro;&lt;/p&gt;
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; <time datetime="2025">2025</time> HTML Lernressource. Viel Erfolg beim Coden!</p>
+        </footer>
+    </div>
+
+</body>
+</html>

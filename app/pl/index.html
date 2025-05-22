@@ -1,0 +1,1562 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet's Life - Deine Eule</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="https://quixoticode.github.io/data/pl/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="https://quixoticode.github.io/data/pl/favicon.svg" />
+    <link rel="shortcut icon" href="https://quixoticode.github.io/data/pl/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="https://quixoticode.github.io/data/pl/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Pet's Life" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <link rel="manifest" href="https://quixoticode.github.io/data/pl/site.webmanifest" />
+
+    <style>
+        :root {
+            --bg-color: #e0f2fe; /* Heller Himmelblau */
+            --card-bg-color: white;
+            --text-color-primary: #0c4a6e; /* Dunkleres Blau */
+            --text-color-secondary: #374151;
+            --text-color-accent: #0ea5e9; /* Akzentfarbe Himmelblau */
+            --button-bg-color: #0ea5e9;
+            --button-text-color: white;
+            --button-hover-bg-color: #0284c7;
+            --room-wall-color: #f0f9ff; /* Sehr helles Blau für Wand */
+            --room-floor-color: #dbeafe; /* Etwas dunkleres Hellblau für Boden */
+            --room-window-frame-color: #a16207; /* Holzbraun */
+            --room-window-glass-color: #cffafe; /* Hellzyan für Glas */
+            --livingroom-wall-color: #fef9c3; /* Helles Gelb für Wohnzimmerwand */
+            --livingroom-floor-color: #fde68a; /* Wärmeres Gelb für Wohnzimmerboden */
+            --livingroom-plant-pot-color: #78350f; /* Dunkelbraun für Topf */
+            --livingroom-plant-leaf-color: #16a34a; /* Grün für Pflanze */
+            --status-bar-track-color: #e5e7eb;
+            --status-bar-energy-fill: #22c55e; /* Grün */
+            --status-bar-hunger-fill: #f97316; /* Orange */
+            --status-bar-mood-fill: #3b82f6;   /* Blau */
+            --modal-overlay-bg: rgba(0, 0, 0, 0.6);
+            --modal-content-bg: white;
+            --worm-color: #a16207;
+            --worm-segment-border: #713f12;
+            --game-area-border: #94a3b8;
+            --personality-text-color: #059669;
+            --flight-game-obstacle-color: #78716c;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --shadow-md-color: rgba(0, 0, 0, 0.07);
+            --bed-standard-blanket-color: #a16207;
+            --bed-comfy-blanket-color: #065f46;
+            --bed-wood-color: #8B4513;
+        }
+
+        .dark-mode:root {
+            --bg-color: #0f172a;
+            --card-bg-color: #1e293b;
+            --text-color-primary: #e0f2fe;
+            --text-color-secondary: #94a3b8;
+            --text-color-accent: #38bdf8;
+            --button-bg-color: #38bdf8;
+            --button-text-color: #0f172a;
+            --button-hover-bg-color: #0ea5e9;
+            --room-wall-color: #334155;
+            --room-floor-color: #1e293b;
+            --room-window-frame-color: #c78458;
+            --room-window-glass-color: #525f76;
+            --livingroom-wall-color: #424230;
+            --livingroom-floor-color: #575338;
+            --livingroom-plant-pot-color: #a16207; 
+            --livingroom-plant-leaf-color: #22c55e;
+            --status-bar-track-color: #334155;
+            --modal-content-bg: #334155;
+            --worm-color: #facc15;
+            --worm-segment-border: #eab308;
+            --game-area-border: #475569;
+            --personality-text-color: #2dd4bf;
+            --flight-game-obstacle-color: #a1a1aa;
+            --shadow-color: rgba(255, 255, 255, 0.05);
+            --shadow-md-color: rgba(255, 255, 255, 0.03);
+            --bed-standard-blanket-color: #c78458;
+            --bed-comfy-blanket-color: #10b981;
+            --bed-wood-color: #A0522D;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--bg-color);
+            color: var(--text-color-secondary);
+            margin: 0;
+            padding: 1rem;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .top-bar {
+            width: 100%;
+            max-width: 420px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--card-bg-color);
+            box-shadow: 0 2px 10px var(--shadow-color);
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+            z-index: 1000;
+            transition: background-color 0.3s ease;
+        }
+        .pet-coins-display {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-color-accent);
+            background-color: var(--bg-color);
+            padding: 0.375rem 0.75rem;
+            border-radius: 9999px;
+            box-shadow: inset 0 1px 2px var(--shadow-md-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .theme-toggle-button {
+            background-color: transparent;
+            color: var(--text-color-secondary);
+            border: 1px solid var(--game-area-border);
+            padding: 0.5rem;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.25rem;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+        }
+        .theme-toggle-button:hover {
+            background-color: var(--room-wall-color);
+        }
+        .game-area {
+            margin-top: 80px;
+            width: 100%;
+            max-width: 400px;
+            background-color: var(--card-bg-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px var(--shadow-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            transition: background-color 0.3s ease;
+        }
+        .room-container {
+            width: 100%;
+            max-width: 320px;
+            height: 240px;
+            position: relative;
+            margin-bottom: 0.5rem;
+        }
+        .pet-room {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 12px;
+            box-shadow: inset 0 2px 4px var(--shadow-md-color), 0 3px 6px var(--shadow-color);
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            overflow: hidden;
+            border: 3px solid var(--card-bg-color);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .pet-room.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 1;
+        }
+        #bedroom {
+            background: linear-gradient(to bottom, var(--room-wall-color) 70%, var(--room-floor-color) 70%);
+        }
+        #bedroom::before {
+            content: ''; position: absolute; top: 30px; right: 30px; width: 60px; height: 70px;
+            background-color: var(--room-window-glass-color); border: 4px solid var(--room-window-frame-color);
+            border-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.2); z-index: 1;
+        }
+        #bedroom::after {
+            content: ''; position: absolute; top: 30px; right: 30px; width: 60px; height: 70px;
+            border-left: 2px solid var(--room-window-frame-color); border-right: 2px solid var(--room-window-frame-color);
+            transform: translateX(-50%) scaleX(0.15); left: calc(30px + 30px); z-index: 2;
+        }
+        #livingroom {
+            background: linear-gradient(to bottom, var(--livingroom-wall-color) 70%, var(--livingroom-floor-color) 70%);
+        }
+        .livingroom-plant {
+            position: absolute;
+            bottom: 10px;
+            left: 30px;
+            width: 50px;
+            height: 70px;
+            z-index: 5;
+        }
+        .livingroom-plant svg { width: 100%; height: 100%; }
+        .bed-display {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 80px;
+            z-index: 5;
+        }
+        .bed-display svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0px 2px 2px var(--shadow-md-color));
+        }
+        .pet-character {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 120px;
+            z-index: 10;
+            transition: bottom 0.3s ease, transform 0.3s ease;
+        }
+        .pet-character svg#owlSvg {
+            width: 100%;
+            height: 100%;
+            transition: transform 0.5s ease-in-out;
+            filter: drop-shadow(0px 3px 3px var(--shadow-color));
+        }
+        .pet-character.sleeping {
+            bottom: 45px;
+            transform: translateX(-50%) rotate(-5deg);
+        }
+        .pet-character.sleeping .owl-eye-pupil {
+            transform: scaleY(0.1);
+            transform-origin: center;
+        }
+         .pet-character.sleeping .owl-eye-white {
+            fill: #e0e0e0;
+        }
+        .pet-info { text-align: center; }
+        .pet-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-color-primary);
+            margin-bottom: 0.25rem;
+        }
+        .pet-age-text, .pet-personality-text {
+            font-size: 0.875rem;
+            color: var(--text-color-secondary);
+            margin-bottom: 0.125rem;
+        }
+        .pet-personality-text { color: var(--personality-text-color); font-style: normal; font-weight: 500; }
+        .pet-status-text {
+            font-size: 1rem;
+            color: var(--text-color-status);
+            min-height: 1.5rem;
+            margin-top: 0.5rem;
+        }
+        .active-effects {
+            font-size: 0.875rem;
+            color: var(--text-color-accent);
+            font-weight: 500;
+            min-height: 1.25rem;
+        }
+        .stats-grid {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.75rem;
+        }
+        .stat-item { width: 100%; }
+        .status-label-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 0.25rem;
+        }
+        .status-label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-color-secondary);
+        }
+        .status-value-text {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-color-primary);
+        }
+        .status-bar {
+            width: 100%;
+            height: 12px;
+            background-color: var(--status-bar-track-color);
+            border-radius: 9999px;
+            overflow: hidden;
+        }
+        .status-bar-fill {
+            height: 100%;
+            border-radius: 9999px;
+            transition: width 0.3s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 0.5rem;
+            font-size: 0.7rem;
+            color: white;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        #energyBar.status-bar-fill { background-color: var(--status-bar-energy-fill); }
+        #hungerBar.status-bar-fill { background-color: var(--status-bar-hunger-fill); }
+        #moodBar.status-bar-fill { background-color: var(--status-bar-mood-fill); }
+        .room-navigation {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .nav-button {
+            background-color: var(--card-bg-color);
+            color: var(--text-color-accent);
+            border: 1px solid var(--text-color-accent);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+        .nav-button:hover, .nav-button.active-room-nav {
+            background-color: var(--text-color-accent);
+            color: var(--card-bg-color);
+        }
+        .dark-mode:root .nav-button.active-room-nav {
+             color: var(--button-text-color);
+        }
+        .main-actions-grid {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            margin-top: 0.5rem;
+        }
+        .action-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            background-color: var(--button-bg-color);
+            color: var(--button-text-color);
+            font-weight: 600;
+            font-size: 0.9375rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 2px 4px var(--shadow-md-color);
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+        .action-button:hover { background-color: var(--button-hover-bg-color); }
+        .action-button:active { transform: translateY(1px); }
+        .action-button.secondary {
+            background-color: var(--card-bg-color);
+            color: var(--text-color-accent);
+            border: 1px solid var(--text-color-accent);
+        }
+        .action-button.secondary:hover {
+            background-color: var(--room-wall-color);
+        }
+        .dark-mode:root .action-button.secondary:hover {
+            background-color: var(--room-wall-color);
+        }
+         .action-button.full-width { grid-column: span 2; }
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--modal-overlay-bg);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 15px;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+        .modal-content {
+            background-color: var(--modal-content-bg);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px var(--shadow-color);
+            width: 100%;
+            max-width: 380px;
+            text-align: center;
+            color: var(--text-color-secondary);
+        }
+        .modal-content h2 {
+            color: var(--text-color-primary);
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        .modal-content ul { list-style: disc; padding-left: 1.5rem; text-align: left; margin-bottom: 1rem;}
+        .modal-content ul li { margin-bottom: 0.25rem; }
+        .shop-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 12px;
+            border: 1px solid var(--game-area-border);
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+        .shop-item span {
+            margin-bottom: 8px;
+        }
+        .shop-item button {
+            width: auto;
+            padding: 8px 16px;
+        }
+        #shopMessage { margin-top: 10px; font-size: 0.9rem; min-height: 1.2em; }
+        #wormGameArea, #flightGameArea {
+            width: 100%;
+            border: 2px solid var(--game-area-border);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            margin-top: 1rem;
+            background-color: var(--room-wall-color);
+        }
+        #wormGameArea { height: 250px; }
+        #flightGameArea { height: 200px; cursor: pointer; }
+        .worm {
+            width: 30px;
+            height: 12px;
+            position: absolute;
+            cursor: pointer;
+            display: flex;
+        }
+        .worm-segment {
+            height: 100%;
+            background-color: var(--worm-color);
+            border: 1px solid var(--worm-segment-border);
+            box-sizing: border-box;
+        }
+        .worm-segment:first-child {
+            width: 35%;
+            border-top-left-radius: 6px;
+            border-bottom-left-radius: 6px;
+        }
+        .worm-segment:nth-child(2) {
+            width: 30%;
+        }
+        .worm-segment:last-child {
+            width: 35%;
+            border-top-right-radius: 6px;
+            border-bottom-right-radius: 6px;
+        }
+        #wormGameTimer, #wormGameScore, #flightGameScore {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-color-primary);
+            margin-top: 0.75rem;
+        }
+        #wormGameMessage, #flightGameMessage {
+            font-size: 0.875rem;
+            color: var(--text-color-status);
+            min-height: 1.25rem;
+            margin-top: 0.5rem;
+        }
+        .flight-owl-container {
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            left: 20px;
+            transition: top 0.1s linear;
+        }
+        .flight-owl-container svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        .flight-obstacle {
+            width: 20px;
+            height: 80px;
+            background-color: var(--flight-game-obstacle-color);
+            position: absolute;
+            right: -20px;
+        }
+        #notificationMessage {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 1rem;
+            border-radius: 8px;
+            background-color: var(--notification-bg);
+            color: var(--notification-text);
+            box-shadow: 0 2px 10px var(--shadow-color);
+            z-index: 2000;
+            display: none;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        #notificationMessage.show {
+            display: block;
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+         #notificationMessage.hide {
+            opacity: 0;
+            transform: translateX(-50%) translateY(20px);
+        }
+        @media (max-width: 480px) {
+            .game-area { margin-top: 70px; padding: 1rem; }
+            .pet-room { max-width: 100%; height: 200px; }
+            .pet-character { width: 100px; height: 100px; bottom: 25px; }
+            .bed-display { width: 130px; height: 70px; bottom: 5px; }
+            .top-bar { padding: 0.5rem 0.75rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <div id="petCoinsDisplay" class="pet-coins-display">🪙 0</div>
+        <button id="themeToggleButton" class="theme-toggle-button" aria-label="Theme umschalten">🌙</button>
+    </div>
+
+    <main class="game-area">
+        <div class="room-container">
+            <div class="pet-room active" id="bedroom">
+                <div class="bed-display" id="bedDisplayContainer">
+                    </div>
+                <div class="pet-character" id="petCharacterDisplay">
+                    <svg id="owlSvg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <ellipse class="owl-body" cx="50" cy="60" rx="30" ry="35" />
+                        <circle class="owl-eye-white" cx="35" cy="50" r="12" fill="white"/>
+                        <circle class="owl-eye-pupil" cx="35" cy="50" r="5" fill="black"/>
+                        <circle class="owl-eye-white" cx="65" cy="50" r="12" fill="white"/>
+                        <circle class="owl-eye-pupil" cx="65" cy="50" r="5" fill="black"/>
+                        <polygon class="owl-beak" points="48,60 52,60 50,65" fill="orange"/>
+                        <ellipse class="owl-foot" cx="40" cy="90" rx="8" ry="4" fill="orange" transform="rotate(-10 40 90)"/>
+                        <ellipse class="owl-foot" cx="60" cy="90" rx="8" ry="4" fill="orange" transform="rotate(10 60 90)"/>
+                        <path class="owl-ear" d="M30 35 Q35 20 40 35" stroke="#783f21" stroke-width="2"/>
+                        <path class="owl-ear" d="M70 35 Q65 20 60 35" stroke="#783f21" stroke-width="2"/>
+                        <path class="owl-wing" d="M20 60 Q15 70 25 80 C 30 75 30 65 20 60" />
+                        <path class="owl-wing" d="M80 60 Q85 70 75 80 C 70 75 70 65 80 60" />
+                    </svg>
+                </div>
+            </div>
+            <div class="pet-room" id="livingroom">
+                <div class="livingroom-plant">
+                    <svg viewBox="0 0 50 70">
+                        <rect x="15" y="50" width="20" height="20" rx="3" fill="var(--livingroom-plant-pot-color)"/>
+                        <path d="M25 50 Q20 30 15 20 Q25 25 25 10 Q25 25 35 20 Q30 30 25 50" fill="var(--livingroom-plant-leaf-color)"/>
+                        <path d="M25 50 Q30 30 35 20 Q25 25 25 10 Q25 25 15 20 Q20 30 25 50" fill="var(--livingroom-plant-leaf-color)" transform="scale(0.8 1) translate(6 0)"/>
+                    </svg>
+                </div>
+                 </div>
+        </div>
+        
+        <div class="room-navigation">
+            <button class="nav-button" id="navBedroomButton">Schlafzimmer</button>
+            <button class="nav-button" id="navLivingroomButton">Wohnzimmer</button>
+        </div>
+
+        <div class="pet-info">
+            <h1 class="pet-title" id="petTitle">Babyeule</h1>
+            <p class="pet-age-text" id="petAgeText">Alter: 0 Tage</p>
+            <p class="pet-personality-text" id="petPersonalityText">Persönlichkeit: Normal</p>
+        </div>
+
+        <p class="pet-status-text" id="petStatusText">Die Babyeule schaut dich neugierig an.</p>
+        <div class="active-effects" id="activeEffectsText"></div>
+        
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="status-label-group">
+                    <span class="status-label">Energie</span>
+                    <span class="status-value-text" id="energyValueText">70%</span>
+                </div>
+                <div class="status-bar"><div class="status-bar-fill" id="energyBar" style="width: 70%;"></div></div>
+            </div>
+            <div class="stat-item">
+                 <div class="status-label-group">
+                    <span class="status-label">Sättigung</span>
+                    <span class="status-value-text" id="hungerValueText">50%</span>
+                </div>
+                <div class="status-bar"><div class="status-bar-fill" id="hungerBar" style="width: 50%;"></div></div>
+            </div>
+            <div class="stat-item">
+                <div class="status-label-group">
+                    <span class="status-label">Laune</span>
+                    <span class="status-value-text" id="moodValueText">80%</span>
+                </div>
+                <div class="status-bar "><div class="status-bar-fill" id="moodBar" style="width: 80%;"></div></div>
+            </div>
+        </div>
+
+        <div class="main-actions-grid">
+            <button class="action-button" id="feedButton">🍼 <span class="ml-1">Füttern</span></button>
+            <button class="action-button" id="petButton">💖 <span class="ml-1">Streicheln</span></button>
+            <button class="action-button" id="sleepButton">🌙 <span class="ml-1">Schlafen</span></button>
+            <button class="action-button" id="openShopButton">🛍️ <span class="ml-1">Shop</span></button>
+            <button class="action-button full-width" id="openWormGameButton">🐛 <span class="ml-1">Wurmjagd</span></button>
+            <button class="action-button full-width" id="openFlightGameButton">🕊️ <span class="ml-1">Hindernisflug</span></button>
+        </div>
+    </main>
+    
+    <div id="notificationMessage"></div>
+
+    <div id="updatePopupModal" class="modal-overlay">
+        <div class="modal-content">
+            <h2>✨ Update-News! ✨</h2>
+            <p class="text-left mb-4">Hallo Eulenfreund! Es gibt ein paar tolle Neuerungen in Pet's Life:</p>
+            <ul class="text-sm">
+                <li><strong>Neues UI-Design:</strong> Wir haben das Aussehen überarbeitet, um es moderner und schöner zu gestalten!</li>
+                <li><strong>Schlafzimmer-Update:</strong> Deine Eule hat jetzt ein richtiges Schlafzimmer mit einem sichtbaren Bett.</li>
+                <li><strong>Neues Wohnzimmer:</strong> Entdecke einen brandneuen Raum für deine Eule!</li>
+                <li><strong>Verbesserte Minispiele:</strong> Die Wurmjagd und der Hindernisflug sollten jetzt zuverlässiger funktionieren.</li>
+                <li>Viele kleine Verbesserungen und Fehlerbehebungen im Hintergrund.</li>
+            </ul>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Viel Spaß mit den neuen Funktionen!</p>
+            <button id="closeUpdatePopupButton" class="action-button">Verstanden!</button>
+        </div>
+    </div>
+
+    <div id="shopModal" class="modal-overlay">
+        <div class="modal-content">
+            <h2>Willkommen im Shop!</h2>
+            <div class="shop-item">
+                <span>Schutztrank (1 Std.)<br><small>Verhindert Statusabfall</small></span>
+                <button id="buyProtectionPotionButton" class="action-button">Kaufen (50 🪙)</button>
+            </div>
+            <div class="shop-item mt-3">
+                <span>Super-Beere<br><small>+50 Sättigung, +10 Energie, +5 Laune</small></span>
+                <button id="buySuperBerryButton" class="action-button">Kaufen (25 🪙)</button>
+            </div>
+            <div class="shop-item mt-3"> <span>Kuscheliges Nest<br><small>Besserer Schlaf: +15 Energie Bonus</small></span>
+                <button id="buyComfyNestButton" class="action-button">Kaufen (75 🪙)</button>
+            </div>
+            <div id="shopMessage" class="mt-2 text-sm min-h-[1.2em]"></div>
+            <button id="closeShopButton" class="action-button secondary mt-4">Schließen</button>
+        </div>
+    </div>
+
+    <div id="wormGameModal" class="modal-overlay">
+        <div class="modal-content">
+            <h2>Wurmjagd!</h2>
+            <p>Klicke so viele Würmer wie möglich in 30 Sekunden!</p>
+            <div id="wormGameArea"></div>
+            <div id="wormGameTimer">Zeit: 30s</div>
+            <div id="wormGameScore">Punkte: 0</div>
+            <div id="wormGameMessage" class="mt-2 text-sm min-h-[1.2em]"></div>
+            <button id="startWormGameButton" class="action-button mt-4">Spiel starten</button>
+            <button id="closeWormGameButton" class="action-button secondary mt-4">Beenden</button>
+        </div>
+    </div>
+
+    <div id="flightGameModal" class="modal-overlay">
+        <div class="modal-content">
+            <h2>Hindernisflug!</h2>
+            <p>Klicke/Tippe, um zu flattern und Hindernissen auszuweichen!</p>
+            <div id="flightGameArea">
+                <div class="flight-owl-container" id="flightGameOwlContainer">
+                    <svg id="flightGameOwlSvg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                      <ellipse class="owl-body" cx="50" cy="60" rx="30" ry="35" />
+                      <circle class="owl-eye-white" cx="35" cy="50" r="12" fill="white"/>
+                      <circle class="owl-eye-pupil" cx="35" cy="50" r="5" fill="black"/>
+                      <circle class="owl-eye-white" cx="65" cy="50" r="12" fill="white"/>
+                      <circle class="owl-eye-pupil" cx="65" cy="50" r="5" fill="black"/>
+                      <polygon class="owl-beak" points="48,60 52,60 50,65" fill="orange"/>
+                      <path class="owl-ear" d="M30 35 Q35 20 40 35" stroke="#783f21" stroke-width="2"/>
+                       <path class="owl-ear" d="M70 35 Q65 20 60 35" stroke="#783f21" stroke-width="2"/>
+                    </svg>
+                </div>
+            </div>
+            <div id="flightGameScore">Punkte: 0</div>
+            <div id="flightGameMessage" class="mt-2 text-sm min-h-[1.2em]"></div>
+            <button id="startFlightGameButton" class="action-button mt-4">Spiel starten</button>
+            <button id="closeFlightGameButton" class="action-button secondary mt-4">Beenden</button>
+        </div>
+    </div>
+
+    <script>
+        // --- Konstanten & Konfiguration ---
+        const GAME_VERSION = "1.4-room-update"; 
+        const MAX_STAT = 100;
+        const MIN_STAT = 0;
+        const MS_PER_HOUR = 1000 * 60 * 60;
+        const MS_PER_DAY = MS_PER_HOUR * 24;
+
+        const SATIATION_DECREASE_PER_HOUR = 8;
+        const ENERGY_DECREASE_PER_HOUR_AWAKE = 6;
+        const MOOD_DECREASE_PER_HOUR_ALONE = 5;
+
+        const SATIATION_GAIN_FROM_FEEDING = 30;
+        const ENERGY_COST_OF_FEEDING = 3;
+        const MOOD_GAIN_FROM_FEEDING = 8;
+        const MOOD_GAIN_FROM_PETTING = 25;
+        const ENERGY_COST_OF_PETTING = 2;
+        const ENERGY_GAIN_FROM_SLEEP_STANDARD = 50;
+        const ENERGY_GAIN_FROM_SLEEP_COMFY = 65;
+        const MOOD_GAIN_FROM_SLEEP = 5;
+
+        const LOW_STAT_THRESHOLD = 25;
+        const GOOD_CARE_AVG_STAT_THRESHOLD = 65;
+
+        const GROWTH_STAGES = {
+            baby: { name: "Babyeule", nextStage: 'juvenile', activeHoursNeeded: 0, careHoursNeeded: 0, svgScale: 1.0, bodyFillLight: "#A0522D", bodyFillDark: "#c78458" },
+            juvenile: { name: "Junge Eule", nextStage: 'adult', activeHoursNeeded: 24, careHoursNeeded: 18, svgScale: 1.2, bodyFillLight: "#8B4513", bodyFillDark: "#a8653a" },
+            adult: { name: "Erwachsene Eule", nextStage: null, activeHoursNeeded: 72, careHoursNeeded: 50, svgScale: 1.4, bodyFillLight: "#753D1F", bodyFillDark: "#915a3f" }
+        };
+        const PROTECTION_POTION_DURATION_MS = 1 * MS_PER_HOUR;
+        const PROTECTION_POTION_COST = 50;
+        const SUPER_BERRY_COST = 25;
+        const SUPER_BERRY_SATIATION = 50;
+        const SUPER_BERRY_ENERGY = 10;
+        const SUPER_BERRY_MOOD = 5;
+        const COMFY_NEST_COST = 75;
+
+        const WORM_GAME_DURATION_S = 30;
+        const WORM_APPEAR_INTERVAL_MS = 1200;
+        const WORM_LIFESPAN_MS = 2500;
+
+        const PERSONALITIES = {
+            normal: { name: "Normal", moodEffect: 1.0, energyEffect: 1.0, hungerEffect: 1.0, specialAbilityText: "" },
+            verspielt: { name: "Verspielt", moodEffect: 1.2, energyEffect: 0.9, hungerEffect: 1.0, specialAbilityText: "Liebt Spiele besonders!", gameCoinBonus: 2 },
+            ruhig: { name: "Ruhig", moodEffect: 0.8, energyEffect: 1.1, hungerEffect: 1.0, specialAbilityText: "Verbraucht weniger Energie." },
+            schlau: { name: "Schlau", moodEffect: 1.0, energyEffect: 1.0, hungerEffect: 0.9, specialAbilityText: "Findet manchmal extra 🪙.", passiveCoinChance: 0.1, passiveCoinAmount: 5 }
+        };
+        const PERSONALITY_KEYS = Object.keys(PERSONALITIES);
+
+        const FLIGHT_GAME_GRAVITY = 2;
+        const FLIGHT_GAME_FLAP_STRENGTH = 35;
+        const FLIGHT_GAME_OBSTACLE_SPEED = 3;
+        const FLIGHT_GAME_OBSTACLE_GAP = 100;
+        const FLIGHT_GAME_OBSTACLE_SPAWN_INTERVAL_MS = 2000;
+
+        const BED_SVGS = {
+            standardBed: `<svg viewBox="0 0 100 50"><rect x="10" y="20" width="80" height="25" rx="5" fill="var(--bed-wood-color)"/><rect x="15" y="10" width="70" height="15" fill="var(--bed-standard-blanket-color)" rx="3"/><ellipse cx="30" cy="12" rx="10" ry="4" fill="#f0f0f0"/><ellipse cx="70" cy="12" rx="10" ry="4" fill="#f0f0f0"/></svg>`,
+            comfyNest: `<svg viewBox="0 0 100 60"><path d="M10 50 Q5 30 15 20 C 25 5 75 5 85 20 Q95 30 90 50 Z" fill="var(--bed-wood-color)" stroke="#5C3A1E" stroke-width="2"/><ellipse cx="50" cy="35" rx="30" ry="15" fill="var(--bed-comfy-blanket-color)"/><ellipse cx="35" cy="30" rx="8" ry="5" fill="#f0f0f0" transform="rotate(-15 35 30)"/><ellipse cx="65" cy="30" rx="8" ry="5" fill="#f0f0f0" transform="rotate(15 65 30)"/></svg>`
+        };
+
+        // --- Spielstatus ---
+        let petStats = {
+            energy: MAX_STAT,
+            hunger: MAX_STAT,
+            mood: MAX_STAT,
+            lastUpdateEnergy: Date.now(),
+            lastUpdateHunger: Date.now(),
+            lastUpdateMood: Date.now(),
+            notifiedLowEnergy: false,
+            notifiedLowHunger: false,
+            notifiedLowMood: false,
+            creationTime: Date.now(),
+            growthStage: 'baby',
+            accumulatedActiveHours: 0,
+            accumulatedCareHours: 0,
+            lastGrowthUpdateTime: Date.now(),
+            themePreference: 'light',
+            petCoins: 100,
+            inventory: {
+                protectionPotion: { active: false, expiresAt: 0 },
+                activeBed: 'standardBed',
+                ownedBeds: ['standardBed']
+            },
+            personality: 'normal',
+            isSleeping: false,
+            currentRoom: 'bedroom',
+            lastSeenVersion: "0"
+        };
+
+        // --- DOM Elemente ---
+        // Globale Deklarationen für Elemente, die außerhalb von DOMContentLoaded benötigt werden könnten
+        let themeToggleButton, petCoinsDisplay, energyBar, hungerBar, moodBar, energyValueText, hungerValueText, moodValueText,
+            petTitle, petAgeText, petPersonalityText, petStatusText, activeEffectsText, owlSvg, owlSvgBody, owlSvgEars, owlSvgWings,
+            notificationMessageDiv, feedButton, petButton, sleepButton, openShopButton, shopModal, closeShopButton,
+            buyProtectionPotionButton, buySuperBerryButton, buyComfyNestButton, shopMessage, openWormGameButton, wormGameModal,
+            closeWormGameButton, startWormGameButton, wormGameArea, wormGameTimerDisplay, wormGameScoreDisplay, wormGameMessage,
+            openFlightGameButton, flightGameModal, closeFlightGameButton, startFlightGameButton, flightGameArea,
+            flightGameOwlContainer, flightGameOwlSvg, flightGameScoreDisplay, flightGameMessage,
+            bedDisplayContainer, petCharacterDisplay, bedroomDiv, livingroomDiv, navBedroomButton, navLivingroomButton,
+            updatePopupModal, closeUpdatePopupButton;
+        
+        let wormGameIntervalId = null;
+        let wormSpawnIntervalId = null;
+        let wormGameScore = 0;
+        let wormGameTimeLeft = WORM_GAME_DURATION_S;
+
+        let flightGameLoopId = null;
+        let flightGameObstacleSpawnId = null;
+        let flightGameOwlY = 100;
+        let flightGameOwlVelocityY = 0;
+        let flightGameObstacles = [];
+        let flightGameScore = 0;
+        let flightGameActive = false;
+        
+        let allModals = [];
+
+
+        window.addEventListener('DOMContentLoaded', () => {
+            // DOM Elemente hier initialisieren
+            themeToggleButton = document.getElementById('themeToggleButton');
+            petCoinsDisplay = document.getElementById('petCoinsDisplay');
+            energyBar = document.getElementById('energyBar');
+            hungerBar = document.getElementById('hungerBar');
+            moodBar = document.getElementById('moodBar');
+            energyValueText = document.getElementById('energyValueText');
+            hungerValueText = document.getElementById('hungerValueText');
+            moodValueText = document.getElementById('moodValueText');
+            petTitle = document.getElementById('petTitle');
+            petAgeText = document.getElementById('petAgeText');
+            petPersonalityText = document.getElementById('petPersonalityText');
+            petStatusText = document.getElementById('petStatusText');
+            activeEffectsText = document.getElementById('activeEffectsText');
+            owlSvg = document.getElementById('owlSvg');
+            if(owlSvg) { // Null checks for safety
+                owlSvgBody = owlSvg.querySelector('.owl-body');
+                owlSvgEars = owlSvg.querySelectorAll('.owl-ear');
+                owlSvgWings = owlSvg.querySelectorAll('.owl-wing');
+            }
+            notificationMessageDiv = document.getElementById('notificationMessage');
+            feedButton = document.getElementById('feedButton');
+            petButton = document.getElementById('petButton');
+            sleepButton = document.getElementById('sleepButton');
+            openShopButton = document.getElementById('openShopButton');
+            shopModal = document.getElementById('shopModal');
+            closeShopButton = document.getElementById('closeShopButton');
+            buyProtectionPotionButton = document.getElementById('buyProtectionPotionButton');
+            buySuperBerryButton = document.getElementById('buySuperBerryButton');
+            buyComfyNestButton = document.getElementById('buyComfyNestButton');
+            shopMessage = document.getElementById('shopMessage');
+            openWormGameButton = document.getElementById('openWormGameButton');
+            wormGameModal = document.getElementById('wormGameModal');
+            closeWormGameButton = document.getElementById('closeWormGameButton');
+            startWormGameButton = document.getElementById('startWormGameButton');
+            wormGameArea = document.getElementById('wormGameArea');
+            wormGameTimerDisplay = document.getElementById('wormGameTimer');
+            wormGameScoreDisplay = document.getElementById('wormGameScore');
+            wormGameMessage = document.getElementById('wormGameMessage');
+            openFlightGameButton = document.getElementById('openFlightGameButton');
+            flightGameModal = document.getElementById('flightGameModal');
+            closeFlightGameButton = document.getElementById('closeFlightGameButton');
+            startFlightGameButton = document.getElementById('startFlightGameButton');
+            flightGameArea = document.getElementById('flightGameArea');
+            flightGameOwlContainer = document.getElementById('flightGameOwlContainer');
+            flightGameOwlSvg = document.getElementById('flightGameOwlSvg');
+            flightGameScoreDisplay = document.getElementById('flightGameScore');
+            flightGameMessage = document.getElementById('flightGameMessage');
+            bedDisplayContainer = document.getElementById('bedDisplayContainer');
+            petCharacterDisplay = document.getElementById('petCharacterDisplay');
+            bedroomDiv = document.getElementById('bedroom');
+            livingroomDiv = document.getElementById('livingroom');
+            navBedroomButton = document.getElementById('navBedroomButton');
+            navLivingroomButton = document.getElementById('navLivingroomButton');
+            updatePopupModal = document.getElementById('updatePopupModal');
+            closeUpdatePopupButton = document.getElementById('closeUpdatePopupButton');
+
+            allModals = [shopModal, wormGameModal, flightGameModal, updatePopupModal];
+
+
+            // Event Listener Zuweisungen hier
+            if(themeToggleButton) {
+                themeToggleButton.addEventListener('click', () => {
+                    const newTheme = document.documentElement.classList.contains('dark-mode') ? 'light' : 'dark';
+                    applyTheme(newTheme);
+                });
+            }
+            if(navBedroomButton) navBedroomButton.addEventListener('click', () => switchToRoom('bedroom'));
+            if(navLivingroomButton) navLivingroomButton.addEventListener('click', () => switchToRoom('livingroom'));
+            if(feedButton) feedButton.addEventListener('click', () => { /* ... */ });
+            if(petButton) petButton.addEventListener('click', () => { /* ... */ });
+            if(sleepButton) sleepButton.addEventListener('click', () => { /* ... */ });
+            if(openShopButton) openShopButton.addEventListener('click', () => { /* ... */ });
+            if(closeShopButton) closeShopButton.addEventListener('click', () => { /* ... */ });
+            if(buyProtectionPotionButton) buyProtectionPotionButton.addEventListener('click', () => { /* ... */ });
+            if(buySuperBerryButton) buySuperBerryButton.addEventListener('click', () => { /* ... */ });
+            if(buyComfyNestButton) buyComfyNestButton.addEventListener('click', () => { /* ... */ });
+            if(openWormGameButton) openWormGameButton.addEventListener('click', () => { /* ... */ });
+            if(closeWormGameButton) closeWormGameButton.addEventListener('click', () => { /* ... */ });
+            if(startWormGameButton) startWormGameButton.addEventListener('click', () => { /* ... */ });
+            if(openFlightGameButton) openFlightGameButton.addEventListener('click', () => { /* ... */ });
+            if(closeFlightGameButton) closeFlightGameButton.addEventListener('click', () => { /* ... */ });
+            if(startFlightGameButton) startFlightGameButton.addEventListener('click', () => { /* ... */ });
+            if(flightGameArea) flightGameArea.addEventListener('click', () => { /* ... */ });
+            if(closeUpdatePopupButton) closeUpdatePopupButton.addEventListener('click', () => { /* ... */ });
+
+
+            // Spiel initialisieren
+            loadGame();
+            requestNotificationPermission();
+            if ('serviceWorker' in navigator) { /* ... */ }
+
+            // Event Listener für Aktionen (gekürzt für Übersicht, volle Logik unten)
+            feedButton.addEventListener('click', handleFeed);
+            petButton.addEventListener('click', handlePet);
+            sleepButton.addEventListener('click', handleSleep);
+            openShopButton.addEventListener('click', handleOpenShop);
+            closeShopButton.addEventListener('click', () => shopModal.style.display = 'none');
+            buyProtectionPotionButton.addEventListener('click', handleBuyProtectionPotion);
+            buySuperBerryButton.addEventListener('click', handleBuySuperBerry);
+            buyComfyNestButton.addEventListener('click', handleBuyComfyNest);
+            openWormGameButton.addEventListener('click', handleOpenWormGame);
+            closeWormGameButton.addEventListener('click', () => { endWormGame(false); wormGameModal.style.display = 'none'; });
+            startWormGameButton.addEventListener('click', handleStartWormGame);
+            openFlightGameButton.addEventListener('click', handleOpenFlightGame);
+            closeFlightGameButton.addEventListener('click', () => { endFlightGame(false); flightGameModal.style.display = 'none'; });
+            startFlightGameButton.addEventListener('click', handleStartFlightGame);
+            if(flightGameArea) flightGameArea.addEventListener('click', handleFlightGameFlap);
+            if(closeUpdatePopupButton) closeUpdatePopupButton.addEventListener('click', handleCloseUpdatePopup);
+        });
+
+
+        function closeAllModals() {
+            allModals.forEach(modal => {
+                if (modal) modal.style.display = 'none';
+            });
+        }
+        function formatTime(milliseconds) {
+            if (milliseconds <= 0) return "0s";
+            let seconds = Math.floor((milliseconds / 1000) % 60);
+            let minutes = Math.floor((milliseconds / (1000 * 60)) % 60);
+            let hours = Math.floor((milliseconds / (1000 * 60 * 60)) % 24);
+            let parts = [];
+            if (hours > 0) parts.push(hours + "h");
+            if (minutes > 0) parts.push(minutes + "m");
+            if (seconds > 0 || parts.length === 0) parts.push(seconds + "s");
+            return parts.join(" ");
+        }
+        function applyTheme(theme) {
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark-mode');
+                if(themeToggleButton) themeToggleButton.textContent = '☀️';
+            } else {
+                document.documentElement.classList.remove('dark-mode');
+                if(themeToggleButton) themeToggleButton.textContent = '🌙';
+            }
+            petStats.themePreference = theme;
+            applyGrowthVisuals();
+            saveGame();
+        }
+        function saveGame() {
+            localStorage.setItem('petLifeGameSave', JSON.stringify(petStats));
+        }
+        function loadGame() {
+            const savedGame = localStorage.getItem('petLifeGameSave');
+            if (savedGame) {
+                const loaded = JSON.parse(savedGame);
+                const defaultInventory = { 
+                    protectionPotion: { active: false, expiresAt: 0 },
+                    activeBed: 'standardBed',
+                    ownedBeds: ['standardBed']
+                };
+                petStats = { 
+                    ...petStats, 
+                    ...loaded, 
+                    creationTime: loaded.creationTime || petStats.creationTime,
+                    inventory: loaded.inventory || defaultInventory,
+                    petCoins: loaded.petCoins === undefined ? 100 : loaded.petCoins,
+                    personality: loaded.personality || PERSONALITY_KEYS[Math.floor(Math.random() * PERSONALITY_KEYS.length)],
+                    isSleeping: loaded.isSleeping || false,
+                    currentRoom: loaded.currentRoom || 'bedroom',
+                    lastSeenVersion: loaded.lastSeenVersion || "0"
+                };
+                if (!petStats.inventory.ownedBeds || !Array.isArray(petStats.inventory.ownedBeds)) {
+                    petStats.inventory.ownedBeds = ['standardBed'];
+                } else if (!petStats.inventory.ownedBeds.includes('standardBed')) {
+                    petStats.inventory.ownedBeds.push('standardBed');
+                }
+                ['lastUpdateEnergy', 'lastUpdateHunger', 'lastUpdateMood', 'creationTime', 'lastGrowthUpdateTime'].forEach(keyPath => {
+                    let val = petStats; const parts = keyPath.split('.'); for(let i = 0; i < parts.length -1; i++) val = val[parts[i]];
+                    if (val && val[parts[parts.length-1]]) val[parts[parts.length-1]] = Number(val[parts[parts.length-1]]);
+                });
+                if (petStats.inventory && petStats.inventory.protectionPotion && petStats.inventory.protectionPotion.expiresAt) {
+                    petStats.inventory.protectionPotion.expiresAt = Number(petStats.inventory.protectionPotion.expiresAt);
+                }
+                applyTheme(petStats.themePreference || 'light');
+            } else {
+                petStats.personality = PERSONALITY_KEYS[Math.floor(Math.random() * PERSONALITY_KEYS.length)];
+                const now = Date.now();
+                petStats.creationTime = now;
+                petStats.lastUpdateEnergy = now;
+                petStats.lastUpdateHunger = now;
+                petStats.lastUpdateMood = now;
+                petStats.lastGrowthUpdateTime = now;
+                petStats.lastSeenVersion = "0";
+                applyTheme('light');
+                console.log(`Eule initialisiert mit Persönlichkeit: ${petStats.personality}`);
+            }
+            updatePetCoinsDisplay();
+            updatePersonalityDisplay();
+            switchToRoom(petStats.currentRoom, true); 
+            updateGrowthMetricsAndCheck(true);
+            recalculateStatsSinceLastUpdate();
+
+            if (petStats.lastSeenVersion !== GAME_VERSION && updatePopupModal) {
+                closeAllModals();
+                updatePopupModal.style.display = 'flex';
+            }
+        }
+        function switchToRoom(roomName, instant = false) {
+            wakeUpOwl();
+            petStats.currentRoom = roomName;
+
+            [bedroomDiv, livingroomDiv].forEach(room => {
+                if(room) room.classList.remove('active');
+            });
+            
+            const activeRoomDiv = document.getElementById(roomName);
+            if (activeRoomDiv) {
+                activeRoomDiv.classList.add('active');
+                if(petCharacterDisplay) activeRoomDiv.appendChild(petCharacterDisplay);
+                if (roomName === 'bedroom') {
+                    if(bedDisplayContainer) {
+                        activeRoomDiv.appendChild(bedDisplayContainer);
+                        bedDisplayContainer.style.display = 'block';
+                    }
+                } else {
+                    if(bedDisplayContainer) bedDisplayContainer.style.display = 'none';
+                }
+            }
+
+            if(navBedroomButton) navBedroomButton.classList.toggle('active-room-nav', roomName === 'bedroom');
+            if(navLivingroomButton) navLivingroomButton.classList.toggle('active-room-nav', roomName === 'livingroom');
+            
+            updateRoomVisuals();
+            saveGame();
+        }
+        function recalculateStatsSinceLastUpdate() {
+            const now = Date.now();
+            let potionActive = petStats.inventory.protectionPotion.active && now < petStats.inventory.protectionPotion.expiresAt;
+            const personalityMods = PERSONALITIES[petStats.personality];
+
+            if (!potionActive) {
+                let energyDecreaseRate = ENERGY_DECREASE_PER_HOUR_AWAKE * (personalityMods.energyEffect || 1.0);
+                let timePassedEnergyHours = (now - petStats.lastUpdateEnergy) / MS_PER_HOUR;
+                petStats.energy = Math.max(MIN_STAT, petStats.energy - (timePassedEnergyHours * energyDecreaseRate));
+                
+                let hungerDecreaseRate = SATIATION_DECREASE_PER_HOUR * (personalityMods.hungerEffect || 1.0);
+                let timePassedHungerHours = (now - petStats.lastUpdateHunger) / MS_PER_HOUR;
+                petStats.hunger = Math.max(MIN_STAT, petStats.hunger - (timePassedHungerHours * hungerDecreaseRate));
+
+                let moodDecreaseRate = MOOD_DECREASE_PER_HOUR_ALONE * (1 / (personalityMods.moodEffect || 1.0));
+                let timePassedMoodHours = (now - petStats.lastUpdateMood) / MS_PER_HOUR;
+                petStats.mood = Math.max(MIN_STAT, petStats.mood - (timePassedMoodHours * moodDecreaseRate));
+            } else {
+                console.log("Schutztrank aktiv, Statusabnahme pausiert.");
+            }
+            petStats.lastUpdateEnergy = now;
+            petStats.lastUpdateHunger = now;
+            petStats.lastUpdateMood = now;
+
+            if (petStats.personality === 'schlau' && Math.random() < (PERSONALITIES.schlau.passiveCoinChance / (60 * 60 / 30) ) ) {
+                 const coinsFound = PERSONALITIES.schlau.passiveCoinAmount;
+                 petStats.petCoins += coinsFound;
+                 updatePetCoinsDisplay();
+                 showNotification("Entdeckung!", `Deine schlaue Eule hat ${coinsFound} 🪙 gefunden!`);
+                 console.log(`Schlaue Eule fand ${coinsFound} PetCoins.`);
+            }
+            
+            updateActiveEffectsDisplay();
+            updateStatusDisplay();
+        }
+        function updateGrowthMetricsAndCheck(isInitialLoad = false) {
+            const now = Date.now();
+            const timeSinceLastGrowthUpdateHours = (now - petStats.lastGrowthUpdateTime) / MS_PER_HOUR;
+
+            if (timeSinceLastGrowthUpdateHours > 0) {
+                petStats.accumulatedActiveHours += timeSinceLastGrowthUpdateHours;
+                const avgStats = (petStats.energy + petStats.hunger + petStats.mood) / 3;
+                if (avgStats >= GOOD_CARE_AVG_STAT_THRESHOLD) {
+                    petStats.accumulatedCareHours += timeSinceLastGrowthUpdateHours;
+                }
+                petStats.lastGrowthUpdateTime = now;
+            }
+
+            const currentStageData = GROWTH_STAGES[petStats.growthStage];
+            if (currentStageData.nextStage) {
+                const nextStageData = GROWTH_STAGES[currentStageData.nextStage];
+                if (petStats.accumulatedActiveHours >= nextStageData.activeHoursNeeded &&
+                    petStats.accumulatedCareHours >= nextStageData.careHoursNeeded) {
+                    petStats.growthStage = currentStageData.nextStage;
+                    if (!isInitialLoad) {
+                        showNotification("Deine Eule ist gewachsen!", `Sie ist jetzt eine ${GROWTH_STAGES[petStats.growthStage].name}!`);
+                    }
+                }
+            }
+            updatePetNameAndAge();
+            applyGrowthVisuals();
+        }
+        function updatePetNameAndAge() {
+            if(petTitle) petTitle.textContent = GROWTH_STAGES[petStats.growthStage].name;
+            if(petAgeText) {
+                const ageInDays = Math.floor((Date.now() - petStats.creationTime) / MS_PER_DAY);
+                petAgeText.textContent = `Alter: ${ageInDays} Tag${ageInDays === 1 ? '' : 'e'}`;
+            }
+        }
+        function applyGrowthVisuals() {
+            const stageConfig = GROWTH_STAGES[petStats.growthStage];
+            const isDarkMode = document.documentElement.classList.contains('dark-mode');
+            const bodyFillColor = isDarkMode ? stageConfig.bodyFillDark : stageConfig.bodyFillLight;
+
+            if(owlSvg) owlSvg.style.transform = `scale(${stageConfig.svgScale})`;
+            if (owlSvgBody) owlSvgBody.setAttribute('fill', bodyFillColor);
+            if(owlSvgEars) owlSvgEars.forEach(ear => ear.setAttribute('fill', bodyFillColor));
+            if(owlSvgWings) owlSvgWings.forEach(wing => wing.setAttribute('fill', bodyFillColor));
+
+            if (flightGameOwlSvg) {
+                const flightOwlBody = flightGameOwlSvg.querySelector('.owl-body');
+                const flightOwlEars = flightGameOwlSvg.querySelectorAll('.owl-ear');
+                if (flightOwlBody) flightOwlBody.setAttribute('fill', bodyFillColor);
+                if(flightOwlEars) flightOwlEars.forEach(ear => ear.setAttribute('fill', bodyFillColor));
+            }
+        }
+        function updateStatusDisplay() {
+            const displayEnergy = Math.round(petStats.energy);
+            const displayHunger = Math.round(petStats.hunger);
+            const displayMood = Math.round(petStats.mood);
+
+            if(energyBar) energyBar.style.width = displayEnergy + '%';
+            if(energyBar) energyBar.textContent = displayEnergy + '%';
+            if(energyValueText) energyValueText.textContent = displayEnergy + '%';
+
+            if(hungerBar) hungerBar.style.width = displayHunger + '%';
+            if(hungerBar) hungerBar.textContent = displayHunger + '%';
+            if(hungerValueText) hungerValueText.textContent = displayHunger + '%';
+
+            if(moodBar) moodBar.style.width = displayMood + '%';
+            if(moodBar) moodBar.textContent = displayMood + '%';
+            if(moodValueText) moodValueText.textContent = displayMood + '%';
+
+            updatePetVisualsAndText(displayEnergy, displayHunger, displayMood);
+            checkAndNotify(displayEnergy, displayHunger, displayMood);
+            saveGame();
+        }
+        function updatePetVisualsAndText(energy, hunger, mood) {
+            const pupils = owlSvg ? owlSvg.querySelectorAll('.owl-eye-pupil') : [];
+            const eyeWhites = owlSvg ? owlSvg.querySelectorAll('.owl-eye-white') : [];
+            const currentStageName = GROWTH_STAGES[petStats.growthStage].name;
+
+            if(!petStatusText) return;
+
+            if (petStats.isSleeping) {
+                petStatusText.textContent = `Die ${currentStageName} schläft tief und fest... Zzzz...`;
+            } else if (energy < LOW_STAT_THRESHOLD + 10) {
+                petStatusText.textContent = `Die ${currentStageName} ist sehr müde und gähnt.`;
+            } else if (hunger < LOW_STAT_THRESHOLD + 10) {
+                petStatusText.textContent = `Die ${currentStageName} knurrt leise. Sie hat Hunger!`;
+            } else if (mood < LOW_STAT_THRESHOLD + 10) {
+                petStatusText.textContent = `Die ${currentStageName} schaut traurig und seufzt.`;
+            } else if (mood > 85 && energy > 70) {
+                petStatusText.textContent = `Die ${currentStageName} hüpft fröhlich und zwitschert!`;
+            } else {
+                petStatusText.textContent = `Die ${currentStageName} ist zufrieden und schaut dich an.`;
+            }
+        }
+        function updatePetCoinsDisplay() {
+            if(petCoinsDisplay) petCoinsDisplay.textContent = `🪙 ${petStats.petCoins}`;
+        }
+        function updateActiveEffectsDisplay() {
+            let effectMsg = "";
+            if (petStats.inventory.protectionPotion.active) {
+                const timeLeft = petStats.inventory.protectionPotion.expiresAt - Date.now();
+                if (timeLeft > 0) {
+                    effectMsg = `Schutz aktiv: ${formatTime(timeLeft)}`;
+                } else {
+                    petStats.inventory.protectionPotion.active = false; 
+                    effectMsg = "Schutztrank ist abgelaufen.";
+                }
+            }
+            if(activeEffectsText) activeEffectsText.textContent = effectMsg;
+        }
+        function updatePersonalityDisplay() {
+            const personalityData = PERSONALITIES[petStats.personality];
+            if(petPersonalityText) petPersonalityText.textContent = `Persönlichkeit: ${personalityData.name}`;
+        }
+        function updateRoomVisuals() {
+            if (bedDisplayContainer) {
+                 bedDisplayContainer.innerHTML = BED_SVGS[petStats.inventory.activeBed] || BED_SVGS.standardBed;
+            }
+            if (petCharacterDisplay) {
+                if (petStats.isSleeping && petStats.currentRoom === 'bedroom') {
+                    petCharacterDisplay.classList.add('sleeping');
+                } else {
+                    petCharacterDisplay.classList.remove('sleeping');
+                    if(petStats.isSleeping) petStats.isSleeping = false;
+                }
+            }
+            updatePetVisualsAndText(petStats.energy, petStats.hunger, petStats.mood);
+        }
+        function wakeUpOwl() {
+            if (petStats.isSleeping) {
+                petStats.isSleeping = false;
+                updateRoomVisuals();
+            }
+        }
+
+        // --- Event Handler Funktionen ---
+        function handleFeed() {
+            wakeUpOwl();
+            recalculateStatsSinceLastUpdate(); 
+            updateGrowthMetricsAndCheck();
+            petStats.hunger = Math.min(MAX_STAT, petStats.hunger + SATIATION_GAIN_FROM_FEEDING);
+            petStats.lastUpdateHunger = Date.now();
+            petStats.energy = Math.max(MIN_STAT, petStats.energy - ENERGY_COST_OF_FEEDING);
+            petStats.lastUpdateEnergy = Date.now(); 
+            petStats.mood = Math.min(MAX_STAT, petStats.mood + (MOOD_GAIN_FROM_FEEDING * (PERSONALITIES[petStats.personality].moodEffect || 1.0) ));
+            petStats.lastUpdateMood = Date.now(); 
+            updateStatusDisplay();
+        }
+        function handlePet() {
+            wakeUpOwl();
+            recalculateStatsSinceLastUpdate(); 
+            updateGrowthMetricsAndCheck();
+            petStats.mood = Math.min(MAX_STAT, petStats.mood + (MOOD_GAIN_FROM_PETTING * (PERSONALITIES[petStats.personality].moodEffect || 1.0) ));
+            petStats.lastUpdateMood = Date.now();
+            petStats.energy = Math.max(MIN_STAT, petStats.energy - ENERGY_COST_OF_PETTING);
+            petStats.lastUpdateEnergy = Date.now();
+            updateStatusDisplay();
+        }
+        function handleSleep() {
+            if (petStats.currentRoom !== 'bedroom') {
+                showNotification("Schlafenszeit!", "Deine Eule kann nur im Schlafzimmer schlafen.");
+                return;
+            }
+            if (!petStats.isSleeping) {
+                 recalculateStatsSinceLastUpdate();
+            }
+            updateGrowthMetricsAndCheck();
+            
+            let energyGain = ENERGY_GAIN_FROM_SLEEP_STANDARD;
+            if (petStats.inventory.activeBed === 'comfyNest') {
+                energyGain = ENERGY_GAIN_FROM_SLEEP_COMFY;
+            }
+
+            petStats.energy = Math.min(MAX_STAT, petStats.energy + energyGain);
+            petStats.lastUpdateEnergy = Date.now();
+            petStats.hunger = Math.max(MIN_STAT, petStats.hunger - SATIATION_DECREASE_DURING_SLEEP);
+            petStats.lastUpdateHunger = Date.now();
+            petStats.mood = Math.min(MAX_STAT, petStats.mood + MOOD_GAIN_FROM_SLEEP);
+            petStats.lastUpdateMood = Date.now();
+            
+            petStats.isSleeping = true;
+            updateRoomVisuals();
+            updateStatusDisplay();
+        }
+        function handleOpenShop() {
+            wakeUpOwl(); 
+            closeAllModals(); 
+            if(shopModal) shopModal.style.display = 'flex'; 
+            if(shopMessage) shopMessage.textContent = ''; 
+        }
+        function handleBuyProtectionPotion() {
+            if (petStats.inventory.protectionPotion.active && petStats.inventory.protectionPotion.expiresAt > Date.now()) {
+                if(shopMessage) shopMessage.textContent = "Ein Schutztrank ist bereits aktiv!";
+                if(shopMessage) shopMessage.style.color = "orange";
+                return;
+            }
+            if (petStats.petCoins >= PROTECTION_POTION_COST) {
+                petStats.petCoins -= PROTECTION_POTION_COST;
+                petStats.inventory.protectionPotion.active = true;
+                petStats.inventory.protectionPotion.expiresAt = Date.now() + PROTECTION_POTION_DURATION_MS;
+                updatePetCoinsDisplay();
+                updateActiveEffectsDisplay();
+                if(shopMessage) shopMessage.textContent = "Schutztrank gekauft und aktiviert!";
+                if(shopMessage) shopMessage.style.color = "green";
+                saveGame();
+            } else {
+                if(shopMessage) shopMessage.textContent = "Nicht genug PetCoins!";
+                if(shopMessage) shopMessage.style.color = "red";
+            }
+        }
+        function handleBuySuperBerry() {
+            if (petStats.petCoins >= SUPER_BERRY_COST) {
+                petStats.petCoins -= SUPER_BERRY_COST;
+                petStats.hunger = Math.min(MAX_STAT, petStats.hunger + SUPER_BERRY_SATIATION);
+                petStats.energy = Math.min(MAX_STAT, petStats.energy + SUPER_BERRY_ENERGY);
+                petStats.mood = Math.min(MAX_STAT, petStats.mood + SUPER_BERRY_MOOD);
+                
+                updatePetCoinsDisplay();
+                updateStatusDisplay();
+                if(shopMessage) shopMessage.textContent = "Super-Beere verfüttert!";
+                if(shopMessage) shopMessage.style.color = "green";
+                saveGame();
+            } else {
+                if(shopMessage) shopMessage.textContent = "Nicht genug PetCoins für die Super-Beere!";
+                if(shopMessage) shopMessage.style.color = "red";
+            }
+        }
+        function handleBuyComfyNest() {
+            wakeUpOwl();
+            if (petStats.inventory.ownedBeds.includes('comfyNest')) {
+                petStats.inventory.activeBed = 'comfyNest';
+                if(shopMessage) shopMessage.textContent = "Kuscheliges Nest ist jetzt dein aktives Bett!";
+                if(shopMessage) shopMessage.style.color = "blue";
+                updateRoomVisuals();
+                saveGame();
+            } else if (petStats.petCoins >= COMFY_NEST_COST) {
+                petStats.petCoins -= COMFY_NEST_COST;
+                petStats.inventory.ownedBeds.push('comfyNest');
+                petStats.inventory.activeBed = 'comfyNest';
+                updatePetCoinsDisplay();
+                updateRoomVisuals();
+                if(shopMessage) shopMessage.textContent = "Kuscheliges Nest gekauft und ausgewählt!";
+                if(shopMessage) shopMessage.style.color = "green";
+                saveGame();
+            } else {
+                if(shopMessage) shopMessage.textContent = "Nicht genug PetCoins für das Kuschelige Nest!";
+                if(shopMessage) shopMessage.style.color = "red";
+            }
+        }
+        function handleOpenWormGame() {
+            wakeUpOwl(); 
+            closeAllModals(); 
+            if(wormGameModal) wormGameModal.style.display = 'flex'; 
+            if(wormGameMessage) wormGameMessage.textContent = '';
+            if(wormGameScoreDisplay) wormGameScoreDisplay.textContent = "Punkte: 0";
+            if(wormGameTimerDisplay) wormGameTimerDisplay.textContent = `Zeit: ${WORM_GAME_DURATION_S}s`;
+            if(startWormGameButton) startWormGameButton.disabled = false;
+            if(wormGameArea) wormGameArea.innerHTML = '';
+        }
+        function handleStartWormGame() {
+            wormGameScore = 0;
+            wormGameTimeLeft = WORM_GAME_DURATION_S;
+            if(wormGameScoreDisplay) wormGameScoreDisplay.textContent = "Punkte: 0";
+            if(wormGameTimerDisplay) wormGameTimerDisplay.textContent = `Zeit: ${wormGameTimeLeft}s`;
+            if(wormGameMessage) wormGameMessage.textContent = '';
+            if(startWormGameButton) startWormGameButton.disabled = true;
+            if(wormGameArea) wormGameArea.innerHTML = '';
+
+            wormGameIntervalId = setInterval(() => {
+                wormGameTimeLeft--;
+                if(wormGameTimerDisplay) wormGameTimerDisplay.textContent = `Zeit: ${wormGameTimeLeft}s`;
+                if (wormGameTimeLeft <= 0) {
+                    endWormGame(true);
+                }
+            }, 1000);
+
+            wormSpawnIntervalId = setInterval(spawnWorm, WORM_APPEAR_INTERVAL_MS);
+            spawnWorm();
+        }
+        function spawnWorm() { 
+            if (wormGameTimeLeft <= 0) return;
+            const worm = document.createElement('div');
+            worm.classList.add('worm');
+            for (let i = 0; i < 3; i++) {
+                const segment = document.createElement('div');
+                segment.classList.add('worm-segment');
+                worm.appendChild(segment);
+            }
+            if(wormGameArea) {
+                worm.style.top = Math.random() * (wormGameArea.clientHeight - 12) + 'px';
+                worm.style.left = Math.random() * (wormGameArea.clientWidth - 30) + 'px';
+                wormGameArea.appendChild(worm);
+            }
+            
+            worm.addEventListener('click', () => {
+                wormGameScore++;
+                if(wormGameScoreDisplay) wormGameScoreDisplay.textContent = `Punkte: ${wormGameScore}`;
+                worm.remove();
+            });
+            
+            setTimeout(() => { if (worm.parentNode) worm.remove(); }, WORM_LIFESPAN_MS);
+         }
+        function endWormGame(giveReward) { 
+            clearInterval(wormGameIntervalId);
+            clearInterval(wormSpawnIntervalId);
+            if(startWormGameButton) startWormGameButton.disabled = false;
+            if(wormGameArea) wormGameArea.innerHTML = '';
+
+            if (giveReward) {
+                let coinsEarned = Math.floor(wormGameScore / 2);
+                let moodBoost = Math.min(20, wormGameScore);
+                const personalityMods = PERSONALITIES[petStats.personality];
+
+                if (petStats.personality === 'verspielt' && personalityMods.gameCoinBonus) {
+                    coinsEarned += personalityMods.gameCoinBonus;
+                }
+                moodBoost *= (personalityMods.moodEffect || 1.0);
+                moodBoost = Math.round(moodBoost);
+                
+                petStats.petCoins += coinsEarned;
+                petStats.mood = Math.min(MAX_STAT, petStats.mood + moodBoost);
+                
+                if(wormGameMessage) wormGameMessage.textContent = `Spiel beendet! Du hast ${coinsEarned} 🪙 und ${moodBoost} Laune gewonnen!`;
+                if (petStats.personality === 'verspielt' && personalityMods.gameCoinBonus && wormGameMessage) {
+                    wormGameMessage.textContent += ` (+${personalityMods.gameCoinBonus} Bonus-🪙 für Verspieltheit!)`;
+                }
+                updatePetCoinsDisplay();
+                updateStatusDisplay();
+                saveGame();
+            } else {
+                 if(wormGameMessage) wormGameMessage.textContent = `Spiel abgebrochen.`;
+            }
+        }
+        function handleOpenFlightGame() {
+            wakeUpOwl(); 
+            closeAllModals(); 
+            if(flightGameModal) flightGameModal.style.display = 'flex'; 
+            if(flightGameMessage) flightGameMessage.textContent = '';
+            if(flightGameScoreDisplay) flightGameScoreDisplay.textContent = "Punkte: 0";
+            if(startFlightGameButton) startFlightGameButton.disabled = false;
+            if(flightGameOwlContainer) flightGameOwlContainer.style.top = '100px';
+            flightGameOwlY = 100;
+            flightGameObstacles.forEach(obs => {if (obs.element.parentNode) obs.element.remove()});
+            flightGameObstacles = [];
+            applyGrowthVisuals();
+        }
+        function handleStartFlightGame() {
+            flightGameScore = 0;
+            if(flightGameScoreDisplay) flightGameScoreDisplay.textContent = "Punkte: 0";
+            if(flightGameMessage) flightGameMessage.textContent = '';
+            if(startFlightGameButton) startFlightGameButton.disabled = true;
+            flightGameActive = true;
+            if(flightGameArea && flightGameOwlContainer) {
+                flightGameOwlY = flightGameArea.clientHeight / 2 - flightGameOwlContainer.clientHeight / 2;
+                flightGameOwlContainer.style.top = flightGameOwlY + 'px';
+            }
+            flightGameOwlVelocityY = 0;
+
+            flightGameObstacles.forEach(obs => { if(obs.element.parentNode) obs.element.remove(); });
+            flightGameObstacles = [];
+
+            flightGameLoopId = requestAnimationFrame(flightGameLoop);
+            flightGameObstacleSpawnId = setInterval(spawnFlightObstacle, FLIGHT_GAME_OBSTACLE_SPAWN_INTERVAL_MS);
+            spawnFlightObstacle();
+        }
+        function handleFlightGameFlap() {
+            if (flightGameActive) {
+                flightGameOwlVelocityY = -FLIGHT_GAME_FLAP_STRENGTH;
+            }
+        }
+        function spawnFlightObstacle() { 
+            if (!flightGameActive || !flightGameArea) return;
+
+            const areaHeight = flightGameArea.clientHeight;
+            const gapPosition = Math.random() * (areaHeight - FLIGHT_GAME_OBSTACLE_GAP - 60) + 30;
+
+            const topObstacle = document.createElement('div');
+            topObstacle.classList.add('flight-obstacle');
+            topObstacle.style.height = gapPosition + 'px';
+            topObstacle.style.top = '0px';
+            flightGameArea.appendChild(topObstacle);
+            flightGameObstacles.push({ element: topObstacle, x: flightGameArea.clientWidth, type: 'top' });
+
+            const bottomObstacle = document.createElement('div');
+            bottomObstacle.classList.add('flight-obstacle');
+            bottomObstacle.style.height = (areaHeight - gapPosition - FLIGHT_GAME_OBSTACLE_GAP) + 'px';
+            bottomObstacle.style.top = (gapPosition + FLIGHT_GAME_OBSTACLE_GAP) + 'px';
+            flightGameArea.appendChild(bottomObstacle);
+            flightGameObstacles.push({ element: bottomObstacle, x: flightGameArea.clientWidth, type: 'bottom' });
+        }
+        function flightGameLoop() { 
+            if (!flightGameActive || !flightGameOwlContainer || !flightGameArea) return;
+
+            flightGameOwlVelocityY += FLIGHT_GAME_GRAVITY;
+            flightGameOwlY += flightGameOwlVelocityY * 0.1;
+
+            if (flightGameOwlY < 0) {
+                flightGameOwlY = 0;
+                flightGameOwlVelocityY = 0;
+            }
+            if (flightGameOwlY + flightGameOwlContainer.clientHeight > flightGameArea.clientHeight) {
+                flightGameOwlY = flightGameArea.clientHeight - flightGameOwlContainer.clientHeight;
+                flightGameOwlVelocityY = 0;
+                endFlightGame(true);
+                return;
+            }
+            flightGameOwlContainer.style.top = flightGameOwlY + 'px';
+
+            let passedObstaclePair = false;
+            for (let i = flightGameObstacles.length - 1; i >= 0; i--) {
+                const obs = flightGameObstacles[i];
+                obs.x -= FLIGHT_GAME_OBSTACLE_SPEED;
+                obs.element.style.left = obs.x + 'px';
+
+                const owlRect = flightGameOwlContainer.getBoundingClientRect();
+                const obsRect = obs.element.getBoundingClientRect();
+
+                if (owlRect.right > obsRect.left && owlRect.left < obsRect.right &&
+                    owlRect.bottom > obsRect.top && owlRect.top < obsRect.bottom) {
+                    endFlightGame(true);
+                    return;
+                }
+
+                if (obs.x + obs.element.clientWidth < 0) {
+                    obs.element.remove();
+                    flightGameObstacles.splice(i, 1);
+                    if(obs.type === 'top') {
+                        passedObstaclePair = true;
+                    }
+                }
+            }
+            
+            if(passedObstaclePair) {
+                flightGameScore++;
+                if(flightGameScoreDisplay) flightGameScoreDisplay.textContent = `Punkte: ${flightGameScore}`;
+            }
+
+            flightGameLoopId = requestAnimationFrame(flightGameLoop);
+        }
+        function endFlightGame(collided) { 
+            flightGameActive = false;
+            if (flightGameLoopId) cancelAnimationFrame(flightGameLoopId);
+            if (flightGameObstacleSpawnId) clearInterval(flightGameObstacleSpawnId);
+            if(startFlightGameButton) startFlightGameButton.disabled = false;
+
+            if (collided) {
+                if(flightGameMessage) flightGameMessage.textContent = `Kollision! Endpunktzahl: ${flightGameScore}.`;
+            } else {
+                 if(flightGameMessage) flightGameMessage.textContent = `Spiel beendet. Punktzahl: ${flightGameScore}.`;
+            }
+            
+            const coinsEarned = flightGameScore;
+            const moodBoost = Math.min(15, Math.floor(flightGameScore / 2));
+            const energyCost = Math.min(10, Math.floor(flightGameScore / 3));
+
+            petStats.petCoins += coinsEarned;
+            petStats.mood = Math.min(MAX_STAT, petStats.mood + moodBoost);
+            petStats.energy = Math.max(MIN_STAT, petStats.energy - energyCost);
+
+            if ((coinsEarned > 0 || moodBoost > 0 || energyCost > 0) && flightGameMessage) {
+                 flightGameMessage.textContent += ` Du erhältst ${coinsEarned} 🪙, ${moodBoost} Laune. Es kostete ${energyCost} Energie.`;
+            }
+
+            updatePetCoinsDisplay();
+            updateStatusDisplay();
+            saveGame();
+        }
+        function handleCloseUpdatePopup() {
+            if(updatePopupModal) updatePopupModal.style.display = 'none';
+            petStats.lastSeenVersion = GAME_VERSION;
+            saveGame();
+        }
+
+        // --- Regelmäßige Updates & Benachrichtigungen ---
+        setInterval(() => {
+            recalculateStatsSinceLastUpdate();
+            updateGrowthMetricsAndCheck();
+        }, 30000); 
+        function requestNotificationPermission() { /* ... */ }
+        function showNotification(title, body) { /* ... */ }
+        function checkAndNotify(energy, hunger, mood) { /* ... */ }
+        
+        // --- Initialisierung (wird jetzt innerhalb von DOMContentLoaded aufgerufen) ---
+        // loadGame(); // Wird in DOMContentLoaded aufgerufen
+        // requestNotificationPermission(); // Wird in DOMContentLoaded aufgerufen
+        // if ('serviceWorker' in navigator) { /* ... */ } // Wird in DOMContentLoaded aufgerufen
+    </script>
+</body>
+</html>
