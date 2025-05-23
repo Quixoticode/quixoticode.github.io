@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>QHub v1.2.1</title>
+    <title>QHub v1.1.0 - App & Video Zentrale</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -63,6 +63,7 @@
             --qhub-color-success: #38A169; 
             --qhub-color-warning: #FFC107; 
             --qhub-color-queued: #79747E; 
+            --qhub-color-paused: #78909C;
             --qhub-color-premium: #FFAB00; 
             --qhub-color-on-premium: #212121;
 
@@ -126,6 +127,7 @@
             --qhub-color-success: #6EE7B7; 
             --qhub-color-warning: #FFD600;
             --qhub-color-queued: #B0BEC5; 
+            --qhub-color-paused: #90A4AE;
             --qhub-color-premium: #FFCA28; 
             --qhub-color-on-premium: #000000;
             
@@ -150,7 +152,8 @@
         
         .main-scroll-container {
             height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
-            overflow-y: auto;
+            overflow-y: auto; /* Erlaubt Scrollen für den Hauptinhalt */
+            -webkit-overflow-scrolling: touch; /* Sanfteres Scrollen auf iOS */
             scroll-snap-type: y mandatory;
             margin-left: 0; 
             padding-top: calc(env(safe-area-inset-top) + 0.5rem); 
@@ -172,7 +175,6 @@
             text-align: center; padding: 0.6rem; font-size: 0.8rem; font-weight: 500;
             display: none; 
         }
-        #offlineStatusMessage { background-color: var(--qhub-color-error-container); color: var(--qhub-color-on-error-container); }
         #resetNotification { background-color: var(--qhub-color-primary-container); color: var(--qhub-color-on-primary-container); }
 
         #offlineIconContainer {
@@ -408,6 +410,35 @@
             background-color: var(--qhub-color-surface);
             color: var(--qhub-color-on-surface);
         }
+
+        /* Video Card Styling */
+        .video-card {
+            background-color: var(--qhub-color-surface-container); /* Etwas abgesetzt */
+            border-radius: var(--border-radius-large);
+            overflow: hidden; /* Wichtig für abgerundete Ecken bei Video/Poster */
+        }
+        .video-card video {
+            display: block;
+            width: 100%;
+            max-height: 400px; /* Maximale Höhe für Videos */
+            background-color: #000; /* Fallback, falls Poster nicht lädt */
+        }
+        .video-card-content {
+            padding: 1rem;
+        }
+        .video-card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--qhub-color-on-surface);
+            margin-bottom: 0.25rem;
+        }
+        .video-card-description {
+            font-size: 0.85rem;
+            color: var(--qhub-color-on-surface-variant);
+            line-height: 1.4;
+        }
+
+
     </style>
 </head>
 <body data-theme="light"> 
@@ -490,6 +521,13 @@
                 <h2 class="section-title"><span class="material-icons">campaign</span>Ankündigungen</h2>
                 <div id="ankuendigungenContainer">
                     <div class="placeholder-text">Lade Ankündigungen...</div>
+                </div>
+            </section>
+            
+            <section id="videothekSection" class="content-section snap-child">
+                <h2 class="section-title"><span class="material-icons">play_circle_filled</span>Videothek</h2>
+                <div id="videothekContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div class="placeholder-text sm:col-span-2">Lade Videos...</div>
                 </div>
             </section>
 
@@ -596,9 +634,9 @@
     </div>
     
     <script>
-        const CURRENT_APP_VERSION = '1.2.0'; 
+        const CURRENT_APP_VERSION = '1.2.1'; 
         const APP_SETTINGS_PREFIX = 'qhub_settings_'; 
-        const LOCAL_APP_DATA_KEY = APP_SETTINGS_PREFIX + 'app_data_cache_v1_2_1'; 
+        const LOCAL_APP_DATA_KEY = APP_SETTINGS_PREFIX + 'app_data_cache_v1_2'; 
         const SEEN_POPUPS_KEY = APP_SETTINGS_PREFIX + 'seen_popups_' + CURRENT_APP_VERSION;
         const LAST_APP_VERSION_KEY = APP_SETTINGS_PREFIX + 'last_version';
         const THEME_SETTINGS_KEY = APP_SETTINGS_PREFIX + 'theme_v1_2';
@@ -608,78 +646,86 @@
         const PREMIUM_CODE_SOURCE_URL = 'https://quixoticode.github.io/data/s/name.json'; 
 
         const initialAppData = {
-            version: "1.2.0", 
-            webApps: [
+            version: "1.2.1", 
+            webApps: [ 
                 { name: "Web", url: "https://quixoticode.github.io/", icon: "web"}, 
-                { name: "QSounds", url: "/qsounds/", icon: "graphic_eq" },
-                { name: "QCode", url: "/qcode/", icon: "code" },
-                { name: "QHub", url: "/qhub/", icon: "hub" },
-                { name: "Tamagotchi", url: "/pl/", icon: "pets", premium: true },
-                { name: "Beta-Archiv", url: "https://quixoticode.github.io/data/s/baustelle.html", icon: "science", premium: true, action: "showBetaArchiveModal" } 
+                { name: "QSounds", url: "https://quixoticode.github.io/app/qsounds/", icon: "graphic_eq" },
+                { name: "QCode", url: "https://quixoticode.github.io/app/qcode/", icon: "code" },
+                { name: "QHub", url: "https://quixoticode.github.io/app/qhub/", icon: "hub" },
+                { name: "Pet's Life", url: "https://quixoticode.github.io/app/pl/", icon: "pets", premium: true },
+                { name: "Beta-Archiv", url: "https://quixoticode.github.io/data/s/baustelle.html", icon: "science", premium: true } 
             ],
             nachrichten: [
                 { 
                   id: "msg_qhub_120_001", title: "QHub v" + CURRENT_APP_VERSION + " ist da!", 
-                  content: "Viele neue Premium-Funktionen warten auf Sie! Entdecken Sie exklusive Inhalte, Anpassungsmöglichkeiten und mehr.", 
-                  date: "2025-05-22", type: "Release" 
+                  content: "Viele neue Premium-Funktionen warten auf Sie! Entdecken Sie exklusive Inhalte wie die neue Videothek, Anpassungsmöglichkeiten und mehr.", 
+                  date: "2025-05-23", type: "Release" 
                 },
                 { 
                   id: "msg_qhub_120_002", title: "Exklusive Premium-News", 
-                  content: "Verstehe mehr über deine neuen Funktionen in PREMIUM: https://quixoticode.github.io/link/knowledge/qhub-premium.html", 
-                  date: "2025-05-22", type: "Premium", premium: true
+                  content: "Als Premium-Mitglied erhalten Sie frühzeitig Zugang zu Informationen über kommende Projekte und spezielle Entwickler-Einblicke im neuen 'Insider-Infos'-Bereich.", 
+                  date: "2025-05-23", type: "Premium", premium: true
                 }
             ],
             insiderInfos: [ 
-                { id: "ins_001", title: "Tamagotchi", content: "Tamagotchi wird immer weiter entwickelt. Die nächste Funktion wird die Uhrzeitlogik sein", date: "2025-05-22", premium: true},
-                { id: "ins_002", title: "Umstrukturierung", content: "Diese App wird wahrscheinlich noch an einen anderen Ort verschoben. Eine Neuinstallation wäre dann fällig. Dies dient der Verbesserung der UX", date: "2025-05-22", premium: true}
+                { id: "ins_001", title: "Entwicklungs-Update: Projekt 'Nova'", content: "Die Arbeiten an 'Nova' schreiten gut voran. Erste interne Tests sind für nächste Woche geplant. Premium-Nutzer erhalten bald eine exklusive Vorschau.", date: "2025-05-23", premium: true}
             ],
             premiumDownloads: [ 
-                { id: "dl_001", name: "QHub Wallpaper Pack", description: "Exklusive Wallpapers für Desktop & Mobile. [1.0]", url: "https://quixoticode.github.io/link/p/wallpaper.zip", icon: "wallpaper", premium: true },
-                { id: "dl_002", name: "QSounds Beta v1.3 [🚧]", description: "Vorabzugriff auf die nächste QSounds Version.", url: "https://quixoticode.github.io/data/s/baustelle.html", icon: "biotech", premium: true }
+                { id: "dl_001", name: "QHub Wallpaper Pack v2", description: "Neue exklusive Wallpapers für Desktop & Mobile.", url: "#", icon: "wallpaper", premium: true },
+                { id: "dl_002", name: "QSounds Sound Pack (Premium)", description: "Zusätzliche Sound-Effekte für QSounds.", url: "#", icon: "music_note", premium: true }
             ],
             ankuendigungen: [
                 { 
-                  id: "ank_qhub_120_001", title: "Premium-Layout Anpassung", 
-                  content: "Premium-Nutzer können jetzt die Reihenfolge der Sektionen auf der Startseite anpassen!", 
-                  date: "2025-05-22" 
+                  id: "ank_qhub_120_001", title: "Videothek jetzt verfügbar!", 
+                  content: "Entdecken Sie informative Videos und Tutorials direkt in QHub. Premium-Nutzer haben Zugriff auf zusätzliche, exklusive Videoinhalte.", 
+                  date: "2025-05-23" 
+                }
+            ],
+            videos: [ // Neuer Abschnitt für Videos
+                {
+                    id: "vid_001",
+                    title: "Teaser",
+                    description: "Coming Soon",
+                    url: "https://quixoticode.github.io/data/qhub/videos/qhub_intro.mp4", // Ersetzen mit echter URL
+                    poster: "https://quixoticode.github.io/data/icons/data.png", // Ersetzen
+                    premium: false
                 },
-                { 
-                  id: "ank_qhub_120_002", title: "Wissensdatenbank gestartet", 
-                  content: "Schaut jetzt im Web in die Wissensdatenbank!", 
-                  date: "2025-05-22" 
-                },
-                { 
-                  id: "ank_qhub_120_003", title: "Wallpaper-Pack 1.0 online", 
-                  content: "Lade jetzt 3 Wallpaper für deinen Desktop runter, exklusiv für Premium-Mitglieder!", 
-                  date: "2025-05-22", type: "Premium", premium: true 
+                {
+                    id: "vid_002",
+                    title: "Premium-Features im Detail (Exklusiv)",
+                    description: "Ein tieferer Einblick in alle Vorteile und Anpassungsmöglichkeiten, die QHub Premium bietet.",
+                    url: "https://quixoticode.github.io/data/qhub/videos/qhub_premium_deepdive.mp4", // Ersetzen
+                    poster: "https://quixoticode.github.io/data/qhub/videos/qhub_premium_poster.jpg", // Ersetzen
+                    premium: true
                 }
             ],
             aktivitaetsleiste: [
-                { id: "act_qhub_120_001", product: "QHub v1.2.0", description: "Premium-Features implementiert", releaseDate: "22. Mai 2025", status: "ready-online" },
-                { id: "act_qhub_120_002", product: "Tamagotchi v0.2", description: "Neue Interaktionen (Premium)", releaseDate: "Juni 2025", status: "in-progress", premium: true },
-                { id: "act_qhub_120_003", product: "QSounds v1.3", description: "Dateiverschlüsselung", releaseDate: "Q3 2025", status: "paused" },
+                { id: "act_qhub_120_001", product: "QHub v1.2.0", description: "Videothek & weitere Premium-Features", releaseDate: "23. Mai 2025", status: "ready-online" },
+                { id: "act_qhub_120_002", product: "Pet's Life v0.3", description: "UI-Überarbeitung (Premium)", releaseDate: "Juli 2025", status: "in-progress", premium: true },
+                { id: "act_qhub_120_003", product: "QSounds v1.3", description: "UX Update", releaseDate: "Q3 2025", status: "paused" },
                 { id: "act_qhub_120_004", product: "QCode 'YouProjects'", description: "Neuer Lernpfad", releaseDate: "Q3 2025", status: "queue" }, 
             ],
             popupNachrichten: [ 
                 {
-                  id: "popup_qhub_premium_v120",
+                  id: "popup_qhub_v120_release",
                   titel: "QHub " + CURRENT_APP_VERSION + " ist da!",
-                  inhalt: "Entdecken Sie viele neue Premium-Funktionen und Anpassungsmöglichkeiten. Mehr unter https://quixoticode.github.io/link/knowledge/qhub-premium.html",
+                  inhalt: "Entdecken Sie die neue Videothek, viele neue Premium-Funktionen und weitere Verbesserungen.",
                   aktiv: true, 
-                  datum: "2025-05-22",
-                  icon: "workspace_premium",
-                  buttonText: "Entdecken"
+                  datum: "2025-05-23",
+                  icon: "celebration",
+                  buttonText: "Großartig!"
                 }
             ]
         };
 
+        // --- DOM Elemente ---
         const qHubSidebar = document.getElementById('qHubSidebar');
         const sidebarToggle = document.getElementById('sidebarToggle');
         const contentOverlay = document.getElementById('contentOverlay');
         const sidebarInternalToggle = document.getElementById('sidebarInternalToggle');
         const appVersionDisplay = document.getElementById('appVersionDisplay');
         const notificationArea = document.getElementById('notificationArea');
-        const offlineStatusMessage = document.getElementById('offlineStatusMessage');
+        const offlineStatusMessage = document.getElementById('offlineStatusMessage'); // Wird nicht mehr als Banner genutzt
         const resetNotification = document.getElementById('resetNotification');
         const offlineIconContainer = document.getElementById('offlineIconContainer');
         const offlineStatusIcon = document.getElementById('offlineStatusIcon');
@@ -718,6 +764,7 @@
         const insiderInfosSection = document.getElementById('insiderInfosSection');
         const premiumDownloadsSection = document.getElementById('premiumDownloadsSection');
         const premiumDownloadsList = document.getElementById('premiumDownloadsList');
+        const videothekContainer = document.getElementById('videothekContainer');
 
 
         function getStatusIndicatorSVG(status) {
@@ -749,10 +796,10 @@
             renderAktivitaetsleiste(data.aktivitaetsleiste || [], isPremium, statusFilterSelect ? statusFilterSelect.value : 'all');
             renderInsiderInfos(data.insiderInfos || [], isPremium);
             renderPremiumDownloads(data.premiumDownloads || [], isPremium);
+            renderVideothek(data.videos || [], isPremium);
             
             const currentSectionOrder = isPremium ? (sectionOrder || getSectionOrder()) : defaultSectionOrder;
             reorderSections(currentSectionOrder);
-
 
             checkAndShowAppDefinedPopups(data.popupNachrichten || []);
             if(appVersionDisplay) appVersionDisplay.textContent = CURRENT_APP_VERSION;
@@ -773,7 +820,10 @@
                 const listItem = document.createElement('li');
                 const link = document.createElement('a');
                 link.href = app.url;
-                if (app.action) { 
+                if (app.action === "showBetaArchiveModal") { // Spezifische Aktion für Beta-Archiv
+                    link.href = "javascript:void(0)";
+                    link.onclick = () => showCustomInfoPopup("Beta-Archiv (Premium)", "Dieser Bereich ist noch in Entwicklung und wird bald exklusive Beta-Versionen enthalten.", "science", "Verstanden");
+                } else if (app.action) { 
                     link.href = "javascript:void(0)";
                     link.onclick = () => window[app.action] ? window[app.action]() : console.warn("Aktion nicht definiert:", app.action);
                 } else {
@@ -798,7 +848,7 @@
             nachrichtenToShow.forEach(item => {
                 const card = document.createElement('div'); card.className = 'card';
                 let typeBadgeHTML = item.type ? `<span class="card-type-badge">${item.type}</span>` : '';
-                if (item.premium) typeBadgeHTML += ` <span class="card-type-badge" style="background-color:var(--qhub-color-premium); color:var(--qhub-color-on-premium);">Premium</span>`;
+                if (item.premium && isPremium) typeBadgeHTML += ` <span class="card-type-badge" style="background-color:var(--qhub-color-premium); color:var(--qhub-color-on-premium);">Premium</span>`;
                 card.innerHTML = `${typeBadgeHTML}<h3 class="card-title">${item.title}</h3><p class="card-content">${item.content}</p><span class="card-date">${new Date(item.date).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' })}</span>`;
                 container.appendChild(card);
             });
@@ -860,7 +910,7 @@
             
             ankuendigungenToShow.forEach(item => {
                 const card = document.createElement('div'); card.className = 'card';
-                 let premiumBadgeHTML = item.premium ? ` <span class="card-type-badge" style="background-color:var(--qhub-color-premium); color:var(--qhub-color-on-premium); float:right;">Premium</span>` : '';
+                 let premiumBadgeHTML = item.premium && isPremium ? ` <span class="card-type-badge" style="background-color:var(--qhub-color-premium); color:var(--qhub-color-on-premium); float:right;">Premium</span>` : '';
                 card.innerHTML = `${premiumBadgeHTML}<h3 class="card-title">${item.title}</h3><p class="card-content">${item.content}</p><span class="card-date">${new Date(item.date).toLocaleDateString('de-DE', { day: 'numeric', month: 'long' })}</span>`;
                 container.appendChild(card);
             });
@@ -881,9 +931,42 @@
             }
             aktivitaetenToShow.forEach(item => {
                 const activityDiv = document.createElement('div'); activityDiv.className = 'activity-item';
-                let premiumStar = item.premium ? ` <span style="color: var(--qhub-color-premium); font-size:0.8em;">★</span>` : '';
+                let premiumStar = item.premium && isPremium ? ` <span style="color: var(--qhub-color-premium); font-size:0.8em;">★</span>` : '';
                 activityDiv.innerHTML = `${getStatusIndicatorSVG(item.status)}<div class="activity-info"><div class="activity-product">${item.product}${premiumStar}</div><div class="activity-description">${item.description}</div></div><div class="activity-date">${item.releaseDate}</div>`;
                 container.appendChild(activityDiv);
+            });
+        }
+
+        function renderVideothek(videos, isPremium) {
+            const container = document.getElementById('videothekContainer');
+            if (!container) return;
+            container.innerHTML = '';
+            const videosToShow = videos.filter(video => !video.premium || (video.premium && isPremium));
+
+            if (videosToShow.length === 0) {
+                container.innerHTML = '<p class="placeholder-text sm:col-span-2">Keine Videos verfügbar.</p>';
+                return;
+            }
+            videosToShow.forEach(video => {
+                const videoCard = document.createElement('div');
+                videoCard.className = 'video-card card'; // Nutzt vorhandenes Card-Styling als Basis
+
+                let premiumBadgeHTML = video.premium && isPremium ? `<span class="card-type-badge" style="background-color:var(--qhub-color-premium); color:var(--qhub-color-on-premium); position:absolute; top:0.5rem; right:0.5rem; z-index:1;">Premium</span>` : '';
+
+                videoCard.innerHTML = `
+                    <div style="position:relative;">
+                        ${premiumBadgeHTML}
+                        <video controls preload="metadata" poster="${video.poster || ''}" style="width:100%; border-radius: var(--border-radius-medium);">
+                            <source src="${video.url}" type="video/mp4">
+                            Ihr Browser unterstützt das Video-Tag nicht.
+                        </video>
+                    </div>
+                    <div class="video-card-content">
+                        <h3 class="video-card-title">${video.title}</h3>
+                        <p class="video-card-description">${video.description}</p>
+                    </div>
+                `;
+                container.appendChild(videoCard);
             });
         }
         
@@ -903,7 +986,6 @@
         
         function updateOfflineStatus() {
             const isOffline = !navigator.onLine;
-            if (offlineStatusMessage) offlineStatusMessage.style.display = 'none'; 
             if (offlineIconContainer) offlineIconContainer.style.display = isOffline ? 'flex' : 'none';
 
             if (isOffline) {
@@ -1200,11 +1282,22 @@
             }
         });
         
-        const defaultSectionOrder = ['nachrichtenSection', 'insiderInfosSection', 'ankuendigungenSection', 'aktivitaetsleisteSection'];
+        const defaultSectionOrder = ['nachrichtenSection', 'insiderInfosSection', 'ankuendigungenSection', 'videothekSection', 'aktivitaetsleisteSection'];
 
         function getSectionOrder() {
             const storedOrder = localStorage.getItem(SECTION_ORDER_KEY);
-            return storedOrder ? JSON.parse(storedOrder) : defaultSectionOrder;
+            // Stelle sicher, dass alle Default-Sektionen enthalten sind, falls neue hinzugefügt wurden
+            if (storedOrder) {
+                const parsedOrder = JSON.parse(storedOrder);
+                const completeOrder = defaultSectionOrder.map(id => parsedOrder.includes(id) ? id : null).filter(Boolean);
+                // Füge neue Sektionen hinzu, die nicht in der gespeicherten Reihenfolge waren
+                defaultSectionOrder.forEach(id => {
+                    if(!completeOrder.includes(id)) completeOrder.push(id);
+                });
+                 // Entferne Sektionen, die nicht mehr existieren könnten
+                return completeOrder.filter(id => defaultSectionOrder.includes(id));
+            }
+            return defaultSectionOrder;
         }
 
         function saveSectionOrder(order) {
@@ -1214,7 +1307,7 @@
         function reorderSections(order) {
             order.forEach(sectionId => {
                 const sectionElement = document.getElementById(sectionId);
-                if (sectionElement && mainContentArea) { // Sicherstellen, dass mainContentArea existiert
+                if (sectionElement && mainContentArea) { 
                     mainContentArea.appendChild(sectionElement);
                 }
             });
@@ -1230,7 +1323,6 @@
                     const sectionTitleElement = sectionElement.querySelector('.section-title');
                     let sectionTitle = sectionId;
                     if (sectionTitleElement) {
-                         // Klonen Sie den Titel, um das Icon zu erhalten, aber entfernen Sie den Filter-Teil
                         const tempTitle = sectionTitleElement.cloneNode(true);
                         const filterDiv = tempTitle.querySelector('#activityFilterContainer');
                         if(filterDiv) filterDiv.remove();
@@ -1289,6 +1381,40 @@
                 renderAktivitaetsleiste(currentLocalData.aktivitaetsleiste || [], getPremiumStatus(), event.target.value);
             });
         }
+        
+        function renderVideothek(videos, isPremium) {
+            const container = document.getElementById('videothekContainer');
+            if (!container) return;
+            container.innerHTML = '';
+            const videosToShow = videos.filter(video => !video.premium || (video.premium && isPremium));
+
+            if (videosToShow.length === 0) {
+                container.innerHTML = '<p class="placeholder-text sm:col-span-2">Keine Videos verfügbar.</p>';
+                return;
+            }
+            videosToShow.forEach(video => {
+                const videoCard = document.createElement('div');
+                videoCard.className = 'video-card card'; 
+
+                let premiumBadgeHTML = video.premium && isPremium ? `<span class="card-type-badge" style="background-color:var(--qhub-color-premium); color:var(--qhub-color-on-premium); position:absolute; top:0.5rem; right:0.5rem; z-index:1;">Premium</span>` : '';
+
+                videoCard.innerHTML = `
+                    <div style="position:relative;">
+                        ${premiumBadgeHTML}
+                        <video controls preload="metadata" poster="${video.poster || ''}" style="width:100%; border-radius: var(--border-radius-medium); aspect-ratio: 16/9; object-fit: cover;">
+                            <source src="${video.url}" type="video/mp4">
+                            Ihr Browser unterstützt das Video-Tag nicht.
+                        </video>
+                    </div>
+                    <div class="video-card-content">
+                        <h3 class="video-card-title">${video.title}</h3>
+                        <p class="video-card-description">${video.description}</p>
+                    </div>
+                `;
+                container.appendChild(videoCard);
+            });
+        }
+
 
         document.addEventListener('DOMContentLoaded', () => {
             applySavedDarkLightModePreference(); 
