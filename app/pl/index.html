@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QPet</title>
+    <title>Pet's Life</title> <!-- Titel geändert -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="https://quixoticode.github.io/data/pl/favicon-96x96.png" sizes="96x96" />
@@ -59,6 +59,7 @@
             --sky-night-color: #00102c;
             --star-color: white;
             --water-color: #77C5D5;
+            --error-text-color: #ef4444; /* Red for error messages */
         }
 
         .dark-mode:root {
@@ -99,6 +100,7 @@
             --sky-day-color: #38bdf8;
             --sky-night-color: #1e293b;
             --water-color: #4A90E2;
+            --error-text-color: #f87171; 
         }
 
         body {
@@ -179,6 +181,19 @@
             gap: 1rem;
             transition: background-color 0.3s ease;
         }
+        .firebase-error-message { /* New style for prominent error */
+            color: var(--error-text-color);
+            font-weight: bold;
+            text-align: center;
+            padding: 2rem;
+            border: 2px dashed var(--error-text-color);
+            border-radius: 8px;
+            width: 100%;
+        }
+        .hidden-on-error { /* Class to hide elements during Firebase error */
+            /* display: none !important; */ /* JS will handle this for smoother transition */
+        }
+
         .room-container {
             width: 100%;
             max-width: 320px;
@@ -210,14 +225,14 @@
             0%, 100% { opacity: 0; }
             50% { opacity: 1; }
         }
-         .fishbowl-container { /* For the fish pet */
+         .fishbowl-container { 
             position: absolute;
             bottom: 10px;
             left: 50%;
             transform: translateX(-50%);
             width: 100px;
             height: 80px;
-            z-index: 4; /* Below pet, above floor elements */
+            z-index: 4; 
         }
         .fishbowl-svg {
             width: 100%;
@@ -278,8 +293,8 @@
             z-index: 10;
             transition: bottom 0.3s ease, transform 0.3s ease;
         }
-        .pet-character-container.swimming { /* For fish */
-            bottom: 35px; /* Adjust to be "in" the bowl */
+        .pet-character-container.swimming { 
+            bottom: 35px; 
             animation: swimCycle 8s infinite ease-in-out;
         }
         @keyframes swimCycle {
@@ -303,7 +318,7 @@
         .sleeping .owl-eye-pupil, .sleeping .bird-eye-pupil, .sleeping .cat-eye-pupil, .sleeping .dog-eye-pupil, .sleeping .dragon-eye-pupil, .sleeping .robot-eye-light { 
             transform: scaleY(0.1); transform-origin: center; 
         }
-        .sleeping .pet-svg-eye-white { fill: #e0e0e0; } /* Generic sleeping eye white */
+        .sleeping .pet-svg-eye-white { fill: #e0e0e0; } 
 
 
         .pet-info { text-align: center; }
@@ -362,11 +377,11 @@
         .worm-segment:last-child { width: 35%; border-top-right-radius: 6px; border-bottom-right-radius: 6px; }
         #wormGameTimer, #wormGameScore, #flightGameScore { font-size: 1.125rem; font-weight: 600; color: var(--text-color-primary); margin-top: 0.75rem; }
         #wormGameMessage, #flightGameMessage { font-size: 0.875rem; color: var(--text-color-status); min-height: 1.25rem; margin-top: 0.5rem; }
-        .flight-pet-container { /* Renamed from flight-owl-container */
+        .flight-pet-container { 
             width: 40px; height: 40px; position: absolute; left: 20px; transition: top 0.1s linear; 
         }
         .flight-pet-container svg { width: 100%; height: 100%; display: block; }
-        .flight-obstacle { width: 20px; /* height is set by JS */ background-color: var(--flight-game-obstacle-color); position: absolute; right: -20px; }
+        .flight-obstacle { width: 20px; background-color: var(--flight-game-obstacle-color); position: absolute; right: -20px; }
 
         #notificationMessage { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); padding: 1rem; border-radius: 8px; background-color: var(--card-bg-color); color: var(--text-color-primary); box-shadow: 0 2px 10px var(--shadow-color); z-index: 2000; display: none; transition: opacity 0.3s ease, transform 0.3s ease; }
         #notificationMessage.show { display: block; opacity: 1; transform: translateX(-50%) translateY(0); }
@@ -417,78 +432,83 @@
     </div>
 
     <main class="game-area">
-        <div class="room-container">
-            <div class="sky-background" id="skyBackground"></div> 
-            <div class="stars-container" id="starsContainer"></div>
-            <div class="fishbowl-container" id="fishbowlContainer" style="display: none;">
-                 <svg class="fishbowl-svg" viewBox="0 0 100 80">
-                    <ellipse class="fishbowl-water" cx="50" cy="50" rx="45" ry="28"/>
-                    <ellipse class="fishbowl-glass" cx="50" cy="50" rx="45" ry="28"/>
-                    <rect x="30" y="22" width="40" height="5" fill="var(--room-window-frame-color)" opacity="0.3" />
-                </svg>
-            </div>
-            <div class="pet-room active" id="bedroom">
-                <div class="bed-display" id="bedDisplayContainer"></div>
-            </div>
-            <div class="pet-room" id="livingroom">
-                <div class="livingroom-plant">
-                    <svg viewBox="0 0 50 70">
-                        <rect x="15" y="50" width="20" height="20" rx="3" fill="var(--livingroom-plant-pot-color)"/>
-                        <path d="M25 50 Q20 30 15 20 Q25 25 25 10 Q25 25 35 20 Q30 30 25 50" fill="var(--livingroom-plant-leaf-color)"/>
-                        <path d="M25 50 Q30 30 35 20 Q25 25 25 10 Q25 25 15 20 Q20 30 25 50" fill="var(--livingroom-plant-leaf-color)" transform="scale(0.8 1) translate(6 0)"/>
+        <div id="firebaseErrorMessage" class="firebase-error-message" style="display: none;">
+            <!-- Error message will be inserted here by JS -->
+        </div>
+        <div class="game-content-wrapper"> <!-- New wrapper for game content -->
+            <div class="room-container hidden-on-error">
+                <div class="sky-background" id="skyBackground"></div> 
+                <div class="stars-container" id="starsContainer"></div>
+                <div class="fishbowl-container" id="fishbowlContainer" style="display: none;">
+                     <svg class="fishbowl-svg" viewBox="0 0 100 80">
+                        <ellipse class="fishbowl-water" cx="50" cy="50" rx="45" ry="28"/>
+                        <ellipse class="fishbowl-glass" cx="50" cy="50" rx="45" ry="28"/>
+                        <rect x="30" y="22" width="40" height="5" fill="var(--room-window-frame-color)" opacity="0.3" />
                     </svg>
                 </div>
-            </div>
-            <div class="pet-character-container" id="petCharacterDisplay"></div>
-        </div>
-        
-        <div class="room-navigation">
-            <button class="nav-button" id="navBedroomButton">Schlafzimmer</button>
-            <button class="nav-button" id="navLivingroomButton">Wohnzimmer</button>
-        </div>
-
-        <div class="pet-info">
-            <h1 class="pet-title" id="petTitle">Lade Haustier...</h1>
-            <p class="pet-type-text" id="petTypeText"></p>
-            <p class="pet-age-text" id="petAgeText">Alter: 0 Tage</p>
-            <p class="pet-personality-text" id="petPersonalityText">Persönlichkeit: Normal</p>
-        </div>
-
-        <p class="pet-status-text" id="petStatusText">...</p>
-        <div class="active-effects" id="activeEffectsText"></div>
-        
-        <div class="stats-grid">
-            <div class="stat-item">
-                <div class="status-label-group">
-                    <span class="status-label">Energie</span>
-                    <span class="status-value-text" id="energyValueText">-%</span>
+                <div class="pet-room active" id="bedroom">
+                    <div class="bed-display" id="bedDisplayContainer"></div>
                 </div>
-                <div class="status-bar"><div class="status-bar-fill" id="energyBar" style="width: 70%;"></div></div>
-            </div>
-            <div class="stat-item">
-                <div class="status-label-group">
-                    <span class="status-label">Sättigung</span>
-                    <span class="status-value-text" id="hungerValueText">-%</span>
+                <div class="pet-room" id="livingroom">
+                    <div class="livingroom-plant">
+                        <svg viewBox="0 0 50 70">
+                            <rect x="15" y="50" width="20" height="20" rx="3" fill="var(--livingroom-plant-pot-color)"/>
+                            <path d="M25 50 Q20 30 15 20 Q25 25 25 10 Q25 25 35 20 Q30 30 25 50" fill="var(--livingroom-plant-leaf-color)"/>
+                            <path d="M25 50 Q30 30 35 20 Q25 25 25 10 Q25 25 15 20 Q20 30 25 50" fill="var(--livingroom-plant-leaf-color)" transform="scale(0.8 1) translate(6 0)"/>
+                        </svg>
+                    </div>
                 </div>
-                <div class="status-bar"><div class="status-bar-fill" id="hungerBar" style="width: 50%;"></div></div>
+                <div class="pet-character-container" id="petCharacterDisplay"></div>
             </div>
-            <div class="stat-item">
-                <div class="status-label-group">
-                    <span class="status-label">Laune</span>
-                    <span class="status-value-text" id="moodValueText">-%</span>
-                </div>
-                <div class="status-bar "><div class="status-bar-fill" id="moodBar" style="width: 80%;"></div></div>
+            
+            <div class="room-navigation hidden-on-error">
+                <button class="nav-button" id="navBedroomButton">Schlafzimmer</button>
+                <button class="nav-button" id="navLivingroomButton">Wohnzimmer</button>
             </div>
-        </div>
 
-        <div class="main-actions-grid">
-            <button class="action-button" id="feedButton">🍼 <span class="ml-1">Füttern</span></button>
-            <button class="action-button" id="petButton">💖 <span class="ml-1">Streicheln</span></button>
-            <button class="action-button" id="sleepButton">🌙 <span class="ml-1">Schlafen</span></button>
-            <button class="action-button" id="openShopButton">🛍️ <span class="ml-1">Shop</span></button>
-            <button class="action-button full-width" id="openWormGameButton">🐛 <span class="ml-1">Wurmjagd</span></button>
-            <button class="action-button full-width" id="openFlightGameButton">🕊️ <span class="ml-1">Hindernisflug</span></button>
-        </div>
+            <div class="pet-info hidden-on-error">
+                <h1 class="pet-title" id="petTitle">Lade Haustier...</h1>
+                <p class="pet-type-text" id="petTypeText"></p>
+                <p class="pet-age-text" id="petAgeText">Alter: 0 Tage</p>
+                <p class="pet-personality-text" id="petPersonalityText">Persönlichkeit: Normal</p>
+            </div>
+
+            <p class="pet-status-text hidden-on-error" id="petStatusText">...</p>
+            <div class="active-effects hidden-on-error" id="activeEffectsText"></div>
+            
+            <div class="stats-grid hidden-on-error">
+                <div class="stat-item">
+                    <div class="status-label-group">
+                        <span class="status-label">Energie</span>
+                        <span class="status-value-text" id="energyValueText">-%</span>
+                    </div>
+                    <div class="status-bar"><div class="status-bar-fill" id="energyBar" style="width: 70%;"></div></div>
+                </div>
+                <div class="stat-item">
+                    <div class="status-label-group">
+                        <span class="status-label">Sättigung</span>
+                        <span class="status-value-text" id="hungerValueText">-%</span>
+                    </div>
+                    <div class="status-bar"><div class="status-bar-fill" id="hungerBar" style="width: 50%;"></div></div>
+                </div>
+                <div class="stat-item">
+                    <div class="status-label-group">
+                        <span class="status-label">Laune</span>
+                        <span class="status-value-text" id="moodValueText">-%</span>
+                    </div>
+                    <div class="status-bar "><div class="status-bar-fill" id="moodBar" style="width: 80%;"></div></div>
+                </div>
+            </div>
+
+            <div class="main-actions-grid hidden-on-error">
+                <button class="action-button" id="feedButton">🍼 <span class="ml-1">Füttern</span></button>
+                <button class="action-button" id="petButton">💖 <span class="ml-1">Streicheln</span></button>
+                <button class="action-button" id="sleepButton">🌙 <span class="ml-1">Schlafen</span></button>
+                <button class="action-button" id="openShopButton">🛍️ <span class="ml-1">Shop</span></button>
+                <button class="action-button full-width" id="openWormGameButton">🐛 <span class="ml-1">Wurmjagd</span></button>
+                <button class="action-button full-width" id="openFlightGameButton">🕊️ <span class="ml-1">Hindernisflug</span></button>
+            </div>
+        </div> <!-- End of game-content-wrapper -->
          <p class="text-xs text-center mt-4" id="userIdDisplay">User ID: -</p>
     </main>
     
@@ -621,15 +641,20 @@
         import { getFirestore, doc, getDoc, setDoc, updateDoc, deleteDoc, onSnapshot, collection, query, where, addDoc, getDocs, serverTimestamp, runTransaction, writeBatch, Timestamp, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // --- Firebase Config & Global App Vars ---
+        // WICHTIG: Die Variablen __firebase_config und __app_id MÜSSEN global verfügbar sein,
+        // BEVOR dieses Skript ausgeführt wird. In einer PWA-Umgebung muss sichergestellt werden,
+        // dass diese Variablen korrekt in der gecachten index.html enthalten sind oder
+        // anderweitig zuverlässig bereitgestellt werden.
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id'; // Eigene App-ID für Firestore-Pfade
+        
         let db, auth, userId, currentPetId;
         let unsubscribePetStats = null;
         let unsubscribeQuests = null;
         let unsubscribeGallery = null;
 
         // --- Konstanten & Konfiguration ---
-        const GAME_VERSION = "1.6-minigamefix-newpets"; // Updated version
+        const GAME_VERSION = "1.6-minigamefix-newpets"; 
         const MAX_STAT = 100;
         const MIN_STAT = 0;
         const MS_PER_HOUR = 1000 * 60 * 60;
@@ -679,7 +704,7 @@
                     baby: { name: "Mieze", nextStage: 'adult', activeHoursNeeded: 0, careHoursNeeded: 0, svgScale: 0.85 },
                     adult: { name: "Katze", nextStage: null, activeHoursNeeded: 50, careHoursNeeded: 35, svgScale: 1.0 }
                 },
-                defaultColors: { primary: "#8D6E63", secondary: "#FFB74D", feature: "#5D4037" } // Brown, Light Orange, Dark Brown
+                defaultColors: { primary: "#8D6E63", secondary: "#FFB74D", feature: "#5D4037" } 
             },
             dog: {
                 name: "Hund",
@@ -688,7 +713,7 @@
                     baby: { name: "Welpe", nextStage: 'adult', activeHoursNeeded: 0, careHoursNeeded: 0, svgScale: 0.9 },
                     adult: { name: "Hund", nextStage: null, activeHoursNeeded: 60, careHoursNeeded: 40, svgScale: 1.1 }
                 },
-                defaultColors: { primary: "#D2B48C", secondary: "#A0522D", feature: "#8B4513" } // Tan, Sienna, SaddleBrown
+                defaultColors: { primary: "#D2B48C", secondary: "#A0522D", feature: "#8B4513" } 
             },
             dragon: {
                 name: "Drache",
@@ -697,7 +722,7 @@
                     baby: { name: "Schlüpfling", nextStage: 'adult', activeHoursNeeded: 0, careHoursNeeded: 0, svgScale: 0.75 },
                     adult: { name: "Drache", nextStage: null, activeHoursNeeded: 100, careHoursNeeded: 70, svgScale: 1.3 }
                 },
-                defaultColors: { primary: "#2E8B57", secondary: "#FF8C00", feature: "#8B0000" } // SeaGreen, DarkOrange, DarkRed
+                defaultColors: { primary: "#2E8B57", secondary: "#FF8C00", feature: "#8B0000" } 
             },
             fish: {
                 name: "Fisch",
@@ -706,8 +731,8 @@
                     baby: { name: "Fischlein", nextStage: 'adult', activeHoursNeeded: 0, careHoursNeeded: 0, svgScale: 0.6 },
                     adult: { name: "Fisch", nextStage: null, activeHoursNeeded: 30, careHoursNeeded: 20, svgScale: 0.8 }
                 },
-                defaultColors: { primary: "#FF6347", secondary: "#FFFF00", feature: "#FFA500" }, // Tomato, Yellow, Orange
-                specialPlacement: "fishbowl" // Indicates it needs the fishbowl
+                defaultColors: { primary: "#FF6347", secondary: "#FFFF00", feature: "#FFA500" }, 
+                specialPlacement: "fishbowl" 
             },
             robot: {
                 name: "Roboter",
@@ -716,7 +741,7 @@
                     baby: { name: "Proto-Bot", nextStage: 'adult', activeHoursNeeded: 0, careHoursNeeded: 0, svgScale: 0.9 },
                     adult: { name: "Robo-Freund", nextStage: null, activeHoursNeeded: 80, careHoursNeeded: 60, svgScale: 1.1 }
                 },
-                defaultColors: { primary: "#B0C4DE", secondary: "#FFD700", feature: "#778899" } // LightSteelBlue, Gold, LightSlateGray
+                defaultColors: { primary: "#B0C4DE", secondary: "#FFD700", feature: "#778899" } 
             }
         };
         const AVAILABLE_ACCESSORIES = {
@@ -752,11 +777,11 @@
         };
         const PERSONALITY_KEYS = Object.keys(PERSONALITIES);
 
-        const FLIGHT_GAME_GRAVITY = 1.5; // Slightly reduced gravity
-        const FLIGHT_GAME_FLAP_STRENGTH = 28; // Slightly reduced flap
-        const FLIGHT_GAME_OBSTACLE_SPEED = 2.5; // Slightly slower obstacles
-        const FLIGHT_GAME_OBSTACLE_GAP = 110; // Slightly wider gap
-        const FLIGHT_GAME_OBSTACLE_SPAWN_INTERVAL_MS = 2200; // Slightly longer spawn interval
+        const FLIGHT_GAME_GRAVITY = 1.5; 
+        const FLIGHT_GAME_FLAP_STRENGTH = 28; 
+        const FLIGHT_GAME_OBSTACLE_SPEED = 2.5; 
+        const FLIGHT_GAME_OBSTACLE_GAP = 110; 
+        const FLIGHT_GAME_OBSTACLE_SPAWN_INTERVAL_MS = 2200; 
 
         const BED_SVGS = {
             standardBed: `<svg viewBox="0 0 100 50"><rect x="10" y="20" width="80" height="25" rx="5" fill="var(--bed-wood-color)"/><rect x="15" y="10" width="70" height="15" fill="var(--bed-standard-blanket-color)" rx="3"/><ellipse cx="30" cy="12" rx="10" ry="4" fill="#f0f0f0"/><ellipse cx="70" cy="12" rx="10" ry="4" fill="#f0f0f0"/></svg>`,
@@ -792,7 +817,7 @@
             openWormGameButton, wormGameModal, closeWormGameButton, startWormGameButton, wormGameArea, 
             wormGameTimerDisplay, wormGameScoreDisplay, wormGameMessage,
             openFlightGameButton, flightGameModal, closeFlightGameButton, startFlightGameButton, flightGameArea,
-            flightGamePetContainer, flightGameScoreDisplay, flightGameMessage, // Renamed flightGameOwlContainer
+            flightGamePetContainer, flightGameScoreDisplay, flightGameMessage, 
             bedDisplayContainer, petCharacterDisplay, bedroomDiv, livingroomDiv, navBedroomButton, navLivingroomButton,
             updatePopupModal, closeUpdatePopupButton,
             petSelectionModal, petSelectionContainer, confirmPetSelectionButton, newPetNameInput,
@@ -800,7 +825,8 @@
             customizePetButton, customizePetModal, colorPickerContainer, accessorySelectionContainer, customizeMessage, saveCustomizationButton, closeCustomizePetModalButton,
             questsButton, questsModal, questListContainer, questGeneralMessage, closeQuestsModalButton,
             galleryButton, galleryModal, galleryGridContainer, showMyPetInGalleryButton, galleryMessage, closeGalleryModalButton,
-            userIdDisplay, skyBackground, starsContainer, fishbowlContainer; 
+            userIdDisplay, skyBackground, starsContainer, fishbowlContainer,
+            firebaseErrorMessageDiv, gameContentWrapper;  // Added new DOM elements
             
         let allModals = [];
         let wormGameIntervalId = null, wormSpawnIntervalId = null, wormGameScore = 0, wormGameTimeLeft = WORM_GAME_DURATION_S;
@@ -809,15 +835,21 @@
 
         window.addEventListener('DOMContentLoaded', async () => {
             console.log("DOM geladen. Initialisiere Spiel...");
-            initializeDOMElements();
-            setupEventListeners();
+            initializeDOMElements(); // Initialize all DOM elements first
             
             if (!firebaseConfig) {
                 console.error("Firebase Konfiguration nicht gefunden!");
-                if(petStatusText) petStatusText.textContent = "Fehler: Firebase nicht konfiguriert. Spiel kann nicht geladen werden.";
-                disableGameControls(true); // Disable all controls including theme
-                return;
+                if(firebaseErrorMessageDiv && gameContentWrapper) {
+                    firebaseErrorMessageDiv.textContent = "Fehler: Firebase ist nicht korrekt konfiguriert. Das Spiel kann nicht geladen werden. Bitte stelle sicher, dass die Firebase-Konfigurationsvariablen (__firebase_config und __app_id) in der Umgebung korrekt gesetzt sind.";
+                    firebaseErrorMessageDiv.style.display = 'block';
+                    gameContentWrapper.style.display = 'none'; // Hide main game content
+                }
+                disableGameControls(true); // Disable all controls
+                return; // Stop further execution
             }
+            
+            // If firebaseConfig is present, proceed with setup
+            setupEventListeners(); // Setup event listeners only if Firebase config is okay
 
             try {
                 const app = initializeApp(firebaseConfig);
@@ -830,6 +862,8 @@
                         console.log("Benutzer ist angemeldet:", user.uid);
                         userId = user.uid;
                         if(userIdDisplay) userIdDisplay.textContent = `User ID: ${userId}`;
+                        if(firebaseErrorMessageDiv) firebaseErrorMessageDiv.style.display = 'none'; // Hide error if auth proceeds
+                        if(gameContentWrapper) gameContentWrapper.style.display = 'block'; // Show game content
                         await loadUserProfile(); 
                     } else {
                         console.log("Benutzer nicht angemeldet. Versuche anonyme Anmeldung oder Custom Token.");
@@ -849,7 +883,11 @@
                 });
             } catch (error) {
                 console.error("Firebase Initialisierungsfehler:", error);
-                if(petStatusText) petStatusText.textContent = "Fehler bei Firebase-Initialisierung.";
+                if(firebaseErrorMessageDiv && gameContentWrapper) {
+                    firebaseErrorMessageDiv.textContent = "Fehler bei der Firebase-Initialisierung. Bitte überprüfe die Konsole für Details.";
+                    firebaseErrorMessageDiv.style.display = 'block';
+                    gameContentWrapper.style.display = 'none';
+                }
                 disableGameControls(true);
             }
         });
@@ -857,7 +895,7 @@
         function disableGameControls(disableAll = false) {
             const buttons = document.querySelectorAll('button');
             buttons.forEach(btn => {
-                if (disableAll || btn.id !== 'themeToggleButton') { // Keep theme toggle active unless disableAll is true
+                if (disableAll || btn.id !== 'themeToggleButton') { 
                     btn.disabled = true;
                 }
             });
@@ -871,7 +909,6 @@
                    btn.disabled = false;
                 }
              });
-             // Ensure minigame start buttons are initially enabled if modal is openable
              if(startWormGameButton) startWormGameButton.disabled = false;
              if(startFlightGameButton) startFlightGameButton.disabled = false;
         }
@@ -885,11 +922,10 @@
                 const docSnap = await getDoc(userProfileRef);
                 if (docSnap.exists()) {
                     const loadedProfile = docSnap.data();
-                    // Merge carefully, especially nested objects like inventory
                     userProfile = {
-                        ...userProfile, // Default structure
-                        ...loadedProfile, // Loaded data
-                        inventory: { // Ensure inventory exists and has defaults
+                        ...userProfile, 
+                        ...loadedProfile, 
+                        inventory: { 
                             ...(userProfile.inventory || {}),
                             ...(loadedProfile.inventory || {})
                         }
@@ -928,7 +964,7 @@
                         activePetId: null,
                         createdAt: now,
                         lastLogin: now,
-                        inventory: { colorTickets: 1, /* other items */ } 
+                        inventory: { colorTickets: 1 } 
                     };
                     await setDoc(userProfileRef, userProfile);
                     console.log("Neues Nutzerprofil erstellt. Zeige Haustierauswahl.");
@@ -941,13 +977,17 @@
 
             } catch (error) {
                 console.error("Fehler beim Laden/Erstellen des Nutzerprofils:", error);
-                if(petStatusText) petStatusText.textContent = "Fehler beim Laden des Profils.";
+                 if(firebaseErrorMessageDiv && gameContentWrapper) {
+                    firebaseErrorMessageDiv.textContent = "Fehler beim Laden des Nutzerprofils.";
+                    firebaseErrorMessageDiv.style.display = 'block';
+                    gameContentWrapper.style.display = 'none';
+                }
                 disableGameControls();
             }
         }
         
         async function saveUserProfile() {
-            if (!userId || !userProfile) return; // Add null check for userProfile
+            if (!userId || !userProfile) return; 
             const userProfileRef = doc(db, `artifacts/${appId}/users/${userId}/profile/main`);
             try {
                 await setDoc(userProfileRef, userProfile, { merge: true });
@@ -968,11 +1008,9 @@
             unsubscribePetStats = onSnapshot(petDocRef, (docSnap) => {
                 if (docSnap.exists()) {
                     const loadedPetStats = docSnap.data();
-                    // Ensure nested objects like inventory and colorScheme are properly merged or initialized
                     petStats = {
-                        // Sensible defaults for a pet object structure
                         name: "Pet",
-                        petType: "owl", // Default pet type if somehow missing
+                        petType: "owl", 
                         energy: MAX_STAT,
                         hunger: MAX_STAT,
                         mood: MAX_STAT,
@@ -994,14 +1032,13 @@
                             accessories: { head: null, body: null, feet: null },
                             ownedAccessories: []
                         },
-                        colorScheme: AVAILABLE_PET_TYPES.owl.defaultColors, // Default color scheme
-                        notifiedLowEnergy: false, // Ensure notification flags are present
+                        colorScheme: AVAILABLE_PET_TYPES.owl.defaultColors, 
+                        notifiedLowEnergy: false, 
                         notifiedLowHunger: false,
                         notifiedLowMood: false,
-                        ...loadedPetStats // Loaded data overrides defaults
+                        ...loadedPetStats 
                     };
                     
-                    // Ensure inventory and its sub-objects exist
                     petStats.inventory = petStats.inventory || {};
                     petStats.inventory.protectionPotion = petStats.inventory.protectionPotion || { active: false, expiresAt: 0 };
                     petStats.inventory.ownedBeds = petStats.inventory.ownedBeds || ['standardBed'];
@@ -1040,7 +1077,6 @@
                         saveUserProfile(); 
                         loadUserProfile(); 
                     } else {
-                        // No owned pets left, or activePetId was invalid from the start
                         console.log("Kein gültiges aktives Haustier. Zeige Auswahl.");
                         closeAllModals();
                         if(petSelectionModal) petSelectionModal.style.display = 'flex';
@@ -1115,7 +1151,7 @@
             closeFlightGameButton = document.getElementById('closeFlightGameButton');
             startFlightGameButton = document.getElementById('startFlightGameButton');
             flightGameArea = document.getElementById('flightGameArea');
-            flightGamePetContainer = document.getElementById('flightGamePetContainer'); // Updated ID
+            flightGamePetContainer = document.getElementById('flightGamePetContainer'); 
             flightGameScoreDisplay = document.getElementById('flightGameScore');
             flightGameMessage = document.getElementById('flightGameMessage');
             bedDisplayContainer = document.getElementById('bedDisplayContainer');
@@ -1157,6 +1193,8 @@
             skyBackground = document.getElementById('skyBackground');
             starsContainer = document.getElementById('starsContainer');
             fishbowlContainer = document.getElementById('fishbowlContainer');
+            firebaseErrorMessageDiv = document.getElementById('firebaseErrorMessage');
+            gameContentWrapper = document.querySelector('.game-content-wrapper');
 
 
             allModals = [shopModal, wormGameModal, flightGameModal, updatePopupModal, petSelectionModal, switchPetModal, customizePetModal, questsModal, galleryModal];
@@ -1164,7 +1202,7 @@
 
         function setupEventListeners() {
             if(themeToggleButton) themeToggleButton.addEventListener('click', () => {
-                if (!userProfile) return; // Guard
+                if (!userProfile) return; 
                 const newTheme = document.documentElement.classList.contains('dark-mode') ? 'light' : 'dark';
                 applyTheme(newTheme);
                 userProfile.themePreference = newTheme;
@@ -1216,7 +1254,7 @@
                         if (event.target === modal) { 
                             modal.style.display = 'none';
                             if (modal === flightGameModal && flightGameActive) endFlightGame(false);
-                            if (modal === wormGameModal && wormGameTimeLeft > 0 && wormGameTimeLeft < WORM_GAME_DURATION_S) endWormGame(false); // Check if game was running
+                            if (modal === wormGameModal && wormGameTimeLeft > 0 && wormGameTimeLeft < WORM_GAME_DURATION_S) endWormGame(false); 
                         }
                     });
                 }
@@ -1224,7 +1262,7 @@
         }
         
         function updateAllDisplays() {
-            if (!petStats || !userProfile) return; // Ensure both are loaded
+            if (!petStats || !userProfile) return; 
             updatePetNameAndAge();
             updatePersonalityDisplay();
             updateStatusDisplay(); 
@@ -1233,7 +1271,7 @@
             applyGrowthVisuals(); 
             renderPetCharacter(); 
             updateDayNightCycle();
-            updatePetCoinsDisplay(); // Also update coins display
+            updatePetCoinsDisplay(); 
         }
 
         function closeAllModals() {
@@ -1275,7 +1313,6 @@
                 itemDiv.className = 'selection-item p-4 border rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700';
                 
                 let previewSvg = petType.baseSvg;
-                // Apply default primary color to the preview
                 previewSvg = previewSvg.replace(/class="pet-svg-body"/g, `class="pet-svg-body" fill="${petType.defaultColors.primary}"`);
                 previewSvg = previewSvg.replace(/class="pet-svg-beak"/g, `class="pet-svg-beak" fill="${petType.defaultColors.secondary}"`);
                 previewSvg = previewSvg.replace(/class="pet-svg-foot"/g, `class="pet-svg-foot" fill="${petType.defaultColors.secondary}"`);
@@ -1401,7 +1438,7 @@
                         `;
                         if (petId !== currentPetId) {
                             const button = petDiv.querySelector('button');
-                            if (button) { // Ensure button exists before adding listener
+                            if (button) { 
                                 button.addEventListener('click', async () => {
                                     userProfile.activePetId = petId;
                                     await saveUserProfile();
@@ -1438,7 +1475,7 @@
                         if (!activeRoomDiv.contains(bedDisplayContainer)) activeRoomDiv.appendChild(bedDisplayContainer);
                         bedDisplayContainer.style.display = 'block';
                     }
-                    if(fishbowlContainer) fishbowlContainer.style.display = 'none'; // Hide fishbowl in bedroom
+                    if(fishbowlContainer) fishbowlContainer.style.display = 'none'; 
                 } else if (roomName === 'livingroom') {
                     if(bedDisplayContainer) bedDisplayContainer.style.display = 'none';
                     if (petStats.petType === 'fish' && fishbowlContainer) {
@@ -1447,7 +1484,7 @@
                     } else if (fishbowlContainer) {
                         fishbowlContainer.style.display = 'none';
                     }
-                } else { // Other rooms potentially
+                } else { 
                      if(bedDisplayContainer) bedDisplayContainer.style.display = 'none';
                      if(fishbowlContainer) fishbowlContainer.style.display = 'none';
                 }
@@ -1456,7 +1493,7 @@
             if(navBedroomButton) navBedroomButton.classList.toggle('active-room-nav', roomName === 'bedroom');
             if(navLivingroomButton) navLivingroomButton.classList.toggle('active-room-nav', roomName === 'livingroom');
             
-            updateRoomVisuals(); // This will also handle pet sleeping state based on room
+            updateRoomVisuals(); 
             savePetStats();
         }
         
@@ -1492,7 +1529,7 @@
             petStats.lastUpdateHunger = now;
             petStats.lastUpdateMood = now;
 
-            if (petStats.personality === 'schlau' && Math.random() < (PERSONALITIES.schlau.passiveCoinChance / (60 * 60 / 30) ) ) { 
+            if (userProfile && petStats.personality === 'schlau' && Math.random() < (PERSONALITIES.schlau.passiveCoinChance / (60 * 60 / 30) ) ) { 
                 const coinsFound = PERSONALITIES.schlau.passiveCoinAmount;
                 userProfile.petCoins += coinsFound;
                 updatePetCoinsDisplay();
@@ -1537,8 +1574,8 @@
         
         function updatePetNameAndAge() {
             if (!petStats) return;
-            const petTypeConfig = AVAILABLE_PET_TYPES[petStats.petType] || AVAILABLE_PET_TYPES.owl; // Fallback
-            const growthStageConfig = petTypeConfig.growthStages[petStats.growthStage] || petTypeConfig.growthStages.baby; // Fallback
+            const petTypeConfig = AVAILABLE_PET_TYPES[petStats.petType] || AVAILABLE_PET_TYPES.owl; 
+            const growthStageConfig = petTypeConfig.growthStages[petStats.growthStage] || petTypeConfig.growthStages.baby; 
             const stageName = growthStageConfig.name;
             
             if(petTitle) petTitle.textContent = `${petStats.name} (${stageName})`;
@@ -1569,7 +1606,7 @@
             baseSvgHtml = baseSvgHtml.replace(/class="pet-svg-foot"/g, `class="pet-svg-foot" fill="${currentColorScheme.secondary}"`);
             baseSvgHtml = baseSvgHtml.replace(/class="pet-svg-wing"/g, `class="pet-svg-wing" fill="${currentColorScheme.primary}" stroke="${currentColorScheme.feature || currentColorScheme.primary}" stroke-width="1"`);
             baseSvgHtml = baseSvgHtml.replace(/class="pet-svg-feature"/g, `class="pet-svg-feature" stroke="${currentColorScheme.feature || currentColorScheme.primary}" fill="${currentColorScheme.feature || currentColorScheme.primary}"`);
-            // For specific pet types, ensure their unique parts are also colored
+            
             if (petStats.petType === 'cat' || petStats.petType === 'dog') {
                  baseSvgHtml = baseSvgHtml.replace(/class="pet-svg-feature (cat-ear|dog-ear|cat-tail|dog-tail)"/g, `class="pet-svg-feature $1" fill="${currentColorScheme.primary}" stroke="${currentColorScheme.feature}"`);
                  baseSvgHtml = baseSvgHtml.replace(/class="pet-svg-beak (cat-nose|dog-nose)"/g, `class="pet-svg-beak $1" fill="${currentColorScheme.secondary}"`);
@@ -1595,7 +1632,6 @@
             }
             petCharacterDisplay.innerHTML = `<div class="pet-character-svg">${baseSvgHtml}</div>` + accessoriesHtml;
 
-            // Fishbowl and swimming animation logic
             if (petStats.petType === 'fish' && petStats.currentRoom === 'livingroom') {
                 if(fishbowlContainer) fishbowlContainer.style.display = 'block';
                 petCharacterDisplay.classList.add('swimming');
@@ -1674,11 +1710,10 @@
                 petCharacterDisplay.classList.add('sleeping');
             } else {
                 petCharacterDisplay.classList.remove('sleeping');
-                if(petStats.isSleeping && petStats.currentRoom !== 'bedroom') { // Wake up if moved from bedroom while sleeping
+                if(petStats.isSleeping && petStats.currentRoom !== 'bedroom') { 
                     petStats.isSleeping = false; 
                 }
             }
-            // Fishbowl visibility is handled in switchToRoom and renderPetCharacter
         }
         function wakeUpOwl() { 
             if (petStats && petStats.isSleeping) {
@@ -1717,7 +1752,7 @@
         }
         function handleSleep() {
             if (!petStats) return;
-            if (petStats.petType === 'fish') { // Fish can't use beds or sleep in this manner
+            if (petStats.petType === 'fish') { 
                 showNotification("Fische schlafen anders!", `${petStats.name} braucht kein Bett.`);
                 return;
             }
@@ -1920,7 +1955,7 @@
                  if (!userProfile.inventory.colorTickets || userProfile.inventory.colorTickets < 1) {
                     customizeMessage.textContent = "Du brauchst ein Farbticket, um die Farbe zu ändern!";
                     customizeMessage.style.color = "red";
-                    return; // Don't proceed if no ticket and color change attempted
+                    return; 
                 }
                 userProfile.inventory.colorTickets--;
                 petStats.colorScheme.primary = newPrimaryColor;
@@ -1969,11 +2004,10 @@
             wormGameModal.style.display = 'flex'; 
             wormGameMessage.textContent = '';
             wormGameScoreDisplay.textContent = "Punkte: 0";
-            wormGameTimeLeft = WORM_GAME_DURATION_S; // Reset time
+            wormGameTimeLeft = WORM_GAME_DURATION_S; 
             wormGameTimerDisplay.textContent = `Zeit: ${wormGameTimeLeft}s`;
             startWormGameButton.disabled = false;
-            wormGameArea.innerHTML = ''; // Clear previous game elements
-            // Ensure game variables are reset
+            wormGameArea.innerHTML = ''; 
             wormGameScore = 0;
             if(wormGameIntervalId) clearInterval(wormGameIntervalId);
             if(wormSpawnIntervalId) clearInterval(wormSpawnIntervalId);
@@ -1988,7 +2022,7 @@
             wormGameTimerDisplay.textContent = `Zeit: ${wormGameTimeLeft}s`;
             wormGameMessage.textContent = '';
             startWormGameButton.disabled = true;
-            wormGameArea.innerHTML = ''; // Clear again just in case
+            wormGameArea.innerHTML = ''; 
 
             wormGameIntervalId = setInterval(() => {
                 wormGameTimeLeft--;
@@ -1998,7 +2032,7 @@
                 }
             }, 1000);
             wormSpawnIntervalId = setInterval(spawnWorm, WORM_APPEAR_INTERVAL_MS);
-            spawnWorm(); // Spawn first worm immediately
+            spawnWorm(); 
         }
         function spawnWorm() {  
             if (wormGameTimeLeft <= 0 || !wormGameArea) return;
@@ -2009,18 +2043,17 @@
                 segment.classList.add('worm-segment');
                 worm.appendChild(segment);
             }
-            // Ensure gameArea has dimensions before calculating position
             if (wormGameArea.clientHeight > 12 && wormGameArea.clientWidth > 30) {
                 worm.style.top = Math.random() * (wormGameArea.clientHeight - 12) + 'px';
                 worm.style.left = Math.random() * (wormGameArea.clientWidth - 30) + 'px';
-            } else { // Fallback position if area not fully rendered
+            } else { 
                 worm.style.top = '50px';
                 worm.style.left = '50px';
             }
             wormGameArea.appendChild(worm);
             
             worm.addEventListener('click', () => {
-                if (wormGameTimeLeft <=0) return; // Don't score after game ends
+                if (wormGameTimeLeft <=0) return; 
                 wormGameScore++;
                 if(wormGameScoreDisplay) wormGameScoreDisplay.textContent = `Punkte: ${wormGameScore}`;
                 worm.remove();
@@ -2034,7 +2067,7 @@
             wormSpawnIntervalId = null;
 
             if(startWormGameButton) startWormGameButton.disabled = false;
-            if(wormGameArea) wormGameArea.innerHTML = ''; // Clear remaining worms
+            if(wormGameArea) wormGameArea.innerHTML = ''; 
 
             if (giveReward && petStats && userProfile) {
                 let coinsEarned = Math.floor(wormGameScore / 2);
@@ -2061,7 +2094,7 @@
             } else {
                 if(wormGameMessage) wormGameMessage.textContent = `Spiel abgebrochen.`;
             }
-             wormGameTimeLeft = 0; // Ensure timer is at 0
+             wormGameTimeLeft = 0; 
         }
         
         function handleOpenFlightGame() { 
@@ -2072,15 +2105,14 @@
             closeAllModals(); 
             flightGameModal.style.display = 'flex'; 
             flightGameMessage.textContent = '';
-            flightGameScoreNum = 0; // Reset score
+            flightGameScoreNum = 0; 
             flightGameScoreDisplay.textContent = "Punkte: 0";
             startFlightGameButton.disabled = false;
             
-            flightGamePetY = flightGameArea.clientHeight / 2 - flightGamePetContainer.clientHeight / 2; // Center pet vertically
+            flightGamePetY = flightGameArea.clientHeight > 0 ? flightGameArea.clientHeight / 2 - flightGamePetContainer.clientHeight / 2 : 100; 
             flightGamePetContainer.style.top = flightGamePetY + 'px';
             flightGamePetVelocityY = 0;
 
-            // Clear previous obstacles
             flightGameObstacles.forEach(obs => {if (obs.element.parentNode) obs.element.remove()});
             flightGameObstacles = [];
 
@@ -2089,7 +2121,6 @@
                 let gamePetSvg = petTypeConfig.baseSvg;
                 const currentColorScheme = petStats.colorScheme || petTypeConfig.defaultColors;
                 gamePetSvg = gamePetSvg.replace(/class="pet-svg-body"/g, `class="pet-svg-body" fill="${currentColorScheme.primary}"`);
-                // Add other color replacements if needed for flight game pet
                 flightGamePetContainer.innerHTML = gamePetSvg;
             }
              if(flightGameLoopId) cancelAnimationFrame(flightGameLoopId);
@@ -2106,7 +2137,7 @@
             startFlightGameButton.disabled = true;
             flightGameActive = true;
             
-            flightGamePetY = flightGameArea.clientHeight / 2 - flightGamePetContainer.clientHeight / 2;
+            flightGamePetY = flightGameArea.clientHeight > 0 ? flightGameArea.clientHeight / 2 - flightGamePetContainer.clientHeight / 2 : 100;
             flightGamePetContainer.style.top = flightGamePetY + 'px';
             flightGamePetVelocityY = 0;
 
@@ -2115,7 +2146,7 @@
 
             flightGameLoopId = requestAnimationFrame(flightGameLoop);
             flightGameObstacleSpawnId = setInterval(spawnFlightObstacle, FLIGHT_GAME_OBSTACLE_SPAWN_INTERVAL_MS);
-            spawnFlightObstacle(); // Spawn first obstacle
+            spawnFlightObstacle(); 
         }
         function handleFlightGameFlap() { 
              if (flightGameActive) {
@@ -2125,7 +2156,7 @@
         function spawnFlightObstacle() { 
             if (!flightGameActive || !flightGameArea) return;
             const areaHeight = flightGameArea.clientHeight;
-            if (areaHeight <= 0) return; // Don't spawn if area not ready
+            if (areaHeight <= 0) return; 
 
             const gapPosition = Math.random() * (areaHeight - FLIGHT_GAME_OBSTACLE_GAP - 60) + 30; 
 
@@ -2133,7 +2164,7 @@
             topObstacle.classList.add('flight-obstacle');
             topObstacle.style.height = gapPosition + 'px';
             topObstacle.style.top = '0px';
-            topObstacle.style.right = '-20px'; // Start off-screen
+            topObstacle.style.right = '-20px'; 
             flightGameArea.appendChild(topObstacle);
             flightGameObstacles.push({ element: topObstacle, x: flightGameArea.clientWidth, type: 'top', passed: false });
 
@@ -2141,7 +2172,7 @@
             bottomObstacle.classList.add('flight-obstacle');
             bottomObstacle.style.height = (areaHeight - gapPosition - FLIGHT_GAME_OBSTACLE_GAP) + 'px';
             bottomObstacle.style.top = (gapPosition + FLIGHT_GAME_OBSTACLE_GAP) + 'px';
-            bottomObstacle.style.right = '-20px'; // Start off-screen
+            bottomObstacle.style.right = '-20px'; 
             flightGameArea.appendChild(bottomObstacle);
             flightGameObstacles.push({ element: bottomObstacle, x: flightGameArea.clientWidth, type: 'bottom', passed: false });
         }
@@ -2152,7 +2183,7 @@
             flightGamePetY += flightGamePetVelocityY * 0.1; 
 
             if (flightGamePetY < 0) { flightGamePetY = 0; flightGamePetVelocityY = 0; }
-            if (flightGamePetY + flightGamePetContainer.clientHeight > flightGameArea.clientHeight) {
+            if (flightGamePetContainer.clientHeight > 0 && flightGamePetY + flightGamePetContainer.clientHeight > flightGameArea.clientHeight) {
                 flightGamePetY = flightGameArea.clientHeight - flightGamePetContainer.clientHeight;
                 flightGamePetVelocityY = 0;
                 endFlightGame(true); 
@@ -2163,10 +2194,12 @@
             for (let i = flightGameObstacles.length - 1; i >= 0; i--) {
                 const obs = flightGameObstacles[i];
                 obs.x -= FLIGHT_GAME_OBSTACLE_SPEED;
-                obs.element.style.left = obs.x + 'px'; // Control position via left
+                obs.element.style.left = obs.x + 'px'; 
 
                 const petRect = flightGamePetContainer.getBoundingClientRect();
                 const obsRect = obs.element.getBoundingClientRect();
+                
+                if (petRect.width === 0 && petRect.height === 0) continue; // Skip collision if pet not rendered
 
                 if (petRect.right > obsRect.left && petRect.left < obsRect.right &&
                     petRect.bottom > obsRect.top && petRect.top < obsRect.bottom) {
@@ -2224,7 +2257,7 @@
         
         function handleCloseUpdatePopup() {
             if(updatePopupModal) updatePopupModal.style.display = 'none';
-            if (userProfile) { // Ensure userProfile is loaded
+            if (userProfile) { 
                 userProfile.lastSeenVersion = GAME_VERSION;
                 saveUserProfile();
             }
@@ -2273,7 +2306,6 @@
                         });
                     });
                 } else {
-                    // Fallback if service worker not ready/active (might not work if tab is not focused)
                     new Notification(title, { body: body, icon: "https://quixoticode.github.io/data/pl/favicon-96x96.png" });
                 }
             }
@@ -2300,10 +2332,9 @@
         }
         
         async function checkAndResetQuests() {
-            if (!userId || !userProfile) return; // Ensure userProfile is available
+            if (!userId || !userProfile) return; 
             const today = new Date().toISOString().split('T')[0]; 
             
-            // Check if quests were already reset today or if it's a new day
             if (userProfile.lastQuestReset === today && dailyQuests && Object.keys(dailyQuests).length > 0) {
                 console.log("Quests für heute bereits geladen/initialisiert.");
                 displayQuests();
@@ -2343,7 +2374,7 @@
         }
         
         function displayQuests() {
-            if (!questListContainer || !dailyQuests) return; // Add check for dailyQuests
+            if (!questListContainer || !dailyQuests) return; 
             questListContainer.innerHTML = '';
             if (Object.keys(dailyQuests).length === 0) {
                 questListContainer.innerHTML = '<p>Heute gibt es keine Quests. Komm morgen wieder!</p>';
@@ -2376,7 +2407,7 @@
         }
 
         async function trackQuestProgress(actionType, amount = 1) {
-            if (!userId || !dailyQuests || !userProfile) return; // Add check for userProfile
+            if (!userId || !dailyQuests || !userProfile) return; 
             let questUpdated = false;
             for (const questId in dailyQuests) {
                 const quest = dailyQuests[questId];
@@ -2391,7 +2422,7 @@
                 }
             }
             if (questUpdated) {
-                const today = userProfile.lastQuestReset || new Date().toISOString().split('T')[0]; // Use stored date or fallback
+                const today = userProfile.lastQuestReset || new Date().toISOString().split('T')[0]; 
                 const questDataRef = doc(db, `artifacts/${appId}/users/${userId}/quests/${today}`);
                 try {
                     await setDoc(questDataRef, { quests: dailyQuests, date: today }, { merge: true });
@@ -2580,7 +2611,7 @@
                 saveUserProfile();
             }
         }
-        requestNotificationPermission(); // Request on load
+        requestNotificationPermission(); 
     </script>
 </body>
 </html>
