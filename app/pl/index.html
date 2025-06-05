@@ -441,9 +441,9 @@
                 <div class="stars-container" id="starsContainer"></div>
                 <div class="fishbowl-container" id="fishbowlContainer" style="display: none;">
                      <svg class="fishbowl-svg" viewBox="0 0 100 80">
-                        <ellipse class="fishbowl-water" cx="50" cy="50" rx="45" ry="28"/>
-                        <ellipse class="fishbowl-glass" cx="50" cy="50" rx="45" ry="28"/>
-                        <rect x="30" y="22" width="40" height="5" fill="var(--room-window-frame-color)" opacity="0.3" />
+                         <ellipse class="fishbowl-water" cx="50" cy="50" rx="45" ry="28"/>
+                         <ellipse class="fishbowl-glass" cx="50" cy="50" rx="45" ry="28"/>
+                         <rect x="30" y="22" width="40" height="5" fill="var(--room-window-frame-color)" opacity="0.3" />
                     </svg>
                 </div>
                 <div class="pet-room active" id="bedroom">
@@ -625,7 +625,7 @@
             <p>Klicke/Tippe, um zu flattern und Hindernissen auszuweichen!</p>
             <div id="flightGameArea">
                 <div class="flight-pet-container" id="flightGamePetContainer">
-                    </div>
+                 </div>
             </div>
             <div id="flightGameScore">Punkte: 0</div>
             <div id="flightGameMessage" class="mt-2 text-sm min-h-[1.2em]"></div>
@@ -642,9 +642,7 @@
 
         // --- Firebase Config & Global App Vars ---
         // WICHTIG: Die Variablen __firebase_config und __app_id MÜSSEN global verfügbar sein,
-        // BEVOR dieses Skript ausgeführt wird. In einer PWA-Umgebung muss sichergestellt werden,
-        // dass diese Variablen korrekt in der gecachten index.html enthalten sind oder
-        // anderweitig zuverlässig bereitgestellt werden.
+        // BEVOR dieses Skript ausgeführt wird. 
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id'; // Eigene App-ID für Firestore-Pfade
         
@@ -654,7 +652,7 @@
         let unsubscribeGallery = null;
 
         // --- Konstanten & Konfiguration ---
-        const GAME_VERSION = "1.6-minigamefix-newpets"; 
+        const GAME_VERSION = "1.7-firebase-improvements"; 
         const MAX_STAT = 100;
         const MIN_STAT = 0;
         const MS_PER_HOUR = 1000 * 60 * 60;
@@ -746,7 +744,7 @@
         };
         const AVAILABLE_ACCESSORIES = {
             red_hat: { name: "Roter Hut", cost: 30, category: "head", 
-              svg: `<path class="accessory-svg-item" d="M35 30 Q50 20 65 30 L60 35 L40 35 Z" fill="var(--accessory-hat-color)" stroke="#000" stroke-width="0.5"/>` 
+                svg: `<path class="accessory-svg-item" d="M35 30 Q50 20 65 30 L60 35 L40 35 Z" fill="var(--accessory-hat-color)" stroke="#000" stroke-width="0.5"/>` 
             }
         };
         const AVAILABLE_COLORS = [
@@ -827,7 +825,7 @@
             galleryButton, galleryModal, galleryGridContainer, showMyPetInGalleryButton, galleryMessage, closeGalleryModalButton,
             userIdDisplay, skyBackground, starsContainer, fishbowlContainer,
             firebaseErrorMessageDiv, gameContentWrapper;  // Added new DOM elements
-            
+             
         let allModals = [];
         let wormGameIntervalId = null, wormSpawnIntervalId = null, wormGameScore = 0, wormGameTimeLeft = WORM_GAME_DURATION_S;
         let flightGameLoopId = null, flightGameObstacleSpawnId = null, flightGamePetY = 100, flightGamePetVelocityY = 0, flightGameObstacles = [], flightGameScoreNum = 0, flightGameActive = false;
@@ -928,7 +926,9 @@
                         inventory: { 
                             ...(userProfile.inventory || {}),
                             ...(loadedProfile.inventory || {})
-                        }
+                        },
+                        // Wichtig: lastQuestReset als String behalten, wie es aus Firestore kommt oder null/undefined
+                        lastQuestReset: loadedProfile.lastQuestReset || null 
                     };
                     console.log("Nutzerprofil geladen:", userProfile);
 
@@ -955,18 +955,18 @@
                     }
                 } else {
                     console.log("Kein Nutzerprofil gefunden. Erstelle neues Profil.");
-                    const now = Timestamp.now();
                     userProfile = {
                         petCoins: 100,
                         themePreference: 'light',
                         lastSeenVersion: "0", 
                         ownedPets: [],
                         activePetId: null,
-                        createdAt: now,
-                        lastLogin: now,
+                        createdAt: serverTimestamp(), // Firestore Server Zeitstempel
+                        lastLogin: serverTimestamp(), // Firestore Server Zeitstempel
+                        lastQuestReset: null, // Wird beim ersten Quest-Check gesetzt
                         inventory: { colorTickets: 1 } 
                     };
-                    await setDoc(userProfileRef, userProfile);
+                    await setDoc(userProfileRef, userProfile); // Hier werden Timestamps korrekt als serverTimestamp() geschrieben
                     console.log("Neues Nutzerprofil erstellt. Zeige Haustierauswahl.");
                     closeAllModals();
                     if(petSelectionModal) petSelectionModal.style.display = 'flex';
@@ -977,7 +977,8 @@
 
             } catch (error) {
                 console.error("Fehler beim Laden/Erstellen des Nutzerprofils:", error);
-                 if(firebaseErrorMessageDiv && gameContentWrapper) {
+                showNotification("Profil Fehler", "Konnte Nutzerprofil nicht laden.", true);
+                if(firebaseErrorMessageDiv && gameContentWrapper) {
                     firebaseErrorMessageDiv.textContent = "Fehler beim Laden des Nutzerprofils.";
                     firebaseErrorMessageDiv.style.display = 'block';
                     gameContentWrapper.style.display = 'none';
@@ -990,10 +991,24 @@
             if (!userId || !userProfile) return; 
             const userProfileRef = doc(db, `artifacts/${appId}/users/${userId}/profile/main`);
             try {
-                await setDoc(userProfileRef, userProfile, { merge: true });
+                // Erstelle ein zu speicherndes Objekt, um Timestamps nicht fälschlicherweise zu konvertieren,
+                // wenn sie bereits Timestamps sind oder null bleiben sollen (wie lastQuestReset).
+                const profileToSave = { ...userProfile };
+                // Nur wenn lastLogin ein Client-Timestamp (Number) ist, konvertieren.
+                // Wenn es schon ein Firestore Timestamp ist oder neu gesetzt wird, bleibt es so.
+                if (typeof profileToSave.lastLogin === 'number') {
+                    profileToSave.lastLogin = Timestamp.fromDate(new Date(profileToSave.lastLogin));
+                } else if (!profileToSave.lastLogin) { // Falls es noch nie gesetzt wurde
+                    profileToSave.lastLogin = serverTimestamp();
+                }
+                // createdAt sollte idealerweise nur einmal beim Erstellen gesetzt werden
+                // und dann nicht mehr verändert werden.
+
+                await setDoc(userProfileRef, profileToSave, { merge: true });
                 console.log("Nutzerprofil gespeichert.");
             } catch (error) {
                 console.error("Fehler beim Speichern des Nutzerprofils:", error);
+                showNotification("Speicherfehler", "Nutzerprofil konnte nicht gespeichert werden.", true);
             }
         }
 
@@ -1008,13 +1023,15 @@
             unsubscribePetStats = onSnapshot(petDocRef, (docSnap) => {
                 if (docSnap.exists()) {
                     const loadedPetStats = docSnap.data();
-                    petStats = {
+                    petStats = { // Default Struktur, um sicherzustellen, dass alle Felder vorhanden sind
                         name: "Pet",
                         petType: "owl", 
                         energy: MAX_STAT,
                         hunger: MAX_STAT,
                         mood: MAX_STAT,
-                        creationTime: Date.now(),
+                        // Zeitstempel werden jetzt als Millisekunden im Client-Code gehalten
+                        // nach der Konvertierung aus Firestore Timestamp Objekten
+                        creationTime: Date.now(), 
                         lastUpdateEnergy: Date.now(),
                         lastUpdateHunger: Date.now(),
                         lastUpdateMood: Date.now(),
@@ -1026,10 +1043,10 @@
                         isSleeping: false,
                         currentRoom: 'bedroom',
                         inventory: {
-                            protectionPotion: { active: false, expiresAt: 0 },
+                            protectionPotion: { active: false, expiresAt: 0 }, // expiresAt als Millisekunden
                             activeBed: 'standardBed',
                             ownedBeds: ['standardBed'],
-                            accessories: { head: null, body: null, feet: null },
+                            accessories: { head: null, body: null, feet: null }, 
                             ownedAccessories: []
                         },
                         colorScheme: AVAILABLE_PET_TYPES.owl.defaultColors, 
@@ -1039,30 +1056,27 @@
                         ...loadedPetStats 
                     };
                     
+                    // Konvertiere Firestore Timestamps zu Millisekunden für Client-Logik
+                    ['creationTime', 'lastUpdateEnergy', 'lastUpdateHunger', 'lastUpdateMood', 'lastGrowthUpdateTime'].forEach(key => {
+                        if (petStats[key] && petStats[key].toDate) { 
+                            petStats[key] = petStats[key].toDate().getTime();
+                        } else if (typeof petStats[key] !== 'number') { // Fallback, falls es kein Timestamp und keine Zahl ist
+                            petStats[key] = Date.now();
+                        }
+                    });
+                    if (petStats.inventory && petStats.inventory.protectionPotion && petStats.inventory.protectionPotion.expiresAt && petStats.inventory.protectionPotion.expiresAt.toDate) {
+                        petStats.inventory.protectionPotion.expiresAt = petStats.inventory.protectionPotion.expiresAt.toDate().getTime();
+                    } else if (petStats.inventory && petStats.inventory.protectionPotion && typeof petStats.inventory.protectionPotion.expiresAt !== 'number') {
+                        petStats.inventory.protectionPotion.expiresAt = 0;
+                    }
+                    
+                    // Sicherstellen, dass verschachtelte Objekte initialisiert sind
                     petStats.inventory = petStats.inventory || {};
                     petStats.inventory.protectionPotion = petStats.inventory.protectionPotion || { active: false, expiresAt: 0 };
                     petStats.inventory.ownedBeds = petStats.inventory.ownedBeds || ['standardBed'];
                     petStats.inventory.accessories = petStats.inventory.accessories || { head: null, body: null, feet: null };
                     petStats.inventory.ownedAccessories = petStats.inventory.ownedAccessories || [];
                     petStats.colorScheme = petStats.colorScheme || (AVAILABLE_PET_TYPES[petStats.petType] ? AVAILABLE_PET_TYPES[petStats.petType].defaultColors : AVAILABLE_PET_TYPES.owl.defaultColors);
-
-
-                    ['lastUpdateEnergy', 'lastUpdateHunger', 'lastUpdateMood', 'creationTime', 'lastGrowthUpdateTime'].forEach(key => {
-                        if (petStats[key] && petStats[key].toDate) { 
-                            petStats[key] = petStats[key].toDate().getTime();
-                        } else if (typeof petStats[key] === 'number') {
-                            // Already a number
-                        } else if (petStats[key]) { 
-                             petStats[key] = new Date(petStats[key]).getTime();
-                        } else {
-                            petStats[key] = Date.now(); // Fallback if undefined
-                        }
-                    });
-                     if (petStats.inventory && petStats.inventory.protectionPotion && petStats.inventory.protectionPotion.expiresAt && petStats.inventory.protectionPotion.expiresAt.toDate) {
-                        petStats.inventory.protectionPotion.expiresAt = petStats.inventory.protectionPotion.expiresAt.toDate().getTime();
-                    } else if (petStats.inventory && petStats.inventory.protectionPotion && typeof petStats.inventory.protectionPotion.expiresAt !== 'number') {
-                        petStats.inventory.protectionPotion.expiresAt = 0; // Fallback if not a number or timestamp
-                    }
 
 
                     console.log("Haustierdaten geladen/aktualisiert:", petStats);
@@ -1085,6 +1099,7 @@
                 }
             }, (error) => {
                 console.error("Fehler beim Abrufen der Haustierdaten (onSnapshot):", error);
+                showNotification("Datenfehler", "Konnte Haustierdaten nicht live laden.", true);
             });
         }
 
@@ -1093,20 +1108,24 @@
             
             const petDocRef = doc(db, `artifacts/${appId}/users/${userId}/pets/${currentPetId}`);
             try {
+                // Erstelle eine Kopie zum Speichern, um das lokale petStats-Objekt nicht zu verändern.
                 const statsToSave = { ...petStats };
-                ['lastUpdateEnergy', 'lastUpdateHunger', 'lastUpdateMood', 'creationTime', 'lastGrowthUpdateTime'].forEach(key => {
+
+                // Konvertiere Client-Zeitstempel (Millisekunden) zurück zu Firestore Timestamps
+                ['creationTime', 'lastUpdateEnergy', 'lastUpdateHunger', 'lastUpdateMood', 'lastGrowthUpdateTime'].forEach(key => {
                     if (statsToSave[key] && typeof statsToSave[key] === 'number') {
                         statsToSave[key] = Timestamp.fromDate(new Date(statsToSave[key]));
                     }
                 });
                 if (statsToSave.inventory && statsToSave.inventory.protectionPotion && typeof statsToSave.inventory.protectionPotion.expiresAt === 'number') {
-                     statsToSave.inventory.protectionPotion.expiresAt = Timestamp.fromDate(new Date(statsToSave.inventory.protectionPotion.expiresAt));
+                    statsToSave.inventory.protectionPotion.expiresAt = Timestamp.fromDate(new Date(statsToSave.inventory.protectionPotion.expiresAt));
                 }
 
                 await setDoc(petDocRef, statsToSave, { merge: true });
                 console.log("Haustierdaten gespeichert für Pet ID:", currentPetId);
             } catch (error) {
                 console.error("Fehler beim Speichern der Haustierdaten:", error);
+                showNotification("Speicherfehler", "Haustierdaten konnten nicht gespeichert werden.", true);
             }
         }
         
@@ -1348,27 +1367,27 @@
 
             const petTypeKey = selectedItem.dataset.selectedType;
             const petTypeData = AVAILABLE_PET_TYPES[petTypeKey];
-            const now = Date.now(); 
-
-            const newPetData = {
+            
+            // Datenobjekt für Firestore mit serverTimestamp()
+            const newPetDataForFirestore = {
                 name: petName,
                 petType: petTypeKey,
                 energy: MAX_STAT,
                 hunger: MAX_STAT,
                 mood: MAX_STAT,
-                lastUpdateEnergy: now,
-                lastUpdateHunger: now,
-                lastUpdateMood: now,
-                creationTime: now,
+                creationTime: serverTimestamp(),
+                lastUpdateEnergy: serverTimestamp(),
+                lastUpdateHunger: serverTimestamp(),
+                lastUpdateMood: serverTimestamp(),
                 growthStage: 'baby', 
                 accumulatedActiveHours: 0,
                 accumulatedCareHours: 0,
-                lastGrowthUpdateTime: now,
+                lastGrowthUpdateTime: serverTimestamp(),
                 personality: PERSONALITY_KEYS[Math.floor(Math.random() * PERSONALITY_KEYS.length)],
                 isSleeping: false,
                 currentRoom: 'bedroom',
                 inventory: {
-                    protectionPotion: { active: false, expiresAt: 0 },
+                    protectionPotion: { active: false, expiresAt: Timestamp.fromDate(new Date(0)) }, // Initialwert für Timestamp
                     activeBed: 'standardBed',
                     ownedBeds: ['standardBed'],
                     accessories: { head: null, body: null, feet: null }, 
@@ -1381,15 +1400,7 @@
             };
 
             try {
-                const newPetRef = await addDoc(collection(db, `artifacts/${appId}/users/${userId}/pets`), {
-                    ...newPetData, 
-                    lastUpdateEnergy: Timestamp.fromDate(new Date(now)),
-                    lastUpdateHunger: Timestamp.fromDate(new Date(now)),
-                    lastUpdateMood: Timestamp.fromDate(new Date(now)),
-                    creationTime: Timestamp.fromDate(new Date(now)),
-                    lastGrowthUpdateTime: Timestamp.fromDate(new Date(now)),
-                    'inventory.protectionPotion.expiresAt': Timestamp.fromDate(new Date(0)) 
-                });
+                const newPetRef = await addDoc(collection(db, `artifacts/${appId}/users/${userId}/pets`), newPetDataForFirestore);
                 currentPetId = newPetRef.id;
                 userProfile.ownedPets.push(currentPetId);
                 userProfile.activePetId = currentPetId;
@@ -1453,6 +1464,7 @@
             } catch (error) {
                 console.error("Fehler beim Laden der Haustierliste:", error);
                 petListContainer.innerHTML = '<p>Fehler beim Laden der Haustiere.</p>';
+                 showNotification("Fehler", "Konnte Haustierliste nicht laden.", true);
             }
         }
 
@@ -2335,7 +2347,8 @@
             if (!userId || !userProfile) return; 
             const today = new Date().toISOString().split('T')[0]; 
             
-            if (userProfile.lastQuestReset === today && dailyQuests && Object.keys(dailyQuests).length > 0) {
+            // Prüfe, ob userProfile.lastQuestReset existiert und ein String ist
+            if (userProfile.lastQuestReset && typeof userProfile.lastQuestReset === 'string' && userProfile.lastQuestReset === today && dailyQuests && Object.keys(dailyQuests).length > 0) {
                 console.log("Quests für heute bereits geladen/initialisiert.");
                 displayQuests();
                 return;
@@ -2358,6 +2371,7 @@
                 displayQuests(); 
             } catch (error) {
                 console.error("Fehler beim Prüfen/Zurücksetzen der Quests:", error);
+                 showNotification("Quest Fehler", "Konnte tägliche Quests nicht laden.", true);
             }
         }
 
@@ -2430,6 +2444,7 @@
                     displayQuests(); 
                 } catch (error) {
                     console.error("Fehler beim Speichern des Quest-Fortschritts:", error);
+                     showNotification("Speicherfehler", "Quest-Fortschritt konnte nicht gespeichert werden.", true);
                 }
             }
         }
@@ -2455,6 +2470,7 @@
                 displayQuests(); 
             } catch (error) {
                 console.error("Fehler beim Speichern des Quest-Abschlusses:", error);
+                 showNotification("Speicherfehler", "Quest-Belohnung konnte nicht gespeichert werden.", true);
             }
         }
 
@@ -2505,7 +2521,7 @@
             if (!galleryGridContainer) return;
             galleryGridContainer.innerHTML = '<p>Lade Galerie...</p>';
             const galleryRef = collection(db, `artifacts/${appId}/public/data/galleryPets`);
-            const q = query(galleryRef); 
+            const q = query(galleryRef); // Später ggf. mit orderBy und limit
 
             try {
                 const querySnapshot = await getDocs(q);
@@ -2565,6 +2581,7 @@
             } catch (error) {
                 console.error("Fehler beim Laden der Galerie:", error);
                 galleryGridContainer.innerHTML = '<p>Fehler beim Laden der Galerie.</p>';
+                showNotification("Fehler", "Konnte Galerie nicht laden.", true);
             }
         }
         
@@ -2609,6 +2626,7 @@
                 userProfile.petCoins += cost; // Refund
                 updatePetCoinsDisplay();
                 saveUserProfile();
+                 showNotification("Fehler", "Konnte Haustier nicht zur Galerie hinzufügen.", true);
             }
         }
         requestNotificationPermission(); 
