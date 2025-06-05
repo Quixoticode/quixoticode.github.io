@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>QHub v1.1.2 - App & Video Zentrale</title>
+    <title>QHub v1.3 - App & Foto Zentrale</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -75,6 +75,7 @@
             --border-radius-medium: 12px; 
             --border-radius-large: 16px;
             --border-radius-xlarge: 28px;
+            --border-radius-full: 9999px; /* For fully rounded elements */
 
             --sidebar-width: 280px;
             --sidebar-bg: var(--qhub-color-surface-container-low); 
@@ -105,7 +106,7 @@
 
             --qhub-color-surface: #141218; 
             --qhub-color-surface-variant: #49454F;
-            --qhub-color-surface-container-low: #1F2937; 
+            --qhub-color-surface-container-low: #1D1B20; /* Slightly adjusted dark surface */
             --qhub-color-surface-container: #211F26;
             --qhub-color-surface-container-high: #2B2930;
             --qhub-color-surface-container-highest: #36343B;
@@ -117,7 +118,7 @@
             --qhub-color-on-background: #E6E1E5;
 
             --qhub-color-outline: #938F99;
-            --qhub-color-outline-variant: #444746;
+            --qhub-color-outline-variant: #49454F; /* Adjusted for better contrast on dark */
 
             --qhub-color-error: #F2B8B5;
             --qhub-color-on-error: #601410;
@@ -152,8 +153,8 @@
         
         .main-scroll-container {
             height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
-            overflow-y: auto; /* Erlaubt Scrollen für den Hauptinhalt */
-            -webkit-overflow-scrolling: touch; /* Sanfteres Scrollen auf iOS */
+            overflow-y: auto; 
+            -webkit-overflow-scrolling: touch; 
             scroll-snap-type: y mandatory;
             margin-left: 0; 
             padding-top: calc(env(safe-area-inset-top) + 0.5rem); 
@@ -310,7 +311,7 @@
         .card-date { font-size: 0.75rem; color: var(--qhub-color-outline); margin-top: 0.75rem; display: block; }
         .card-type-badge {
             display: inline-block; padding: 0.25rem 0.6rem; font-size: 0.7rem; font-weight: 500;
-            border-radius: var(--border-radius-small); margin-bottom: 0.5rem;
+            border-radius: var(--border-radius-small); margin-bottom: 0.5rem; margin-right: 0.25rem; /* Added margin-right for spacing between tags */
             background-color: var(--qhub-color-secondary-container); color: var(--qhub-color-on-secondary-container);
         }
         .premium-content-lock {
@@ -411,31 +412,42 @@
             color: var(--qhub-color-on-surface);
         }
 
-        /* Video Card Styling */
-        .video-card {
-            background-color: var(--qhub-color-surface-container); /* Etwas abgesetzt */
+        /* Photo Card Styling */
+        .photo-card { 
+            background-color: var(--qhub-color-surface-container); 
             border-radius: var(--border-radius-large);
-            overflow: hidden; /* Wichtig für abgerundete Ecken bei Video/Poster */
+            overflow: hidden; 
         }
-        .video-card video {
+        .photo-card img {
             display: block;
             width: 100%;
-            max-height: 400px; /* Maximale Höhe für Videos */
-            background-color: #000; /* Fallback, falls Poster nicht lädt */
+            /* max-height: 250px; Consider removing fixed max-height for better responsive behavior or use aspect-ratio */
+            aspect-ratio: 16 / 9; 
+            object-fit: cover; 
+            background-color: var(--qhub-color-surface-variant); 
+            /* border-radius: var(--border-radius-medium); No longer needed if image is flush */
+            margin-bottom: 0rem; /* Image directly touches content below */
         }
-        .video-card-content {
-            padding: 1rem;
+        .photo-card-content { 
+            padding: 1rem; /* Consistent padding around content */
         }
-        .video-card-title {
+        .photo-card-title {
             font-size: 1.1rem;
             font-weight: 600;
             color: var(--qhub-color-on-surface);
             margin-bottom: 0.25rem;
         }
-        .video-card-description {
+        .photo-card-description {
             font-size: 0.85rem;
             color: var(--qhub-color-on-surface-variant);
             line-height: 1.4;
+            margin-bottom: 0.75rem;
+        }
+        .photo-tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem; 
+            margin-top: 0.75rem;
         }
 
 
@@ -487,7 +499,7 @@
             </ul>
         </div>
         <div class="q-sidebar-footer">
-            <span class="text-xs" style="color: var(--sidebar-icon-color); padding: 0 1rem;">QHub v<span id="appVersionDisplay">1.2.0</span></span>
+            <span class="text-xs" style="color: var(--sidebar-icon-color); padding: 0 1rem;">QHub v<span id="appVersionDisplay">1.3.0</span></span>
         </div>
     </nav>
     <div class="content-overlay" id="contentOverlay"></div>
@@ -524,10 +536,10 @@
                 </div>
             </section>
             
-            <section id="videothekSection" class="content-section snap-child">
-                <h2 class="section-title"><span class="material-icons">play_circle_filled</span>Videothek</h2>
-                <div id="videothekContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div class="placeholder-text sm:col-span-2">Lade Videos...</div>
+            <section id="fotogalerieSection" class="content-section snap-child">
+                <h2 class="section-title"><span class="material-icons">photo_library</span>Fotogalerie</h2>
+                <div id="fotogalerieContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div class="placeholder-text sm:col-span-2">Lade Fotos...</div>
                 </div>
             </section>
 
@@ -618,7 +630,8 @@
             <h3 class="modal-title" style="text-align:left; display:flex; align-items:center;"><span class="material-icons" style="margin-right:0.5rem;">view_quilt</span>Layout Anpassen (Premium)</h3>
             <p class="modal-text" style="text-align:left; margin-bottom:1rem;">Wählen Sie die Reihenfolge der Sektionen auf der Startseite. Änderungen werden nach dem Speichern und Neuladen der Seite wirksam.</p>
             <div id="sectionOrderContainer" class="space-y-2 mb-4">
-                </div>
+                <!-- Dynamically populated -->
+            </div>
             <div class="flex">
                 <button class="modal-button secondary" style="flex-grow:1;" id="closeLayoutModal">Abbrechen</button>
                 <button class="modal-button" style="flex-grow:1;" id="saveLayoutButton">Reihenfolge speichern</button>
@@ -634,19 +647,19 @@
     </div>
     
     <script>
-        const CURRENT_APP_VERSION = '1.2.3'; 
+        const CURRENT_APP_VERSION = '1.3.0'; 
         const APP_SETTINGS_PREFIX = 'qhub_settings_'; 
-        const LOCAL_APP_DATA_KEY = APP_SETTINGS_PREFIX + 'app_data_cache_v1_2'; 
-        const SEEN_POPUPS_KEY = APP_SETTINGS_PREFIX + 'seen_popups_' + CURRENT_APP_VERSION;
+        const LOCAL_APP_DATA_KEY = APP_SETTINGS_PREFIX + 'app_data_cache_v1_3_photos'; 
+        const SEEN_POPUPS_KEY = APP_SETTINGS_PREFIX + 'seen_popups_' + CURRENT_APP_VERSION; // Automatically uses new version
         const LAST_APP_VERSION_KEY = APP_SETTINGS_PREFIX + 'last_version';
-        const THEME_SETTINGS_KEY = APP_SETTINGS_PREFIX + 'theme_v1_2';
+        const THEME_SETTINGS_KEY = APP_SETTINGS_PREFIX + 'theme_v1_2'; // Theme settings can remain compatible unless structure changes
         const PREMIUM_STATUS_KEY = APP_SETTINGS_PREFIX + 'premium_status';
         const REDEEMED_CODES_KEY = APP_SETTINGS_PREFIX + 'redeemed_codes';
-        const SECTION_ORDER_KEY = APP_SETTINGS_PREFIX + 'section_order_v1_2';
+        const SECTION_ORDER_KEY = APP_SETTINGS_PREFIX + 'section_order_v1_3_photos'; 
         const PREMIUM_CODE_SOURCE_URL = 'https://quixoticode.github.io/data/s/name.json'; 
 
         const initialAppData = {
-            version: "1.2.3", 
+            version: "1.3.1", // Internal data version
             webApps: [ 
                 { name: "Web", url: "https://quixoticode.github.io/", icon: "web"}, 
                 { name: "QSounds", url: "https://quixoticode.github.io/app/qsounds/", icon: "graphic_eq" },
@@ -657,63 +670,54 @@
             ],
             nachrichten: [
                 { 
-                  id: "msg_qhub_120_001", title: "QHub v" + CURRENT_APP_VERSION + " ist da!", 
-                  content: "Viele neue Premium-Funktionen warten auf Sie! Entdecken Sie exklusive Inhalte wie die neue Videothek, Anpassungsmöglichkeiten und mehr.", 
-                  date: "2025-05-23", type: "Release" 
+                    id: "msg_qhub_130_001", title: "QHub v" + CURRENT_APP_VERSION + " ist Live!", 
+                    content: "Die brandneue Fotogalerie ist da, zusammen mit weiteren Verbesserungen unter der Haube. Premium-Nutzer finden neue exklusive Bilder!", 
+                    date: "2025-06-05", type: "Release" 
                 },
                 { 
-                  id: "msg_qhub_120_002", title: "Exklusive Premium-News", 
-                  content: "Als Premium-Mitglied erhalten Sie frühzeitig Zugang zu Informationen über kommende Projekte und spezielle Entwickler-Einblicke im neuen 'Insider-Infos'-Bereich.", 
-                  date: "2025-05-23", type: "Premium", premium: true
+                    id: "msg_qhub_120_002", title: "QPet's Update", // Older message, can be kept or removed
+                    content: "Erhält Erfolge, mehrere neue Tiere und neue Items!", 
+                    date: "2025-06-01", type: "Update", premium: true 
                 }
             ],
             insiderInfos: [ 
-                { id: "ins_001", title: "Entwicklungs-Update: Projekt 'Nova'", content: "Die Arbeiten an 'Nova' schreiten gut voran. Erste interne Tests sind für nächste Woche geplant. Premium-Nutzer erhalten bald eine exklusive Vorschau.", date: "2025-05-23", premium: true}
+                { id: "ins_001_v13", title: "Ausblick auf QHub v1.4", content: "Wir planen eine Integration von Nutzer-Feedback direkt in die App und vielleicht kleine Mini-Spiele für Premium-Nutzer.", date: "2025-06-05", premium: true}
             ],
             premiumDownloads: [ 
-                { id: "dl_001", name: "QHub Wallpaper Pack v1", description: "Neue exklusive Wallpapers für Desktop & Mobile.", url: "https://quixoticode.github.io/link/p/wallpaper.zip", icon: "wallpaper", premium: true },
-                { id: "dl_002", name: "QSounds Sound Pack (Premium)", description: "Zusätzliche Sound-Effekte für QSounds.", url: "#", icon: "music_note", premium: true }
+                { id: "dl_001", name: "QHub Wallpaper Pack v1.2 (Juni Update)", description: "Neue exklusive Wallpapers passend zur Fotogalerie.", url: "https://quixoticode.github.io/link/p/wallpaper_jun25.zip", icon: "wallpaper", premium: true },
             ],
             ankuendigungen: [
                 { 
-                  id: "ank_qhub_120_001", title: "Videothek jetzt verfügbar!", 
-                  content: "Entdecken Sie informative Videos und Tutorials direkt in QHub. Premium-Nutzer haben Zugriff auf zusätzliche, exklusive Videoinhalte.", 
-                  date: "2025-05-23" 
+                    id: "ank_qhub_130_001", title: "Fotogalerie - Feedback erwünscht!", 
+                    content: "Teilt uns eure Meinung zur neuen Fotogalerie mit! Welche Art von Bildern möchtet ihr sehen?", 
+                    date: "2025-06-05" 
                 }
             ],
-            videos: [ // Neuer Abschnitt für Videos
+            photos: [ 
                 {
-                    id: "vid_001",
-                    title: "Teaser",
-                    description: "Coming Soon",
-                    url: "https://quixoticode.github.io/data/qhub/videos/qhub_intro.mp4", // Ersetzen mit echter URL
-                    poster: "https://quixoticode.github.io/data/icons/data.png", // Ersetzen
+                    id: "photo_v13_001",
+                    title: "QPet's Feature_Vorschau (nur für Premium)",
+                    description: "Kleiner Tease zu v1.3 :)",
+                    imageUrl: "https://quixoticode.github.io/data/qhub/photos/001.png", 
+                    tags: ["Release", "QHub", "Neu"],
                     premium: false
                 },
-                {
-                    id: "vid_002",
-                    title: "Premium-Features im Detail (Exklusiv)",
-                    description: "Ein tieferer Einblick in alle Vorteile und Anpassungsmöglichkeiten, die QHub Premium bietet.",
-                    url: "https://quixoticode.github.io/data/qhub/videos/qhub_premium_deepdive.mp4", // Ersetzen
-                    poster: "https://quixoticode.github.io/data/qhub/videos/qhub_premium_poster.jpg", // Ersetzen
-                    premium: true
-                }
             ],
             aktivitaetsleiste: [
-                { id: "act_qhub_120_001", product: "QHub v1.2.0", description: "Videothek & weitere Premium-Features", releaseDate: "23. Mai 2025", status: "ready-online" },
-                { id: "act_qhub_120_002", product: "Pet's Life v0.3", description: "UI-Überarbeitung (Premium)", releaseDate: "Juli 2025", status: "in-progress", premium: true },
-                { id: "act_qhub_120_003", product: "QSounds v1.3", description: "UX Update", releaseDate: "Q3 2025", status: "paused" },
-                { id: "act_qhub_120_004", product: "QCode 'YouProjects'", description: "Neuer Lernpfad", releaseDate: "Q3 2025", status: "queue" }, 
+                { id: "act_qhub_130_001", product: "QHub v1.4", description: "Bugfixes und kleinere UI-Anpassungen", releaseDate: "Juli 2025", status: "paused" },
+                { id: "act_qhub_120_002", product: "QPet's v0.3", description: "Mehr folgt!", releaseDate: "Juni-Juli 2025", status: "in-progress", premium: true },
+                { id: "act_qhub_120_003", product: "QSounds v1.3", description: "UX Update", releaseDate: "Juni 2025", status: "paused" },
+                { id: "act_qhub_120_004", product: "QCode 'YouProjects'", description: "Neuer Lernpfad", releaseDate: "Q3 2025", status: "paused" }, 
             ],
             popupNachrichten: [ 
                 {
-                  id: "popup_qhub_v120_release",
-                  titel: "Pets ist dabei, etwas großes zu werden!",
-                  inhalt: "Jetzt für Premium",
-                  aktiv: true, 
-                  datum: "2025-06-03",
-                  icon: "premium",
-                  buttonText: "Großartig!"
+                    id: "popup_qhub_v130_launch",
+                    titel: "Willkommen zu QHub " + CURRENT_APP_VERSION + "!",
+                    inhalt: "Die neue Fotogalerie ist jetzt verfügbar. Entdecke exklusive Bilder und mehr. Schau dir auch die neusten Nachrichten an!",
+                    aktiv: true, 
+                    datum: "2025-06-05", // Should match current date if it's a launch popup
+                    icon: "celebration",
+                    buttonText: "Entdecken!"
                 }
             ]
         };
@@ -725,7 +729,6 @@
         const sidebarInternalToggle = document.getElementById('sidebarInternalToggle');
         const appVersionDisplay = document.getElementById('appVersionDisplay');
         const notificationArea = document.getElementById('notificationArea');
-        const offlineStatusMessage = document.getElementById('offlineStatusMessage'); // Wird nicht mehr als Banner genutzt
         const resetNotification = document.getElementById('resetNotification');
         const offlineIconContainer = document.getElementById('offlineIconContainer');
         const offlineStatusIcon = document.getElementById('offlineStatusIcon');
@@ -764,7 +767,7 @@
         const insiderInfosSection = document.getElementById('insiderInfosSection');
         const premiumDownloadsSection = document.getElementById('premiumDownloadsSection');
         const premiumDownloadsList = document.getElementById('premiumDownloadsList');
-        const videothekContainer = document.getElementById('videothekContainer');
+        const fotogalerieContainer = document.getElementById('fotogalerieContainer');
 
 
         function getStatusIndicatorSVG(status) {
@@ -780,14 +783,21 @@
                     svgContent += `<line class="cross-line" x1="8" y1="8" x2="16" y2="16"/><line class="cross-line" x1="16" y1="8" x2="8" y2="16"/>`; break;
                 case 'paused':
                     svgContent += `<g class="pause-lines"><line x1="9" y1="8" x2="9" y2="16"></line><line x1="15" y1="8" x2="15" y2="16"></line></g>`; break;
-                case 'queue': break;
+                case 'queue': break; // Queue usually just shows the colored circle
+                 case 'ready': // Added for completeness, similar to queue but green
+                    break;
+                default: // Default to a simple circle if status unknown
+                    break;
             }
             svgContent += `</svg>`;
             return svgContent;
         }
         
         function displayData(data, sectionOrder) {
-            if (!data) { data = initialAppData; }
+            if (!data) { 
+                console.warn("No data provided to displayData, using initialAppData.");
+                data = initialAppData; 
+            }
             const isPremium = getPremiumStatus();
 
             renderSidebarAppList(data.webApps || [], isPremium);
@@ -796,7 +806,7 @@
             renderAktivitaetsleiste(data.aktivitaetsleiste || [], isPremium, statusFilterSelect ? statusFilterSelect.value : 'all');
             renderInsiderInfos(data.insiderInfos || [], isPremium);
             renderPremiumDownloads(data.premiumDownloads || [], isPremium);
-            renderVideothek(data.videos || [], isPremium);
+            renderFotogalerie(data.photos || [], isPremium); 
             
             const currentSectionOrder = isPremium ? (sectionOrder || getSectionOrder()) : defaultSectionOrder;
             reorderSections(currentSectionOrder);
@@ -820,7 +830,7 @@
                 const listItem = document.createElement('li');
                 const link = document.createElement('a');
                 link.href = app.url;
-                if (app.action === "showBetaArchiveModal") { // Spezifische Aktion für Beta-Archiv
+                if (app.action === "showBetaArchiveModal") {
                     link.href = "javascript:void(0)";
                     link.onclick = () => showCustomInfoPopup("Beta-Archiv (Premium)", "Dieser Bereich ist noch in Entwicklung und wird bald exklusive Beta-Versionen enthalten.", "science", "Verstanden");
                 } else if (app.action) { 
@@ -861,7 +871,7 @@
 
             if (!isPremium || !infos || infos.length === 0) {
                 section.classList.add('hidden');
-                container.innerHTML = '';
+                container.innerHTML = ''; // Clear content even if section is hidden
                 return;
             }
             section.classList.remove('hidden');
@@ -869,7 +879,7 @@
 
             infos.forEach(item => {
                 const card = document.createElement('div'); card.className = 'card';
-                card.innerHTML = `<h3 class="card-title">${item.title}</h3><p class="card-content">${item.content}</p><span class="card-date">${new Date(item.date).toLocaleDateString('de-DE', { day: 'numeric', month: 'long' })}</span>`;
+                card.innerHTML = `<h3 class="card-title">${item.title}</h3><p class="card-content">${item.content}</p><span class="card-date">${new Date(item.date).toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' })}</span>`;
                 container.appendChild(card);
             });
         }
@@ -891,10 +901,10 @@
                 const link = document.createElement('a');
                 link.href = item.url; 
                 link.target = "_blank";
-                link.rel = "noopener noreferrer";
+                link.rel = "noopener noreferrer"; // Good practice for security
                 link.innerHTML = `<span class="material-icons">${item.icon || 'download'}</span> ${item.name}`;
                 if (item.description) {
-                    link.innerHTML += `<br><small style="color:var(--sidebar-icon-color); padding-left: calc(22px + 1.25rem); display: block; font-size: 0.8em;">${item.description}</small>`;
+                    link.innerHTML += `<br><small style="color:var(--sidebar-icon-color); padding-left: calc(22px + 1.25rem); display: block; font-size: 0.8em; line-height: 1.2;">${item.description}</small>`;
                 }
                 listItem.appendChild(link);
                 list.appendChild(listItem);
@@ -911,7 +921,7 @@
             ankuendigungenToShow.forEach(item => {
                 const card = document.createElement('div'); card.className = 'card';
                  let premiumBadgeHTML = item.premium && isPremium ? ` <span class="card-type-badge" style="background-color:var(--qhub-color-premium); color:var(--qhub-color-on-premium); float:right;">Premium</span>` : '';
-                card.innerHTML = `${premiumBadgeHTML}<h3 class="card-title">${item.title}</h3><p class="card-content">${item.content}</p><span class="card-date">${new Date(item.date).toLocaleDateString('de-DE', { day: 'numeric', month: 'long' })}</span>`;
+                card.innerHTML = `${premiumBadgeHTML}<h3 class="card-title">${item.title}</h3><p class="card-content">${item.content}</p><span class="card-date">${new Date(item.date).toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' })}</span>`;
                 container.appendChild(card);
             });
         }
@@ -937,36 +947,41 @@
             });
         }
 
-        function renderVideothek(videos, isPremium) {
-            const container = document.getElementById('videothekContainer');
+        function renderFotogalerie(photos, isPremium) {
+            const container = document.getElementById('fotogalerieContainer');
             if (!container) return;
-            container.innerHTML = '';
-            const videosToShow = videos.filter(video => !video.premium || (video.premium && isPremium));
+            container.innerHTML = ''; // Clear previous content
+            const photosToShow = photos.filter(photo => !photo.premium || (photo.premium && isPremium));
 
-            if (videosToShow.length === 0) {
-                container.innerHTML = '<p class="placeholder-text sm:col-span-2">Keine Videos verfügbar.</p>';
+            if (photosToShow.length === 0) {
+                container.innerHTML = '<p class="placeholder-text sm:col-span-2">Keine Fotos verfügbar.</p>';
                 return;
             }
-            videosToShow.forEach(video => {
-                const videoCard = document.createElement('div');
-                videoCard.className = 'video-card card'; // Nutzt vorhandenes Card-Styling als Basis
+            photosToShow.forEach(photo => {
+                const photoCard = document.createElement('div');
+                photoCard.className = 'photo-card card'; 
 
-                let premiumBadgeHTML = video.premium && isPremium ? `<span class="card-type-badge" style="background-color:var(--qhub-color-premium); color:var(--qhub-color-on-premium); position:absolute; top:0.5rem; right:0.5rem; z-index:1;">Premium</span>` : '';
+                let premiumBadgeHTML = photo.premium && isPremium ? `<span class="card-type-badge" style="background-color:var(--qhub-color-premium); color:var(--qhub-color-on-premium); position:absolute; top:0.5rem; right:0.5rem; z-index:1;">Premium</span>` : '';
+                
+                let tagsHTML = '';
+                if (photo.tags && photo.tags.length > 0) {
+                    tagsHTML = photo.tags.map(tag => `<span class="card-type-badge">${tag}</span>`).join('');
+                }
 
-                videoCard.innerHTML = `
+                photoCard.innerHTML = `
                     <div style="position:relative;">
                         ${premiumBadgeHTML}
-                        <video controls preload="metadata" poster="${video.poster || ''}" style="width:100%; border-radius: var(--border-radius-medium);">
-                            <source src="${video.url}" type="video/mp4">
-                            Ihr Browser unterstützt das Video-Tag nicht.
-                        </video>
+                        <img src="${photo.imageUrl}" alt="${photo.title || 'Galeriebild'}" onerror="this.onerror=null;this.src='https://placehold.co/600x338/E7E0EC/49454F?text=Bild+nicht+gefunden';">
                     </div>
-                    <div class="video-card-content">
-                        <h3 class="video-card-title">${video.title}</h3>
-                        <p class="video-card-description">${video.description}</p>
+                    <div class="photo-card-content">
+                        <h3 class="photo-card-title">${photo.title || 'Unbenanntes Foto'}</h3>
+                        <p class="photo-card-description">${photo.description || ''}</p>
+                        <div class="photo-tags-container">
+                            ${tagsHTML}
+                        </div>
                     </div>
                 `;
-                container.appendChild(videoCard);
+                container.appendChild(photoCard);
             });
         }
         
@@ -979,7 +994,11 @@
             const localDataString = localStorage.getItem(LOCAL_APP_DATA_KEY);
             if (localDataString) {
                 try { return JSON.parse(localDataString); } 
-                catch (e) { console.error("Fehler beim Parsen der App-Daten aus LocalStorage:", e); return null; }
+                catch (e) { 
+                    console.error("Fehler beim Parsen der App-Daten aus LocalStorage:", e); 
+                    localStorage.removeItem(LOCAL_APP_DATA_KEY); // Remove corrupted data
+                    return null; 
+                }
             }
             return null;
         }
@@ -994,43 +1013,79 @@
                 displayData(cachedData || initialAppData, getSectionOrder()); 
             } else {
                 console.log("App ist online.");
+                // Potentially re-fetch or use cached data as before
+                // For this example, we assume initialAppData is the "freshest" if online and no newer version from server
                 const cachedData = loadAppDataFromLocal();
                 if (!cachedData || cachedData.version !== initialAppData.version) {
-                    console.log("Lokale Daten veraltet oder nicht vorhanden, 'aktualisiere' mit initialAppData.");
-                    saveAppDataToLocal(initialAppData);
+                    console.log("Lokale Daten veraltet oder nicht vorhanden, 'aktualisiere' mit initialAppData (Version "+initialAppData.version+").");
+                    saveAppDataToLocal(initialAppData); // Save the "latest" defined data
                     displayData(initialAppData, getSectionOrder());
-                     checkAndShowAppDefinedPopups(initialAppData.popupNachrichten || []);
+                    checkAndShowAppDefinedPopups(initialAppData.popupNachrichten || []);
                 } else {
-                    console.log("Lokale Daten sind aktuell.");
+                    console.log("Lokale Daten sind aktuell (Version "+cachedData.version+").");
                     displayData(cachedData, getSectionOrder()); 
-                     checkAndShowAppDefinedPopups(cachedData.popupNachrichten || []);
+                    checkAndShowAppDefinedPopups(cachedData.popupNachrichten || []);
                 }
             }
         }
 
         function getSeenPopups() {
             const seen = localStorage.getItem(SEEN_POPUPS_KEY);
-            return seen ? JSON.parse(seen) : [];
+            try {
+                return seen ? JSON.parse(seen) : [];
+            } catch (e) {
+                console.warn("Could not parse seen popups, returning empty array.", e);
+                return [];
+            }
         }
         function markPopupAsSeen(popupId) {
             const seen = getSeenPopups();
-            if (!seen.includes(popupId)) { seen.push(popupId); localStorage.setItem(SEEN_POPUPS_KEY, JSON.stringify(seen)); }
+            if (!seen.includes(popupId)) { 
+                seen.push(popupId); 
+                try {
+                    localStorage.setItem(SEEN_POPUPS_KEY, JSON.stringify(seen)); 
+                } catch (e) {
+                    console.error("Error saving seen popups to localStorage:", e);
+                }
+            }
         }
         function showCustomInfoPopup(title, text, icon = 'info', buttonTxt = 'OK', onConfirm = null) {
             const backdrop = document.getElementById('infoPopupBackdrop');
-            if (!backdrop) return;
-            document.getElementById('infoPopupIcon').textContent = icon;
-            document.getElementById('infoPopupTitle').textContent = title;
-            document.getElementById('infoPopupText').innerHTML = text.replace(/\n/g, '<br>'); 
-            const button = document.getElementById('infoPopupButton');
-            button.textContent = buttonTxt;
-            button.onclick = () => { backdrop.classList.remove('visible'); if (onConfirm) onConfirm(); };
+            const iconEl = document.getElementById('infoPopupIcon');
+            const titleEl = document.getElementById('infoPopupTitle');
+            const textEl = document.getElementById('infoPopupText');
+            const buttonEl = document.getElementById('infoPopupButton');
+
+            if (!backdrop || !iconEl || !titleEl || !textEl || !buttonEl) {
+                console.error("Info Popup DOM elements not found.");
+                return;
+            }
+            iconEl.textContent = icon;
+            titleEl.textContent = title;
+            textEl.innerHTML = text.replace(/\n/g, '<br>'); 
+            buttonEl.textContent = buttonTxt;
+            
+            // Clone and replace button to remove old event listeners
+            const newButton = buttonEl.cloneNode(true);
+            buttonEl.parentNode.replaceChild(newButton, buttonEl);
+            
+            newButton.onclick = () => { 
+                backdrop.classList.remove('visible'); 
+                if (onConfirm && typeof onConfirm === 'function') {
+                     onConfirm();
+                }
+            };
             backdrop.classList.add('visible');
         }
 
         function checkAndShowAppDefinedPopups(popupNachrichten) {
+            if (!Array.isArray(popupNachrichten)) {
+                // console.warn("popupNachrichten is not an array, skipping popups.");
+                return;
+            }
             const seenPopups = getSeenPopups();
-            const activePopupData = popupNachrichten.find(p => p.aktiv && !seenPopups.includes(p.id));
+            const activePopupData = popupNachrichten.find(p => p && p.id && p.aktiv && !seenPopups.includes(p.id));
+            
             if (activePopupData) {
                 showCustomInfoPopup(
                     activePopupData.titel, activePopupData.inhalt,
@@ -1051,7 +1106,7 @@
             contentOverlay.classList.toggle('active', isOpen);
             document.body.classList.toggle('sidebar-open', isOpen && window.innerWidth >= 768); 
             sidebarToggle.setAttribute('aria-expanded', isOpen.toString());
-            sidebarToggle.classList.toggle('hidden-when-sidebar-open', isOpen && window.innerWidth < 768);
+            sidebarToggle.classList.toggle('hidden-when-sidebar-open', isOpen && window.innerWidth < 768); // Hide external toggle on small screens when open
         }
 
         sidebarToggle.addEventListener('click', toggleSidebar);
@@ -1080,17 +1135,17 @@
         }
 
         function loadThemeFromLocalStorage() {
-            const themeSettings = localStorage.getItem(THEME_SETTINGS_KEY);
+            const themeSettingsString = localStorage.getItem(THEME_SETTINGS_KEY);
             let currentPrimary = getComputedStyle(document.documentElement).getPropertyValue('--qhub-color-primary').trim();
             let currentSecondary = getComputedStyle(document.documentElement).getPropertyValue('--qhub-color-secondary').trim();
             let currentTertiary = getComputedStyle(document.documentElement).getPropertyValue('--qhub-color-tertiary').trim();
 
-            if (themeSettings) {
+            if (themeSettingsString) {
                 try { 
-                    const { primary, secondary, tertiary } = JSON.parse(themeSettings); 
-                    currentPrimary = primary; 
-                    currentSecondary = secondary;
-                    currentTertiary = tertiary || currentTertiary; 
+                    const themeSettings = JSON.parse(themeSettingsString); 
+                    currentPrimary = themeSettings.primary || currentPrimary; 
+                    currentSecondary = themeSettings.secondary || currentSecondary;
+                    currentTertiary = themeSettings.tertiary || currentTertiary; 
                 } 
                 catch(e) { console.error("Fehler beim Laden des Themes aus LocalStorage", e); }
             }
@@ -1102,8 +1157,11 @@
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
             document.documentElement.setAttribute('data-theme', newTheme);
             localStorage.setItem(APP_SETTINGS_PREFIX + 'theme_preference', newTheme);
-            document.getElementById('themeColorMetaLight').content = newTheme === 'light' ? getComputedStyle(document.documentElement).getPropertyValue('--qhub-color-primary') : getComputedStyle(document.documentElement).getPropertyValue('--qhub-color-primary-container');
-            document.getElementById('themeColorMetaDark').content = newTheme === 'dark' ? getComputedStyle(document.documentElement).getPropertyValue('--qhub-color-primary-container') : getComputedStyle(document.documentElement).getPropertyValue('--qhub-color-primary');
+            // Update meta theme colors immediately
+            const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--qhub-color-primary').trim();
+            const primaryContainerColor = getComputedStyle(document.documentElement).getPropertyValue('--qhub-color-primary-container').trim();
+            document.getElementById('themeColorMetaLight').content = newTheme === 'light' ? primaryColor : primaryContainerColor;
+            document.getElementById('themeColorMetaDark').content = newTheme === 'dark' ? primaryContainerColor : primaryColor;
         }
 
         function applySavedDarkLightModePreference() {
@@ -1111,16 +1169,20 @@
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
             const initialTheme = savedPreference || (prefersDark ? 'dark' : 'light');
             document.documentElement.setAttribute('data-theme', initialTheme);
-            document.getElementById('themeColorMetaLight').content = initialTheme === 'light' ? getComputedStyle(document.documentElement).getPropertyValue('--qhub-color-primary') : getComputedStyle(document.documentElement).getPropertyValue('--qhub-color-primary-container');
-            document.getElementById('themeColorMetaDark').content = initialTheme === 'dark' ? getComputedStyle(document.documentElement).getPropertyValue('--qhub-color-primary-container') : getComputedStyle(document.documentElement).getPropertyValue('--qhub-color-primary');
+            // Update meta theme colors based on the initial theme
+            const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--qhub-color-primary').trim();
+            const primaryContainerColor = getComputedStyle(document.documentElement).getPropertyValue('--qhub-color-primary-container').trim();
+            document.getElementById('themeColorMetaLight').content = initialTheme === 'light' ? primaryColor : primaryContainerColor;
+            document.getElementById('themeColorMetaDark').content = initialTheme === 'dark' ? primaryContainerColor : primaryColor;
         }
 
         if (themeEditorLink) {
             themeEditorLink.addEventListener('click', (e) => {
-                e.preventDefault(); loadThemeFromLocalStorage(); 
+                e.preventDefault(); 
+                loadThemeFromLocalStorage(); // Load current colors into pickers
                 if(tertiaryColorPickerContainer) tertiaryColorPickerContainer.classList.toggle('hidden', !getPremiumStatus());
                 themeEditorPopup.classList.add('visible');
-                if (qHubSidebar.classList.contains('open')) toggleSidebar();
+                if (qHubSidebar.classList.contains('open')) toggleSidebar(); // Close sidebar if open
             });
         }
         if (closeThemeEditorButton) closeThemeEditorButton.addEventListener('click', () => themeEditorPopup.classList.remove('visible'));
@@ -1128,12 +1190,15 @@
 
         async function clearSiteCache() {
             let clearedSomething = false;
-            if ('serviceWorker' in navigator) {
+            if ('serviceWorker' in navigator && navigator.serviceWorker.controller) { // Check if a SW is active
                 try {
                     const registrations = await navigator.serviceWorker.getRegistrations();
                     for (const registration of registrations) {
+                        // Ensure we only unregister SWs for the current origin or a more specific scope
                         if (registration.scope.startsWith(window.location.origin)) { 
-                            await registration.unregister(); clearedSomething = true;
+                            await registration.unregister(); 
+                            clearedSomething = true;
+                            console.log("Service Worker unregistered:", registration.scope);
                         }
                     }
                 } catch (e) { console.error("Fehler Service Worker Deregistrierung:", e); }
@@ -1141,52 +1206,83 @@
             if ('caches' in window) {
                 try {
                     const keys = await caches.keys();
-                    for (const key of keys) { await caches.delete(key); clearedSomething = true; }
+                    for (const key of keys) { 
+                        // Be careful here not to delete caches from other origins if this code runs in a shared worker or similar context.
+                        // For a simple page, this is usually fine.
+                        await caches.delete(key); 
+                        clearedSomething = true; 
+                        console.log("Cache deleted:", key);
+                    }
                 } catch (e) { console.error("Fehler Cache Löschung:", e); }
             }
             return clearedSomething;
         }
 
         function performSystemReset() {
-            try { localStorage.clear(); } 
+            try { 
+                // Clear all localStorage items specific to this app prefix, or all if intended.
+                // For a full domain clear as stated in modal:
+                localStorage.clear(); 
+                console.log("LocalStorage completely cleared.");
+            } 
             catch (e) { console.error("Fehler LocalStorage Löschung:", e); }
             
             clearSiteCache().then(cacheCleared => {
                 let message = "Alle lokalen Daten (LocalStorage) wurden gelöscht. ";
-                message += cacheCleared ? "Service Worker und Cache API wurden ebenfalls zurückgesetzt. " : "Keine aktiven Service Worker/Cache API Einträge gefunden/gelöscht. ";
-                message += "Für einen vollständigen Cache-Reset laden Sie die Seite bitte mit Strg+Shift+R (oder Cmd+Shift+R) neu oder leeren Sie den Browser-Cache manuell.";
-                resetNotification.textContent = message; resetNotification.style.display = 'block';
-                setTimeout(() => { resetNotification.style.display = 'none'; location.reload(true); }, 8000);
+                message += cacheCleared ? "Service Worker und Cache API Einträge wurden ebenfalls zurückgesetzt. " : "Keine aktiven Service Worker/Cache API Einträge zum Löschen gefunden. ";
+                message += "Für einen vollständigen Cache-Reset laden Sie die Seite bitte manuell neu (z.B. mit Strg+Shift+R oder Cmd+Shift+R) oder leeren Sie den Browser-Cache in den Browsereinstellungen.";
+                
+                resetNotification.textContent = message; 
+                resetNotification.style.display = 'block';
+                
+                // Don't auto-reload immediately, let user read the message.
+                setTimeout(() => { 
+                    resetNotification.style.display = 'none'; 
+                    // Optional: Manually trigger a hard reload after a longer delay if desired.
+                    // location.reload(true); 
+                }, 10000); // Increased timeout
             }).catch(e => {
-                 resetNotification.textContent = "Fehler beim Cache-Reset: " + e.message; resetNotification.style.display = 'block';
+                 resetNotification.textContent = "Fehler beim Cache-Reset: " + e.message; 
+                 resetNotification.style.display = 'block';
                  setTimeout(() => { resetNotification.style.display = 'none'; }, 8000);
             });
         }
 
         if(resetSystemLink) {
             resetSystemLink.addEventListener('click', (e) => {
-                e.preventDefault(); resetConfirmPopup.classList.add('visible');
+                e.preventDefault(); 
+                resetConfirmPopup.classList.add('visible');
                 if (qHubSidebar.classList.contains('open')) toggleSidebar();
             });
         }
         if(cancelResetButton) cancelResetButton.addEventListener('click', () => resetConfirmPopup.classList.remove('visible'));
         if(confirmResetButton) confirmResetButton.addEventListener('click', () => {
-            resetConfirmPopup.classList.remove('visible'); performSystemReset();
+            resetConfirmPopup.classList.remove('visible'); 
+            performSystemReset();
         });
 
         function checkAndClearCacheOnUpdate() {
             const lastVersion = localStorage.getItem(LAST_APP_VERSION_KEY);
             if (lastVersion !== CURRENT_APP_VERSION) {
-                console.log(`App-Update: ${lastVersion || 'unbekannt'} -> ${CURRENT_APP_VERSION}. Leere Cache.`);
+                console.log(`App-Update erkannt: Von Version '${lastVersion || 'unbekannt'}' zu '${CURRENT_APP_VERSION}'. Leere relevanten Cache und Daten.`);
+                
+                // Clear app-specific data that might be incompatible
+                localStorage.removeItem(LOCAL_APP_DATA_KEY); // Remove old data structure
+                localStorage.removeItem(SECTION_ORDER_KEY); // Reset section order for new version
+                localStorage.removeItem(SEEN_POPUPS_KEY); // Reset seen popups
+
                 clearSiteCache().then(cleared => {
                     if (cleared) {
-                        resetNotification.textContent = `Cache für App-Update auf v${CURRENT_APP_VERSION} geleert.`;
+                        resetNotification.textContent = `Cache für App-Update auf v${CURRENT_APP_VERSION} geleert. Alte Daten wurden zurückgesetzt.`;
+                        resetNotification.style.display = 'block';
+                        setTimeout(() => resetNotification.style.display = 'none', 5000);
+                    } else {
+                         resetNotification.textContent = `App auf v${CURRENT_APP_VERSION} aktualisiert. Alte Daten wurden zurückgesetzt.`;
                         resetNotification.style.display = 'block';
                         setTimeout(() => resetNotification.style.display = 'none', 5000);
                     }
                 });
                 localStorage.setItem(LAST_APP_VERSION_KEY, CURRENT_APP_VERSION);
-                localStorage.removeItem(SEEN_POPUPS_KEY); 
             }
         }
         
@@ -1198,19 +1294,30 @@
             localStorage.setItem(PREMIUM_STATUS_KEY, isPremium.toString());
             const currentLocalData = loadAppDataFromLocal() || initialAppData; 
             displayData(currentLocalData, getSectionOrder()); 
+            // updatePremiumUI(isPremium) is called within displayData
         }
 
         function getRedeemedCodes() {
-            const codes = localStorage.getItem(REDEEMED_CODES_KEY);
-            return codes ? JSON.parse(codes) : [];
+            const codesString = localStorage.getItem(REDEEMED_CODES_KEY);
+            try {
+                return codesString ? JSON.parse(codesString) : [];
+            } catch (e) {
+                console.warn("Could not parse redeemed codes, returning empty array.", e);
+                return [];
+            }
         }
 
         function addRedeemedCode(code) {
             const codes = getRedeemedCodes();
-            const numericCode = /^\d+$/.test(code) ? parseInt(code, 10) : code.toString().toUpperCase();
-            if (!codes.includes(numericCode)) {
-                codes.push(numericCode);
-                localStorage.setItem(REDEEMED_CODES_KEY, JSON.stringify(codes));
+            // Normalize code to uppercase string for consistent storage and checking, unless it's purely numeric
+            const normalizedCode = /^\d+$/.test(code) ? parseInt(code, 10) : code.toString().toUpperCase();
+            if (!codes.includes(normalizedCode)) {
+                codes.push(normalizedCode);
+                try {
+                    localStorage.setItem(REDEEMED_CODES_KEY, JSON.stringify(codes));
+                } catch (e) {
+                     console.error("Error saving redeemed codes to localStorage:", e);
+                }
             }
         }
         
@@ -1218,17 +1325,18 @@
             if (premiumBadgeSidebar) premiumBadgeSidebar.classList.toggle('hidden', !isPremium);
             if (premiumBadgeMain) premiumBadgeMain.classList.toggle('hidden', !isPremium);
             
-            if (redeemPremiumLink) redeemPremiumLink.style.display = isPremium ? 'none' : 'flex';
+            if (redeemPremiumLink) redeemPremiumLink.style.display = isPremium ? 'none' : 'flex'; // 'flex' to match sidebar links
             if (activityFilterContainer) activityFilterContainer.classList.toggle('hidden', !isPremium);
             if (tertiaryColorPickerContainer) tertiaryColorPickerContainer.classList.toggle('hidden', !isPremium);
             if (layoutCustomizationLink) layoutCustomizationLink.classList.toggle('hidden', !isPremium);
-            if (insiderInfosSection) insiderInfosSection.classList.toggle('hidden', !isPremium);
-            if (premiumDownloadsSection) premiumDownloadsSection.classList.toggle('hidden', !isPremium);
+            
+            // Sections visibility handled by their respective render functions based on isPremium and data availability
+            // Ensure render functions are called after premium status might have changed
         }
 
         async function validateAndRedeemCode(enteredCodeString) {
             premiumCodeMessage.textContent = 'Prüfe Code...';
-            premiumCodeMessage.className = 'modal-message';
+            premiumCodeMessage.className = 'modal-message'; // Reset classes
 
             const enteredCode = /^\d+$/.test(enteredCodeString) ? parseInt(enteredCodeString, 10) : enteredCodeString.toUpperCase();
 
@@ -1240,16 +1348,24 @@
             }
 
             try {
+                // Add a cache-busting parameter to the URL
                 const response = await fetch(`${PREMIUM_CODE_SOURCE_URL}?t=${new Date().getTime()}`); 
-                if (!response.ok) throw new Error('Premium-Code-Server nicht erreichbar.');
+                if (!response.ok) {
+                    throw new Error(`Premium-Code-Server nicht erreichbar. Status: ${response.status}`);
+                }
                 const data = await response.json();
                 
-                if (data.one_time_codes && Array.isArray(data.one_time_codes) && data.one_time_codes.includes(enteredCode)) {
+                if (data.one_time_codes && Array.isArray(data.one_time_codes) && data.one_time_codes.map(c => String(c).toUpperCase()).includes(String(enteredCode).toUpperCase())) {
                     setPremiumStatus(true); 
-                    addRedeemedCode(enteredCode);
+                    addRedeemedCode(enteredCode); // Add the original (or parsed int) code
                     premiumCodeMessage.textContent = 'Premium erfolgreich aktiviert!';
                     premiumCodeMessage.classList.add('success');
-                    setTimeout(() => { premiumCodeModal.classList.remove('visible'); }, 2000);
+                    setTimeout(() => { 
+                        premiumCodeModal.classList.remove('visible'); 
+                        // Refresh displayed data to show new premium content immediately
+                        const currentData = loadAppDataFromLocal() || initialAppData;
+                        displayData(currentData, getSectionOrder());
+                    }, 2000);
                 } else {
                     premiumCodeMessage.textContent = 'Ungültiger oder abgelaufener Code.';
                     premiumCodeMessage.classList.add('error');
@@ -1264,9 +1380,9 @@
         if (redeemPremiumLink) {
             redeemPremiumLink.addEventListener('click', (e) => {
                 e.preventDefault();
-                premiumCodeInput.value = '';
-                premiumCodeMessage.textContent = '';
-                premiumCodeMessage.className = 'modal-message';
+                premiumCodeInput.value = ''; // Clear input field
+                premiumCodeMessage.textContent = ''; // Clear previous messages
+                premiumCodeMessage.className = 'modal-message'; // Reset message style
                 premiumCodeModal.classList.add('visible');
                 if (qHubSidebar.classList.contains('open')) toggleSidebar();
             });
@@ -1282,33 +1398,50 @@
             }
         });
         
-        const defaultSectionOrder = ['nachrichtenSection', 'insiderInfosSection', 'ankuendigungenSection', 'videothekSection', 'aktivitaetsleisteSection'];
+        const defaultSectionOrder = ['nachrichtenSection', 'insiderInfosSection', 'ankuendigungenSection', 'fotogalerieSection', 'aktivitaetsleisteSection']; 
 
         function getSectionOrder() {
-            const storedOrder = localStorage.getItem(SECTION_ORDER_KEY);
-            // Stelle sicher, dass alle Default-Sektionen enthalten sind, falls neue hinzugefügt wurden
-            if (storedOrder) {
-                const parsedOrder = JSON.parse(storedOrder);
-                const completeOrder = defaultSectionOrder.map(id => parsedOrder.includes(id) ? id : null).filter(Boolean);
-                // Füge neue Sektionen hinzu, die nicht in der gespeicherten Reihenfolge waren
-                defaultSectionOrder.forEach(id => {
-                    if(!completeOrder.includes(id)) completeOrder.push(id);
-                });
-                 // Entferne Sektionen, die nicht mehr existieren könnten
-                return completeOrder.filter(id => defaultSectionOrder.includes(id));
+            const storedOrderString = localStorage.getItem(SECTION_ORDER_KEY);
+            if (storedOrderString) {
+                try {
+                    const parsedOrder = JSON.parse(storedOrderString);
+                    if (Array.isArray(parsedOrder)) {
+                        // Ensure all default sections are present and filter out obsolete ones
+                        const currentDefaultIds = new Set(defaultSectionOrder);
+                        let validStoredOrder = parsedOrder.filter(id => currentDefaultIds.has(id));
+                        
+                        // Add any new default sections not in stored order to the end
+                        defaultSectionOrder.forEach(id => {
+                            if (!validStoredOrder.includes(id)) {
+                                validStoredOrder.push(id);
+                            }
+                        });
+                        return validStoredOrder;
+                    }
+                } catch (e) {
+                    console.warn("Could not parse section order from localStorage, using default.", e);
+                    // Fall through to default if parsing fails
+                }
             }
-            return defaultSectionOrder;
+            return [...defaultSectionOrder]; // Return a copy of default
         }
 
         function saveSectionOrder(order) {
-            localStorage.setItem(SECTION_ORDER_KEY, JSON.stringify(order));
+            try {
+                localStorage.setItem(SECTION_ORDER_KEY, JSON.stringify(order));
+            } catch(e) {
+                console.error("Error saving section order to localStorage:", e);
+            }
         }
 
         function reorderSections(order) {
+            if (!mainContentArea) return;
             order.forEach(sectionId => {
                 const sectionElement = document.getElementById(sectionId);
-                if (sectionElement && mainContentArea) { 
+                if (sectionElement) { 
                     mainContentArea.appendChild(sectionElement);
+                } else {
+                    // console.warn(`Section with ID '${sectionId}' not found for reordering.`);
                 }
             });
         }
@@ -1317,25 +1450,32 @@
             if (!sectionOrderContainer) return;
             sectionOrderContainer.innerHTML = '';
             const currentOrder = getSectionOrder();
+            
             currentOrder.forEach((sectionId, index) => {
                 const sectionElement = document.getElementById(sectionId);
                 if (sectionElement) {
                     const sectionTitleElement = sectionElement.querySelector('.section-title');
-                    let sectionTitle = sectionId;
+                    let sectionTitleText = sectionId; // Fallback to ID
                     if (sectionTitleElement) {
                         const tempTitle = sectionTitleElement.cloneNode(true);
-                        const filterDiv = tempTitle.querySelector('#activityFilterContainer');
+                        const filterDiv = tempTitle.querySelector('#activityFilterContainer'); // Specific to Aktivitätsleiste
                         if(filterDiv) filterDiv.remove();
-                        sectionTitle = tempTitle.textContent.replace('(Premium)','').trim();
+                        // Get only text content, removing icon text
+                        const iconInTitle = tempTitle.querySelector('.material-icons');
+                        if (iconInTitle) iconInTitle.remove();
+                        sectionTitleText = tempTitle.textContent.replace('(Premium)','').trim();
                     }
 
                     const div = document.createElement('div');
-                    div.className = 'flex justify-between items-center p-2 bg-gray-100 dark:bg-gray-700 rounded mb-1';
+                    div.className = 'flex justify-between items-center p-2 rounded mb-1'; 
+                    div.style.backgroundColor = 'var(--qhub-color-surface-container)'; 
+                    div.style.color = 'var(--qhub-color-on-surface-container)';
+
                     div.innerHTML = `
-                        <span>${sectionTitle}</span>
+                        <span>${sectionTitleText}</span>
                         <div class="space-x-1">
-                            <button class="text-sm p-1 ${index === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-200 dark:hover:bg-gray-600'}" ${index === 0 ? 'disabled' : ''} onclick="moveSection('${sectionId}', 'up')">▲</button>
-                            <button class="text-sm p-1 ${index === currentOrder.length - 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-200 dark:hover:bg-gray-600'}" ${index === currentOrder.length - 1 ? 'disabled' : ''} onclick="moveSection('${sectionId}', 'down')">▼</button>
+                            <button class="text-sm p-1 rounded ${index === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-300 dark:hover:bg-gray-600'}" ${index === 0 ? 'disabled' : ''} onclick="moveSection('${sectionId}', 'up')" style="background: var(--qhub-color-surface-variant); color: var(--qhub-color-on-surface-variant); border: 1px solid var(--qhub-color-outline-variant);">▲</button>
+                            <button class="text-sm p-1 rounded ${index === currentOrder.length - 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-300 dark:hover:bg-gray-600'}" ${index === currentOrder.length - 1 ? 'disabled' : ''} onclick="moveSection('${sectionId}', 'down')" style="background: var(--qhub-color-surface-variant); color: var(--qhub-color-on-surface-variant); border: 1px solid var(--qhub-color-outline-variant);">▼</button>
                         </div>
                     `;
                     sectionOrderContainer.appendChild(div);
@@ -1343,7 +1483,8 @@
             });
         }
 
-        function moveSection(sectionId, direction) {
+        // Make moveSection globally accessible if it's called from inline HTML onclick
+        window.moveSection = function(sectionId, direction) {
             let currentOrder = getSectionOrder();
             const index = currentOrder.indexOf(sectionId);
             if (index === -1) return;
@@ -1354,7 +1495,7 @@
                 [currentOrder[index+1], currentOrder[index]] = [currentOrder[index], currentOrder[index+1]];
             }
             saveSectionOrder(currentOrder);
-            populateLayoutCustomizationModal(); 
+            populateLayoutCustomizationModal(); // Re-render the modal list
         }
 
         if (layoutCustomizationLink) {
@@ -1368,10 +1509,10 @@
         if (closeLayoutModalButton) closeLayoutModalButton.addEventListener('click', () => layoutCustomizationModal.classList.remove('visible'));
         if (saveLayoutButton) {
             saveLayoutButton.addEventListener('click', () => {
-                const currentOrder = getSectionOrder(); 
-                reorderSections(currentOrder);
+                const currentOrder = getSectionOrder(); // Order is already saved by moveSection
+                reorderSections(currentOrder); // Apply to main page
                 layoutCustomizationModal.classList.remove('visible');
-                showCustomInfoPopup("Layout Gespeichert", "Die neue Reihenfolge der Sektionen wurde angewendet.", "done");
+                showCustomInfoPopup("Layout Gespeichert", "Die neue Reihenfolge der Sektionen wurde angewendet und wird beim nächsten Laden der Seite aktiv.", "done", "OK");
             });
         }
 
@@ -1382,59 +1523,31 @@
             });
         }
         
-        function renderVideothek(videos, isPremium) {
-            const container = document.getElementById('videothekContainer');
-            if (!container) return;
-            container.innerHTML = '';
-            const videosToShow = videos.filter(video => !video.premium || (video.premium && isPremium));
-
-            if (videosToShow.length === 0) {
-                container.innerHTML = '<p class="placeholder-text sm:col-span-2">Keine Videos verfügbar.</p>';
-                return;
-            }
-            videosToShow.forEach(video => {
-                const videoCard = document.createElement('div');
-                videoCard.className = 'video-card card'; 
-
-                let premiumBadgeHTML = video.premium && isPremium ? `<span class="card-type-badge" style="background-color:var(--qhub-color-premium); color:var(--qhub-color-on-premium); position:absolute; top:0.5rem; right:0.5rem; z-index:1;">Premium</span>` : '';
-
-                videoCard.innerHTML = `
-                    <div style="position:relative;">
-                        ${premiumBadgeHTML}
-                        <video controls preload="metadata" poster="${video.poster || ''}" style="width:100%; border-radius: var(--border-radius-medium); aspect-ratio: 16/9; object-fit: cover;">
-                            <source src="${video.url}" type="video/mp4">
-                            Ihr Browser unterstützt das Video-Tag nicht.
-                        </video>
-                    </div>
-                    <div class="video-card-content">
-                        <h3 class="video-card-title">${video.title}</h3>
-                        <p class="video-card-description">${video.description}</p>
-                    </div>
-                `;
-                container.appendChild(videoCard);
-            });
-        }
-
-
         document.addEventListener('DOMContentLoaded', () => {
             applySavedDarkLightModePreference(); 
             loadThemeFromLocalStorage(); 
-            checkAndClearCacheOnUpdate(); 
+            checkAndClearCacheOnUpdate(); // This should run early
             
             let currentData = loadAppDataFromLocal();
-            if (!currentData || currentData.version !== initialAppData.version) {
+            // If cache was cleared due to version update, currentData will be null here
+            if (!currentData) { // Or if version mismatch after checkAndClear (though that function handles saving initial)
+                console.log("Local data missing or needs reset after version update. Using initialAppData.");
                 currentData = initialAppData;
-                saveAppDataToLocal(currentData);
-                localStorage.removeItem(SEEN_POPUPS_KEY);
+                saveAppDataToLocal(currentData); // Ensure initial data for the new version is saved
+                 localStorage.removeItem(SEEN_POPUPS_KEY); // Also reset seen popups for the new version
             }
+            
             const sectionOrder = getPremiumStatus() ? getSectionOrder() : defaultSectionOrder;
             displayData(currentData, sectionOrder); 
+            // checkAndShowAppDefinedPopups should be called after displayData if it depends on UI elements being present
+            // However, it's independent of displayData's rendering, so it can be called here:
             checkAndShowAppDefinedPopups(currentData.popupNachrichten || []);
+
 
             const themeToggleButton = document.getElementById('themeToggleButton');
             if (themeToggleButton) themeToggleButton.addEventListener('click', toggleDarkLightMode);
             
-            updateOfflineStatus(); 
+            updateOfflineStatus(); // Initial check
         });
 
         window.addEventListener('offline', updateOfflineStatus);
