@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pet's Life</title> <!-- Titel geändert -->
+    <title>Pet's Life</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="https://quixoticode.github.io/data/pl/favicon-96x96.png" sizes="96x96" />
@@ -100,7 +100,7 @@
             --sky-day-color: #38bdf8;
             --sky-night-color: #1e293b;
             --water-color: #4A90E2;
-            --error-text-color: #f87171; 
+            --error-text-color: #f87171;
         }
 
         body {
@@ -118,7 +118,7 @@
         }
         .top-bar {
             width: 100%;
-            max-width: 420px; 
+            max-width: 420px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -149,7 +149,7 @@
             box-shadow: inset 0 1px 2px var(--shadow-md-color);
             transition: background-color 0.3s ease, color 0.3s ease;
         }
-        .icon-button { 
+        .icon-button {
             background-color: transparent;
             color: var(--text-color-secondary);
             border: 1px solid var(--game-area-border);
@@ -168,7 +168,7 @@
         }
 
         .game-area {
-            margin-top: 80px; 
+            margin-top: 80px;
             width: 100%;
             max-width: 400px;
             background-color: var(--card-bg-color);
@@ -181,7 +181,7 @@
             gap: 1rem;
             transition: background-color 0.3s ease;
         }
-        .firebase-error-message { /* New style for prominent error */
+        .firebase-error-message {
             color: var(--error-text-color);
             font-weight: bold;
             text-align: center;
@@ -190,9 +190,6 @@
             border-radius: 8px;
             width: 100%;
         }
-        .hidden-on-error { /* Class to hide elements during Firebase error */
-            /* display: none !important; */ /* JS will handle this for smoother transition */
-        }
 
         .room-container {
             width: 100%;
@@ -200,9 +197,9 @@
             height: 240px;
             position: relative;
             margin-bottom: 0.5rem;
-            overflow: hidden; 
+            overflow: hidden;
         }
-        .sky-background { 
+        .sky-background {
             position: absolute;
             top: 35px; right: 35px; width: 50px; height: 60px;
             z-index: 0;
@@ -225,14 +222,14 @@
             0%, 100% { opacity: 0; }
             50% { opacity: 1; }
         }
-         .fishbowl-container { 
+         .fishbowl-container {
             position: absolute;
             bottom: 10px;
             left: 50%;
             transform: translateX(-50%);
             width: 100px;
             height: 80px;
-            z-index: 4; 
+            z-index: 4;
         }
         .fishbowl-svg {
             width: 100%;
@@ -266,13 +263,13 @@
         }
         .pet-room.active { opacity: 1; visibility: visible; z-index: 1; }
         #bedroom { background: linear-gradient(to bottom, var(--room-wall-color) 70%, var(--room-floor-color) 70%); }
-        #bedroom::before { 
+        #bedroom::before {
             content: ''; position: absolute; top: 30px; right: 30px; width: 60px; height: 70px;
             background-color: var(--room-window-glass-color); border: 4px solid var(--room-window-frame-color);
             border-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.2); z-index: 1;
             transition: background-color 0.5s ease;
         }
-        #bedroom::after { 
+        #bedroom::after {
             content: ''; position: absolute; top: 30px; right: 30px; width: 60px; height: 70px;
             border-left: 2px solid var(--room-window-frame-color); border-right: 2px solid var(--room-window-frame-color);
             transform: translateX(-50%) scaleX(0.15); left: calc(30px + 30px); z-index: 2;
@@ -283,18 +280,18 @@
         .bed-display { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); width: 150px; height: 80px; z-index: 5; }
         .bed-display svg { width: 100%; height: 100%; filter: drop-shadow(0px 2px 2px var(--shadow-md-color)); }
 
-        .pet-character-container { 
+        .pet-character-container {
             position: absolute;
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
-            width: 120px; 
-            height: 120px; 
+            width: 120px;
+            height: 120px;
             z-index: 10;
             transition: bottom 0.3s ease, transform 0.3s ease;
         }
-        .pet-character-container.swimming { 
-            bottom: 35px; 
+        .pet-character-container.swimming {
+            bottom: 35px;
             animation: swimCycle 8s infinite ease-in-out;
         }
         @keyframes swimCycle {
@@ -315,10 +312,10 @@
             filter: drop-shadow(0px 3px 3px var(--shadow-color));
         }
         .pet-accessory-svg { z-index: 11; }
-        .sleeping .owl-eye-pupil, .sleeping .bird-eye-pupil, .sleeping .cat-eye-pupil, .sleeping .dog-eye-pupil, .sleeping .dragon-eye-pupil, .sleeping .robot-eye-light { 
-            transform: scaleY(0.1); transform-origin: center; 
+        .sleeping .owl-eye-pupil, .sleeping .bird-eye-pupil, .sleeping .cat-eye-pupil, .sleeping .dog-eye-pupil, .sleeping .dragon-eye-pupil, .sleeping .robot-eye-light {
+            transform: scaleY(0.1); transform-origin: center;
         }
-        .sleeping .pet-svg-eye-white { fill: #e0e0e0; } 
+        .sleeping .pet-svg-eye-white { fill: #e0e0e0; }
 
 
         .pet-info { text-align: center; }
@@ -377,8 +374,8 @@
         .worm-segment:last-child { width: 35%; border-top-right-radius: 6px; border-bottom-right-radius: 6px; }
         #wormGameTimer, #wormGameScore, #flightGameScore { font-size: 1.125rem; font-weight: 600; color: var(--text-color-primary); margin-top: 0.75rem; }
         #wormGameMessage, #flightGameMessage { font-size: 0.875rem; color: var(--text-color-status); min-height: 1.25rem; margin-top: 0.5rem; }
-        .flight-pet-container { 
-            width: 40px; height: 40px; position: absolute; left: 20px; transition: top 0.1s linear; 
+        .flight-pet-container {
+            width: 40px; height: 40px; position: absolute; left: 20px; transition: top 0.1s linear;
         }
         .flight-pet-container svg { width: 100%; height: 100%; display: block; }
         .flight-obstacle { width: 20px; background-color: var(--flight-game-obstacle-color); position: absolute; right: -20px; }
@@ -397,7 +394,7 @@
 
         .color-picker-container { display: flex; gap: 10px; margin: 10px 0; justify-content: center; }
         .color-swatch { width: 30px; height: 30px; border-radius: 50%; cursor: pointer; border: 2px solid var(--game-area-border); }
-        
+
         .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 1rem; max-height: 300px; overflow-y: auto; padding: 0.5rem; border: 1px solid var(--game-area-border); border-radius: 8px; margin-top: 1rem;}
         .gallery-pet-card { background-color: var(--room-wall-color); border-radius: 8px; padding: 0.5rem; text-align: center; }
         .gallery-pet-svg-container { width: 60px; height: 60px; margin: 0 auto 0.5rem; position: relative; }
@@ -412,8 +409,8 @@
             .pet-character-container { width: 100px; height: 100px; bottom: 25px; }
             .bed-display { width: 130px; height: 70px; bottom: 5px; }
             .top-bar { padding: 0.5rem 0.75rem; }
-            .main-actions-grid { grid-template-columns: 1fr; } 
-            .action-button.full-width { grid-column: span 1; } 
+            .main-actions-grid { grid-template-columns: 1fr; }
+            .action-button.full-width { grid-column: span 1; }
         }
     </style>
 </head>
@@ -437,7 +434,7 @@
         </div>
         <div class="game-content-wrapper"> <!-- New wrapper for game content -->
             <div class="room-container hidden-on-error">
-                <div class="sky-background" id="skyBackground"></div> 
+                <div class="sky-background" id="skyBackground"></div>
                 <div class="stars-container" id="starsContainer"></div>
                 <div class="fishbowl-container" id="fishbowlContainer" style="display: none;">
                      <svg class="fishbowl-svg" viewBox="0 0 100 80">
@@ -460,7 +457,7 @@
                 </div>
                 <div class="pet-character-container" id="petCharacterDisplay"></div>
             </div>
-            
+
             <div class="room-navigation hidden-on-error">
                 <button class="nav-button" id="navBedroomButton">Schlafzimmer</button>
                 <button class="nav-button" id="navLivingroomButton">Wohnzimmer</button>
@@ -475,7 +472,7 @@
 
             <p class="pet-status-text hidden-on-error" id="petStatusText">...</p>
             <div class="active-effects hidden-on-error" id="activeEffectsText"></div>
-            
+
             <div class="stats-grid hidden-on-error">
                 <div class="stat-item">
                     <div class="status-label-group">
@@ -511,7 +508,7 @@
         </div> <!-- End of game-content-wrapper -->
          <p class="text-xs text-center mt-4" id="userIdDisplay">User ID: -</p>
     </main>
-    
+
     <div id="notificationMessage"></div>
 
     <div id="updatePopupModal" class="modal-overlay">
@@ -519,9 +516,10 @@
             <h2>✨ Update-News! ✨</h2>
             <p class="text-left mb-4">Hallo Tierfreund! Es gibt tolle Neuerungen in Pet's Life:</p>
             <ul class="text-sm">
+                <li><strong>Firebase Konfiguration:</strong> Ist jetzt direkt im Code!</li>
+                <li><strong>Verbesserte Firebase-Integration:</strong> Stabilität und Fehlerbehandlung verbessert.</li>
                 <li><strong>Minispiel-Fixes:</strong> Wurmjagd und Hindernisflug sollten jetzt besser funktionieren!</li>
                 <li><strong>Neue Tierarten:</strong> Entdecke Katzen, Hunde, Drachen, Fische und Roboter!</li>
-                <li>Firebase Integration, Haustier-Anpassung, Tägliche Quests, Tag/Nacht-Zyklus.</li>
             </ul>
             <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Viel Spaß!</p>
             <button id="closeUpdatePopupButton" class="action-button">Verstanden!</button>
@@ -536,7 +534,7 @@
             <button id="confirmPetSelectionButton" class="action-button mt-2">Bestätigen</button>
         </div>
     </div>
-    
+
     <div id="switchPetModal" class="modal-overlay">
         <div class="modal-content">
             <h2>Haustier wechseln</h2>
@@ -595,7 +593,7 @@
             <button id="closeQuestsModalButton" class="action-button secondary mt-4">Schließen</button>
         </div>
     </div>
-    
+
     <div id="galleryModal" class="modal-overlay">
         <div class="modal-content">
             <h2>Haustier Galerie</h2>
@@ -636,23 +634,33 @@
 
     <script type="module">
         // Firebase Imports
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc, updateDoc, deleteDoc, onSnapshot, collection, query, where, addDoc, getDocs, serverTimestamp, runTransaction, writeBatch, Timestamp, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js"; // Version auf 11.8.1 aktualisiert
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-auth.js"; // signInWithCustomToken entfernt, da es hier nicht benötigt wird
+        import { getFirestore, doc, getDoc, setDoc, updateDoc, onSnapshot, collection, query, addDoc, getDocs, serverTimestamp, Timestamp, setLogLevel } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js"; // Unnötige Imports entfernt
+        // import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-analytics.js"; // Analytics ist optional
 
         // --- Firebase Config & Global App Vars ---
-        // WICHTIG: Die Variablen __firebase_config und __app_id MÜSSEN global verfügbar sein,
-        // BEVOR dieses Skript ausgeführt wird. 
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id'; // Eigene App-ID für Firestore-Pfade
-        
+        // Deine Web app's Firebase configuration
+        // Ersetze dies mit deiner tatsächlichen Konfiguration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCf_dfv155ihVeG_6M34uuQAN2wZBYhGpI",
+            authDomain: "qpets-8f300.firebaseapp.com",
+            projectId: "qpets-8f300",
+            storageBucket: "qpets-8f300.appspot.com", // korrigiert von .firebasestorage.app
+            messagingSenderId: "339283062417",
+            appId: "1:339283062417:web:080a0ba36cf944fbfa5930",
+            measurementId: "G-PQ9VJ37HRW"
+        };
+
+        // EINE EINZIGARTIGE ID FÜR DEINE ANWENDUNG für Firestore Pfade
+        const firestoreAppId = 'pets-life-qpets-8f300-v1'; // Eindeutiger machen mit Projekt ID
+
         let db, auth, userId, currentPetId;
         let unsubscribePetStats = null;
-        let unsubscribeQuests = null;
-        let unsubscribeGallery = null;
+        // let analytics; // Optional: für Firebase Analytics
 
         // --- Konstanten & Konfiguration ---
-        const GAME_VERSION = "1.7-firebase-improvements"; 
+        const GAME_VERSION = "1.9-user-config"; // Spielversion aktualisiert
         const MAX_STAT = 100;
         const MIN_STAT = 0;
         const MS_PER_HOUR = 1000 * 60 * 60;
@@ -661,7 +669,7 @@
         const SATIATION_DECREASE_PER_HOUR = 8;
         const ENERGY_DECREASE_PER_HOUR_AWAKE = 6;
         const MOOD_DECREASE_PER_HOUR_ALONE = 5;
-        const SATIATION_DECREASE_DURING_SLEEP = 3; 
+        const SATIATION_DECREASE_DURING_SLEEP = 3;
 
         const SATIATION_GAIN_FROM_FEEDING = 30;
         const ENERGY_COST_OF_FEEDING = 3;
@@ -676,8 +684,8 @@
         const GOOD_CARE_AVG_STAT_THRESHOLD = 65;
 
         const AVAILABLE_PET_TYPES = {
-            owl: { 
-                name: "Eule", 
+            owl: {
+                name: "Eule",
                 baseSvg: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse class="pet-svg-body" cx="50" cy="60" rx="30" ry="35"/><circle class="pet-svg-eye-white owl-eye-white" cx="35" cy="50" r="12" fill="white"/><circle class="pet-svg-eye-pupil owl-eye-pupil" cx="35" cy="50" r="5" fill="black"/><circle class="pet-svg-eye-white owl-eye-white" cx="65" cy="50" r="12" fill="white"/><circle class="pet-svg-eye-pupil owl-eye-pupil" cx="65" cy="50" r="5" fill="black"/><polygon class="pet-svg-beak owl-beak" points="48,60 52,60 50,65"/><ellipse class="pet-svg-foot owl-foot" cx="40" cy="90" rx="8" ry="4" transform="rotate(-10 40 90)"/><ellipse class="pet-svg-foot owl-foot" cx="60" cy="90" rx="8" ry="4" transform="rotate(10 60 90)"/><path class="pet-svg-feature owl-ear" d="M30 35 Q35 20 40 35" stroke-width="3" fill="none"/><path class="pet-svg-feature owl-ear" d="M70 35 Q65 20 60 35" stroke-width="3" fill="none"/><path class="pet-svg-wing owl-wing" d="M20 60 Q15 70 25 80 C 30 75 30 65 20 60" /><path class="pet-svg-wing owl-wing" d="M80 60 Q85 70 75 80 C 70 75 70 65 80 60" /></svg>`,
                 growthStages: {
                     baby: { name: "Babyeule", nextStage: 'juvenile', activeHoursNeeded: 0, careHoursNeeded: 0, svgScale: 0.8 },
@@ -689,7 +697,7 @@
             bird: {
                 name: "Vogel",
                 baseSvg: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse class="pet-svg-body" cx="50" cy="60" rx="25" ry="20"/><circle class="pet-svg-eye-white bird-eye-white" cx="65" cy="55" r="7" fill="white"/><circle class="pet-svg-eye-pupil bird-eye-pupil" cx="68" cy="55" r="3" fill="black"/><polygon class="pet-svg-beak bird-beak" points="75,58 85,55 75,52"/><path class="pet-svg-wing bird-wing" d="M40 50 Q20 60 40 70 C 50 65 50 55 40 50" /><ellipse class="pet-svg-foot bird-foot" cx="45" cy="80" rx="5" ry="3"/><ellipse class="pet-svg-foot bird-foot" cx="55" cy="80" rx="5" ry="3"/></svg>`,
-                growthStages: { 
+                growthStages: {
                     baby: { name: "Küken", nextStage: 'adult', activeHoursNeeded: 0, careHoursNeeded: 0, svgScale: 0.9 },
                     adult: { name: "Vogel", nextStage: null, activeHoursNeeded: 48, careHoursNeeded: 30, svgScale: 1.1 }
                 },
@@ -702,7 +710,7 @@
                     baby: { name: "Mieze", nextStage: 'adult', activeHoursNeeded: 0, careHoursNeeded: 0, svgScale: 0.85 },
                     adult: { name: "Katze", nextStage: null, activeHoursNeeded: 50, careHoursNeeded: 35, svgScale: 1.0 }
                 },
-                defaultColors: { primary: "#8D6E63", secondary: "#FFB74D", feature: "#5D4037" } 
+                defaultColors: { primary: "#8D6E63", secondary: "#FFB74D", feature: "#5D4037" }
             },
             dog: {
                 name: "Hund",
@@ -711,7 +719,7 @@
                     baby: { name: "Welpe", nextStage: 'adult', activeHoursNeeded: 0, careHoursNeeded: 0, svgScale: 0.9 },
                     adult: { name: "Hund", nextStage: null, activeHoursNeeded: 60, careHoursNeeded: 40, svgScale: 1.1 }
                 },
-                defaultColors: { primary: "#D2B48C", secondary: "#A0522D", feature: "#8B4513" } 
+                defaultColors: { primary: "#D2B48C", secondary: "#A0522D", feature: "#8B4513" }
             },
             dragon: {
                 name: "Drache",
@@ -720,7 +728,7 @@
                     baby: { name: "Schlüpfling", nextStage: 'adult', activeHoursNeeded: 0, careHoursNeeded: 0, svgScale: 0.75 },
                     adult: { name: "Drache", nextStage: null, activeHoursNeeded: 100, careHoursNeeded: 70, svgScale: 1.3 }
                 },
-                defaultColors: { primary: "#2E8B57", secondary: "#FF8C00", feature: "#8B0000" } 
+                defaultColors: { primary: "#2E8B57", secondary: "#FF8C00", feature: "#8B0000" }
             },
             fish: {
                 name: "Fisch",
@@ -729,8 +737,8 @@
                     baby: { name: "Fischlein", nextStage: 'adult', activeHoursNeeded: 0, careHoursNeeded: 0, svgScale: 0.6 },
                     adult: { name: "Fisch", nextStage: null, activeHoursNeeded: 30, careHoursNeeded: 20, svgScale: 0.8 }
                 },
-                defaultColors: { primary: "#FF6347", secondary: "#FFFF00", feature: "#FFA500" }, 
-                specialPlacement: "fishbowl" 
+                defaultColors: { primary: "#FF6347", secondary: "#FFFF00", feature: "#FFA500" },
+                specialPlacement: "fishbowl"
             },
             robot: {
                 name: "Roboter",
@@ -739,18 +747,18 @@
                     baby: { name: "Proto-Bot", nextStage: 'adult', activeHoursNeeded: 0, careHoursNeeded: 0, svgScale: 0.9 },
                     adult: { name: "Robo-Freund", nextStage: null, activeHoursNeeded: 80, careHoursNeeded: 60, svgScale: 1.1 }
                 },
-                defaultColors: { primary: "#B0C4DE", secondary: "#FFD700", feature: "#778899" } 
+                defaultColors: { primary: "#B0C4DE", secondary: "#FFD700", feature: "#778899" }
             }
         };
         const AVAILABLE_ACCESSORIES = {
-            red_hat: { name: "Roter Hut", cost: 30, category: "head", 
-                svg: `<path class="accessory-svg-item" d="M35 30 Q50 20 65 30 L60 35 L40 35 Z" fill="var(--accessory-hat-color)" stroke="#000" stroke-width="0.5"/>` 
+            red_hat: { name: "Roter Hut", cost: 30, category: "head",
+                svg: `<path class="accessory-svg-item" d="M35 30 Q50 20 65 30 L60 35 L40 35 Z" fill="var(--accessory-hat-color)" stroke="#000" stroke-width="0.5"/>`
             }
         };
         const AVAILABLE_COLORS = [
             { name: "Braun", value: "#A0522D" }, { name: "Blau", value: "#4682B4" }, { name: "Grün", value: "#2E8B57" },
             { name: "Gelb", value: "#facc15" }, { name: "Grau", value: "#B0C4DE" }, { name: "Pink", value: "#ec4899" },
-            { name: "Rot", value: "#FF6347" }, { name: "Orange", value: "#FF8C00" } 
+            { name: "Rot", value: "#FF6347" }, { name: "Orange", value: "#FF8C00" }
         ];
         const COLOR_TICKET_COST = 40;
 
@@ -775,17 +783,17 @@
         };
         const PERSONALITY_KEYS = Object.keys(PERSONALITIES);
 
-        const FLIGHT_GAME_GRAVITY = 1.5; 
-        const FLIGHT_GAME_FLAP_STRENGTH = 28; 
-        const FLIGHT_GAME_OBSTACLE_SPEED = 2.5; 
-        const FLIGHT_GAME_OBSTACLE_GAP = 110; 
-        const FLIGHT_GAME_OBSTACLE_SPAWN_INTERVAL_MS = 2200; 
+        const FLIGHT_GAME_GRAVITY = 1.5;
+        const FLIGHT_GAME_FLAP_STRENGTH = 28;
+        const FLIGHT_GAME_OBSTACLE_SPEED = 2.5;
+        const FLIGHT_GAME_OBSTACLE_GAP = 110;
+        const FLIGHT_GAME_OBSTACLE_SPAWN_INTERVAL_MS = 2200;
 
         const BED_SVGS = {
             standardBed: `<svg viewBox="0 0 100 50"><rect x="10" y="20" width="80" height="25" rx="5" fill="var(--bed-wood-color)"/><rect x="15" y="10" width="70" height="15" fill="var(--bed-standard-blanket-color)" rx="3"/><ellipse cx="30" cy="12" rx="10" ry="4" fill="#f0f0f0"/><ellipse cx="70" cy="12" rx="10" ry="4" fill="#f0f0f0"/></svg>`,
             comfyNest: `<svg viewBox="0 0 100 60"><path d="M10 50 Q5 30 15 20 C 25 5 75 5 85 20 Q95 30 90 50 Z" fill="var(--bed-wood-color)" stroke="#5C3A1E" stroke-width="2"/><ellipse cx="50" cy="35" rx="30" ry="15" fill="var(--bed-comfy-blanket-color)"/><ellipse cx="35" cy="30" rx="8" ry="5" fill="#f0f0f0" transform="rotate(-15 35 30)"/><ellipse cx="65" cy="30" rx="8" ry="5" fill="#f0f0f0" transform="rotate(15 65 30)"/></svg>`
         };
-        
+
         const QUEST_DEFINITIONS = {
             feedPet: { id: "feedPet", title: "Satt & Glücklich", description: "Füttere dein Haustier 2 Mal.", targetCount: 2, currentCount: 0, rewardCoins: 20, actionType: "feed" },
             playWormGame: { id: "playWormGame", title: "Wurmjäger", description: "Spiele 1 Mal Wurmjagd.", targetCount: 1, currentCount: 0, rewardCoins: 15, actionType: "game_worm" },
@@ -794,28 +802,28 @@
         };
 
 
-        let petStats = null; 
-        let userProfile = { 
+        let petStats = null;
+        let userProfile = {
             petCoins: 100,
             themePreference: 'light',
             lastSeenVersion: "0",
-            ownedPets: [], 
+            ownedPets: [],
             activePetId: null,
             lastQuestReset: null,
-            inventory: { 
+            inventory: {
                 colorTickets: 0,
             }
         };
-        let dailyQuests = {}; 
+        let dailyQuests = {};
 
         let themeToggleButton, petCoinsDisplay, energyBar, hungerBar, moodBar, energyValueText, hungerValueText, moodValueText,
-            petTitle, petTypeText, petAgeText, petPersonalityText, petStatusText, activeEffectsText, notificationMessageDiv, 
+            petTitle, petTypeText, petAgeText, petPersonalityText, petStatusText, activeEffectsText, notificationMessageDiv,
             feedButton, petButton, sleepButton, openShopButton, shopModal, closeShopButton,
-            buyProtectionPotionButton, buySuperBerryButton, buyComfyNestButton, buyRedHatButton, buyColorTicketButton, shopMessage, 
-            openWormGameButton, wormGameModal, closeWormGameButton, startWormGameButton, wormGameArea, 
+            buyProtectionPotionButton, buySuperBerryButton, buyComfyNestButton, buyRedHatButton, buyColorTicketButton, shopMessage,
+            openWormGameButton, wormGameModal, closeWormGameButton, startWormGameButton, wormGameArea,
             wormGameTimerDisplay, wormGameScoreDisplay, wormGameMessage,
             openFlightGameButton, flightGameModal, closeFlightGameButton, startFlightGameButton, flightGameArea,
-            flightGamePetContainer, flightGameScoreDisplay, flightGameMessage, 
+            flightGamePetContainer, flightGameScoreDisplay, flightGameMessage,
             bedDisplayContainer, petCharacterDisplay, bedroomDiv, livingroomDiv, navBedroomButton, navLivingroomButton,
             updatePopupModal, closeUpdatePopupButton,
             petSelectionModal, petSelectionContainer, confirmPetSelectionButton, newPetNameInput,
@@ -824,8 +832,8 @@
             questsButton, questsModal, questListContainer, questGeneralMessage, closeQuestsModalButton,
             galleryButton, galleryModal, galleryGridContainer, showMyPetInGalleryButton, galleryMessage, closeGalleryModalButton,
             userIdDisplay, skyBackground, starsContainer, fishbowlContainer,
-            firebaseErrorMessageDiv, gameContentWrapper;  // Added new DOM elements
-             
+            firebaseErrorMessageDiv, gameContentWrapper;
+
         let allModals = [];
         let wormGameIntervalId = null, wormSpawnIntervalId = null, wormGameScore = 0, wormGameTimeLeft = WORM_GAME_DURATION_S;
         let flightGameLoopId = null, flightGameObstacleSpawnId = null, flightGamePetY = 100, flightGamePetVelocityY = 0, flightGameObstacles = [], flightGameScoreNum = 0, flightGameActive = false;
@@ -833,58 +841,58 @@
 
         window.addEventListener('DOMContentLoaded', async () => {
             console.log("DOM geladen. Initialisiere Spiel...");
-            initializeDOMElements(); // Initialize all DOM elements first
-            
-            if (!firebaseConfig) {
-                console.error("Firebase Konfiguration nicht gefunden!");
+            initializeDOMElements();
+
+            if (!firebaseConfig || !firebaseConfig.apiKey || !firebaseConfig.projectId) { // Einfache Prüfung, ob die Config-Keys existieren
+                console.error("Firebase Konfiguration ist nicht korrekt! Bitte fülle die `firebaseConfig` im Skript aus.");
                 if(firebaseErrorMessageDiv && gameContentWrapper) {
-                    firebaseErrorMessageDiv.textContent = "Fehler: Firebase ist nicht korrekt konfiguriert. Das Spiel kann nicht geladen werden. Bitte stelle sicher, dass die Firebase-Konfigurationsvariablen (__firebase_config und __app_id) in der Umgebung korrekt gesetzt sind.";
+                    firebaseErrorMessageDiv.textContent = "Fehler: Die Firebase-Konfiguration im Code ist nicht korrekt gesetzt. Das Spiel kann nicht gestartet werden.";
                     firebaseErrorMessageDiv.style.display = 'block';
-                    gameContentWrapper.style.display = 'none'; // Hide main game content
+                    if (gameContentWrapper) gameContentWrapper.style.display = 'none';
                 }
-                disableGameControls(true); // Disable all controls
-                return; // Stop further execution
+                disableGameControls(true);
+                return;
             }
-            
-            // If firebaseConfig is present, proceed with setup
-            setupEventListeners(); // Setup event listeners only if Firebase config is okay
+
+            setupEventListeners();
 
             try {
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
                 auth = getAuth(app);
-                setLogLevel('debug'); 
+                // analytics = getAnalytics(app); // Optional: Analytics initialisieren
+                setLogLevel('debug');
 
                 onAuthStateChanged(auth, async (user) => {
                     if (user) {
                         console.log("Benutzer ist angemeldet:", user.uid);
                         userId = user.uid;
                         if(userIdDisplay) userIdDisplay.textContent = `User ID: ${userId}`;
-                        if(firebaseErrorMessageDiv) firebaseErrorMessageDiv.style.display = 'none'; // Hide error if auth proceeds
-                        if(gameContentWrapper) gameContentWrapper.style.display = 'block'; // Show game content
-                        await loadUserProfile(); 
+                        if(firebaseErrorMessageDiv) firebaseErrorMessageDiv.style.display = 'none';
+                        if(gameContentWrapper) gameContentWrapper.style.display = 'block';
+                        await loadUserProfile();
                     } else {
-                        console.log("Benutzer nicht angemeldet. Versuche anonyme Anmeldung oder Custom Token.");
-                        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                            try {
-                                await signInWithCustomToken(auth, __initial_auth_token);
-                                console.log("Erfolgreich mit Custom Token angemeldet.");
-                            } catch (error) {
-                                console.error("Fehler bei Custom Token Anmeldung, versuche anonym:", error);
-                                await signInAnonymously(auth);
-                            }
-                        } else {
+                        console.log("Benutzer nicht angemeldet. Versuche anonyme Anmeldung.");
+                        try {
                             await signInAnonymously(auth);
                             console.log("Erfolgreich anonym angemeldet.");
+                        } catch (error) {
+                             console.error("Fehler bei anonymer Anmeldung:", error);
+                             if(firebaseErrorMessageDiv && gameContentWrapper) {
+                                firebaseErrorMessageDiv.textContent = "Fehler bei der anonymen Firebase-Anmeldung. Das Spiel kann nicht ohne Authentifizierung verwendet werden.";
+                                firebaseErrorMessageDiv.style.display = 'block';
+                                if (gameContentWrapper) gameContentWrapper.style.display = 'none';
+                            }
+                            disableGameControls(true);
                         }
                     }
                 });
             } catch (error) {
                 console.error("Firebase Initialisierungsfehler:", error);
                 if(firebaseErrorMessageDiv && gameContentWrapper) {
-                    firebaseErrorMessageDiv.textContent = "Fehler bei der Firebase-Initialisierung. Bitte überprüfe die Konsole für Details.";
+                    firebaseErrorMessageDiv.textContent = "Fehler bei der Firebase-Initialisierung: " + error.message;
                     firebaseErrorMessageDiv.style.display = 'block';
-                    gameContentWrapper.style.display = 'none';
+                    if (gameContentWrapper) gameContentWrapper.style.display = 'none';
                 }
                 disableGameControls(true);
             }
@@ -893,7 +901,7 @@
         function disableGameControls(disableAll = false) {
             const buttons = document.querySelectorAll('button');
             buttons.forEach(btn => {
-                if (disableAll || btn.id !== 'themeToggleButton') { 
+                if (disableAll || btn.id !== 'themeToggleButton') {
                     btn.disabled = true;
                 }
             });
@@ -914,21 +922,20 @@
         async function loadUserProfile() {
             if (!userId) return;
             console.log(`Lade Nutzerprofil für User ID: ${userId}`);
-            const userProfileRef = doc(db, `artifacts/${appId}/users/${userId}/profile/main`);
-            
+            const userProfileRef = doc(db, `artifacts/${firestoreAppId}/users/${userId}/profile/main`); // firestoreAppId verwenden
+
             try {
                 const docSnap = await getDoc(userProfileRef);
                 if (docSnap.exists()) {
                     const loadedProfile = docSnap.data();
                     userProfile = {
-                        ...userProfile, 
-                        ...loadedProfile, 
-                        inventory: { 
+                        ...userProfile,
+                        ...loadedProfile,
+                        inventory: {
                             ...(userProfile.inventory || {}),
                             ...(loadedProfile.inventory || {})
                         },
-                        // Wichtig: lastQuestReset als String behalten, wie es aus Firestore kommt oder null/undefined
-                        lastQuestReset: loadedProfile.lastQuestReset || null 
+                        lastQuestReset: loadedProfile.lastQuestReset || null
                     };
                     console.log("Nutzerprofil geladen:", userProfile);
 
@@ -943,7 +950,7 @@
                         currentPetId = userProfile.activePetId;
                         await loadPetStats(currentPetId);
                     } else if (userProfile.ownedPets && userProfile.ownedPets.length > 0) {
-                        currentPetId = userProfile.ownedPets[0]; 
+                        currentPetId = userProfile.ownedPets[0];
                         userProfile.activePetId = currentPetId;
                         await setDoc(userProfileRef, { activePetId: currentPetId }, { merge: true });
                         await loadPetStats(currentPetId);
@@ -958,21 +965,21 @@
                     userProfile = {
                         petCoins: 100,
                         themePreference: 'light',
-                        lastSeenVersion: "0", 
+                        lastSeenVersion: "0",
                         ownedPets: [],
                         activePetId: null,
-                        createdAt: serverTimestamp(), // Firestore Server Zeitstempel
-                        lastLogin: serverTimestamp(), // Firestore Server Zeitstempel
-                        lastQuestReset: null, // Wird beim ersten Quest-Check gesetzt
-                        inventory: { colorTickets: 1 } 
+                        createdAt: serverTimestamp(),
+                        lastLogin: serverTimestamp(),
+                        lastQuestReset: null,
+                        inventory: { colorTickets: 1 }
                     };
-                    await setDoc(userProfileRef, userProfile); // Hier werden Timestamps korrekt als serverTimestamp() geschrieben
+                    await setDoc(userProfileRef, userProfile);
                     console.log("Neues Nutzerprofil erstellt. Zeige Haustierauswahl.");
                     closeAllModals();
                     if(petSelectionModal) petSelectionModal.style.display = 'flex';
                     populatePetSelection();
                 }
-                await checkAndResetQuests(); 
+                await checkAndResetQuests();
                 enableGameControls();
 
             } catch (error) {
@@ -981,28 +988,25 @@
                 if(firebaseErrorMessageDiv && gameContentWrapper) {
                     firebaseErrorMessageDiv.textContent = "Fehler beim Laden des Nutzerprofils.";
                     firebaseErrorMessageDiv.style.display = 'block';
-                    gameContentWrapper.style.display = 'none';
+                    if (gameContentWrapper) gameContentWrapper.style.display = 'none';
                 }
                 disableGameControls();
             }
         }
-        
+
         async function saveUserProfile() {
-            if (!userId || !userProfile) return; 
-            const userProfileRef = doc(db, `artifacts/${appId}/users/${userId}/profile/main`);
+            if (!userId || !userProfile) return;
+            const userProfileRef = doc(db, `artifacts/${firestoreAppId}/users/${userId}/profile/main`); // firestoreAppId verwenden
             try {
-                // Erstelle ein zu speicherndes Objekt, um Timestamps nicht fälschlicherweise zu konvertieren,
-                // wenn sie bereits Timestamps sind oder null bleiben sollen (wie lastQuestReset).
                 const profileToSave = { ...userProfile };
-                // Nur wenn lastLogin ein Client-Timestamp (Number) ist, konvertieren.
-                // Wenn es schon ein Firestore Timestamp ist oder neu gesetzt wird, bleibt es so.
-                if (typeof profileToSave.lastLogin === 'number') {
+                if (typeof profileToSave.lastLogin === 'number') { // Nur konvertieren, wenn es ein Client-Timestamp ist
                     profileToSave.lastLogin = Timestamp.fromDate(new Date(profileToSave.lastLogin));
-                } else if (!profileToSave.lastLogin) { // Falls es noch nie gesetzt wurde
-                    profileToSave.lastLogin = serverTimestamp();
+                } else if (!profileToSave.lastLogin || !(profileToSave.lastLogin instanceof Timestamp)) { // Falls nicht gesetzt oder kein Timestamp
+                     profileToSave.lastLogin = serverTimestamp();
                 }
-                // createdAt sollte idealerweise nur einmal beim Erstellen gesetzt werden
-                // und dann nicht mehr verändert werden.
+                // createdAt sollte nur einmal beim Erstellen gesetzt werden und nicht bei jedem Speichern aktualisiert werden.
+                // Entferne es hier, wenn es nicht explizit aktualisiert werden soll.
+                // delete profileToSave.createdAt; // Wenn es nicht überschrieben werden soll.
 
                 await setDoc(userProfileRef, profileToSave, { merge: true });
                 console.log("Nutzerprofil gespeichert.");
@@ -1015,23 +1019,21 @@
         async function loadPetStats(petId) {
             if (!userId || !petId) return;
             console.log(`Lade Haustierdaten für Pet ID: ${petId}`);
-            currentPetId = petId; 
+            currentPetId = petId;
 
-            if (unsubscribePetStats) unsubscribePetStats(); 
+            if (unsubscribePetStats) unsubscribePetStats();
 
-            const petDocRef = doc(db, `artifacts/${appId}/users/${userId}/pets/${petId}`);
+            const petDocRef = doc(db, `artifacts/${firestoreAppId}/users/${userId}/pets/${petId}`); // firestoreAppId verwenden
             unsubscribePetStats = onSnapshot(petDocRef, (docSnap) => {
                 if (docSnap.exists()) {
                     const loadedPetStats = docSnap.data();
-                    petStats = { // Default Struktur, um sicherzustellen, dass alle Felder vorhanden sind
+                    petStats = {
                         name: "Pet",
-                        petType: "owl", 
+                        petType: "owl",
                         energy: MAX_STAT,
                         hunger: MAX_STAT,
                         mood: MAX_STAT,
-                        // Zeitstempel werden jetzt als Millisekunden im Client-Code gehalten
-                        // nach der Konvertierung aus Firestore Timestamp Objekten
-                        creationTime: Date.now(), 
+                        creationTime: Date.now(),
                         lastUpdateEnergy: Date.now(),
                         lastUpdateHunger: Date.now(),
                         lastUpdateMood: Date.now(),
@@ -1043,24 +1045,23 @@
                         isSleeping: false,
                         currentRoom: 'bedroom',
                         inventory: {
-                            protectionPotion: { active: false, expiresAt: 0 }, // expiresAt als Millisekunden
+                            protectionPotion: { active: false, expiresAt: 0 },
                             activeBed: 'standardBed',
                             ownedBeds: ['standardBed'],
-                            accessories: { head: null, body: null, feet: null }, 
+                            accessories: { head: null, body: null, feet: null },
                             ownedAccessories: []
                         },
-                        colorScheme: AVAILABLE_PET_TYPES.owl.defaultColors, 
-                        notifiedLowEnergy: false, 
+                        colorScheme: AVAILABLE_PET_TYPES.owl.defaultColors,
+                        notifiedLowEnergy: false,
                         notifiedLowHunger: false,
                         notifiedLowMood: false,
-                        ...loadedPetStats 
+                        ...loadedPetStats
                     };
-                    
-                    // Konvertiere Firestore Timestamps zu Millisekunden für Client-Logik
+
                     ['creationTime', 'lastUpdateEnergy', 'lastUpdateHunger', 'lastUpdateMood', 'lastGrowthUpdateTime'].forEach(key => {
-                        if (petStats[key] && petStats[key].toDate) { 
+                        if (petStats[key] && petStats[key].toDate) {
                             petStats[key] = petStats[key].toDate().getTime();
-                        } else if (typeof petStats[key] !== 'number') { // Fallback, falls es kein Timestamp und keine Zahl ist
+                        } else if (typeof petStats[key] !== 'number') {
                             petStats[key] = Date.now();
                         }
                     });
@@ -1069,8 +1070,7 @@
                     } else if (petStats.inventory && petStats.inventory.protectionPotion && typeof petStats.inventory.protectionPotion.expiresAt !== 'number') {
                         petStats.inventory.protectionPotion.expiresAt = 0;
                     }
-                    
-                    // Sicherstellen, dass verschachtelte Objekte initialisiert sind
+
                     petStats.inventory = petStats.inventory || {};
                     petStats.inventory.protectionPotion = petStats.inventory.protectionPotion || { active: false, expiresAt: 0 };
                     petStats.inventory.ownedBeds = petStats.inventory.ownedBeds || ['standardBed'];
@@ -1080,16 +1080,16 @@
 
 
                     console.log("Haustierdaten geladen/aktualisiert:", petStats);
-                    recalculateStatsSinceLastUpdate(); 
-                    updateGrowthMetricsAndCheck(true); 
-                    updateAllDisplays(); 
+                    recalculateStatsSinceLastUpdate();
+                    updateGrowthMetricsAndCheck(true);
+                    updateAllDisplays();
                 } else {
                     console.warn(`Haustier mit ID ${petId} nicht gefunden.`);
                     if (userProfile.ownedPets.includes(petId)) {
                         userProfile.ownedPets = userProfile.ownedPets.filter(id => id !== petId);
                         userProfile.activePetId = userProfile.ownedPets.length > 0 ? userProfile.ownedPets[0] : null;
-                        saveUserProfile(); 
-                        loadUserProfile(); 
+                        saveUserProfile();
+                        loadUserProfile();
                     } else {
                         console.log("Kein gültiges aktives Haustier. Zeige Auswahl.");
                         closeAllModals();
@@ -1105,13 +1105,11 @@
 
         async function savePetStats() {
             if (!userId || !currentPetId || !petStats) return;
-            
-            const petDocRef = doc(db, `artifacts/${appId}/users/${userId}/pets/${currentPetId}`);
+
+            const petDocRef = doc(db, `artifacts/${firestoreAppId}/users/${userId}/pets/${currentPetId}`); // firestoreAppId verwenden
             try {
-                // Erstelle eine Kopie zum Speichern, um das lokale petStats-Objekt nicht zu verändern.
                 const statsToSave = { ...petStats };
 
-                // Konvertiere Client-Zeitstempel (Millisekunden) zurück zu Firestore Timestamps
                 ['creationTime', 'lastUpdateEnergy', 'lastUpdateHunger', 'lastUpdateMood', 'lastGrowthUpdateTime'].forEach(key => {
                     if (statsToSave[key] && typeof statsToSave[key] === 'number') {
                         statsToSave[key] = Timestamp.fromDate(new Date(statsToSave[key]));
@@ -1128,7 +1126,10 @@
                 showNotification("Speicherfehler", "Haustierdaten konnten nicht gespeichert werden.", true);
             }
         }
-        
+
+        // Der Rest des JavaScript-Codes bleibt gleich wie in der vorherigen Version...
+        // initializeDOMElements, setupEventListeners, updateAllDisplays, etc.
+        // ... (hier den gesamten restlichen Code von oben einfügen)
         function initializeDOMElements() {
             themeToggleButton = document.getElementById('themeToggleButton');
             petCoinsDisplay = document.getElementById('petCoinsDisplay');
@@ -1158,7 +1159,7 @@
             buyColorTicketButton = document.getElementById('buyColorTicketButton');
             shopMessage = document.getElementById('shopMessage');
             openWormGameButton = document.getElementById('openWormGameButton');
-            wormGameModal = document.getElementById('wormGameModal'); 
+            wormGameModal = document.getElementById('wormGameModal');
             closeWormGameButton = document.getElementById('closeWormGameButton');
             startWormGameButton = document.getElementById('startWormGameButton');
             wormGameArea = document.getElementById('wormGameArea');
@@ -1166,11 +1167,11 @@
             wormGameScoreDisplay = document.getElementById('wormGameScore');
             wormGameMessage = document.getElementById('wormGameMessage');
             openFlightGameButton = document.getElementById('openFlightGameButton');
-            flightGameModal = document.getElementById('flightGameModal'); 
+            flightGameModal = document.getElementById('flightGameModal');
             closeFlightGameButton = document.getElementById('closeFlightGameButton');
             startFlightGameButton = document.getElementById('startFlightGameButton');
             flightGameArea = document.getElementById('flightGameArea');
-            flightGamePetContainer = document.getElementById('flightGamePetContainer'); 
+            flightGamePetContainer = document.getElementById('flightGamePetContainer');
             flightGameScoreDisplay = document.getElementById('flightGameScore');
             flightGameMessage = document.getElementById('flightGameMessage');
             bedDisplayContainer = document.getElementById('bedDisplayContainer');
@@ -1221,7 +1222,7 @@
 
         function setupEventListeners() {
             if(themeToggleButton) themeToggleButton.addEventListener('click', () => {
-                if (!userProfile) return; 
+                if (!userProfile) return;
                 const newTheme = document.documentElement.classList.contains('dark-mode') ? 'light' : 'dark';
                 applyTheme(newTheme);
                 userProfile.themePreference = newTheme;
@@ -1232,7 +1233,7 @@
             if(feedButton) feedButton.addEventListener('click', handleFeed);
             if(petButton) petButton.addEventListener('click', handlePet);
             if(sleepButton) sleepButton.addEventListener('click', handleSleep);
-            
+
             if(openShopButton) openShopButton.addEventListener('click', handleOpenShop);
             if(closeShopButton) closeShopButton.addEventListener('click', () => {if(shopModal) shopModal.style.display = 'none'});
             if(buyProtectionPotionButton) buyProtectionPotionButton.addEventListener('click', handleBuyProtectionPotion);
@@ -1248,7 +1249,7 @@
             if(closeFlightGameButton) closeFlightGameButton.addEventListener('click', () => { endFlightGame(false); if(flightGameModal) flightGameModal.style.display = 'none'; });
             if(startFlightGameButton) startFlightGameButton.addEventListener('click', handleStartFlightGame);
             if(flightGameArea) flightGameArea.addEventListener('click', handleFlightGameFlap);
-            
+
             if(closeUpdatePopupButton) closeUpdatePopupButton.addEventListener('click', handleCloseUpdatePopup);
             if(confirmPetSelectionButton) confirmPetSelectionButton.addEventListener('click', handleConfirmPetSelection);
             if(switchPetButton) switchPetButton.addEventListener('click', handleOpenSwitchPetModal);
@@ -1270,27 +1271,27 @@
             allModals.forEach(modal => {
                 if (modal) {
                     modal.addEventListener('click', (event) => {
-                        if (event.target === modal) { 
+                        if (event.target === modal) {
                             modal.style.display = 'none';
                             if (modal === flightGameModal && flightGameActive) endFlightGame(false);
-                            if (modal === wormGameModal && wormGameTimeLeft > 0 && wormGameTimeLeft < WORM_GAME_DURATION_S) endWormGame(false); 
+                            if (modal === wormGameModal && wormGameTimeLeft > 0 && wormGameTimeLeft < WORM_GAME_DURATION_S) endWormGame(false);
                         }
                     });
                 }
             });
         }
-        
+
         function updateAllDisplays() {
-            if (!petStats || !userProfile) return; 
+            if (!petStats || !userProfile) return;
             updatePetNameAndAge();
             updatePersonalityDisplay();
-            updateStatusDisplay(); 
+            updateStatusDisplay();
             updateActiveEffectsDisplay();
-            updateRoomVisuals(); 
-            applyGrowthVisuals(); 
-            renderPetCharacter(); 
+            updateRoomVisuals();
+            applyGrowthVisuals();
+            renderPetCharacter();
             updateDayNightCycle();
-            updatePetCoinsDisplay(); 
+            updatePetCoinsDisplay();
         }
 
         function closeAllModals() {
@@ -1318,11 +1319,11 @@
                 if(themeToggleButton) themeToggleButton.textContent = '🌙';
             }
             if (petStats) {
-                 applyGrowthVisuals(); 
+                 applyGrowthVisuals();
                  renderPetCharacter();
             }
         }
-        
+
         function populatePetSelection() {
             if (!petSelectionContainer) return;
             petSelectionContainer.innerHTML = '';
@@ -1330,7 +1331,7 @@
                 const petType = AVAILABLE_PET_TYPES[typeKey];
                 const itemDiv = document.createElement('div');
                 itemDiv.className = 'selection-item p-4 border rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700';
-                
+
                 let previewSvg = petType.baseSvg;
                 previewSvg = previewSvg.replace(/class="pet-svg-body"/g, `class="pet-svg-body" fill="${petType.defaultColors.primary}"`);
                 previewSvg = previewSvg.replace(/class="pet-svg-beak"/g, `class="pet-svg-beak" fill="${petType.defaultColors.secondary}"`);
@@ -1346,7 +1347,7 @@
                 itemDiv.addEventListener('click', () => {
                     document.querySelectorAll('#petSelectionContainer .selection-item').forEach(el => el.classList.remove('ring-2', 'ring-blue-500'));
                     itemDiv.classList.add('ring-2', 'ring-blue-500');
-                    itemDiv.dataset.selectedType = typeKey; 
+                    itemDiv.dataset.selectedType = typeKey;
                 });
                 petSelectionContainer.appendChild(itemDiv);
             });
@@ -1367,8 +1368,7 @@
 
             const petTypeKey = selectedItem.dataset.selectedType;
             const petTypeData = AVAILABLE_PET_TYPES[petTypeKey];
-            
-            // Datenobjekt für Firestore mit serverTimestamp()
+
             const newPetDataForFirestore = {
                 name: petName,
                 petType: petTypeKey,
@@ -1379,7 +1379,7 @@
                 lastUpdateEnergy: serverTimestamp(),
                 lastUpdateHunger: serverTimestamp(),
                 lastUpdateMood: serverTimestamp(),
-                growthStage: 'baby', 
+                growthStage: 'baby',
                 accumulatedActiveHours: 0,
                 accumulatedCareHours: 0,
                 lastGrowthUpdateTime: serverTimestamp(),
@@ -1387,45 +1387,45 @@
                 isSleeping: false,
                 currentRoom: 'bedroom',
                 inventory: {
-                    protectionPotion: { active: false, expiresAt: Timestamp.fromDate(new Date(0)) }, // Initialwert für Timestamp
+                    protectionPotion: { active: false, expiresAt: Timestamp.fromDate(new Date(0)) },
                     activeBed: 'standardBed',
                     ownedBeds: ['standardBed'],
-                    accessories: { head: null, body: null, feet: null }, 
+                    accessories: { head: null, body: null, feet: null },
                     ownedAccessories: []
                 },
                 colorScheme: { ...petTypeData.defaultColors },
-                notifiedLowEnergy: false, 
+                notifiedLowEnergy: false,
                 notifiedLowHunger: false,
                 notifiedLowMood: false
             };
 
             try {
-                const newPetRef = await addDoc(collection(db, `artifacts/${appId}/users/${userId}/pets`), newPetDataForFirestore);
+                const newPetRef = await addDoc(collection(db, `artifacts/${firestoreAppId}/users/${userId}/pets`), newPetDataForFirestore); // firestoreAppId verwenden
                 currentPetId = newPetRef.id;
                 userProfile.ownedPets.push(currentPetId);
                 userProfile.activePetId = currentPetId;
-                
-                await saveUserProfile(); 
-                
+
+                await saveUserProfile();
+
                 if(petSelectionModal) petSelectionModal.style.display = 'none';
-                if(newPetNameInput) newPetNameInput.value = ''; 
-                await loadPetStats(currentPetId); 
+                if(newPetNameInput) newPetNameInput.value = '';
+                await loadPetStats(currentPetId);
                 showNotification("Willkommen!", `Dein neues Haustier ${petName} ist eingezogen!`);
             } catch (error) {
                 console.error("Fehler beim Erstellen des neuen Haustiers:", error);
                 showNotification("Fehler", "Konnte Haustier nicht erstellen.", true);
             }
         }
-        
+
         async function handleOpenSwitchPetModal() {
             if (!petListContainer || !switchPetModal) return;
             petListContainer.innerHTML = 'Lade Haustiere...';
             switchPetModal.style.display = 'flex';
 
-            const petsCollectionRef = collection(db, `artifacts/${appId}/users/${userId}/pets`);
+            const petsCollectionRef = collection(db, `artifacts/${firestoreAppId}/users/${userId}/pets`); // firestoreAppId verwenden
             try {
                 const querySnapshot = await getDocs(petsCollectionRef);
-                petListContainer.innerHTML = ''; 
+                petListContainer.innerHTML = '';
                 if (querySnapshot.empty) {
                     petListContainer.innerHTML = '<p>Du besitzt noch keine weiteren Haustiere.</p>';
                 } else {
@@ -1443,18 +1443,18 @@
                                 <span class="font-semibold">${petData.name}</span>
                                 <small class="block text-xs">${typeInfo.name} (${growthInfo.name})</small>
                             </div>
-                            ${petId === currentPetId 
-                                ? '<span class="text-sm text-green-500">Aktiv</span>' 
+                            ${petId === currentPetId
+                                ? '<span class="text-sm text-green-500">Aktiv</span>'
                                 : '<button class="action-button text-xs py-1 px-2">Wählen</button>'}
                         `;
                         if (petId !== currentPetId) {
                             const button = petDiv.querySelector('button');
-                            if (button) { 
+                            if (button) {
                                 button.addEventListener('click', async () => {
                                     userProfile.activePetId = petId;
                                     await saveUserProfile();
                                     if(switchPetModal) switchPetModal.style.display = 'none';
-                                    await loadPetStats(petId); 
+                                    await loadPetStats(petId);
                                 });
                             }
                         }
@@ -1470,24 +1470,24 @@
 
 
         function switchToRoom(roomName, instant = false) {
-            if (!petStats) return; 
+            if (!petStats) return;
             wakeUpOwl();
             petStats.currentRoom = roomName;
 
             [bedroomDiv, livingroomDiv].forEach(room => {
                 if(room) room.classList.remove('active');
             });
-            
+
             const activeRoomDiv = document.getElementById(roomName);
             if (activeRoomDiv) {
                 activeRoomDiv.classList.add('active');
-                if(petCharacterDisplay) activeRoomDiv.appendChild(petCharacterDisplay); 
+                if(petCharacterDisplay) activeRoomDiv.appendChild(petCharacterDisplay);
                 if (roomName === 'bedroom') {
                     if(bedDisplayContainer) {
                         if (!activeRoomDiv.contains(bedDisplayContainer)) activeRoomDiv.appendChild(bedDisplayContainer);
                         bedDisplayContainer.style.display = 'block';
                     }
-                    if(fishbowlContainer) fishbowlContainer.style.display = 'none'; 
+                    if(fishbowlContainer) fishbowlContainer.style.display = 'none';
                 } else if (roomName === 'livingroom') {
                     if(bedDisplayContainer) bedDisplayContainer.style.display = 'none';
                     if (petStats.petType === 'fish' && fishbowlContainer) {
@@ -1496,7 +1496,7 @@
                     } else if (fishbowlContainer) {
                         fishbowlContainer.style.display = 'none';
                     }
-                } else { 
+                } else {
                      if(bedDisplayContainer) bedDisplayContainer.style.display = 'none';
                      if(fishbowlContainer) fishbowlContainer.style.display = 'none';
                 }
@@ -1504,11 +1504,11 @@
 
             if(navBedroomButton) navBedroomButton.classList.toggle('active-room-nav', roomName === 'bedroom');
             if(navLivingroomButton) navLivingroomButton.classList.toggle('active-room-nav', roomName === 'livingroom');
-            
-            updateRoomVisuals(); 
+
+            updateRoomVisuals();
             savePetStats();
         }
-        
+
         function recalculateStatsSinceLastUpdate() {
             if (!petStats) return;
             const now = Date.now();
@@ -1516,12 +1516,12 @@
             const personalityMods = PERSONALITIES[petStats.personality];
 
             if (!potionActive) {
-                if (!petStats.isSleeping) { 
+                if (!petStats.isSleeping) {
                     let energyDecreaseRate = ENERGY_DECREASE_PER_HOUR_AWAKE * (personalityMods.energyEffect || 1.0);
                     let timePassedEnergyHours = (now - (petStats.lastUpdateEnergy || now)) / MS_PER_HOUR;
                     petStats.energy = Math.max(MIN_STAT, petStats.energy - (timePassedEnergyHours * energyDecreaseRate));
                 }
-                
+
                 let hungerDecreaseRate;
                 if (petStats.isSleeping) {
                     hungerDecreaseRate = SATIATION_DECREASE_DURING_SLEEP * (personalityMods.hungerEffect || 1.0);
@@ -1541,17 +1541,17 @@
             petStats.lastUpdateHunger = now;
             petStats.lastUpdateMood = now;
 
-            if (userProfile && petStats.personality === 'schlau' && Math.random() < (PERSONALITIES.schlau.passiveCoinChance / (60 * 60 / 30) ) ) { 
+            if (userProfile && petStats.personality === 'schlau' && Math.random() < (PERSONALITIES.schlau.passiveCoinChance / (60 * 60 / 30) ) ) {
                 const coinsFound = PERSONALITIES.schlau.passiveCoinAmount;
                 userProfile.petCoins += coinsFound;
                 updatePetCoinsDisplay();
                 saveUserProfile();
                 showNotification("Entdeckung!", `Deine schlaue ${petStats.name} hat ${coinsFound} 🪙 gefunden!`);
             }
-            
-            updateActiveEffectsDisplay(); 
+
+            updateActiveEffectsDisplay();
         }
-        
+
         function updateGrowthMetricsAndCheck(isInitialLoad = false) {
             if (!petStats) return;
             const now = Date.now();
@@ -1570,7 +1570,7 @@
 
             const currentStageKey = petStats.growthStage;
             const currentStageData = petTypeConfig.growthStages[currentStageKey];
-            
+
             if (currentStageData && currentStageData.nextStage) {
                 const nextStageKey = currentStageData.nextStage;
                 const nextStageData = petTypeConfig.growthStages[nextStageKey];
@@ -1583,13 +1583,13 @@
                 }
             }
         }
-        
+
         function updatePetNameAndAge() {
             if (!petStats) return;
-            const petTypeConfig = AVAILABLE_PET_TYPES[petStats.petType] || AVAILABLE_PET_TYPES.owl; 
-            const growthStageConfig = petTypeConfig.growthStages[petStats.growthStage] || petTypeConfig.growthStages.baby; 
+            const petTypeConfig = AVAILABLE_PET_TYPES[petStats.petType] || AVAILABLE_PET_TYPES.owl;
+            const growthStageConfig = petTypeConfig.growthStages[petStats.growthStage] || petTypeConfig.growthStages.baby;
             const stageName = growthStageConfig.name;
-            
+
             if(petTitle) petTitle.textContent = `${petStats.name} (${stageName})`;
             if(petTypeText) petTypeText.textContent = `Art: ${petTypeConfig.name}`;
             if(petAgeText) {
@@ -1597,12 +1597,12 @@
                 petAgeText.textContent = `Alter: ${ageInDays} Tag${ageInDays === 1 ? '' : 'e'}`;
             }
         }
-        
+
         function applyGrowthVisuals() {
             if (!petStats || !petCharacterDisplay) return;
             const petTypeConfig = AVAILABLE_PET_TYPES[petStats.petType] || AVAILABLE_PET_TYPES.owl;
             const stageConfig = petTypeConfig.growthStages[petStats.growthStage] || petTypeConfig.growthStages.baby;
-            
+
             petCharacterDisplay.style.transform = `translateX(-50%) scale(${stageConfig.svgScale})`;
         }
 
@@ -1618,7 +1618,7 @@
             baseSvgHtml = baseSvgHtml.replace(/class="pet-svg-foot"/g, `class="pet-svg-foot" fill="${currentColorScheme.secondary}"`);
             baseSvgHtml = baseSvgHtml.replace(/class="pet-svg-wing"/g, `class="pet-svg-wing" fill="${currentColorScheme.primary}" stroke="${currentColorScheme.feature || currentColorScheme.primary}" stroke-width="1"`);
             baseSvgHtml = baseSvgHtml.replace(/class="pet-svg-feature"/g, `class="pet-svg-feature" stroke="${currentColorScheme.feature || currentColorScheme.primary}" fill="${currentColorScheme.feature || currentColorScheme.primary}"`);
-            
+
             if (petStats.petType === 'cat' || petStats.petType === 'dog') {
                  baseSvgHtml = baseSvgHtml.replace(/class="pet-svg-feature (cat-ear|dog-ear|cat-tail|dog-tail)"/g, `class="pet-svg-feature $1" fill="${currentColorScheme.primary}" stroke="${currentColorScheme.feature}"`);
                  baseSvgHtml = baseSvgHtml.replace(/class="pet-svg-beak (cat-nose|dog-nose)"/g, `class="pet-svg-beak $1" fill="${currentColorScheme.secondary}"`);
@@ -1668,9 +1668,9 @@
             if(moodValueText) moodValueText.textContent = displayMood + '%';
 
             updatePetVisualsAndText(displayEnergy, displayHunger, displayMood);
-            checkAndNotifyLowStats(displayEnergy, displayHunger, displayMood); 
+            checkAndNotifyLowStats(displayEnergy, displayHunger, displayMood);
         }
-        
+
         function updatePetVisualsAndText(energy, hunger, mood) {
             if(!petStatusText || !petStats) return;
             const petTypeConfig = AVAILABLE_PET_TYPES[petStats.petType] || AVAILABLE_PET_TYPES.owl;
@@ -1703,7 +1703,7 @@
                 if (timeLeft > 0) {
                     effectMsg = `Schutz aktiv: ${formatTime(timeLeft)}`;
                 } else {
-                    petStats.inventory.protectionPotion.active = false; 
+                    petStats.inventory.protectionPotion.active = false;
                     effectMsg = "Schutztrank ist abgelaufen.";
                 }
             }
@@ -1717,17 +1717,17 @@
         function updateRoomVisuals() {
             if (!petStats || !bedDisplayContainer || !petCharacterDisplay) return;
             bedDisplayContainer.innerHTML = BED_SVGS[petStats.inventory.activeBed] || BED_SVGS.standardBed;
-            
+
             if (petStats.isSleeping && petStats.currentRoom === 'bedroom') {
                 petCharacterDisplay.classList.add('sleeping');
             } else {
                 petCharacterDisplay.classList.remove('sleeping');
-                if(petStats.isSleeping && petStats.currentRoom !== 'bedroom') { 
-                    petStats.isSleeping = false; 
+                if(petStats.isSleeping && petStats.currentRoom !== 'bedroom') {
+                    petStats.isSleeping = false;
                 }
             }
         }
-        function wakeUpOwl() { 
+        function wakeUpOwl() {
             if (petStats && petStats.isSleeping) {
                 petStats.isSleeping = false;
                 updateRoomVisuals();
@@ -1737,14 +1737,14 @@
         async function handleFeed() {
             if (!petStats) return;
             wakeUpOwl();
-            recalculateStatsSinceLastUpdate(); 
+            recalculateStatsSinceLastUpdate();
             updateGrowthMetricsAndCheck();
             petStats.hunger = Math.min(MAX_STAT, petStats.hunger + SATIATION_GAIN_FROM_FEEDING);
             petStats.lastUpdateHunger = Date.now();
             petStats.energy = Math.max(MIN_STAT, petStats.energy - ENERGY_COST_OF_FEEDING);
-            petStats.lastUpdateEnergy = Date.now(); 
+            petStats.lastUpdateEnergy = Date.now();
             petStats.mood = Math.min(MAX_STAT, petStats.mood + (MOOD_GAIN_FROM_FEEDING * (PERSONALITIES[petStats.personality].moodEffect || 1.0) ));
-            petStats.lastUpdateMood = Date.now(); 
+            petStats.lastUpdateMood = Date.now();
             updateStatusDisplay();
             await trackQuestProgress("feed");
             savePetStats();
@@ -1752,7 +1752,7 @@
         async function handlePet() {
             if (!petStats) return;
             wakeUpOwl();
-            recalculateStatsSinceLastUpdate(); 
+            recalculateStatsSinceLastUpdate();
             updateGrowthMetricsAndCheck();
             petStats.mood = Math.min(MAX_STAT, petStats.mood + (MOOD_GAIN_FROM_PETTING * (PERSONALITIES[petStats.personality].moodEffect || 1.0) ));
             petStats.lastUpdateMood = Date.now();
@@ -1764,7 +1764,7 @@
         }
         function handleSleep() {
             if (!petStats) return;
-            if (petStats.petType === 'fish') { 
+            if (petStats.petType === 'fish') {
                 showNotification("Fische schlafen anders!", `${petStats.name} braucht kein Bett.`);
                 return;
             }
@@ -1772,11 +1772,11 @@
                 showNotification("Schlafenszeit!", "Dein Haustier kann nur im Schlafzimmer schlafen.");
                 return;
             }
-            if (!petStats.isSleeping) { 
+            if (!petStats.isSleeping) {
                 recalculateStatsSinceLastUpdate();
             }
             updateGrowthMetricsAndCheck();
-            
+
             let energyGain = ENERGY_GAIN_FROM_SLEEP_STANDARD;
             if (petStats.inventory.activeBed === 'comfyNest') {
                 energyGain = ENERGY_GAIN_FROM_SLEEP_COMFY;
@@ -1786,18 +1786,18 @@
             petStats.lastUpdateEnergy = Date.now();
             petStats.mood = Math.min(MAX_STAT, petStats.mood + MOOD_GAIN_FROM_SLEEP);
             petStats.lastUpdateMood = Date.now();
-            
+
             petStats.isSleeping = true;
-            updateRoomVisuals(); 
-            updateStatusDisplay(); 
+            updateRoomVisuals();
+            updateStatusDisplay();
             savePetStats();
         }
         function handleOpenShop() {
             if (!petStats) return;
-            wakeUpOwl(); 
-            closeAllModals(); 
-            if(shopModal) shopModal.style.display = 'flex'; 
-            if(shopMessage) shopMessage.textContent = ''; 
+            wakeUpOwl();
+            closeAllModals();
+            if(shopModal) shopModal.style.display = 'flex';
+            if(shopMessage) shopMessage.textContent = '';
         }
         function handleBuyProtectionPotion() {
             if (!petStats || !userProfile) return;
@@ -1825,7 +1825,7 @@
                 petStats.hunger = Math.min(MAX_STAT, petStats.hunger + SUPER_BERRY_SATIATION);
                 petStats.energy = Math.min(MAX_STAT, petStats.energy + SUPER_BERRY_ENERGY);
                 petStats.mood = Math.min(MAX_STAT, petStats.mood + SUPER_BERRY_MOOD);
-                
+
                 updatePetCoinsDisplay();
                 updateStatusDisplay();
                 if(shopMessage) { shopMessage.textContent = "Super-Beere verfüttert!"; shopMessage.style.color = "green"; }
@@ -1860,7 +1860,7 @@
                 if(shopMessage) { shopMessage.textContent = "Nicht genug PetCoins für das Kuschelige Nest!"; shopMessage.style.color = "red"; }
             }
         }
-        
+
         function handleBuyAccessory(accessoryId) {
             if (!petStats || !AVAILABLE_ACCESSORIES[accessoryId] || !userProfile) return;
             const accessory = AVAILABLE_ACCESSORIES[accessoryId];
@@ -1881,7 +1881,7 @@
                 if(shopMessage) { shopMessage.textContent = `Nicht genug PetCoins für ${accessory.name}!`; shopMessage.style.color = "red"; }
             }
         }
-        
+
         function handleBuyColorTicket() {
             if (!userProfile) return;
             if (userProfile.petCoins >= COLOR_TICKET_COST) {
@@ -1910,7 +1910,7 @@
                 swatch.title = color.name;
                 swatch.dataset.colorValue = color.value;
                 if (petStats.colorScheme.primary === color.value) {
-                    swatch.style.borderColor = 'var(--text-color-accent)'; 
+                    swatch.style.borderColor = 'var(--text-color-accent)';
                     swatch.style.borderWidth = '3px';
                 }
                 swatch.addEventListener('click', () => {
@@ -1923,18 +1923,18 @@
                 });
                 colorPickerContainer.appendChild(swatch);
             });
-            
+
             accessorySelectionContainer.innerHTML = '';
-            const categories = { head: "Kopf", body: "Körper" }; 
+            const categories = { head: "Kopf", body: "Körper" };
             Object.keys(categories).forEach(category => {
                 const categoryDiv = document.createElement('div');
                 categoryDiv.innerHTML = `<h4 class="text-sm font-semibold mt-3 mb-1">${categories[category]}:</h4>`;
                 const select = document.createElement('select');
                 select.dataset.category = category;
                 select.className = "p-2 border rounded w-full bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200";
-                
+
                 const noneOption = document.createElement('option');
-                noneOption.value = "null"; 
+                noneOption.value = "null";
                 noneOption.textContent = "Nichts";
                 select.appendChild(noneOption);
 
@@ -1962,21 +1962,21 @@
             if (selectedColorSwatch) {
                 newPrimaryColor = selectedColorSwatch.dataset.colorValue;
             }
-            
+
             if (newPrimaryColor !== petStats.colorScheme.primary) {
                  if (!userProfile.inventory.colorTickets || userProfile.inventory.colorTickets < 1) {
                     customizeMessage.textContent = "Du brauchst ein Farbticket, um die Farbe zu ändern!";
                     customizeMessage.style.color = "red";
-                    return; 
+                    return;
                 }
                 userProfile.inventory.colorTickets--;
                 petStats.colorScheme.primary = newPrimaryColor;
                 const petTypeDefaultColors = AVAILABLE_PET_TYPES[petStats.petType]?.defaultColors;
-                if (petTypeDefaultColors) { 
+                if (petTypeDefaultColors) {
                     petStats.colorScheme.secondary = petTypeDefaultColors.secondary;
-                    petStats.colorScheme.feature = petTypeDefaultColors.feature; 
+                    petStats.colorScheme.feature = petTypeDefaultColors.feature;
                 }
-                saveUserProfile(); 
+                saveUserProfile();
                 colorChanged = true;
             }
 
@@ -2007,24 +2007,24 @@
         }
 
 
-        function handleOpenWormGame() { 
+        function handleOpenWormGame() {
             if (!petStats || !wormGameModal || !startWormGameButton || !wormGameArea || !wormGameTimerDisplay || !wormGameScoreDisplay || !wormGameMessage) {
                 console.error("Worm game DOM elements missing"); return;
             }
-            wakeUpOwl(); 
-            closeAllModals(); 
-            wormGameModal.style.display = 'flex'; 
+            wakeUpOwl();
+            closeAllModals();
+            wormGameModal.style.display = 'flex';
             wormGameMessage.textContent = '';
             wormGameScoreDisplay.textContent = "Punkte: 0";
-            wormGameTimeLeft = WORM_GAME_DURATION_S; 
+            wormGameTimeLeft = WORM_GAME_DURATION_S;
             wormGameTimerDisplay.textContent = `Zeit: ${wormGameTimeLeft}s`;
             startWormGameButton.disabled = false;
-            wormGameArea.innerHTML = ''; 
+            wormGameArea.innerHTML = '';
             wormGameScore = 0;
             if(wormGameIntervalId) clearInterval(wormGameIntervalId);
             if(wormSpawnIntervalId) clearInterval(wormSpawnIntervalId);
         }
-        function handleStartWormGame() { 
+        function handleStartWormGame() {
             if (!startWormGameButton || !wormGameArea || !wormGameTimerDisplay || !wormGameScoreDisplay || !wormGameMessage) {
                  console.error("Worm game start DOM elements missing"); return;
             }
@@ -2034,7 +2034,7 @@
             wormGameTimerDisplay.textContent = `Zeit: ${wormGameTimeLeft}s`;
             wormGameMessage.textContent = '';
             startWormGameButton.disabled = true;
-            wormGameArea.innerHTML = ''; 
+            wormGameArea.innerHTML = '';
 
             wormGameIntervalId = setInterval(() => {
                 wormGameTimeLeft--;
@@ -2044,9 +2044,9 @@
                 }
             }, 1000);
             wormSpawnIntervalId = setInterval(spawnWorm, WORM_APPEAR_INTERVAL_MS);
-            spawnWorm(); 
+            spawnWorm();
         }
-        function spawnWorm() {  
+        function spawnWorm() {
             if (wormGameTimeLeft <= 0 || !wormGameArea) return;
             const worm = document.createElement('div');
             worm.classList.add('worm');
@@ -2058,28 +2058,28 @@
             if (wormGameArea.clientHeight > 12 && wormGameArea.clientWidth > 30) {
                 worm.style.top = Math.random() * (wormGameArea.clientHeight - 12) + 'px';
                 worm.style.left = Math.random() * (wormGameArea.clientWidth - 30) + 'px';
-            } else { 
+            } else {
                 worm.style.top = '50px';
                 worm.style.left = '50px';
             }
             wormGameArea.appendChild(worm);
-            
+
             worm.addEventListener('click', () => {
-                if (wormGameTimeLeft <=0) return; 
+                if (wormGameTimeLeft <=0) return;
                 wormGameScore++;
                 if(wormGameScoreDisplay) wormGameScoreDisplay.textContent = `Punkte: ${wormGameScore}`;
                 worm.remove();
             });
             setTimeout(() => { if (worm.parentNode) worm.remove(); }, WORM_LIFESPAN_MS);
         }
-        async function endWormGame(giveReward) {  
+        async function endWormGame(giveReward) {
             clearInterval(wormGameIntervalId);
             wormGameIntervalId = null;
             clearInterval(wormSpawnIntervalId);
             wormSpawnIntervalId = null;
 
             if(startWormGameButton) startWormGameButton.disabled = false;
-            if(wormGameArea) wormGameArea.innerHTML = ''; 
+            if(wormGameArea) wormGameArea.innerHTML = '';
 
             if (giveReward && petStats && userProfile) {
                 let coinsEarned = Math.floor(wormGameScore / 2);
@@ -2090,10 +2090,10 @@
                     coinsEarned += personalityMods.gameCoinBonus;
                 }
                 moodBoost = Math.round(moodBoost * (personalityMods.moodEffect || 1.0));
-                
+
                 userProfile.petCoins += coinsEarned;
                 petStats.mood = Math.min(MAX_STAT, petStats.mood + moodBoost);
-                
+
                 if(wormGameMessage) wormGameMessage.textContent = `Spiel beendet! Du hast ${coinsEarned} 🪙 und ${moodBoost} Laune gewonnen!`;
                 if (petStats.personality === 'verspielt' && personalityMods.gameCoinBonus && wormGameMessage) {
                     wormGameMessage.textContent += ` (+${personalityMods.gameCoinBonus} Bonus-🪙 für Verspieltheit!)`;
@@ -2106,22 +2106,22 @@
             } else {
                 if(wormGameMessage) wormGameMessage.textContent = `Spiel abgebrochen.`;
             }
-             wormGameTimeLeft = 0; 
+             wormGameTimeLeft = 0;
         }
-        
-        function handleOpenFlightGame() { 
+
+        function handleOpenFlightGame() {
             if (!petStats || !flightGameModal || !startFlightGameButton || !flightGamePetContainer || !flightGameArea || !flightGameScoreDisplay || !flightGameMessage) {
                  console.error("Flight game DOM elements missing"); return;
             }
-            wakeUpOwl(); 
-            closeAllModals(); 
-            flightGameModal.style.display = 'flex'; 
+            wakeUpOwl();
+            closeAllModals();
+            flightGameModal.style.display = 'flex';
             flightGameMessage.textContent = '';
-            flightGameScoreNum = 0; 
+            flightGameScoreNum = 0;
             flightGameScoreDisplay.textContent = "Punkte: 0";
             startFlightGameButton.disabled = false;
-            
-            flightGamePetY = flightGameArea.clientHeight > 0 ? flightGameArea.clientHeight / 2 - flightGamePetContainer.clientHeight / 2 : 100; 
+
+            flightGamePetY = flightGameArea.clientHeight > 0 ? flightGameArea.clientHeight / 2 - flightGamePetContainer.clientHeight / 2 : 100;
             flightGamePetContainer.style.top = flightGamePetY + 'px';
             flightGamePetVelocityY = 0;
 
@@ -2139,7 +2139,7 @@
              if(flightGameObstacleSpawnId) clearInterval(flightGameObstacleSpawnId);
              flightGameActive = false;
         }
-        function handleStartFlightGame() { 
+        function handleStartFlightGame() {
             if (!startFlightGameButton || !flightGamePetContainer || !flightGameArea || !flightGameScoreDisplay || !flightGameMessage) {
                 console.error("Flight game start DOM elements missing"); return;
             }
@@ -2148,7 +2148,7 @@
             flightGameMessage.textContent = '';
             startFlightGameButton.disabled = true;
             flightGameActive = true;
-            
+
             flightGamePetY = flightGameArea.clientHeight > 0 ? flightGameArea.clientHeight / 2 - flightGamePetContainer.clientHeight / 2 : 100;
             flightGamePetContainer.style.top = flightGamePetY + 'px';
             flightGamePetVelocityY = 0;
@@ -2158,25 +2158,25 @@
 
             flightGameLoopId = requestAnimationFrame(flightGameLoop);
             flightGameObstacleSpawnId = setInterval(spawnFlightObstacle, FLIGHT_GAME_OBSTACLE_SPAWN_INTERVAL_MS);
-            spawnFlightObstacle(); 
+            spawnFlightObstacle();
         }
-        function handleFlightGameFlap() { 
+        function handleFlightGameFlap() {
              if (flightGameActive) {
                 flightGamePetVelocityY = -FLIGHT_GAME_FLAP_STRENGTH;
             }
         }
-        function spawnFlightObstacle() { 
+        function spawnFlightObstacle() {
             if (!flightGameActive || !flightGameArea) return;
             const areaHeight = flightGameArea.clientHeight;
-            if (areaHeight <= 0) return; 
+            if (areaHeight <= 0) return;
 
-            const gapPosition = Math.random() * (areaHeight - FLIGHT_GAME_OBSTACLE_GAP - 60) + 30; 
+            const gapPosition = Math.random() * (areaHeight - FLIGHT_GAME_OBSTACLE_GAP - 60) + 30;
 
             const topObstacle = document.createElement('div');
             topObstacle.classList.add('flight-obstacle');
             topObstacle.style.height = gapPosition + 'px';
             topObstacle.style.top = '0px';
-            topObstacle.style.right = '-20px'; 
+            topObstacle.style.right = '-20px';
             flightGameArea.appendChild(topObstacle);
             flightGameObstacles.push({ element: topObstacle, x: flightGameArea.clientWidth, type: 'top', passed: false });
 
@@ -2184,21 +2184,21 @@
             bottomObstacle.classList.add('flight-obstacle');
             bottomObstacle.style.height = (areaHeight - gapPosition - FLIGHT_GAME_OBSTACLE_GAP) + 'px';
             bottomObstacle.style.top = (gapPosition + FLIGHT_GAME_OBSTACLE_GAP) + 'px';
-            bottomObstacle.style.right = '-20px'; 
+            bottomObstacle.style.right = '-20px';
             flightGameArea.appendChild(bottomObstacle);
             flightGameObstacles.push({ element: bottomObstacle, x: flightGameArea.clientWidth, type: 'bottom', passed: false });
         }
-        function flightGameLoop() { 
+        function flightGameLoop() {
             if (!flightGameActive || !flightGamePetContainer || !flightGameArea) return;
 
             flightGamePetVelocityY += FLIGHT_GAME_GRAVITY;
-            flightGamePetY += flightGamePetVelocityY * 0.1; 
+            flightGamePetY += flightGamePetVelocityY * 0.1;
 
             if (flightGamePetY < 0) { flightGamePetY = 0; flightGamePetVelocityY = 0; }
             if (flightGamePetContainer.clientHeight > 0 && flightGamePetY + flightGamePetContainer.clientHeight > flightGameArea.clientHeight) {
                 flightGamePetY = flightGameArea.clientHeight - flightGamePetContainer.clientHeight;
                 flightGamePetVelocityY = 0;
-                endFlightGame(true); 
+                endFlightGame(true);
                 return;
             }
             flightGamePetContainer.style.top = flightGamePetY + 'px';
@@ -2206,25 +2206,25 @@
             for (let i = flightGameObstacles.length - 1; i >= 0; i--) {
                 const obs = flightGameObstacles[i];
                 obs.x -= FLIGHT_GAME_OBSTACLE_SPEED;
-                obs.element.style.left = obs.x + 'px'; 
+                obs.element.style.left = obs.x + 'px';
 
                 const petRect = flightGamePetContainer.getBoundingClientRect();
                 const obsRect = obs.element.getBoundingClientRect();
-                
+
                 if (petRect.width === 0 && petRect.height === 0) continue; // Skip collision if pet not rendered
 
                 if (petRect.right > obsRect.left && petRect.left < obsRect.right &&
                     petRect.bottom > obsRect.top && petRect.top < obsRect.bottom) {
-                    endFlightGame(true); 
+                    endFlightGame(true);
                     return;
                 }
 
                 if (obs.type === 'top' && !obs.passed && obs.x + obs.element.clientWidth < petRect.left) {
-                    obs.passed = true; 
+                    obs.passed = true;
                     flightGameScoreNum++;
                     if(flightGameScoreDisplay) flightGameScoreDisplay.textContent = `Punkte: ${flightGameScoreNum}`;
                 }
-                
+
                 if (obs.x + obs.element.clientWidth < 0) {
                     obs.element.remove();
                     flightGameObstacles.splice(i, 1);
@@ -2232,7 +2232,7 @@
             }
             flightGameLoopId = requestAnimationFrame(flightGameLoop);
         }
-        async function endFlightGame(collided) { 
+        async function endFlightGame(collided) {
             flightGameActive = false;
             if (flightGameLoopId) cancelAnimationFrame(flightGameLoopId);
             flightGameLoopId = null;
@@ -2246,11 +2246,11 @@
             } else {
                 if(flightGameMessage) flightGameMessage.textContent = `Spiel beendet. Punktzahl: ${flightGameScoreNum}.`;
             }
-            
+
             if (petStats && userProfile) {
-                const coinsEarned = flightGameScoreNum; 
+                const coinsEarned = flightGameScoreNum;
                 const moodBoost = Math.min(15, Math.floor(flightGameScoreNum / 2));
-                const energyCost = Math.min(10, Math.floor(flightGameScoreNum / 3)); 
+                const energyCost = Math.min(10, Math.floor(flightGameScoreNum / 3));
 
                 userProfile.petCoins += coinsEarned;
                 petStats.mood = Math.min(MAX_STAT, petStats.mood + moodBoost);
@@ -2261,28 +2261,28 @@
                 }
                 updatePetCoinsDisplay();
                 updateStatusDisplay();
-                await trackQuestProgress("game_flight"); 
+                await trackQuestProgress("game_flight");
                 saveUserProfile();
                 savePetStats();
             }
         }
-        
+
         function handleCloseUpdatePopup() {
             if(updatePopupModal) updatePopupModal.style.display = 'none';
-            if (userProfile) { 
+            if (userProfile) {
                 userProfile.lastSeenVersion = GAME_VERSION;
                 saveUserProfile();
             }
         }
 
         setInterval(() => {
-            if (petStats && userId && currentPetId) { 
+            if (petStats && userId && currentPetId) {
                 recalculateStatsSinceLastUpdate();
                 updateGrowthMetricsAndCheck();
-                updateStatusDisplay(); 
-                savePetStats(); 
+                updateStatusDisplay();
+                savePetStats();
             }
-        }, 30000); 
+        }, 30000);
 
         function requestNotificationPermission() {
             if (!("Notification" in window)) {
@@ -2295,7 +2295,7 @@
                 });
             }
         }
-        
+
         function showNotification(title, body, isError = false) {
             if(notificationMessageDiv) {
                 notificationMessageDiv.textContent = `${title}: ${body}`;
@@ -2314,7 +2314,7 @@
                      navigator.serviceWorker.ready.then(registration => {
                         registration.showNotification(title, {
                             body: body,
-                            icon: "https://quixoticode.github.io/data/pl/favicon-96x96.png" 
+                            icon: "https://quixoticode.github.io/data/pl/favicon-96x96.png"
                         });
                     });
                 } else {
@@ -2342,19 +2342,18 @@
                 petStats.notifiedLowMood = true;
             }
         }
-        
+
         async function checkAndResetQuests() {
-            if (!userId || !userProfile) return; 
-            const today = new Date().toISOString().split('T')[0]; 
-            
-            // Prüfe, ob userProfile.lastQuestReset existiert und ein String ist
+            if (!userId || !userProfile) return;
+            const today = new Date().toISOString().split('T')[0];
+
             if (userProfile.lastQuestReset && typeof userProfile.lastQuestReset === 'string' && userProfile.lastQuestReset === today && dailyQuests && Object.keys(dailyQuests).length > 0) {
                 console.log("Quests für heute bereits geladen/initialisiert.");
                 displayQuests();
                 return;
             }
 
-            const questDataRef = doc(db, `artifacts/${appId}/users/${userId}/quests/${today}`);
+            const questDataRef = doc(db, `artifacts/${firestoreAppId}/users/${userId}/quests/${today}`); // firestoreAppId verwenden
 
             try {
                 const docSnap = await getDoc(questDataRef);
@@ -2366,9 +2365,9 @@
                     dailyQuests = initializeNewQuests();
                     await setDoc(questDataRef, { quests: dailyQuests, date: today });
                 }
-                userProfile.lastQuestReset = today; 
-                await saveUserProfile(); 
-                displayQuests(); 
+                userProfile.lastQuestReset = today;
+                await saveUserProfile();
+                displayQuests();
             } catch (error) {
                 console.error("Fehler beim Prüfen/Zurücksetzen der Quests:", error);
                  showNotification("Quest Fehler", "Konnte tägliche Quests nicht laden.", true);
@@ -2379,16 +2378,16 @@
             const newQuests = {};
             const availableQuestKeys = Object.keys(QUEST_DEFINITIONS);
             const shuffledKeys = availableQuestKeys.sort(() => 0.5 - Math.random());
-            const selectedKeys = shuffledKeys.slice(0, Math.min(3, availableQuestKeys.length)); 
+            const selectedKeys = shuffledKeys.slice(0, Math.min(3, availableQuestKeys.length));
 
             selectedKeys.forEach(key => {
                 newQuests[key] = { ...QUEST_DEFINITIONS[key], currentCount: 0, completed: false, claimed: false };
             });
             return newQuests;
         }
-        
+
         function displayQuests() {
-            if (!questListContainer || !dailyQuests) return; 
+            if (!questListContainer || !dailyQuests) return;
             questListContainer.innerHTML = '';
             if (Object.keys(dailyQuests).length === 0) {
                 questListContainer.innerHTML = '<p>Heute gibt es keine Quests. Komm morgen wieder!</p>';
@@ -2400,7 +2399,7 @@
                 const questDiv = document.createElement('div');
                 questDiv.className = 'quest-item';
                 const progressPercent = Math.min(100, (quest.currentCount / quest.targetCount) * 100);
-                
+
                 questDiv.innerHTML = `
                     <span class="quest-title">${quest.title}</span>
                     <p class="quest-description">${quest.description}</p>
@@ -2421,14 +2420,14 @@
         }
 
         async function trackQuestProgress(actionType, amount = 1) {
-            if (!userId || !dailyQuests || !userProfile) return; 
+            if (!userId || !dailyQuests || !userProfile) return;
             let questUpdated = false;
             for (const questId in dailyQuests) {
                 const quest = dailyQuests[questId];
                 if (quest.actionType === actionType && !quest.completed) {
                     quest.currentCount += amount;
                     if (quest.currentCount >= quest.targetCount) {
-                        quest.currentCount = quest.targetCount; 
+                        quest.currentCount = quest.targetCount;
                         quest.completed = true;
                         showNotification("Quest abgeschlossen!", `Du hast "${quest.title}" abgeschlossen!`);
                     }
@@ -2436,38 +2435,38 @@
                 }
             }
             if (questUpdated) {
-                const today = userProfile.lastQuestReset || new Date().toISOString().split('T')[0]; 
-                const questDataRef = doc(db, `artifacts/${appId}/users/${userId}/quests/${today}`);
+                const today = userProfile.lastQuestReset || new Date().toISOString().split('T')[0];
+                const questDataRef = doc(db, `artifacts/${firestoreAppId}/users/${userId}/quests/${today}`); // firestoreAppId verwenden
                 try {
                     await setDoc(questDataRef, { quests: dailyQuests, date: today }, { merge: true });
                     console.log("Quest-Fortschritt gespeichert.");
-                    displayQuests(); 
+                    displayQuests();
                 } catch (error) {
                     console.error("Fehler beim Speichern des Quest-Fortschritts:", error);
                      showNotification("Speicherfehler", "Quest-Fortschritt konnte nicht gespeichert werden.", true);
                 }
             }
         }
-        
+
         async function handleClaimQuestReward(event) {
             const questId = event.target.dataset.questId;
             if (!dailyQuests[questId] || !dailyQuests[questId].completed || dailyQuests[questId].claimed || !userProfile) {
                 return;
             }
-            
+
             const quest = dailyQuests[questId];
             userProfile.petCoins += quest.rewardCoins;
             quest.claimed = true;
-            
+
             updatePetCoinsDisplay();
             showNotification("Belohnung erhalten!", `Du hast ${quest.rewardCoins} 🪙 für "${quest.title}" erhalten!`);
-            
+
             const today = userProfile.lastQuestReset || new Date().toISOString().split('T')[0];
-            const questDataRef = doc(db, `artifacts/${appId}/users/${userId}/quests/${today}`);
+            const questDataRef = doc(db, `artifacts/${firestoreAppId}/users/${userId}/quests/${today}`); // firestoreAppId verwenden
             try {
                 await setDoc(questDataRef, { quests: dailyQuests, date: today }, { merge: true });
-                await saveUserProfile(); 
-                displayQuests(); 
+                await saveUserProfile();
+                displayQuests();
             } catch (error) {
                 console.error("Fehler beim Speichern des Quest-Abschlusses:", error);
                  showNotification("Speicherfehler", "Quest-Belohnung konnte nicht gespeichert werden.", true);
@@ -2478,19 +2477,19 @@
             if(!questsModal) return;
             closeAllModals();
             questsModal.style.display = 'flex';
-            displayQuests(); 
+            displayQuests();
         }
-        
+
         function updateDayNightCycle() {
             if (!skyBackground || !starsContainer || !bedroomDiv) return;
             const hour = new Date().getHours();
-            const isNight = hour < 6 || hour > 19; 
+            const isNight = hour < 6 || hour > 19;
 
             if (isNight) {
                 skyBackground.style.backgroundColor = 'var(--sky-night-color)';
-                if (bedroomDiv.classList.contains('active')) { 
-                     starsContainer.innerHTML = ''; 
-                    for (let i = 0; i < 15; i++) { 
+                if (bedroomDiv.classList.contains('active')) {
+                     starsContainer.innerHTML = '';
+                    for (let i = 0; i < 15; i++) {
                         const star = document.createElement('div');
                         star.className = 'star';
                         star.style.width = star.style.height = (Math.random() * 2 + 1) + 'px';
@@ -2503,11 +2502,11 @@
                 bedroomDiv.style.setProperty('--room-window-glass-color', 'var(--room-window-glass-night-color)');
             } else {
                 skyBackground.style.backgroundColor = 'var(--sky-day-color)';
-                starsContainer.innerHTML = ''; 
+                starsContainer.innerHTML = '';
                 bedroomDiv.style.setProperty('--room-window-glass-color', 'var(--room-window-glass-color)');
             }
         }
-        setInterval(updateDayNightCycle, 60000); 
+        setInterval(updateDayNightCycle, 60000);
 
         async function handleOpenGalleryModal() {
             if(!galleryModal) return;
@@ -2520,8 +2519,8 @@
         async function loadGalleryPets() {
             if (!galleryGridContainer) return;
             galleryGridContainer.innerHTML = '<p>Lade Galerie...</p>';
-            const galleryRef = collection(db, `artifacts/${appId}/public/data/galleryPets`);
-            const q = query(galleryRef); // Später ggf. mit orderBy und limit
+            const galleryRef = collection(db, `artifacts/${firestoreAppId}/public/data/galleryPets`); // firestoreAppId verwenden
+            const q = query(galleryRef);
 
             try {
                 const querySnapshot = await getDocs(q);
@@ -2534,7 +2533,7 @@
                         const petTypeConfig = AVAILABLE_PET_TYPES[petData.petType] || AVAILABLE_PET_TYPES.owl;
                         const growthStageConfig = petTypeConfig.growthStages[petData.growthStage] || petTypeConfig.growthStages.baby;
                         let baseSvg = petTypeConfig.baseSvg;
-                        
+
                         const displayColorScheme = petData.colorScheme || petTypeConfig.defaultColors;
 
                         baseSvg = baseSvg.replace(/class="pet-svg-body"/g, `class="pet-svg-body" fill="${displayColorScheme.primary}"`);
@@ -2564,7 +2563,7 @@
                                 }
                             });
                         }
-                        
+
                         const card = document.createElement('div');
                         card.className = 'gallery-pet-card';
                         card.innerHTML = `
@@ -2584,7 +2583,7 @@
                 showNotification("Fehler", "Konnte Galerie nicht laden.", true);
             }
         }
-        
+
         async function handleShowMyPetInGallery() {
             if (!petStats || !userId || !userProfile || !galleryMessage) {
                 if(galleryMessage) {
@@ -2610,15 +2609,15 @@
                 growthStage: petStats.growthStage,
                 colorScheme: petStats.colorScheme,
                 accessories: petStats.inventory.accessories,
-                ownerId: userId, 
+                ownerId: userId,
                 showcasedAt: serverTimestamp()
             };
 
             try {
-                await addDoc(collection(db, `artifacts/${appId}/public/data/galleryPets`), petDataForGallery);
+                await addDoc(collection(db, `artifacts/${firestoreAppId}/public/data/galleryPets`), petDataForGallery); // firestoreAppId verwenden
                 galleryMessage.textContent = `${petStats.name} wird jetzt in der Galerie gezeigt!`;
                 galleryMessage.style.color = "green";
-                loadGalleryPets(); 
+                loadGalleryPets();
             } catch (error) {
                 console.error("Fehler beim Hinzufügen zur Galerie:", error);
                 galleryMessage.textContent = "Fehler beim Zeigen des Haustiers.";
@@ -2629,7 +2628,8 @@
                  showNotification("Fehler", "Konnte Haustier nicht zur Galerie hinzufügen.", true);
             }
         }
-        requestNotificationPermission(); 
+        requestNotificationPermission();
+
     </script>
 </body>
 </html>
