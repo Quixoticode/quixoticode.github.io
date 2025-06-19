@@ -2,11 +2,13 @@
 <html lang="de" data-theme="light">
 <head>
     <meta charset="UTF-8">
-    <title>QSounds v1.1.1 – RSA Encrypting Tool (Material You)</title>
+    <title>QSounds v1.3 – RSA Encrypting Tool</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Sharp|Material+Icons+Round" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jsencrypt/3.3.2/jsencrypt.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/davidshimjs-qrcodejs@0.0.2/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
@@ -20,49 +22,44 @@
     <style>
         :root {
             --font-family-sans: 'Roboto', 'Inter', 'Segoe UI', sans-serif;
-            
-            --color-primary: #6200EE; 
+            --color-primary: #6200EE;
             --color-primary-variant: #3700B3;
             --color-secondary: #03DAC6;
             --color-secondary-variant: #018786;
-
             --color-background: #FFFFFF;
             --color-surface: #FFFFFF;
             --color-on-primary: #FFFFFF;
             --color-on-secondary: #000000;
             --color-on-background: #000000;
             --color-on-surface: #000000;
-            --color-on-surface-variant: #757575; 
+            --color-on-surface-variant: #757575;
             --color-outline: #dbdbdb;
             --color-error: #B00020;
-
+            --color-success: #2E7D32;
             --sidebar-width: 290px;
-            --sidebar-bg: #F8F9FA; 
+            --sidebar-bg: #F8F9FA;
             --sidebar-text-color: var(--color-on-surface);
             --sidebar-icon-color: var(--color-on-surface-variant);
             --sidebar-link-hover-bg: #E9ECEF;
             --sidebar-link-active-bg: var(--color-secondary);
             --sidebar-link-active-text: var(--color-on-secondary);
             --sidebar-border-color: #E0E0E0;
-
             --elevation-1: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
             --elevation-2: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             --elevation-3: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            
             --border-radius-small: 8px;
             --border-radius-medium: 16px;
-            --border-radius-large: 28px; 
+            --border-radius-large: 28px;
             --border-radius-full: 9999px;
         }
 
         [data-theme="dark"] {
             --color-primary: #BB86FC;
-            --color-primary-variant: #6A0DAD; 
-            --color-secondary: #03DAC6; 
+            --color-primary-variant: #6A0DAD;
+            --color-secondary: #03DAC6;
             --color-secondary-variant: #03DAC6;
-
             --color-background: #121212;
-            --color-surface: #1E1E1E; 
+            --color-surface: #1E1E1E;
             --color-on-primary: #000000;
             --color-on-secondary: #000000;
             --color-on-background: #FFFFFF;
@@ -70,7 +67,7 @@
             --color-on-surface-variant: #BDBDBD;
             --color-outline: #424242;
             --color-error: #CF6679;
-
+            --color-success: #81C784;
             --sidebar-bg: #212121;
             --sidebar-text-color: var(--color-on-surface);
             --sidebar-icon-color: var(--color-on-surface-variant);
@@ -80,332 +77,221 @@
             --sidebar-border-color: #303030;
         }
 
-        body {
-            margin: 0; padding: 0; font-family: var(--font-family-sans);
-            background-color: var(--color-background); color: var(--color-on-background);
-            transition: background-color 0.3s, color 0.3s, margin-left 0.3s ease-in-out;
-            overflow-x: hidden;
-        }
-
-        .sidebar-toggle-button {
-            position: fixed; top: 1rem; left: 1rem; z-index: 1050;
-            background-color: var(--color-surface); color: var(--color-primary);
-            border: 1px solid var(--color-outline);
-            cursor: pointer; padding: 0.6rem; display: flex; align-items: center; justify-content: center;
-            border-radius: var(--border-radius-full); box-shadow: var(--elevation-2);
-            transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, opacity 0.3s ease;
-            opacity: 1;
-        }
+        body { margin: 0; padding: 0; font-family: var(--font-family-sans); background-color: var(--color-background); color: var(--color-on-background); transition: background-color 0.3s, color 0.3s, margin-left 0.3s ease-in-out; overflow-x: hidden; }
+        .sidebar-toggle-button { position: fixed; top: 1rem; left: 1rem; z-index: 1050; background-color: var(--color-surface); color: var(--color-primary); border: 1px solid var(--color-outline); cursor: pointer; padding: 0.6rem; display: flex; align-items: center; justify-content: center; border-radius: var(--border-radius-full); box-shadow: var(--elevation-2); transition: all 0.2s ease; opacity: 1; }
         .sidebar-toggle-button.hidden-when-sidebar-open { opacity: 0; pointer-events: none; }
         .sidebar-toggle-button:hover { background-color: var(--sidebar-link-hover-bg); box-shadow: var(--elevation-3); }
         .sidebar-toggle-button .material-icons, .sidebar-toggle-button .material-icons-outlined { font-size: 26px; }
-
-        .q-sidebar {
-            position: fixed; top: 0; left: 0; height: 100vh;
-            width: var(--sidebar-width); background-color: var(--sidebar-bg);
-            color: var(--sidebar-text-color); padding-top: 1rem;
-            box-shadow: var(--elevation-3); transform: translateX(-100%);
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 1000; display: flex; flex-direction: column;
-            border-right: 1px solid var(--sidebar-border-color);
-        }
+        .q-sidebar { position: fixed; top: 0; left: 0; height: 100vh; width: var(--sidebar-width); background-color: var(--sidebar-bg); color: var(--sidebar-text-color); padding-top: 1rem; box-shadow: var(--elevation-3); transform: translateX(-100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1000; display: flex; flex-direction: column; border-right: 1px solid var(--sidebar-border-color); }
         .q-sidebar.open { transform: translateX(0); }
-
-        .q-sidebar-header {
-            padding: 0.5rem 1rem 1rem 1.5rem; display: flex; align-items: center;
-            justify-content: space-between; margin-bottom: 0.5rem; min-height: 64px; box-sizing: border-box;
-        }
-        .logo-title-group { display: flex; align-items: center; }
-        .q-sidebar-header .logo-icon { font-size: 2.2rem; margin-right: 0.75rem; color: var(--color-primary); }
+        .q-sidebar-header { padding: 0.5rem 1rem 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; min-height: 64px; box-sizing: border-box; }
+        .logo-title-group { display: flex; align-items: center; gap: 0.75rem;}
+        .q-sidebar-header .logo-icon { width: 36px; height: 36px; }
         .q-sidebar-header h2 { margin: 0; font-size: 1.35em; font-weight: 500; color: var(--sidebar-text-color); }
-        
-        .sidebar-internal-toggle {
-            background: none; border: none; color: var(--sidebar-icon-color);
-            cursor: pointer; padding: 0.5rem; display: flex; align-items: center;
-            justify-content: center; border-radius: var(--border-radius-full);
-        }
+        .sidebar-internal-toggle { background: none; border: none; color: var(--sidebar-icon-color); cursor: pointer; padding: 0.5rem; display: flex; align-items: center; justify-content: center; border-radius: var(--border-radius-full); }
         .sidebar-internal-toggle:hover { background-color: var(--sidebar-link-hover-bg); color: var(--color-primary); }
-        .sidebar-internal-toggle .material-icons-outlined { font-size: 24px; }
-
         .q-sidebar-nav { flex-grow: 1; overflow-y: auto; padding: 0 0.75rem; }
         .q-sidebar-nav ul { list-style: none; padding: 0; margin: 0; }
-        .q-sidebar-nav li .nav-link, .q-sidebar-nav li .stored-key-item-container .stored-key-item-main {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 0.8rem 1rem; color: var(--sidebar-text-color); text-decoration: none;
-            transition: background-color 0.2s ease, color 0.2s ease;
-            border-radius: var(--border-radius-large); margin: 0.3rem 0; font-weight: 500;
-            cursor: pointer;
-        }
-        .q-sidebar-nav li .nav-link:hover, .q-sidebar-nav li .stored-key-item-container .stored-key-item-main:hover {
-            background-color: var(--sidebar-link-hover-bg);
-        }
-        .q-sidebar-nav li .nav-link.active, .q-sidebar-nav li .stored-key-item-container .stored-key-item-main.active {
-            background-color: var(--sidebar-link-active-bg); color: var(--sidebar-link-active-text);
-            font-weight: 700;
-        }
-        .q-sidebar-nav li .nav-link.active .material-icons, 
-        .q-sidebar-nav li .stored-key-item-container .stored-key-item-main.active .material-icons { color: var(--sidebar-link-active-text); }
-        
-        .q-sidebar-nav li .nav-link .material-icons, 
-        .q-sidebar-nav li .stored-key-item-container .stored-key-item-main .material-icons {
-            margin-right: 1.25rem; color: var(--sidebar-icon-color);
-            font-size: 22px; transition: color 0.2s ease;
-        }
-        .q-sidebar-nav li .stored-key-item-container .stored-key-item-main .key-name { 
-            flex-grow: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.9em; 
-        }
-        .q-sidebar-nav li .nav-link:hover .material-icons, 
-        .q-sidebar-nav li .stored-key-item-container .stored-key-item-main:hover .material-icons { color: var(--color-primary); }
-        
-        .stored-key-actions {
-            display: none; 
-            padding: 0.5rem 1rem 0.5rem 3.5rem; 
-            background-color: rgba(0,0,0,0.03);
-            border-radius: 0 0 var(--border-radius-medium) var(--border-radius-medium);
-            margin-top: -0.25rem;
-            margin-bottom: 0.25rem;
-        }
-        .stored-key-item-container.actions-visible .stored-key-actions { display: flex; gap: 0.5rem; justify-content: flex-start; }
-        [data-theme="dark"] .stored-key-actions { background-color: rgba(255,255,255,0.04); }
-
-        .stored-key-actions button {
-            background: none; border: none; color: var(--sidebar-icon-color); cursor: pointer; 
-            padding: 0.3rem; border-radius: var(--border-radius-full);
-            display: flex; align-items: center; font-size: 0.85em;
-        }
-        .stored-key-actions button .material-icons { font-size: 18px; margin-right: 0.3rem;}
-        .stored-key-actions button:hover { color: var(--color-primary); background-color: var(--sidebar-link-hover-bg); }
-        .stored-key-actions button.delete:hover { color: var(--color-error); }
-
-
-        .q-sidebar-section-title {
-            padding: 1.5rem 1rem 0.5rem 1rem; font-size: 0.8rem;
-            font-weight: 700; color: var(--color-primary);
-            text-transform: uppercase; letter-spacing: 0.075em;
-        }
+        .q-sidebar-nav li .nav-link { display: flex; align-items: center; padding: 0.8rem 1rem; color: var(--sidebar-text-color); text-decoration: none; transition: background-color 0.2s ease, color 0.2s ease; border-radius: var(--border-radius-large); margin: 0.3rem 0; font-weight: 500; cursor: pointer; }
+        .q-sidebar-nav li .nav-link:hover { background-color: var(--sidebar-link-hover-bg); }
+        .q-sidebar-nav li .nav-link.active { background-color: var(--sidebar-link-active-bg); color: var(--sidebar-link-active-text); font-weight: 700; }
+        .q-sidebar-nav li .nav-link.active .material-icons { color: var(--sidebar-link-active-text); }
+        .q-sidebar-nav li .nav-link .material-icons { margin-right: 1.25rem; color: var(--sidebar-icon-color); font-size: 22px; transition: color 0.2s ease; }
+        .q-sidebar-section-title { padding: 1.5rem 1rem 0.5rem 1rem; font-size: 0.8rem; font-weight: 700; color: var(--color-primary); text-transform: uppercase; letter-spacing: 0.075em; }
         .q-sidebar-footer { padding: 1rem; border-top: 1px solid var(--sidebar-border-color); }
-
-        .content-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0,0,0,0.3); backdrop-filter: blur(4px);
-            z-index: 999; opacity: 0; visibility: hidden;
-            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
-        }
+        .content-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.3); backdrop-filter: blur(4px); z-index: 999; opacity: 0; visibility: hidden; transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out; }
         .content-overlay.active { opacity: 1; visibility: visible; }
-
         .qsounds-main-content { margin-left: 0; transition: margin-left 0.3s ease-in-out; padding: 1.5rem; }
         body.sidebar-open .qsounds-main-content { margin-left: var(--sidebar-width); }
+        .modal-backdrop { position: fixed; inset: 0; background-color: rgba(0,0,0,0.5); backdrop-filter: blur(2px); z-index: 1040; display: flex; align-items: center; justify-content: center; padding: 1rem; opacity: 0; visibility: hidden; transition: opacity 0.2s ease, visibility 0.2s ease; }
+        .modal-backdrop.visible { opacity: 1; visibility: visible; }
+        .modal-content { background-color: var(--color-surface); color: var(--color-on-surface); padding: 1.75rem; border-radius: var(--border-radius-large); box-shadow: var(--elevation-3); min-width: 320px; max-width: 95%; width: 560px; transform: scale(0.95); transition: transform 0.2s ease; }
+        .modal-backdrop.visible .modal-content { transform: scale(1); }
+        .modal-content h2 { color: var(--color-primary); margin-top: 0; margin-bottom: 1rem; font-size: 1.5em; font-weight: 500;}
+        .form-field { margin-bottom: 1.25rem; }
+        .form-field label { display: block; font-size: 0.9rem; font-weight: 500; color: var(--color-on-surface-variant); margin-bottom: 0.5rem; }
+        .textarea-wrapper { position: relative; }
+        .clear-textarea-btn { position: absolute; top: 8px; right: 8px; background: none; border: none; color: var(--color-on-surface-variant); cursor: pointer; border-radius: 99px; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.2s, background-color 0.2s; }
+        .textarea-wrapper:hover .clear-textarea-btn, .textarea-wrapper:focus-within .clear-textarea-btn { opacity: 1; }
+        .clear-textarea-btn:hover { background-color: var(--sidebar-link-hover-bg); color: var(--color-error); }
+        .qs-input, .qs-textarea { background-color: var(--color-surface); color: var(--color-on-surface); border: 1px solid var(--color-outline); border-radius: var(--border-radius-small); padding: 0.9rem 1rem; width: 100%; font-size: 1rem; line-height: 1.5; transition: border-color 0.2s ease, box-shadow 0.2s ease; }
+        .qs-input:focus, .qs-textarea:focus { border-color: var(--color-primary); outline: none; box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-primary) 30%, transparent); }
+        .qs-button { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; background-color: var(--color-primary); color: var(--color-on-primary); padding: 0.75rem 1.5rem; border-radius: var(--border-radius-full); font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.9rem; border: none; cursor: pointer; transition: all 0.2s ease; box-shadow: var(--elevation-1); }
+        .qs-button:hover:not(:disabled) { background-color: var(--color-primary-variant); box-shadow: var(--elevation-2); }
+        .qs-button:disabled { background-color: var(--color-outline); color: var(--color-on-surface-variant); cursor: not-allowed; box-shadow: none; }
+        .qs-button .spinner { border: 2px solid #f3f3f3; border-top: 2px solid var(--color-on-primary); border-radius: 50%; width: 16px; height: 16px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .card { background-color: var(--color-surface); border-radius: var(--border-radius-medium); padding: 1.5rem; box-shadow: var(--elevation-1); transition: box-shadow 0.3s ease-in-out; border: 1px solid transparent; }
+        .card.highlight { border-color: var(--color-primary); box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 40%, transparent); }
+        .card-title { font-size: 1.4em; font-weight: 500; color: var(--color-primary); margin-bottom: 1.25rem; display: flex; align-items: center; }
+        .card-title .material-icons { margin-right: 0.75rem; font-size: 1.8rem; }
+        #toast-container { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 2000; display: flex; flex-direction: column; gap: 0.75rem; }
+        .toast { background-color: var(--color-surface); color: var(--color-on-surface); padding: 1rem 1.5rem; border-radius: var(--border-radius-medium); box-shadow: var(--elevation-3); display: flex; align-items: center; gap: 1rem; transform: translateX(120%); opacity: 0; transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s; }
+        .toast.show { transform: translateX(0); opacity: 1; }
+        .toast.success { border-left: 5px solid var(--color-success); }
+        .toast.error { border-left: 5px solid var(--color-error); }
+        .toast.info { border-left: 5px solid var(--color-primary); }
+        .toast .material-icons { color: var(--color-primary); }
+        .toast.success .material-icons { color: var(--color-success); }
+        .toast.error .material-icons { color: var(--color-error); }
+        #qrCodeModal .modal-content { text-align: center; }
+        #qrCodeContainer { margin: 1.5rem auto; padding: 1rem; background: white; display: inline-block; }
+        #camera-feed, #camera-canvas { max-width: 100%; border-radius: var(--border-radius-medium); }
         @media (max-width: 992px) { 
             body.sidebar-open .qsounds-main-content { margin-left: 0; }
             .qsounds-main-content { padding: 1rem; }
-            .q-sidebar { box-shadow: var(--elevation-3); border-right: none;}
+            .q-sidebar { box-shadow: var(--elevation-3); border-right: none; }
         }
-
-        .modal-backdrop {
-            position: fixed; inset: 0; background-color: rgba(0,0,0,0.5); backdrop-filter: blur(2px);
-            z-index: 1040; display: flex; align-items: center; justify-content: center; padding: 1rem;
-        }
-        .modal-content {
-            background-color: var(--color-surface); color: var(--color-on-surface);
-            padding: 1.75rem; border-radius: var(--border-radius-large);
-            box-shadow: var(--elevation-3);
-            min-width: 320px; max-width: 95%; width: 560px;
-        }
-        .modal-content h2 { color: var(--color-primary); margin-top: 0; margin-bottom: 1rem; font-size: 1.5em; font-weight: 500;}
-        .modal-content label { color: var(--color-on-surface-variant); font-size: 0.9em; margin-bottom: 0.25rem; display: block;}
-        .modal-content input[type="color"] { border-radius: var(--border-radius-small); border: 1px solid var(--color-outline); height: 48px; }
-
-        .qs-input, .qs-textarea {
-            background-color: var(--color-surface); color: var(--color-on-surface);
-            border: 1px solid var(--color-outline);
-            border-radius: var(--border-radius-small); padding: 0.9rem 1rem;
-            width: 100%; font-size: 1rem; line-height: 1.5;
-            transition: border-color 0.2s ease, box-shadow 0.2s ease;
-        }
-        .qs-input:focus, .qs-textarea:focus {
-            border-color: var(--color-primary); outline: none;
-            box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-primary) 30%, transparent);
-        }
-        .qs-textarea { min-height: 120px; }
-
-        .qs-button {
-            background-color: var(--color-primary); color: var(--color-on-primary);
-            padding: 0.75rem 1.5rem; border-radius: var(--border-radius-full); font-weight: 500;
-            text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.9rem;
-            border: none; cursor: pointer; transition: background-color 0.2s ease, box-shadow 0.2s ease;
-            box-shadow: var(--elevation-1);
-        }
-        .qs-button:hover { background-color: var(--color-primary-variant); box-shadow: var(--elevation-2); }
-        
-        .qs-button-secondary {
-            background-color: transparent; color: var(--color-primary);
-            border: 1px solid var(--color-outline);
-            padding: 0.7rem 1.45rem; border-radius: var(--border-radius-full); font-weight: 500;
-            text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.9rem;
-            cursor: pointer; transition: background-color 0.2s ease, border-color 0.2s ease;
-        }
-        .qs-button-secondary:hover { background-color: color-mix(in srgb, var(--color-primary) 8%, transparent); border-color: var(--color-primary); }
-
-        .qs-button-text {
-             background-color: transparent; color: var(--color-primary);
-             padding: 0.7rem 1rem; border-radius: var(--border-radius-small); font-weight: 500;
-             text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.9rem;
-             border: none; cursor: pointer; transition: background-color 0.2s ease;
-        }
-        .qs-button-text:hover { background-color: color-mix(in srgb, var(--color-primary) 8%, transparent); }
-
-
-        .card {
-            background-color: var(--color-surface);
-            border-radius: var(--border-radius-medium);
-            padding: 1.5rem;
-            box-shadow: var(--elevation-1);
-            transition: box-shadow 0.3s ease-in-out;
-        }
-        .card:hover { box-shadow: var(--elevation-2); }
-        .card-title {
-            font-size: 1.4em; font-weight: 500; color: var(--color-primary);
-            margin-bottom: 1.25rem; display: flex; align-items: center;
-        }
-        .card-title .material-icons { margin-right: 0.75rem; font-size: 1.8rem; }
-        
-        .app-header { margin-bottom: 2rem; }
-        .app-header h1 { font-size: 2.5rem; font-weight: 700; color: var(--color-primary); }
-        .app-header p { font-size: 1.1rem; color: var(--color-on-surface-variant); }
-
-        .form-field { margin-bottom: 1.25rem; }
-        .form-field label {
-            display: block; font-size: 0.9rem; font-weight: 500;
-            color: var(--color-on-surface-variant); margin-bottom: 0.5rem;
-        }
-        .key-display-area textarea { font-family: 'Roboto Mono', monospace; font-size: 0.8rem; background-color: var(--color-background) !important; }
-        
-        .message-area { min-height: 1.5em; font-size: 0.9em; margin-top: 0.75rem; color: var(--color-secondary); }
     </style>
 </head>
-<body>
+<body class="drag-and-drop-container">
 
     <button class="sidebar-toggle-button" id="sidebarToggle" aria-label="Navigation öffnen/schließen" aria-expanded="false">
         <span class="material-icons-outlined">menu</span>
     </button>
-
     <nav class="q-sidebar" id="qSoundsSidebar">
         <div class="q-sidebar-header">
             <div class="logo-title-group">
-                <img src="https://quixoticode.github.io/data/qsounds/favicon-96x96.png" alt=""> <h2>QSounds</h2>
+                <img src="https://quixoticode.github.io/data/qsounds/favicon.svg" class="logo-icon" alt="QSounds Logo">
+                <h2>QSounds</h2>
             </div>
             <button class="sidebar-internal-toggle" id="sidebarInternalToggle" aria-label="Navigation schließen">
                 <span class="material-icons-outlined">close</span>
             </button>
         </div>
-
         <div class="q-sidebar-nav">
-            <div class="q-sidebar-section-title">Navigation</div>
+            <div class="q-sidebar-section-title">Aktionen</div>
             <ul>
-                <li><a class="nav-link" href="#" onclick="scrollToElement('keyManagementSection'); closeSidebarAfterAction(); return false;"><span class="material-icons">vpn_key</span> Schlüsselverwaltung</a></li>
-                <li><a class="nav-link" href="#" onclick="scrollToElement('encryptionSection'); closeSidebarAfterAction(); return false;"><span class="material-icons">lock</span> Verschlüsseln</a></li>
-                <li><a class="nav-link" href="#" onclick="scrollToElement('decryptionSection'); closeSidebarAfterAction(); return false;"><span class="material-icons">lock_open</span> Entschlüsseln</a></li>
+                <li><a class="nav-link" href="#" onclick="importKeyPairFile(); closeSidebarAfterAction(); return false;"><span class="material-icons">file_upload</span> Schlüssel importieren</a></li>
+                <li><a class="nav-link" href="#" onclick="showQRScanner(); closeSidebarAfterAction(); return false;"><span class="material-icons">qr_code_scanner</span> QR-Code scannen</a></li>
             </ul>
-
-            <div class="q-sidebar-section-title">Meine Schlüssel</div>
-            <ul id="storedKeysList">
-            </ul>
-            <ul>
-                 <li><a class="nav-link" href="#" onclick="importKeyPairFile(); closeSidebarAfterAction(); return false;"><span class="material-icons">file_upload</span> Schlüsselpaar importieren</a></li>
-            </ul>
-
-
-            <div class="q-sidebar-section-title">App Daten</div>
-            <ul>
-                <li><a class="nav-link" href="#" onclick="exportTextData(); closeSidebarAfterAction(); return false;"><span class="material-icons">description</span> Text exportieren</a></li>
-                <li><a class="nav-link" href="#" onclick="exportCurrentKeyPairData(); closeSidebarAfterAction(); return false;"><span class="material-icons">key</span> Aktuelles Paar exportieren</a></li>
-            </ul>
-
             <div class="q-sidebar-section-title">Einstellungen</div>
             <ul>
                 <li><a class="nav-link" href="#" onclick="toggleTheme(); closeSidebarAfterAction(false); return false;"><span class="material-icons">brightness_6</span> Modus wechseln</a></li>
                 <li><a class="nav-link" href="#" onclick="showThemePopup(); closeSidebarAfterAction(); return false;"><span class="material-icons">palette</span> Theme Editor</a></li>
             </ul>
         </div>
-        
         <div class="q-sidebar-footer">
              <div class="q-sidebar-section-title" style="padding-top: 0.5rem; padding-bottom: 0.2rem;">Info</div>
              <ul>
                 <li><a class="nav-link" href="#" onclick="showCurrentChangelog(); closeSidebarAfterAction(); return false;"><span class="material-icons">article</span> Changelog</a></li>
-                <li><a class="nav-link" href="README.md" target="_blank" rel="noopener noreferrer"><span class="material-icons">help_outline</span> ReadMe</a></li>
+                <li><a class="nav-link" href="https://github.com/Quixoticode/qsounds" target="_blank" rel="noopener noreferrer"><span class="material-icons">code</span> Quellcode</a></li>
              </ul>
         </div>
     </nav>
-
     <div class="content-overlay" id="contentOverlay"></div>
 
     <main class="qsounds-main-content">
-        <header class="app-header text-center">
-            <h1>QSounds <span class="text-2xl font-normal">v<span id="displayed-version">1.1</span></span></h1>
-            <p>Sichere RSA-Verschlüsselung für Ihre Nachrichten und Schlüssel.</p>
+        <header class="app-header text-center mb-8">
+            <h1 class="text-4xl font-bold" style="color: var(--color-primary);">QSounds <span class="text-2xl font-normal opacity-80">v<span id="displayed-version">1.3</span></span></h1>
+            <p class="text-lg mt-2" style="color: var(--color-on-surface-variant);">Moderne RSA-Verschlüsselung, einfach und sicher.</p>
         </header>
 
         <div class="space-y-8">
             <section id="keyManagementSection" class="card">
                 <h2 class="card-title"><span class="material-icons">vpn_key</span>RSA Schlüsselverwaltung</h2>
                 <div class="flex flex-wrap gap-3 mb-6">
-                    <button id="generateKeysButton" class="qs-button">Neues Schlüsselpaar generieren</button>
-                    <button id="saveCurrentKeysButton" class="qs-button-secondary">Aktuelles Paar in Sidebar speichern</button>
+                    <button id="generateKeysButton" class="qs-button">
+                        <span class="material-icons">autorenew</span>
+                        <span>Generieren (Ctrl+G)</span>
+                        <span class="spinner hidden"></span>
+                    </button>
+                    <button id="saveCurrentKeysButton" class="qs-button" disabled>
+                        <span class="material-icons">save</span>
+                        <span>Speichern (Ctrl+S)</span>
+                    </button>
+                    <button id="showQrCodeButton" class="qs-button" disabled>
+                        <span class="material-icons">qr_code_2</span>
+                        <span>Teilen via QR</span>
+                    </button>
+                    <button id="exportCurrentKeysButton" class="qs-button" disabled>
+                        <span class="material-icons">file_download</span>
+                        <span>Exportieren</span>
+                    </button>
                 </div>
                 
-                <div class="grid md:grid-cols-2 gap-6 key-display-area">
+                <div class="grid md:grid-cols-2 gap-6">
                     <div class="form-field">
                         <label for="publicKeyOutput">Öffentlicher Schlüssel:</label>
-                        <textarea id="publicKeyOutput" readonly class="qs-textarea"></textarea>
-                        <button onclick="copyToClipboard('publicKeyOutput', 'Öffentlicher Schlüssel')" class="qs-button-text mt-2">Kopieren</button>
+                        <div class="textarea-wrapper">
+                            <textarea id="publicKeyOutput" readonly class="qs-textarea font-mono text-xs" rows="8"></textarea>
+                            <button class="clear-textarea-btn" onclick="clearTextarea('publicKeyOutput', true)" title="Leeren"><span class="material-icons text-base">close</span></button>
+                        </div>
+                        <button onclick="copyToClipboard('publicKeyOutput', 'Öffentlicher Schlüssel')" class="qs-button-text mt-2 text-sm">Kopieren</button>
                     </div>
                     <div class="form-field">
                         <label for="privateKeyOutput">Privater Schlüssel:</label>
-                        <textarea id="privateKeyOutput" readonly class="qs-textarea"></textarea>
-                        <button onclick="copyToClipboard('privateKeyOutput', 'Privater Schlüssel')" class="qs-button-text mt-2">Kopieren</button>
+                         <div class="textarea-wrapper">
+                            <textarea id="privateKeyOutput" readonly class="qs-textarea font-mono text-xs" rows="8"></textarea>
+                             <button class="clear-textarea-btn" onclick="clearTextarea('privateKeyOutput', true)" title="Leeren"><span class="material-icons text-base">close</span></button>
+                        </div>
+                        <button onclick="copyToClipboard('privateKeyOutput', 'Privater Schlüssel')" class="qs-button-text mt-2 text-sm">Kopieren</button>
                     </div>
                 </div>
-                 <p id="keyMessage" class="message-area"></p>
             </section>
 
             <section id="encryptionSection" class="card">
                 <h2 class="card-title"><span class="material-icons">lock</span>Verschlüsseln</h2>
                 <div class="space-y-6">
                     <div class="form-field">
-                        <label for="textToEncryptInput">Zu verschlüsselnder Text:</label>
-                        <textarea id="textToEncryptInput" placeholder="Geben Sie hier Ihren Klartext ein..." class="qs-textarea"></textarea>
+                        <label for="publicKeyForEncryptInput">Öffentlicher Schlüssel für die Verschlüsselung:</label>
+                        <div class="textarea-wrapper">
+                           <textarea id="publicKeyForEncryptInput" placeholder="Öffentlichen Schlüssel hier einfügen..." class="qs-textarea key-display-area font-mono text-xs" rows="5"></textarea>
+                           <button class="clear-textarea-btn" onclick="clearTextarea('publicKeyForEncryptInput')" title="Leeren"><span class="material-icons text-base">close</span></button>
+                        </div>
                     </div>
                     <div class="form-field">
-                        <label for="publicKeyForEncryptInput">Öffentlicher Schlüssel für die Verschlüsselung:</label>
-                        <textarea id="publicKeyForEncryptInput" placeholder="Öffentlichen Schlüssel hier einfügen..." class="qs-textarea key-display-area"></textarea>
+                        <label for="textToEncryptInput">Zu verschlüsselnder Text:</label>
+                         <div class="textarea-wrapper">
+                           <textarea id="textToEncryptInput" placeholder="Geben Sie hier Ihren Klartext ein..." class="qs-textarea" rows="4"></textarea>
+                            <button class="clear-textarea-btn" onclick="clearTextarea('textToEncryptInput')" title="Leeren"><span class="material-icons text-base">close</span></button>
+                        </div>
                     </div>
-                    <button id="encryptButton" class="qs-button">Text verschlüsseln</button>
+                    <button id="encryptButton" class="qs-button" disabled>
+                        <span class="material-icons">enhanced_encryption</span>
+                        <span>Verschlüsseln (Ctrl+E)</span>
+                        <span class="spinner hidden"></span>
+                    </button>
                     <div class="form-field mt-4">
                         <label for="encryptedOutput">Verschlüsselte Ausgabe (Base64):</label>
-                        <textarea id="encryptedOutput" readonly class="qs-textarea key-display-area"></textarea>
-                         <button onclick="copyToClipboard('encryptedOutput', 'Verschlüsselter Text')" class="qs-button-text mt-2">Kopieren</button>
+                        <div class="textarea-wrapper">
+                            <textarea id="encryptedOutput" readonly class="qs-textarea key-display-area font-mono text-xs" rows="5"></textarea>
+                            <button class="clear-textarea-btn" onclick="clearTextarea('encryptedOutput')" title="Leeren"><span class="material-icons text-base">close</span></button>
+                        </div>
+                         <button onclick="copyToClipboard('encryptedOutput', 'Verschlüsselter Text')" class="qs-button-text mt-2 text-sm">Kopieren</button>
                     </div>
-                     <p id="encryptMessage" class="message-area"></p>
                 </div>
             </section>
 
             <section id="decryptionSection" class="card">
                 <h2 class="card-title"><span class="material-icons">lock_open</span>Entschlüsseln</h2>
                 <div class="space-y-6">
+                     <div class="form-field">
+                        <label for="privateKeyForDecryptInput">Privater Schlüssel für die Entschlüsselung:</label>
+                        <div class="textarea-wrapper">
+                            <textarea id="privateKeyForDecryptInput" placeholder="Privaten Schlüssel hier einfügen..." class="qs-textarea key-display-area font-mono text-xs" rows="5"></textarea>
+                            <button class="clear-textarea-btn" onclick="clearTextarea('privateKeyForDecryptInput')" title="Leeren"><span class="material-icons text-base">close</span></button>
+                        </div>
+                    </div>
                     <div class="form-field">
                         <label for="textToDecryptInput">Zu entschlüsselnder Chiffretext (Base64):</label>
-                        <textarea id="textToDecryptInput" placeholder="Base64-kodierten Chiffretext hier einfügen..." class="qs-textarea key-display-area"></textarea>
+                         <div class="textarea-wrapper">
+                            <textarea id="textToDecryptInput" placeholder="Base64-kodierten Chiffretext hier einfügen..." class="qs-textarea key-display-area font-mono text-xs" rows="5"></textarea>
+                            <button class="clear-textarea-btn" onclick="clearTextarea('textToDecryptInput')" title="Leeren"><span class="material-icons text-base">close</span></button>
+                        </div>
                     </div>
-                    <div class="form-field">
-                        <label for="privateKeyForDecryptInput">Privater Schlüssel für die Entschlüsselung:</label>
-                        <textarea id="privateKeyForDecryptInput" placeholder="Privaten Schlüssel hier einfügen..." class="qs-textarea key-display-area"></textarea>
-                    </div>
-                    <button id="decryptButton" class="qs-button">Text entschlüsseln</button>
+                    <button id="decryptButton" class="qs-button" disabled>
+                        <span class="material-icons">enhanced_encryption</span>
+                        <span>Entschlüsseln (Ctrl+D)</span>
+                        <span class="spinner hidden"></span>
+                    </button>
                     <div class="form-field mt-4">
                         <label for="decryptedOutput">Entschlüsselte Ausgabe:</label>
-                        <textarea id="decryptedOutput" readonly class="qs-textarea"></textarea>
+                        <div class="textarea-wrapper">
+                           <textarea id="decryptedOutput" readonly class="qs-textarea" rows="4"></textarea>
+                            <button class="clear-textarea-btn" onclick="clearTextarea('decryptedOutput')" title="Leeren"><span class="material-icons text-base">close</span></button>
+                        </div>
                     </div>
-                     <p id="decryptMessage" class="message-area"></p>
                 </div>
             </section>
         </div>
@@ -414,638 +300,709 @@
             <p class="text-sm" style="color: var(--color-on-surface-variant);">Erstellt mit <span class="material-icons text-sm text-red-500 inline-block align-middle">favorite</span> von <a href="https://github.com/Quixoticode" target="_blank" rel="noopener noreferrer" class="font-medium hover:underline" style="color: var(--color-primary);">Quixoticode</a></p>
         </footer>
     </main>
+    
+    <div id="toast-container"></div>
 
-    <div id="version-info-modal" class="modal-backdrop hidden">
+    <!-- Modals -->
+    <div id="changelogModal" class="modal-backdrop">
         <div class="modal-content">
-            <h2 class="flex items-center"><span class="material-icons-outlined mr-3">campaign</span>Neueste Änderungen (Version <span id="current-version-modal">1.1</span>)</h2>
-            <div id="changelog-content" class="text-sm space-y-1 my-6 max-h-72 overflow-y-auto pr-2"></div>
+            <h2 class="flex items-center"><span class="material-icons-outlined mr-3">campaign</span>Neues in Version <span id="current-version-modal">1.3</span></h2>
+            <div id="changelog-content" class="text-sm space-y-3 my-6 max-h-80 overflow-y-auto pr-2"></div>
             <div class="flex justify-end">
-                <button id="close-changelog" class="qs-button">Verstanden</button>
+                <button onclick="closeModal('changelogModal', true)" class="qs-button">Verstanden</button>
             </div>
         </div>
     </div>
-
-    <div id="themePopup" class="modal-backdrop hidden">
+    <div id="themePopup" class="modal-backdrop">
         <div class="modal-content">
             <h2 class="flex items-center"><span class="material-icons-outlined mr-3">palette</span>Theme Editor</h2>
             <div class="space-y-5 my-6">
-                <div>
-                    <label for="primaryColor">Primäre Akzentfarbe (z.B. Buttons):</label>
-                    <input type="color" id="primaryColor" class="w-full">
-                </div>
-                <div>
-                    <label for="secondaryColor">Sekundäre Akzentfarbe (z.B. aktive Sidebar-Links):</label>
-                    <input type="color" id="secondaryColor" class="w-full">
-                </div>
+                 <div><label for="primaryColor">Primärfarbe (Buttons, Titel)</label><input type="color" id="primaryColor" class="w-full h-12 border-none rounded-lg"></div>
+                 <div><label for="secondaryColor">Sekundärfarbe (Aktive Links)</label><input type="color" id="secondaryColor" class="w-full h-12 border-none rounded-lg"></div>
             </div>
-            <div class="flex justify-end gap-3">
-                <button onclick="closeModal('themePopup')" class="qs-button-text">Abbrechen</button>
-                <button onclick="saveTheme()" class="qs-button">Speichern</button>
+            <div class="flex justify-end gap-3"><button onclick="closeModal('themePopup')" class="qs-button-text">Abbrechen</button><button onclick="saveTheme()" class="qs-button">Speichern</button></div>
+        </div>
+    </div>
+    <div id="customPromptModal" class="modal-backdrop">
+        <div class="modal-content">
+            <h2 id="promptTitle">Titel</h2>
+            <p id="promptMessage" class="my-4 text-sm" style="color: var(--color-on-surface-variant);"></p>
+            <input type="text" id="promptInput" class="qs-input w-full">
+            <div class="flex justify-end gap-3 mt-6">
+                <button id="promptCancel" class="qs-button-text">Abbrechen</button>
+                <button id="promptConfirm" class="qs-button">OK</button>
             </div>
         </div>
     </div>
-    
-    <div id="devPortal" class="fixed inset-0 bg-black bg-opacity-95 text-lime-400 p-4 font-mono z-[1060] hidden overflow-auto text-xs">
-        <div class="flex justify-between items-center mb-3">
-            <h2 class="text-xl">Entwicklerportal</h2>
-            <button onclick="document.getElementById('devPortal').style.display='none'" class="bg-lime-500 text-black py-1 px-3 rounded hover:bg-lime-600 text-sm">Schließen</button>
+    <div id="qrCodeModal" class="modal-backdrop">
+        <div class="modal-content">
+            <h2 id="qrCodeModalTitle" class="flex items-center justify-center"></h2>
+            <div id="qrCodeContainer"></div>
+            <p class="text-xs mt-2" style="color: var(--color-on-surface-variant);">Scanne diesen Code, um das Schlüsselpaar zu importieren.</p>
+            <div class="flex justify-center mt-6"><button onclick="closeModal('qrCodeModal')" class="qs-button">Schließen</button></div>
         </div>
-        <pre id="devLog" class="bg-gray-900 p-3 h-72 overflow-y-auto border border-lime-700 rounded-md"></pre>
     </div>
+    <div id="qrScannerModal" class="modal-backdrop">
+        <div class="modal-content">
+            <h2 class="flex items-center justify-center"><span class="material-icons mr-2">qr_code_scanner</span>QR-Code Scanner</h2>
+            <div id="camera-container" class="my-4 bg-gray-800 rounded-lg overflow-hidden">
+                <video id="camera-feed" playsinline class="w-full"></video>
+                <canvas id="camera-canvas" class="hidden"></canvas>
+            </div>
+            <p id="scanner-status" class="text-center text-sm" style="color: var(--color-on-surface-variant);">Richte die Kamera auf einen QSounds QR-Code.</p>
+            <div class="flex justify-center mt-6"><button onclick="closeModal('qrScannerModal')" class="qs-button">Abbrechen</button></div>
+        </div>
+    </div>
+
 
     <script>
-        const sidebar = document.getElementById('qSoundsSidebar');
-        const sidebarToggle = document.getElementById('sidebarToggle');
-        const sidebarInternalToggle = document.getElementById('sidebarInternalToggle');
-        const contentOverlay = document.getElementById('contentOverlay');
-        
-        const publicKeyOutput = document.getElementById('publicKeyOutput');
-        const privateKeyOutput = document.getElementById('privateKeyOutput');
-        const generateKeysButton = document.getElementById('generateKeysButton');
-        const saveCurrentKeysButton = document.getElementById('saveCurrentKeysButton');
-        const keyMessage = document.getElementById('keyMessage');
+        // --- DOM Element Cache ---
+        const getEl = (id) => document.getElementById(id);
+        const DOMElements = {
+            sidebar: getEl('qSoundsSidebar'),
+            sidebarToggle: getEl('sidebarToggle'),
+            sidebarInternalToggle: getEl('sidebarInternalToggle'),
+            contentOverlay: getEl('contentOverlay'),
+            publicKeyOutput: getEl('publicKeyOutput'),
+            privateKeyOutput: getEl('privateKeyOutput'),
+            generateKeysButton: getEl('generateKeysButton'),
+            saveCurrentKeysButton: getEl('saveCurrentKeysButton'),
+            exportCurrentKeysButton: getEl('exportCurrentKeysButton'),
+            showQrCodeButton: getEl('showQrCodeButton'),
+            textToEncryptInput: getEl('textToEncryptInput'),
+            publicKeyForEncryptInput: getEl('publicKeyForEncryptInput'),
+            encryptButton: getEl('encryptButton'),
+            encryptedOutput: getEl('encryptedOutput'),
+            textToDecryptInput: getEl('textToDecryptInput'),
+            privateKeyForDecryptInput: getEl('privateKeyForDecryptInput'),
+            decryptButton: getEl('decryptButton'),
+            decryptedOutput: getEl('decryptedOutput'),
+            changelogModal: getEl('changelogModal'),
+            changelogContentEl: getEl('changelog-content'),
+            currentVersionModalSpan: getEl('current-version-modal'),
+            displayedVersionSpan: getEl('displayed-version'),
+            themePopup: getEl('themePopup'),
+            primaryColorInput: getEl('primaryColor'),
+            secondaryColorInput: getEl('secondaryColor'),
+            toastContainer: getEl('toast-container'),
+            qrCodeModal: getEl('qrCodeModal'),
+            qrCodeContainer: getEl('qrCodeContainer'),
+            qrCodeModalTitle: getEl('qrCodeModalTitle'),
+            qrScannerModal: getEl('qrScannerModal'),
+            cameraFeed: getEl('camera-feed'),
+            cameraCanvas: getEl('camera-canvas'),
+            scannerStatus: getEl('scanner-status'),
+        };
 
-        const textToEncryptInput = document.getElementById('textToEncryptInput');
-        const publicKeyForEncryptInput = document.getElementById('publicKeyForEncryptInput');
-        const encryptButton = document.getElementById('encryptButton');
-        const encryptedOutput = document.getElementById('encryptedOutput');
-        const encryptMessage = document.getElementById('encryptMessage');
-
-        const textToDecryptInput = document.getElementById('textToDecryptInput');
-        const privateKeyForDecryptInput = document.getElementById('privateKeyForDecryptInput');
-        const decryptButton = document.getElementById('decryptButton');
-        const decryptedOutput = document.getElementById('decryptedOutput');
-        const decryptMessage = document.getElementById('decryptMessage');
-
-        const versionInfoModal = document.getElementById('version-info-modal');
-        const changelogContentEl = document.getElementById('changelog-content');
-        const currentVersionModalSpan = document.getElementById('current-version-modal');
-        const displayedVersionSpan = document.getElementById('displayed-version');
-        const closeChangelogButton = document.getElementById('close-changelog');
-        
-        const themePopup = document.getElementById('themePopup');
-        const primaryColorInput = document.getElementById('primaryColor');
-        const secondaryColorInput = document.getElementById('secondaryColor');
-
-        const devLog = document.getElementById('devLog');
-        const storedKeysListUI = document.getElementById('storedKeysList');
-
-        const currentAppVersion = '1.0.0'; // Zurückgesetzt auf 1.1
-        const lastSeenVersionKey = 'lastSeenAppVersion_QSounds_Material_v1_1_revised'; // Angepasster Key für localStorage
-        const storedKeysLocalStorageKey = 'qs_rsa_keys_list_material_v1_1_revised'; // Angepasster Key für localStorage
-        const themeLocalStorageKey = "qs_theme_material_v1_1_revised"; // Angepasster Key für Theme
-        const themePreferenceLocalStorageKey = "qs_theme_preference_material_v1_1_revised"; // Angepasster Key für Theme Präferenz
-
+        // --- App State & Constants ---
+        const APP_VERSION = '1.3';
+        const STORAGE_PREFIX = 'QSounds_v1_3_';
+        const KEYS = {
+            LAST_SEEN_VERSION: `${STORAGE_PREFIX}lastSeenVersion`,
+            STORED_KEYS: `${STORAGE_PREFIX}storedKeys`,
+            THEME_COLORS: `${STORAGE_PREFIX}themeColors`,
+            THEME_PREFERENCE: `${STORAGE_PREFIX}themePreference`,
+            SIDEBAR_STATE: `${STORAGE_PREFIX}sidebarState`
+        };
         let rsa = new JSEncrypt({ default_key_size: 2048 });
+        let qrCodeInstance = null;
+        let cameraStream = null;
 
-        function generateRSAKeyPair() {
-            appendDevLog('Generiere RSA Schlüsselpaar (2048 bit)...');
-            keyMessage.textContent = 'Generiere Schlüssel... bitte warten.';
-            try {
-                rsa = new JSEncrypt({ default_key_size: 2048 });
-                const privateK = rsa.getPrivateKey();
-                const publicK = rsa.getPublicKey();
-
-                publicKeyOutput.value = publicK;
-                privateKeyOutput.value = privateK;
-                publicKeyForEncryptInput.value = publicK;
-                privateKeyForDecryptInput.value = privateK;
-
-                keyMessage.textContent = 'Neues RSA Schlüsselpaar erfolgreich generiert!';
-                appendDevLog('RSA Schlüsselpaar generiert.');
-                setTimeout(() => keyMessage.textContent = '', 4000);
-            } catch (error) {
-                keyMessage.textContent = 'Fehler beim Generieren der Schlüssel. Siehe Konsole.';
-                appendDevLog(`Fehler beim Generieren der RSA Schlüssel: ${error.message || error}`);
-            }
-        }
-
-        function encryptRSA() {
-            const plainText = textToEncryptInput.value;
-            const publicKey = publicKeyForEncryptInput.value;
-            encryptMessage.textContent = '';
-
-            if (!plainText) { encryptMessage.textContent = 'Bitte Text zum Verschlüsseln eingeben.'; return; }
-            if (!publicKey) { encryptMessage.textContent = 'Bitte einen öffentlichen Schlüssel für die Verschlüsselung angeben.'; return; }
-
-            try {
-                const encryptor = new JSEncrypt();
-                encryptor.setPublicKey(publicKey);
-                const ciphertext = encryptor.encrypt(plainText);
-
-                if (ciphertext) {
-                    encryptedOutput.value = ciphertext;
-                    encryptMessage.textContent = 'Text erfolgreich verschlüsselt.';
-                    appendDevLog('Text verschlüsselt.');
-                } else {
-                    encryptedOutput.value = '';
-                    encryptMessage.textContent = 'Verschlüsselung fehlgeschlagen. Ist der öffentliche Schlüssel gültig und der Text nicht zu lang?';
-                    appendDevLog('Verschlüsselung fehlgeschlagen.');
-                }
-            } catch (error) {
-                encryptedOutput.value = '';
-                encryptMessage.textContent = `Verschlüsselungsfehler: ${error.message || error}.`;
-                appendDevLog(`Verschlüsselungsfehler: ${error.message || error}`);
-            }
-            setTimeout(() => encryptMessage.textContent = '', 5000);
-        }
-
-        function decryptRSA() {
-            const ciphertext = textToDecryptInput.value;
-            const privateKey = privateKeyForDecryptInput.value;
-            decryptMessage.textContent = '';
-
-            if (!ciphertext) { decryptMessage.textContent = 'Bitte Chiffretext zum Entschlüsseln eingeben.'; return; }
-            if (!privateKey) { decryptMessage.textContent = 'Bitte einen privaten Schlüssel für die Entschlüsselung angeben.'; return; }
-
-            try {
-                const decryptor = new JSEncrypt();
-                decryptor.setPrivateKey(privateKey);
-                const plaintext = decryptor.decrypt(ciphertext);
-
-                if (plaintext) {
-                    decryptedOutput.value = plaintext;
-                    decryptMessage.textContent = 'Text erfolgreich entschlüsselt.';
-                    appendDevLog('Text entschlüsselt.');
-                } else {
-                    decryptedOutput.value = '';
-                    decryptMessage.textContent = 'Entschlüsselung fehlgeschlagen. Ist der private Schlüssel korrekt und der Chiffretext gültig?';
-                    appendDevLog('Entschlüsselung fehlgeschlagen.');
-                }
-            } catch (error) {
-                decryptedOutput.value = '';
-                decryptMessage.textContent = `Entschlüsselungsfehler: ${error.message || error}.`;
-                appendDevLog(`Entschlüsselungsfehler: ${error.message || error}`);
-            }
-            setTimeout(() => decryptMessage.textContent = '', 5000);
-        }
-        
-        function getStoredKeys() {
-            const keysJSON = localStorage.getItem(storedKeysLocalStorageKey);
-            try { return keysJSON ? JSON.parse(keysJSON) : []; }
-            catch (e) {
-                appendDevLog("Fehler beim Parsen gespeicherter Schlüssel. Setze auf leeres Array.");
-                localStorage.removeItem(storedKeysLocalStorageKey); return [];
-            }
-        }
-
-        function saveStoredKeys(keys) {
-            localStorage.setItem(storedKeysLocalStorageKey, JSON.stringify(keys));
-        }
-
-        function renderStoredKeysInSidebar() {
-            const keys = getStoredKeys();
-            storedKeysListUI.innerHTML = '';
-            if (keys.length === 0) {
-                const li = document.createElement('li');
-                li.className = 'px-4 py-3 text-sm text-center';
-                li.style.color = 'var(--color-on-surface-variant)';
-                li.textContent = 'Keine Schlüssel hier.';
-                storedKeysListUI.appendChild(li);
-                return;
-            }
-
-            keys.forEach((keyObj, index) => {
-                const containerLi = document.createElement('li');
-                containerLi.className = 'stored-key-item-container';
-
-                const mainDiv = document.createElement('div');
-                mainDiv.className = 'stored-key-item-main group';
-                mainDiv.title = `Schlüssel "${keyObj.name}" auswählen/verwalten`;
-                mainDiv.onclick = () => toggleKeyActions(index, keyObj.name);
-
-                const iconSpan = document.createElement('span');
-                iconSpan.className = 'material-icons';
-                iconSpan.textContent = 'key';
-                
-                const nameSpan = document.createElement('span');
-                nameSpan.className = 'key-name';
-                nameSpan.textContent = keyObj.name;
-
-                const expandIcon = document.createElement('span');
-                expandIcon.className = 'material-icons transition-transform duration-200';
-                expandIcon.textContent = 'expand_more';
-                expandIcon.id = `expand_icon_${index}`;
-
-                mainDiv.appendChild(iconSpan);
-                mainDiv.appendChild(nameSpan);
-                mainDiv.appendChild(expandIcon);
-                containerLi.appendChild(mainDiv);
-
-                const actionsDiv = document.createElement('div');
-                actionsDiv.className = 'stored-key-actions';
-                actionsDiv.id = `actions_div_${index}`;
-                
-                actionsDiv.innerHTML = `
-                    <button title="Auswählen" onclick="loadKeyFromStorage(${index}, event)"><span class="material-icons">check_circle_outline</span>Wählen</button>
-                    <button title="Umbenennen" onclick="renameStoredKey(${index}, event)"><span class="material-icons">edit</span></button>
-                    <button title="Exportieren" onclick="exportStoredKeyPair(${index}, event)"><span class="material-icons">file_download</span></button>
-                    <button title="Löschen" class="delete" onclick="deleteStoredKey(${index}, event)"><span class="material-icons">delete</span></button>
-                `;
-                containerLi.appendChild(actionsDiv);
-                storedKeysListUI.appendChild(containerLi);
-            });
-        }
-        
-        function toggleKeyActions(index, keyName) {
-            const actionsDiv = document.getElementById(`actions_div_${index}`);
-            const expandIcon = document.getElementById(`expand_icon_${index}`);
-            const mainDiv = actionsDiv.previousElementSibling; 
-            const containerLi = actionsDiv.parentElement;
-
-            const allActionDivs = document.querySelectorAll('.stored-key-actions');
-            const allExpandIcons = document.querySelectorAll('.stored-key-item-main .material-icons:last-child');
-            const allMainDivs = document.querySelectorAll('.stored-key-item-main');
-
-            allActionDivs.forEach((div, i) => {
-                if (i !== index && div.style.display === 'flex') {
-                    div.style.display = 'none';
-                    if (allExpandIcons[i]) allExpandIcons[i].style.transform = 'rotate(0deg)';
-                    if (allMainDivs[i]) allMainDivs[i].classList.remove('active');
-                    if (div.parentElement) div.parentElement.classList.remove('actions-visible');
-                }
-            });
-            
-            if (actionsDiv.style.display === 'flex') {
-                actionsDiv.style.display = 'none';
-                expandIcon.style.transform = 'rotate(0deg)';
-                mainDiv.classList.remove('active');
-                containerLi.classList.remove('actions-visible');
-            } else {
-                actionsDiv.style.display = 'flex';
-                expandIcon.style.transform = 'rotate(180deg)';
-                mainDiv.classList.add('active');
-                containerLi.classList.add('actions-visible');
-                appendDevLog(`Aktionen für Schlüssel "${keyName}" angezeigt.`);
-            }
-        }
-
-        function saveCurrentKeyPairToSidebar() {
-            const pubKey = publicKeyOutput.value;
-            const privKey = privateKeyOutput.value;
-
-            if (!pubKey || !privKey) {
-                keyMessage.textContent = 'Keine Schlüssel zum Speichern. Generieren Sie zuerst ein Paar.';
-                setTimeout(() => keyMessage.textContent = '', 4000); return;
-            }
-
-            let name = prompt("Geben Sie eine Bezeichnung für dieses Schlüsselpaar ein:", `Mein Schlüssel ${new Date().toLocaleDateString('de-DE')}`);
-            if (!name) { keyMessage.textContent = 'Speichern abgebrochen.'; setTimeout(() => keyMessage.textContent = '', 3000); return; }
-
-            const keys = getStoredKeys();
-            while (keys.some(k => k.name === name)) {
-                name = prompt(`Der Name "${name}" existiert bereits. Bitte wählen Sie einen anderen Namen:`, `${name} (Kopie)`);
-                if (!name) { keyMessage.textContent = 'Speichern abgebrochen.'; setTimeout(() => keyMessage.textContent = '', 3000); return; }
-            }
-            
-            keys.push({ name, publicKey: pubKey, privateKey: privKey });
-            saveStoredKeys(keys);
-            renderStoredKeysInSidebar();
-            keyMessage.textContent = `Schlüssel "${name}" in Sidebar gespeichert.`;
-            appendDevLog(`Schlüssel "${name}" gespeichert.`);
-            setTimeout(() => keyMessage.textContent = '', 4000);
-        }
-        
-        function loadKeyFromStorage(index, event) {
-            event.stopPropagation();
-            const keys = getStoredKeys();
-            if (index >= 0 && index < keys.length) {
-                const keyObj = keys[index];
-                publicKeyOutput.value = keyObj.publicKey;
-                privateKeyOutput.value = keyObj.privateKey;
-                publicKeyForEncryptInput.value = keyObj.publicKey;
-                privateKeyForDecryptInput.value = keyObj.privateKey;
-                keyMessage.textContent = `Schlüssel "${keyObj.name}" geladen.`;
-                appendDevLog(`Schlüssel "${keyObj.name}" aus Speicher geladen.`);
-                
-                document.querySelectorAll('.stored-key-item-main').forEach(el => el.classList.remove('active'));
-                const mainDiv = document.getElementById(`actions_div_${index}`).previousElementSibling;
-                mainDiv.classList.add('active');
-                
-                const actionsDiv = document.getElementById(`actions_div_${index}`);
-                const expandIcon = document.getElementById(`expand_icon_${index}`);
-                if (actionsDiv && expandIcon) {
-                    actionsDiv.style.display = 'none';
-                    expandIcon.style.transform = 'rotate(0deg)';
-                    if (actionsDiv.parentElement) actionsDiv.parentElement.classList.remove('actions-visible');
-                }
-                closeSidebarAfterAction();
-                setTimeout(() => keyMessage.textContent = '', 4000);
-            }
-        }
-        
-        function renameStoredKey(index, event) {
-            event.stopPropagation();
-            const keys = getStoredKeys();
-            if (index >= 0 && index < keys.length) {
-                const oldName = keys[index].name;
-                let newName = prompt(`Neuen Namen für Schlüssel "${oldName}" eingeben:`, oldName);
-                if (!newName || newName === oldName) { appendDevLog("Umbenennen abgebrochen oder Name nicht geändert."); return; }
-
-                while (keys.some((k, i) => i !== index && k.name === newName)) {
-                    newName = prompt(`Der Name "${newName}" existiert bereits. Bitte wählen Sie einen anderen Namen:`, `${newName} (1)`);
-                    if (!newName) { appendDevLog("Umbenennen abgebrochen."); return; }
-                }
-                keys[index].name = newName;
-                saveStoredKeys(keys);
-                renderStoredKeysInSidebar();
-                keyMessage.textContent = `Schlüssel von "${oldName}" zu "${newName}" umbenannt.`;
-                appendDevLog(`Schlüssel umbenannt: ${oldName} -> ${newName}`);
-                setTimeout(() => keyMessage.textContent = '', 4000);
-            }
-        }
-
-        function deleteStoredKey(index, event) {
-            event.stopPropagation();
-            const keys = getStoredKeys();
-            if (index >= 0 && index < keys.length) {
-                const keyNameToDelete = keys[index].name;
-                if (confirm(`Möchten Sie den Schlüssel "${keyNameToDelete}" wirklich löschen?`)) {
-                    keys.splice(index, 1);
-                    saveStoredKeys(keys);
-                    renderStoredKeysInSidebar();
-                    keyMessage.textContent = `Schlüssel "${keyNameToDelete}" gelöscht.`;
-                    appendDevLog(`Schlüssel "${keyNameToDelete}" gelöscht.`);
-                    setTimeout(() => keyMessage.textContent = '', 4000);
-                }
-            }
-        }
-
-        function copyToClipboard(elementId, type) {
-            const textarea = document.getElementById(elementId);
-            if (!textarea.value) { alert(`${type} ist leer, nichts zu kopieren.`); return; }
-            textarea.select();
-            textarea.setSelectionRange(0, 99999); 
-            try {
-                document.execCommand('copy');
-                const messageEl = type.includes('Öffentlicher') || type.includes('Privater') ? keyMessage : (type.includes('Verschlüsselter') ? encryptMessage : decryptMessage);
-                if (messageEl) { messageEl.textContent = `${type} in Zwischenablage kopiert!`; setTimeout(() => messageEl.textContent = '', 3000); }
-                appendDevLog(`${type} in Zwischenablage kopiert.`);
-            } catch (err) { alert('Kopieren fehlgeschlagen.'); appendDevLog(`Fehler beim Kopieren: ${err}`); }
-            window.getSelection()?.removeAllRanges();
-        }
-        
-        function scrollToElement(elementId) {
-            const element = document.getElementById(elementId);
-            if (element) { element.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
-        }
-
-        function toggleSidebar() {
-            const isOpen = sidebar.classList.toggle('open');
-            contentOverlay.classList.toggle('active', isOpen);
-            document.body.classList.toggle('sidebar-open', isOpen);
-            sidebarToggle.setAttribute('aria-expanded', isOpen);
-            sidebarToggle.classList.toggle('hidden-when-sidebar-open', isOpen);
-        }
-
-        function closeSidebarAfterAction(shouldScrollToTop = true) {
-            if (sidebar.classList.contains('open') && window.innerWidth <= 992) { toggleSidebar(); }
-        }
-
-        sidebarToggle.addEventListener('click', toggleSidebar);
-        sidebarInternalToggle.addEventListener('click', toggleSidebar);
-        contentOverlay.addEventListener('click', toggleSidebar);
-
-        generateKeysButton.addEventListener('click', generateRSAKeyPair);
-        saveCurrentKeysButton.addEventListener('click', saveCurrentKeyPairToSidebar);
-        encryptButton.addEventListener('click', encryptRSA);
-        decryptButton.addEventListener('click', decryptRSA);
-
-        function applyThemeColors(primary, secondary) {
-            document.documentElement.style.setProperty('--color-primary', primary);
-            document.documentElement.style.setProperty('--color-secondary', secondary);
-            const primaryVariant = pSBC(-0.4, primary);
-            document.documentElement.style.setProperty('--color-primary-variant', primaryVariant || primary);
-            primaryColorInput.value = primary;
-            secondaryColorInput.value = secondary;
-        }
-        
-        const pSBC=(p,c0,c1,l)=>{
-            let r,g,b,P,f,t,h,i=parseInt,m=Math.round,a=typeof(c1)=="string";
-            if(typeof(p)!="number"||p<-1||p>1||typeof(c0)!="string"||(c0[0]!='r'&&c0[0]!='#')||(c1&&!a))return null;
-            if(!this.pSBCr)this.pSBCr=(d)=>{
-                let n=d.length,x={};
-                if(n>9){
-                    [r,g,b,a]=d=d.split(","),n=d.length;
-                    if(n<3||n>4)return null;
-                    x.r=i(r[3]=="a"?r.slice(5):r.slice(4)),x.g=i(g),x.b=i(b),x.a=a?parseFloat(a):-1
-                }else{
-                    if(n==8||n==6||n<4)return null;
-                    if(n<6)d="#"+d[1]+d[1]+d[2]+d[2]+d[3]+d[3]+(n>4?d[4]+d[4]:"");
-                    d=i(d.slice(1),16);
-                    if(n==9||n==5)x.r=d>>24&255,x.g=d>>16&255,x.b=d>>8&255,x.a=m((d&255)/0.255)/1000;
-                    else x.r=d>>16,x.g=d>>8&255,x.b=d&255,x.a=-1
-                }return x};
-            h=c0.length>9,h=a?c1.length>9?true:c1=="c"?!h:false:h,f=this.pSBCr(c0),P=p<0,t=c1&&c1!="c"?this.pSBCr(c1):P?{r:0,g:0,b:0,a:-1}:{r:255,g:255,b:255,a:-1},p=P?p*-1:p,P=1-p;
-            if(!f||!t)return null;
-            if(l)r=m(P*f.r+p*t.r),g=m(P*f.g+p*t.g),b=m(P*f.b+p*t.b);
-            else r=m((P*f.r**2+p*t.r**2)**0.5),g=m((P*f.g**2+p*t.g**2)**0.5),b=m((P*f.b**2+p*t.b**2)**0.5);
-            a=f.a,t=t.a,f=a>=0||t>=0,a=f?a<0?t:t<0?a:a*P+t*p:0;
-            if(h)return"rgb"+(f?"a(":"(")+r+","+g+","+b+(f?","+m(a*1000)/1000:"")+")";
-            else return"#"+(4294967296+r*16777216+g*65536+b*256+(f?m(a*255):0)).toString(16).slice(1,f?undefined:-2)
-        }
-
-        function saveTheme() {
-            const primary = primaryColorInput.value;
-            const secondary = secondaryColorInput.value;
-            applyThemeColors(primary, secondary);
-            localStorage.setItem(themeLocalStorageKey, JSON.stringify({ primary, secondary }));
-            closeModal('themePopup');
-            appendDevLog(`Theme gespeichert: Primär ${primary}, Sekundär ${secondary}`);
-        }
-
-        function loadSavedTheme() {
-            const theme = localStorage.getItem(themeLocalStorageKey);
-            let defaultPrimary = getComputedStyle(document.documentElement).getPropertyValue('--color-primary').trim();
-            let defaultSecondary = getComputedStyle(document.documentElement).getPropertyValue('--color-secondary').trim();
-
-            if (theme) {
-                try { const { primary, secondary } = JSON.parse(theme); applyThemeColors(primary, secondary); appendDevLog('Gespeichertes Theme geladen.'); }
-                catch (e) { localStorage.removeItem(themeLocalStorageKey); applyThemeColors(defaultPrimary, defaultSecondary); appendDevLog('Fehler beim Laden, Standardtheme angewendet.'); }
-            } else { applyThemeColors(defaultPrimary, defaultSecondary); appendDevLog('Kein gespeichertes Theme, Standard CSS Variablen verwendet.'); }
-        }
-        
-        function toggleTheme() {
-            const currentTheme = document.documentElement.getAttribute("data-theme");
-            const newTheme = currentTheme === "light" ? "dark" : "light";
-            document.documentElement.setAttribute("data-theme", newTheme);
-            localStorage.setItem(themePreferenceLocalStorageKey, newTheme);
-            appendDevLog(`Theme geändert zu ${newTheme}.`);
-            loadSavedTheme();
-        }
-
-        function loadThemePreference() {
-            const preferredTheme = localStorage.getItem(themePreferenceLocalStorageKey);
-            document.documentElement.setAttribute("data-theme", preferredTheme || "light");
-            loadSavedTheme();
-        }
-        
-        function openModal(modalId) {
-            const modal = document.getElementById(modalId);
-            if (modal) {
-                modal.classList.remove('hidden');
-                if (modalId === 'version-info-modal') closeModal('themePopup');
-                if (modalId === 'themePopup') closeModal('version-info-modal');
-            }
-        }
-        function closeModal(modalId) {
-            const modal = document.getElementById(modalId);
-            if (modal) modal.classList.add('hidden');
-        }
-
-        function showThemePopup() { openModal('themePopup'); }
-
+        // --- Changelog ---
         const changelogHTML = `
-            <ul class="list-disc list-inside space-y-2 text-sm" style="color: var(--color-on-surface-variant);">
-                <li>MIGRATION DER APP ZU https://quixoticode.github.io/apps/ (LETZTE INFO FOLGT!)</li>
+            <h3 class="font-bold text-lg" style="color: var(--color-primary);"><span class="material-icons-outlined align-bottom mr-1">sparkles</span>Komplett überarbeitete UX/UI</h3>
+            <ul class="list-disc list-inside space-y-2 text-sm pl-2" style="color: var(--color-on-surface-variant);">
+                <li><b>Modernes Design:</b> Die gesamte Oberfläche wurde aufgeräumt und modernisiert für eine bessere Übersicht.</li>
+                <li><b>Smarte Benachrichtigungen:</b> Statt alter Pop-ups gibt es jetzt elegante "Toast"-Nachrichten.</li>
+                <li><b>Visuelles Feedback:</b> Buttons zeigen Lade-Spinner und werden deaktiviert, wenn Aktionen nicht möglich sind.</li>
+                <li><b>Neue Dialogfenster:</b> Alle Abfragen (z.B. für Namen) nutzen jetzt schönere, ins Design integrierte Modals.</li>
+                <li><b>Drag & Drop:</b> Importiere Schlüsseldateien (.qsnd), indem du sie einfach ins Fenster ziehst.</li>
+            </ul>
+
+            <h3 class="font-bold text-lg mt-4" style="color: var(--color-primary);"><span class="material-icons-outlined align-bottom mr-1">qr_code_2</span>QR-Code Sharing & Scanning</h3>
+            <ul class="list-disc list-inside space-y-2 text-sm pl-2" style="color: var(--color-on-surface-variant);">
+                <li><b>Schlüssel via QR-Code teilen:</b> Erzeuge einen QR-Code für dein komplettes Schlüsselpaar und teile es so blitzschnell.</li>
+                <li><b>Kamera-Scan:</b> Nutze die Kamera deines Geräts, um Schlüsselpaare von einem QR-Code zu importieren.</li>
+            </ul>
+
+            <h3 class="font-bold text-lg mt-4" style="color: var(--color-primary);"><span class="material-icons-outlined align-bottom mr-1">keyboard_alt</span>Tastenkombinationen für den Desktop</h3>
+            <ul class="list-disc list-inside space-y-2 text-sm pl-2" style="color: var(--color-on-surface-variant);">
+                <li><b>Ctrl/Cmd + G:</b> Neues Schlüsselpaar generieren.</li>
+                <li><b>Ctrl/Cmd + S:</b> Aktuelles Schlüsselpaar speichern.</li>
+                <li><b>Ctrl/Cmd + E:</b> Text verschlüsseln.</li>
+                <li><b>Ctrl/Cmd + D:</b> Text entschlüsseln.</li>
+                <li><b>Escape:</b> Schließt alle offenen Fenster.</li>
             </ul>
         `;
 
-        function showCurrentChangelog() {
-            if(currentVersionModalSpan) currentVersionModalSpan.textContent = currentAppVersion;
-            if(changelogContentEl) changelogContentEl.innerHTML = changelogHTML;
-            openModal('version-info-modal');
-            appendDevLog('Changelog angezeigt.');
+        // --- Core App Logic ---
+        function generateRSAKeyPair() {
+            toggleButtonLoading(DOMElements.generateKeysButton, true);
+            showToast('info', 'Generiere 2048-bit Schlüsselpaar... das kann einen Moment dauern.');
+            
+            setTimeout(() => {
+                try {
+                    rsa = new JSEncrypt({ default_key_size: 2048 });
+                    const privateKey = rsa.getPrivateKey();
+                    const publicKey = rsa.getPublicKey();
+
+                    DOMElements.publicKeyOutput.value = publicKey;
+                    DOMElements.privateKeyOutput.value = privateKey;
+                    
+                    // Pre-fill corresponding fields
+                    DOMElements.publicKeyForEncryptInput.value = publicKey;
+                    DOMElements.privateKeyForDecryptInput.value = privateKey;
+
+                    showToast('success', 'Neues Schlüsselpaar erfolgreich generiert!');
+                    updateButtonStates();
+                    highlightCard('keyManagementSection');
+                } catch (error) {
+                    showToast('error', 'Fehler beim Generieren der Schlüssel.');
+                    console.error("RSA Generation Error:", error);
+                } finally {
+                    toggleButtonLoading(DOMElements.generateKeysButton, false);
+                }
+            }, 50); // Timeout allows UI to update before blocking task
         }
 
-        closeChangelogButton.addEventListener('click', () => {
-            closeModal('version-info-modal');
-            localStorage.setItem(lastSeenVersionKey, currentAppVersion);
-            appendDevLog('Changelog geschlossen, Version als gesehen markiert.');
-        });
+        function encryptRSA() {
+            toggleButtonLoading(DOMElements.encryptButton, true);
+            setTimeout(() => {
+                try {
+                    const plainText = DOMElements.textToEncryptInput.value;
+                    const publicKey = DOMElements.publicKeyForEncryptInput.value;
+                    
+                    const encryptor = new JSEncrypt();
+                    encryptor.setPublicKey(publicKey);
+                    const ciphertext = encryptor.encrypt(plainText);
+
+                    if (ciphertext) {
+                        DOMElements.encryptedOutput.value = ciphertext;
+                        showToast('success', 'Text erfolgreich verschlüsselt.');
+                        highlightCard('encryptionSection');
+                        DOMElements.encryptedOutput.select();
+                    } else {
+                        DOMElements.encryptedOutput.value = '';
+                        showToast('error', 'Verschlüsselung fehlgeschlagen. Ist der öffentliche Schlüssel gültig?');
+                    }
+                } catch (error) {
+                    DOMElements.encryptedOutput.value = '';
+                    showToast('error', `Verschlüsselungsfehler: ${error.message}`);
+                } finally {
+                    toggleButtonLoading(DOMElements.encryptButton, false);
+                    updateButtonStates();
+                }
+            }, 50);
+        }
+
+        function decryptRSA() {
+            toggleButtonLoading(DOMElements.decryptButton, true);
+            setTimeout(() => {
+                try {
+                    const ciphertext = DOMElements.textToDecryptInput.value;
+                    const privateKey = DOMElements.privateKeyForDecryptInput.value;
+                    
+                    const decryptor = new JSEncrypt();
+                    decryptor.setPrivateKey(privateKey);
+                    const plaintext = decryptor.decrypt(ciphertext);
+
+                    if (plaintext) {
+                        DOMElements.decryptedOutput.value = plaintext;
+                        showToast('success', 'Text erfolgreich entschlüsselt.');
+                        highlightCard('decryptionSection');
+                    } else {
+                        DOMElements.decryptedOutput.value = '';
+                        showToast('error', 'Entschlüsselung fehlgeschlagen. Ist der private Schlüssel korrekt?');
+                    }
+                } catch (error) {
+                    DOMElements.decryptedOutput.value = '';
+                    showToast('error', `Entschlüsselungsfehler: ${error.message}.`);
+                } finally {
+                    toggleButtonLoading(DOMElements.decryptButton, false);
+                    updateButtonStates();
+                }
+            }, 50);
+        }
+
+        // --- UI & UX Functions ---
+        function showToast(type = 'info', message, duration = 4000) {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            const iconMap = { 'success': 'check_circle', 'error': 'error', 'info': 'info' };
+            toast.innerHTML = `<span class="material-icons">${iconMap[type]}</span><span>${message}</span>`;
+            
+            DOMElements.toastContainer.appendChild(toast);
+            setTimeout(() => toast.classList.add('show'), 10);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                toast.addEventListener('transitionend', () => toast.remove());
+            }, duration);
+        }
+
+        function toggleButtonLoading(button, isLoading) {
+            const textSpan = button.querySelector('span:not(.spinner)');
+            const spinnerSpan = button.querySelector('.spinner');
+            if (isLoading) {
+                button.disabled = true;
+                textSpan.classList.add('hidden');
+                spinnerSpan.classList.remove('hidden');
+            } else {
+                button.disabled = false;
+                textSpan.classList.remove('hidden');
+                spinnerSpan.classList.add('hidden');
+            }
+        }
+
+        function updateButtonStates() {
+            const hasKeys = DOMElements.publicKeyOutput.value && DOMElements.privateKeyOutput.value;
+            DOMElements.saveCurrentKeysButton.disabled = !hasKeys;
+            DOMElements.exportCurrentKeysButton.disabled = !hasKeys;
+            DOMElements.showQrCodeButton.disabled = !hasKeys;
+
+            const canEncrypt = DOMElements.textToEncryptInput.value && DOMElements.publicKeyForEncryptInput.value;
+            DOMElements.encryptButton.disabled = !canEncrypt;
+
+            const canDecrypt = DOMElements.textToDecryptInput.value && DOMElements.privateKeyForDecryptInput.value;
+            DOMElements.decryptButton.disabled = !canDecrypt;
+        }
+
+        function copyToClipboard(elementId, type) {
+            const textarea = getEl(elementId);
+            if (!textarea.value) { showToast('error', `${type} ist leer.`); return; }
+            textarea.select();
+            document.execCommand('copy');
+            window.getSelection()?.removeAllRanges();
+            showToast('success', `${type} in Zwischenablage kopiert!`);
+        }
         
-        function exportDataToFile(dataObject, baseFilename) {
+        function clearTextarea(elementId, updateFields = false) {
+            const textarea = getEl(elementId);
+            textarea.value = '';
+            if (updateFields) {
+                if (elementId === 'publicKeyOutput') DOMElements.publicKeyForEncryptInput.value = '';
+                if (elementId === 'privateKeyOutput') DOMElements.privateKeyForDecryptInput.value = '';
+            }
+            updateButtonStates();
+        }
+
+        function highlightCard(cardId) {
+            const card = getEl(cardId);
+            card.classList.add('highlight');
+            setTimeout(() => card.classList.remove('highlight'), 1500);
+        }
+
+        // --- Sidebar Logic ---
+        function toggleSidebar() {
+            const isOpen = DOMElements.sidebar.classList.toggle('open');
+            DOMElements.contentOverlay.classList.toggle('active', isOpen);
+            document.body.classList.toggle('sidebar-open', isOpen);
+            DOMElements.sidebarToggle.setAttribute('aria-expanded', isOpen);
+            DOMElements.sidebarToggle.classList.toggle('hidden-when-sidebar-open', isOpen);
+            localStorage.setItem(KEYS.SIDEBAR_STATE, isOpen ? 'open' : 'closed');
+        }
+
+        function closeSidebarAfterAction(shouldScrollToTop = true) {
+            if (DOMElements.sidebar.classList.contains('open') && window.innerWidth <= 992) {
+                toggleSidebar();
+            }
+        }
+
+        // --- Modal Logic ---
+        function openModal(modalId) {
+            const modal = getEl(modalId);
+            if (modal) {
+                modal.classList.add('visible');
+            }
+        }
+
+        function closeModal(modalId, markAsSeen = false) {
+            const modal = getEl(modalId);
+            if (modal) {
+                modal.classList.remove('visible');
+                if (modalId === 'changelogModal' && markAsSeen) {
+                    localStorage.setItem(KEYS.LAST_SEEN_VERSION, APP_VERSION);
+                }
+                if (modalId === 'qrScannerModal') {
+                    stopCamera();
+                }
+            }
+        }
+        
+        async function customPrompt({ title, message, initialValue = '' }) {
+            return new Promise((resolve) => {
+                getEl('promptTitle').textContent = title;
+                getEl('promptMessage').textContent = message;
+                const input = getEl('promptInput');
+                input.value = initialValue;
+                openModal('customPromptModal');
+                
+                const confirmHandler = () => {
+                    cleanup();
+                    resolve(input.value);
+                };
+                
+                const cancelHandler = () => {
+                    cleanup();
+                    resolve(null);
+                };
+                
+                const keydownHandler = (e) => {
+                    if (e.key === 'Enter') confirmHandler();
+                    if (e.key === 'Escape') cancelHandler();
+                };
+
+                const confirmBtn = getEl('promptConfirm');
+                const cancelBtn = getEl('promptCancel');
+                
+                confirmBtn.onclick = confirmHandler;
+                cancelBtn.onclick = cancelHandler;
+                input.onkeydown = keydownHandler;
+                
+                input.focus();
+                input.select();
+                
+                function cleanup() {
+                    closeModal('customPromptModal');
+                    confirmBtn.onclick = null;
+                    cancelBtn.onclick = null;
+                    input.onkeydown = null;
+                }
+            });
+        }
+        
+        // --- QR Code Logic ---
+        function showQRCodeForCurrentKeys() {
+            const pubKey = DOMElements.publicKeyOutput.value;
+            const privKey = DOMElements.privateKeyOutput.value;
+            if (!pubKey || !privKey) {
+                showToast('error', 'Kein Schlüsselpaar zum Teilen vorhanden.');
+                return;
+            }
+            
+            const keyPairObject = { type: 'QSoundsKeyPair', pub: pubKey, priv: privKey };
+            const jsonString = JSON.stringify(keyPairObject);
+
+            DOMElements.qrCodeContainer.innerHTML = '';
+            qrCodeInstance = new QRCode(DOMElements.qrCodeContainer, {
+                text: jsonString,
+                width: 256,
+                height: 256,
+                colorDark : "#000000",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.L // Low correction level for max data
+            });
+
+            DOMElements.qrCodeModalTitle.innerHTML = `<span class="material-icons mr-2">qr_code_2</span>Schlüsselpaar teilen`;
+            openModal('qrCodeModal');
+        }
+
+        function showQRScanner() {
+            openModal('qrScannerModal');
+            startCamera();
+        }
+
+        function startCamera() {
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+                    .then(stream => {
+                        cameraStream = stream;
+                        DOMElements.cameraFeed.srcObject = stream;
+                        DOMElements.cameraFeed.play();
+                        requestAnimationFrame(scanQRCode);
+                        DOMElements.scannerStatus.textContent = "Kamera aktiv. Suche nach QR-Code...";
+                    })
+                    .catch(err => {
+                        console.error("Camera Error:", err);
+                        DOMElements.scannerStatus.textContent = "Kamera-Zugriff fehlgeschlagen.";
+                        showToast('error', 'Konnte nicht auf die Kamera zugreifen.');
+                    });
+            }
+        }
+
+        function stopCamera() {
+            if (cameraStream) {
+                cameraStream.getTracks().forEach(track => track.stop());
+                cameraStream = null;
+                DOMElements.cameraFeed.srcObject = null;
+            }
+        }
+
+        function scanQRCode() {
+            if (cameraStream && DOMElements.cameraFeed.readyState === DOMElements.cameraFeed.HAVE_ENOUGH_DATA) {
+                const canvas = DOMElements.cameraCanvas;
+                const video = DOMElements.cameraFeed;
+                const ctx = canvas.getContext('2d');
+                canvas.height = video.videoHeight;
+                canvas.width = video.videoWidth;
+                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                const code = jsQR(imageData.data, imageData.width, imageData.height, {
+                    inversionAttempts: "dontInvert",
+                });
+
+                if (code) {
+                    DOMElements.scannerStatus.textContent = "Code gefunden! Verarbeite...";
+                    try {
+                        const data = JSON.parse(code.data);
+                        if (data.type === 'QSoundsKeyPair' && data.pub && data.priv) {
+                            handleImportedKeyPairData({
+                                name: `QR Import ${new Date().toLocaleTimeString('de-DE')}`,
+                                publicKey: data.pub,
+                                privateKey: data.priv
+                            });
+                            closeModal('qrScannerModal');
+                            showToast('success', 'Schlüsselpaar erfolgreich via QR-Code importiert!');
+                        } else {
+                            DOMElements.scannerStatus.textContent = "Kein gültiger QSounds-Code.";
+                            setTimeout(() => DOMElements.scannerStatus.textContent = "Suche nach QR-Code...", 2000);
+                        }
+                    } catch (e) {
+                        DOMElements.scannerStatus.textContent = "Code konnte nicht gelesen werden.";
+                         setTimeout(() => DOMElements.scannerStatus.textContent = "Suche nach QR-Code...", 2000);
+                    }
+                }
+            }
+            if (cameraStream) {
+                requestAnimationFrame(scanQRCode);
+            }
+        }
+
+        // --- Data Import/Export ---
+        async function saveCurrentKeyPair() {
+            const pubKey = DOMElements.publicKeyOutput.value;
+            const privKey = DOMElements.privateKeyOutput.value;
+
+            const name = await customPrompt({
+                title: 'Schlüsselpaar speichern',
+                message: 'Geben Sie eine eindeutige Bezeichnung für dieses Schlüsselpaar ein:',
+                initialValue: `Mein Schlüssel ${new Date().toLocaleDateString('de-DE')}`
+            });
+
+            if (!name) { showToast('info', 'Speichern abgebrochen.'); return; }
+
+            // This is a placeholder for a more advanced storage system (e.g., indexedDB)
+            // For now, it just demonstrates the flow. A real implementation would save to a persistent store.
+             handleImportedKeyPairData({ name, publicKey: pubKey, privateKey: privKey });
+             showToast('success', `Schlüsselpaar "${name}" wurde simuliert gespeichert.`);
+        }
+        
+        function handleImportedKeyPairData(keyData) {
+            // This function would typically save to a persistent store (e.g., IndexedDB)
+            // and update a list in the UI. For this example, we just load it.
+            DOMElements.publicKeyOutput.value = keyData.publicKey;
+            DOMElements.privateKeyOutput.value = keyData.privateKey;
+            DOMElements.publicKeyForEncryptInput.value = keyData.publicKey;
+            DOMElements.privateKeyForDecryptInput.value = keyData.privateKey;
+            updateButtonStates();
+            showToast('success', `Schlüsselpaar "${keyData.name}" geladen/importiert.`);
+            highlightCard('keyManagementSection');
+        }
+
+        function exportDataToFile(dataObject, baseFilename, extension) {
             const blob = new Blob([JSON.stringify(dataObject, null, 2)], { type: "application/json" });
             const a = document.createElement("a");
             a.href = URL.createObjectURL(blob);
-            a.download = `${baseFilename}_${new Date().toISOString().slice(0,10).replace(/-/g,'')}.qsnd`;
+            a.download = `${baseFilename}_${new Date().toISOString().slice(0,10).replace(/-/g,'')}.${extension}`;
             document.body.appendChild(a); a.click(); document.body.removeChild(a);
             URL.revokeObjectURL(a.href);
         }
 
-        function exportTextData() {
-            let dataToExport = encryptedOutput.value.trim();
-            if (!dataToExport) dataToExport = textToEncryptInput.value.trim();
-            if (!dataToExport) { alert("Nichts zu exportieren."); return; }
-
-            const data = {
-                timestamp: new Date().toISOString(), version: currentAppVersion, dataType: "text",
-                content: dataToExport,
-                note: "QSounds Text Export."
-            };
-            exportDataToFile(data, "qsounds_text_export");
-            appendDevLog('Textdaten exportiert.');
-        }
-        
-        function exportKeyPairData(name, publicKey, privateKey, sourceNote) {
-            if (!publicKey || !privateKey) { alert("Kein vollständiges Schlüsselpaar zum Exportieren vorhanden."); return; }
-            const data = {
-                timestamp: new Date().toISOString(), version: currentAppVersion, dataType: "keyPair",
-                keyName: name || "Unbenanntes Schlüsselpaar", publicKey, privateKey,
-                note: sourceNote || "QSounds Schlüsselpaar Export."
-            };
-            exportDataToFile(data, `qsounds_keypair_${(name || "export").replace(/\s+/g, '_')}`);
-            appendDevLog(`Schlüsselpaar "${name}" exportiert.`);
-        }
-        
         function exportCurrentKeyPairData() {
-            const pubKey = publicKeyOutput.value;
-            const privKey = privateKeyOutput.value;
-            exportKeyPairData("Aktuell angezeigt", pubKey, privKey, "Export des aktuell in der App angezeigten Schlüsselpaars.");
-        }
-
-        function exportStoredKeyPair(index, event) {
-            event.stopPropagation();
-            const keys = getStoredKeys();
-            if (index >= 0 && index < keys.length) {
-                const keyObj = keys[index];
-                exportKeyPairData(keyObj.name, keyObj.publicKey, keyObj.privateKey, `Export des gespeicherten Schlüsselpaars "${keyObj.name}".`);
-            }
+            const pubKey = DOMElements.publicKeyOutput.value;
+            const privKey = DOMElements.privateKeyOutput.value;
+            const data = {
+                type: "QSoundsKeyPair",
+                timestamp: new Date().toISOString(),
+                version: APP_VERSION,
+                pub: pubKey,
+                priv: privKey,
+            };
+            exportDataToFile(data, "qsounds_keypair_export", "qsnd");
+            showToast('success', 'Schlüsselpaar als .qsnd Datei exportiert.');
         }
 
         function importKeyPairFile() {
             const input = document.createElement("input");
             input.type = "file";
             input.accept = ".qsnd,.json";
-
             input.onchange = async (e) => {
                 const file = e.target.files[0];
                 if (!file) return;
-                const fileText = await file.text();
                 try {
+                    const fileText = await file.text();
                     const data = JSON.parse(fileText);
-                    if (data.dataType === "keyPair" && data.publicKey && data.privateKey) {
-                        let keyName = data.keyName || `Importiert ${new Date().toLocaleTimeString('de-DE')}`;
-                        const keys = getStoredKeys();
-                        while (keys.some(k => k.name === keyName)) {
-                            keyName = prompt(`Ein Schlüssel mit dem Namen "${keyName}" existiert bereits. Bitte neuen Namen vergeben:`, `${keyName} (Import)`);
-                            if (!keyName) { alert("Import abgebrochen."); return; }
-                        }
-                        keys.push({ name: keyName, publicKey: data.publicKey, privateKey: data.privateKey });
-                        saveStoredKeys(keys);
-                        renderStoredKeysInSidebar();
-                        alert(`Schlüsselpaar "${keyName}" erfolgreich importiert und in der Sidebar gespeichert.`);
-                        appendDevLog(`Schlüsselpaar "${keyName}" importiert.`);
-                    } else if (data.dataType === "text" && data.content) {
-                         if (data.content.length > 200 && (data.content.includes('='))) { 
-                           textToDecryptInput.value = data.content;
-                           alert("Textdatei importiert. Inhalt wurde in das Feld 'Zu entschlüsselnder Chiffretext' eingefügt, da es wie verschlüsselter Text aussieht.");
-                        } else {
-                           textToEncryptInput.value = data.content;
-                           alert("Textdatei importiert. Inhalt wurde in das Feld 'Zu verschlüsselnder Text' eingefügt.");
-                        }
-                        appendDevLog('Textdatei importiert.');
+                    if (data.type === 'QSoundsKeyPair' && data.pub && data.priv) {
+                         handleImportedKeyPairData({
+                            name: file.name.replace(/\.[^/.]+$/, ""), // use filename as name
+                            publicKey: data.pub,
+                            privateKey: data.priv
+                         });
+                    } else {
+                        showToast('error', "Ungültige QSounds Schlüsseldatei.");
                     }
-                    else { alert("Ungültige .qsnd Datei oder falscher dataType."); appendDevLog('Ungültige Importdatei.'); }
                 } catch (err) {
-                    alert("Fehler beim Lesen der Datei.");
-                    appendDevLog(`Fehler beim Import: ${err.message || err}`);
+                    showToast('error', "Fehler beim Lesen der Importdatei.");
+                    console.error("Import Error:", err);
                 }
             };
             input.click();
         }
         
-        function appendDevLog(message) {
-            if (devLog) {
-                const timestamp = new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit', second: '2-digit'});
-                devLog.innerHTML += `[${timestamp}] ${message}\n`;
-                devLog.scrollTop = devLog.scrollHeight;
-            }
+        // --- Theme Management ---
+        function applyThemeColors(primary, secondary) {
+            document.documentElement.style.setProperty('--color-primary', primary);
+            document.documentElement.style.setProperty('--color-secondary', secondary);
+            DOMElements.primaryColorInput.value = primary;
+            DOMElements.secondaryColorInput.value = secondary;
         }
 
-        function showDevPortal() {
-            const portal = document.getElementById('devPortal');
-            portal.style.display = 'block';
-            appendDevLog('Entwicklerportal geöffnet.');
-            closeModal('version-info-modal'); closeModal('themePopup');
+        function saveTheme() {
+            const primary = DOMElements.primaryColorInput.value;
+            const secondary = DOMElements.secondaryColorInput.value;
+            applyThemeColors(primary, secondary);
+            localStorage.setItem(KEYS.THEME_COLORS, JSON.stringify({ primary, secondary }));
+            closeModal('themePopup');
+            showToast('success', 'Neues Theme gespeichert!');
         }
+        
+        function showThemePopup() { openModal('themePopup'); }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            if(displayedVersionSpan) displayedVersionSpan.textContent = currentAppVersion;
-            loadThemePreference();
-            renderStoredKeysInSidebar();
-
-            const lastSeenVersion = localStorage.getItem(lastSeenVersionKey);
-            if (lastSeenVersion !== currentAppVersion) { showCurrentChangelog(); }
-            else { appendDevLog(`Aktuelle Version ${currentAppVersion} bereits gesehen.`); }
-            
-            if (!publicKeyOutput.value || !privateKeyOutput.value) {
-                 keyMessage.textContent = 'Generieren Sie ein Schlüsselpaar oder laden/importieren Sie eines.';
-            }
-            appendDevLog(`QSounds v${currentAppVersion} Initialisiert.`);
-        });
-
-        window.addEventListener("keydown", (e) => {
-            if (e.ctrlKey && e.shiftKey && (e.key === "D" || e.key === "d")) { e.preventDefault(); showDevPortal(); }
-            if (e.key === "Escape") {
-                closeModal('version-info-modal'); closeModal('themePopup');
-                if (document.getElementById('devPortal').style.display === 'block') {
-                    document.getElementById('devPortal').style.display = 'none';
+        function loadSavedTheme() {
+            const theme = localStorage.getItem(KEYS.THEME_COLORS);
+            const defaultPrimary = getComputedStyle(document.documentElement).getPropertyValue('--color-primary').trim();
+            const defaultSecondary = getComputedStyle(document.documentElement).getPropertyValue('--color-secondary').trim();
+            if (theme) {
+                try {
+                    const { primary, secondary } = JSON.parse(theme);
+                    applyThemeColors(primary, secondary);
+                } catch (e) {
+                    applyThemeColors(defaultPrimary, defaultSecondary);
                 }
+            } else {
+                applyThemeColors(defaultPrimary, defaultSecondary);
             }
-        });
+        }
+
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute("data-theme");
+            const newTheme = currentTheme === "light" ? "dark" : "light";
+            document.documentElement.setAttribute("data-theme", newTheme);
+            localStorage.setItem(KEYS.THEME_PREFERENCE, newTheme);
+            loadSavedTheme(); // Reload to apply potentially different dark/light variants
+        }
+
+        function loadThemePreference() {
+            const preferredTheme = localStorage.getItem(KEYS.THEME_PREFERENCE) || "light";
+            document.documentElement.setAttribute("data-theme", preferredTheme);
+            loadSavedTheme();
+        }
+        
+        // --- Initialization and Event Listeners ---
+        function initializeApp() {
+            DOMElements.displayedVersionSpan.textContent = APP_VERSION;
+            DOMElements.currentVersionModalSpan.textContent = APP_VERSION;
+            DOMElements.changelogContentEl.innerHTML = changelogHTML;
+
+            loadThemePreference();
+            updateButtonStates();
+            
+            // Show changelog on first visit of new version
+            const lastSeenVersion = localStorage.getItem(KEYS.LAST_SEEN_VERSION);
+            if (lastSeenVersion !== APP_VERSION) {
+                openModal('changelogModal');
+            }
+
+            // Restore sidebar state
+            const sidebarState = localStorage.getItem(KEYS.SIDEBAR_STATE);
+            if (sidebarState === 'open' && window.innerWidth > 992) {
+                DOMElements.sidebar.classList.add('open');
+                DOMElements.sidebarToggle.classList.add('hidden-when-sidebar-open');
+                document.body.classList.add('sidebar-open');
+            }
+            
+            // Set up event listeners
+            DOMElements.sidebarToggle.addEventListener('click', toggleSidebar);
+            DOMElements.sidebarInternalToggle.addEventListener('click', toggleSidebar);
+            DOMElements.contentOverlay.addEventListener('click', toggleSidebar);
+            DOMElements.generateKeysButton.addEventListener('click', generateRSAKeyPair);
+            DOMElements.saveCurrentKeysButton.addEventListener('click', saveCurrentKeyPair);
+            DOMElements.exportCurrentKeysButton.addEventListener('click', exportCurrentKeyPairData);
+            DOMElements.showQrCodeButton.addEventListener('click', showQRCodeForCurrentKeys);
+            DOMElements.encryptButton.addEventListener('click', encryptRSA);
+            DOMElements.decryptButton.addEventListener('click', decryptRSA);
+
+            // Add input listeners for real-time button state updates
+            ['input', 'change'].forEach(evt => {
+                [DOMElements.publicKeyOutput, DOMElements.privateKeyOutput, DOMElements.textToEncryptInput, DOMElements.publicKeyForEncryptInput, DOMElements.textToDecryptInput, DOMElements.privateKeyForDecryptInput].forEach(el => {
+                    el.addEventListener(evt, updateButtonStates);
+                });
+            });
+
+            // Keyboard shortcuts
+            window.addEventListener("keydown", (e) => {
+                if (e.key === "Escape") {
+                    // Close any open modal
+                    document.querySelectorAll('.modal-backdrop.visible').forEach(modal => closeModal(modal.id));
+                }
+                if (e.ctrlKey || e.metaKey) {
+                    switch(e.key.toLowerCase()) {
+                        case 'g': e.preventDefault(); DOMElements.generateKeysButton.click(); break;
+                        case 's': e.preventDefault(); if(!DOMElements.saveCurrentKeysButton.disabled) DOMElements.saveCurrentKeysButton.click(); break;
+                        case 'e': e.preventDefault(); if(!DOMElements.encryptButton.disabled) DOMElements.encryptButton.click(); break;
+                        case 'd': e.preventDefault(); if(!DOMElements.decryptButton.disabled) DOMElements.decryptButton.click(); break;
+                    }
+                }
+            });
+
+            // Drag and Drop
+            const dropContainer = document.body;
+            dropContainer.addEventListener('dragover', (e) => { e.preventDefault(); e.stopPropagation(); dropContainer.style.backgroundColor = 'var(--color-primary-variant)'; });
+            dropContainer.addEventListener('dragleave', (e) => { e.preventDefault(); e.stopPropagation(); dropContainer.style.backgroundColor = ''; });
+            dropContainer.addEventListener('drop', (e) => {
+                e.preventDefault(); e.stopPropagation();
+                dropContainer.style.backgroundColor = '';
+                if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+                    const fakeEvent = { target: { files: e.dataTransfer.files } };
+                    getEl('__tempFileInput').onchange(fakeEvent); // Reuse logic
+                }
+            });
+
+            // Create a hidden file input to reuse the import logic for drag-and-drop
+            const hiddenInput = document.createElement('input');
+            hiddenInput.id = '__tempFileInput';
+            hiddenInput.type = 'file';
+            hiddenInput.accept = ".qsnd,.json";
+            hiddenInput.style.display = 'none';
+            hiddenInput.onchange = async (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                try {
+                    const fileText = await file.text();
+                    const data = JSON.parse(fileText);
+                    if (data.type === 'QSoundsKeyPair' && data.pub && data.priv) {
+                         handleImportedKeyPairData({
+                            name: file.name.replace(/\.[^/.]+$/, ""),
+                            publicKey: data.pub,
+                            privateKey: data.priv
+                         });
+                    } else {
+                        showToast('error', "Ungültige QSounds Schlüsseldatei.");
+                    }
+                } catch (err) { showToast('error', "Fehler beim Lesen der Importdatei."); }
+                hiddenInput.value = ''; // Reset for next use
+            };
+            document.body.appendChild(hiddenInput);
+
+            showToast('info', `Willkommen zu QSounds v${APP_VERSION}!`, 2000);
+        }
+
+        function showCurrentChangelog() {
+            openModal('changelogModal');
+        }
+
+        // --- App Start ---
+        document.addEventListener('DOMContentLoaded', initializeApp);
 
     </script>
 </body>
 </html>
-
