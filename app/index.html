@@ -94,6 +94,7 @@
             <button class="activity-btn" data-view="dashboard" title="Dashboard"><span class="material-icons">dashboard</span></button>
             <button class="activity-btn" data-view="qcode" title="QCode Lernplattform"><span class="material-icons">school</span></button>
             <button class="activity-btn" data-view="qsounds" title="QSounds"><span class="material-icons">graphic_eq</span></button>
+            <button class="activity-btn" data-view="status" title="Statuspage"><span class="material-icons">error</span></button>
             <div class="mt-auto"><button class="activity-btn" id="settingsBtn" title="Einstellungen"><span class="material-icons">settings</span></button></div>
         </div>
         <aside class="q-sidebar hidden" id="qHubSidebar"></aside>
@@ -204,6 +205,10 @@
                 case 'qsounds':
                     dom.headerTitle.textContent = "QSounds";
                     dom.mainContentArea.innerHTML = `<div class="webapp-container"><iframe src="https://quixoticode.github.io/app/QSounds/"></iframe></div>`;
+                    break;
+                case 'status':
+                    dom.headerTitle.textContent = "StatusPage";
+                    dom.mainContentArea.innerHTML = `<div class="webapp-container"><iframe src="https://status.quixoticode.de/status/network"></iframe></div>`;
                     break;
             }
             saveSettings();
