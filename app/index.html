@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>QHub v2.1.1 - Dein persönlicher Hub</title>
+    <title>QHub v2.1.2 - Dein persönlicher Hub</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -44,7 +44,8 @@
 
         body { font-family: var(--font-family-sans); background-color: var(--q-background); color: var(--q-on-surface); overflow: hidden; }
         .q-app-container { display: flex; height: 100vh; }
-        .q-activity-bar { width: var(--activity-bar-width); flex-shrink: 0; background-color: var(--q-surface); border-right: 1px solid var(--q-outline); display: flex; flex-direction: column; align-items: center; padding: 1rem 0; gap: 0.5rem; z-index: 1100; }
+        /* GEÄNDERT: padding-bottom mit Safe Area für mobile Geräte */
+        .q-activity-bar { width: var(--activity-bar-width); flex-shrink: 0; background-color: var(--q-surface); border-right: 1px solid var(--q-outline); display: flex; flex-direction: column; align-items: center; padding: 1rem 0; padding-bottom: calc(1rem + env(safe-area-inset-bottom)); gap: 0.5rem; z-index: 1100; }
         .activity-btn { position: relative; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: var(--radius-md); color: var(--q-on-surface-variant); cursor: pointer; transition: all 0.2s; }
         .activity-btn:hover { background-color: var(--q-highlight); color: var(--q-highlight-text); }
         .activity-btn.active { background-color: var(--q-primary); color: var(--q-primary-text); }
@@ -62,7 +63,6 @@
         .q-modal-backdrop.visible { display: flex; opacity: 1; }
         .q-modal-content { background-color: var(--q-surface); padding: 2rem; border-radius: var(--radius-lg); max-width: 500px; width: 100%; }
 
-        /* NEU: Mobile Optimierungen für Modals */
         @media (max-width: 768px) {
             .q-modal-backdrop.visible { overflow-y: auto; align-items: flex-start; }
             .q-modal-content { width: 95%; margin-top: 5vh; max-height: 90vh; overflow-y: auto; padding: 1.5rem; }
@@ -71,10 +71,8 @@
         @media (max-width: 768px) { 
             .q-sidebar { position: fixed; left: var(--activity-bar-width); height: 100%; transform: translateX(-100%); } 
             .q-sidebar.open { transform: translateX(0); box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1); } 
-            /* NEU: Weniger Padding auf mobilen Geräten */
             .q-header { padding: 0 1rem; }
             .q-content-area { padding: 1rem; }
-            /* NEU: Kleinere Überschriften in Sektionen */
             #mainContentArea h2.text-2xl { font-size: 1.25rem; }
         }
 
@@ -118,26 +116,25 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // GEÄNDERT: Version auf 2.1.1 erhöht
+        // GEÄNDERT: Version auf 2.1.2 erhöht
         const APP_PREFIX = 'qhub_v2.1_final_';
         const SETTINGS_KEY = APP_PREFIX + 'settings';
         const USER_DATA_KEY = APP_PREFIX + 'user_data';
-        const APP_VERSION = "2.1.1";
+        const APP_VERSION = "2.1.2";
 
         const initialUserData = {
             version: APP_VERSION,
             announcements: [
-                { id: "news-1", title: "Willkommen zu QHub 2.1.1!", content: "Entdecke das neue Premium-System und die App-Integrationen.", date: "2025-06-19", premium: false },
-                { id: "news-2", title: "Exklusiver Einblick in v2.2", content: "Als Premium-Nutzer siehst du hier exklusive Details zum nächsten großen Update, das ein Feature für Support & Feedback implementieren wird.", date: "2025-06-20", premium: true },
-                { id: "news-3", title: "QCode-Integration", content: "Die QCode Lernplattform ist jetzt direkt im Hub verfügbar.", date: "2025-06-20", premium: false },
+                { id: "news-1", title: "Willkommen zu QHub 2.1!", content: "Entdecke das neue Premium-System und die App-Integrationen.", date: "2025-06-20", premium: false },
+                { id: "news-2", title: "Exklusiver Einblick in v2.2", content: "Als Premium-Nutzer siehst du hier exklusive Details zum nächsten großen Update, das einen Notizblock mit Markdown-Unterstützung bringen wird.", date: "2025-06-20", premium: true },
             ],
             roadmap: [
-                { id: "rm-1", title: 'v2.2: Contact-Formular', description: 'Integration eines vollwertigen Kontaktsystems', status: 'in-progress', progress: 10 },
-                { id: "rm-2", title: 'v2.3: Kalender', description: 'Ein einfacher Kalender zur Terminübersicht direkt auf dem Dashboard.', status: 'planned', progress: 0 },
-                { id: "rm-3", title: 'v2.4: Gaming...', description: 'Who knows...', status: 'planned', progress: 0}
+                { id: "rm-1", title: 'v2.2: Notizen & Aufgaben', description: 'Integration eines vollwertigen Notizblocks und einer To-Do-Liste.', status: 'in-progress', progress: 30 },
+                { id: "rm-2", title: 'v2.3: Kalender-Widget', description: 'Ein einfacher Kalender zur Terminübersicht direkt auf dem Dashboard.', status: 'planned', progress: 0 },
             ],
-            // NEU: Changelog für Version 2.1.1 hinzugefügt
+            // NEU: Changelog für Version 2.1.2 hinzugefügt
             changelog: [
+                { version: "2.1.2", date: "2025-06-20", changes: ["Behebt ein Problem, bei dem der Einstellungs-Button auf mobilen Geräten nicht klickbar war.", "Layout an den sicheren Anzeigebereich (Safe Area) von mobilen Geräten angepasst."] },
                 { version: "2.1.1", date: "2025-06-20", changes: ["Verbesserte Mobilansicht für Header und Inhaltsbereiche.", "Optimierte Darstellung der Einstellungs- & Changelog-Modals auf kleinen Bildschirmen.", "Allgemeine Layout-Anpassungen für eine bessere mobile Benutzererfahrung."] },
                 { version: "2.1.0", date: "2025-06-20", changes: ["Premium-System mit Code- & Login-Aktivierung.", "Neue 'Roadmap'-Sektion zur Update-Verfolgung.", "Integration von QCode & QSounds als Web-Apps.", "Erweiterte Theme-Auswahl."] },
                 { version: "2.0.0", date: "2025-06-19", changes: ["Komplett neues Design und neue Code-Basis.", "Einführung der Dashboard-Ansicht.", "Basis-Theme-Auswahl (Light/Dark).", "Daten-Import & Export-Funktionalität."] }
@@ -147,7 +144,7 @@
         const defaultSettings = {
             version: APP_VERSION,
             userName: "Gast",
-            userAvatar: `https://placehold.co/96x96/e0e7ff/3730a3?text=Guest`,
+            userAvatar: `https://placehold.co/96x96/e0e7ff/3730a3?text=Q`,
             theme: "light",
             activeView: "dashboard",
             premium: { active: false, type: null, user: null },
@@ -185,7 +182,7 @@
         function renderView(viewId, isInitialLoad = false) {
             if (!isInitialLoad && settings.activeView === viewId) return;
             dom.activityBar.querySelectorAll('.activity-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.view === viewId));
-            dom.qHubSidebar.classList.remove('open'); // Mobile Sidebar schließen bei View-Wechsel
+            dom.qHubSidebar.classList.remove('open');
             dom.qHubSidebar.classList.add('hidden');
             dom.searchContainer.classList.add('hidden');
             dom.mobileMenuBtn.classList.add('hidden');
@@ -325,7 +322,7 @@
             modal.querySelector('#themeSelector').value = settings.theme;
             modal.querySelector('#closeSettingsModal').addEventListener('click', () => toggleModal('settingsModal', false));
             modal.querySelector('#themeSelector').addEventListener('change', (e) => { settings.theme = e.target.value; applyTheme(); saveSettings(); });
-            modal.querySelector('#exportBtn')?.addEventListener('click', () => {}); /* Export-Funktion hier einfügen */
+            modal.querySelector('#exportBtn')?.addEventListener('click', () => {}); 
             modal.querySelector('#activatePremiumBtn')?.addEventListener('click', handlePremiumActivation);
             toggleModal('settingsModal', true);
         }
@@ -362,7 +359,7 @@
                     saveSettings();
                     showToast("Premium erfolgreich aktiviert!", "success");
                     toggleModal('settingsModal', false);
-                    renderView(settings.activeView, true); // Ansicht neu rendern
+                    renderView(settings.activeView, true);
                 } else {
                     showToast("Ungültige Daten. Aktivierung fehlgeschlagen.", "error");
                 }
@@ -373,15 +370,14 @@
         
         function checkChangelog() {
             const lastVersion = settings.lastSeenVersion;
-            // Zeige Modal nur, wenn die gespeicherte Version NICHT die aktuelle ist.
             if (lastVersion !== APP_VERSION) {
                 const modal = document.getElementById('changelogModal');
-                const latestChangelog = userData.changelog[0]; // Holen des neuesten Eintrags
+                const latestChangelog = userData.changelog[0]; 
 
                  modal.innerHTML = `
                  <div class="q-modal-content">
                     <h2 class="text-2xl font-bold mb-4">Willkommen zu Version ${latestChangelog.version}!</h2>
-                    <div class="text-sm text-gray-500 mb-4">Was ist neu seit Version ${lastVersion}?</div>
+                    <div class="text-sm text-gray-500 mb-4">Was ist neu seit Version ${lastVersion || 'unbekannt'}?</div>
                     <ul class="list-disc list-inside space-y-2 my-6">
                         ${latestChangelog.changes.map(change => `<li>${change}</li>`).join('')}
                     </ul>
