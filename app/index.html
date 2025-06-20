@@ -208,8 +208,22 @@
                     break;
                 case 'status':
                     dom.headerTitle.textContent = "StatusPage";
-                    dom.mainContentArea.innerHTML = `<div class="webapp-container"><iframe src="https://status.quixoticode.de/status/network"></iframe></div>`;
-                    break;
+                    dom.mainContentArea.innerHTML = `
+                        <div class="h-full flex flex-col items-center justify-center text-center p-4">
+                        <div class="q-card max-w-md">
+                        <span class="material-icons text-6xl text-gray-400 mb-4">link_off</span>
+                        <h2 class="text-xl font-bold mb-2">Die Status-Seite kann nicht eingebettet werden.</h2>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6">
+                        Aus Sicherheitsgründen blockiert der Server die Anzeige in iFrames. Du kannst die Seite stattdessen direkt aufrufen.
+                        </p>
+                        <a href="https://status.quixoticode.de/status/network" target="_blank"
+                        class="inline-block px-6 py-3 rounded-lg text-white font-semibold transition" 
+                        style="background-color: var(--q-primary); color: var(--q-primary-text);">
+                        Status-Seite öffnen
+                        </a>
+                        </div>
+                        </div>`;
+                        break;
             }
             saveSettings();
         }
