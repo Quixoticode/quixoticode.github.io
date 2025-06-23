@@ -1,0 +1,199 @@
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link
+      rel="stylesheet"
+      as="style"
+      onload="this.rel='stylesheet'"
+      href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter%3Awght%40400%3B500%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900"
+    />
+
+    <title>BETA PROGRAM</title>
+    <link rel="icon" type="image/png" href="https://quixoticode.github.io/data/beta/beta.png" />
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <style>
+      /* Added styles for modal transitions */
+      .modal-hidden {
+        display: none;
+      }
+      .modal-visible {
+        display: flex;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="relative flex size-full min-h-screen flex-col bg-gray-50 group/design-root overflow-x-hidden" style='font-family: Inter, "Noto Sans", sans-serif;'>
+      <div class="layout-container flex h-full grow flex-col">
+        <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#e9edf1] px-4 sm:px-10 py-3">
+          <div class="flex items-center gap-4 text-[#101419]">
+            <div class="size-4">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z" fill="currentColor"></path></svg>
+            </div>
+            <h2 class="text-[#101419] text-lg font-bold leading-tight tracking-[-0.015em]">Beta Programs</h2>
+          </div>
+          <div class="flex flex-1 justify-end gap-2 sm:gap-8">
+            <div class="hidden sm:flex items-center gap-9">
+              <a class="text-[#101419] text-sm font-medium leading-normal" href="https://quixoticode.github.io/">Home</a>
+              <a class="text-[#101419] text-sm font-medium leading-normal" href="https://quixoticode.github.io/app">Programs</a>
+              <a class="text-[#101419] text-sm font-medium leading-normal" href="mailto:leitung@quixoticode.de">Support</a>
+              <a class="text-[#101419] text-sm font-medium leading-normal" href="https://quixoticode.github.io/contact">Contact</a>
+            </div>
+            <button
+              class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 bg-[#e9edf1] text-[#101419] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5"
+            >
+              <div class="text-[#101419]" data-icon="Bell" data-size="20px" data-weight="regular">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
+                  <path
+                    d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216ZM48,184c7.7-13.24,16-43.92,16-80a64,64,0,1,1,128,0c0,36.05,8.28,66.73,16,80Z"
+                  ></path>
+                </svg>
+              </div>
+            </button>
+          </div>
+        </header>
+        <main class="px-4 md:px-20 lg:px-40 flex flex-1 justify-center py-5">
+          <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+            <div class="flex flex-wrap justify-between gap-3 p-4">
+              <div class="flex min-w-72 flex-col gap-3">
+                <p class="text-[#101419] tracking-light text-[32px] font-bold leading-tight">Explore Beta Programs</p>
+                <p class="text-[#58728d] text-sm font-normal leading-normal">
+                  Discover and participate in our latest beta programs. Your feedback helps us improve our products and services.
+                </p>
+              </div>
+            </div>
+            <h2 class="text-[#101419] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Available Programs</h2>
+            
+            <!-- Program List -->
+            <div class="flex flex-col gap-4">
+                <!-- Program Card: QHub -->
+                <div class="p-4">
+                    <div class="flex flex-col md:flex-row items-center justify-between gap-6 rounded-xl border border-gray-200 p-6 bg-white shadow-sm hover:shadow-md transition-shadow">
+                        <div class="flex-shrink-0">
+                            <img src="https://quixoticode.github.io/data/qhub/favicon.svg" alt="QHub Icon" class="w-16 h-16 object-contain" onerror="this.onerror=null;this.src='https://placehold.co/64x64/e9edf1/101419?text=Icon';">
+                        </div>
+                        <div class="flex-grow flex flex-col gap-1 text-center md:text-left">
+                            <p class="text-[#101419] text-lg font-bold leading-tight">QHub</p>
+                            <p class="text-[#58728d] text-sm font-normal leading-normal">Hub for all Apps</p>
+                        </div>
+                        <div class="flex-shrink-0 mt-4 md:mt-0">
+                            <button class="register-btn flex min-w-[100px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-6 bg-blue-600 text-white text-sm font-bold leading-normal hover:bg-blue-700 transition-colors">
+                                <span class="truncate">Register</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Program Card: QSounds -->
+                <div class="p-4">
+                    <div class="flex flex-col md:flex-row items-center justify-between gap-6 rounded-xl border border-gray-200 p-6 bg-white shadow-sm hover:shadow-md transition-shadow">
+                        <div class="flex-shrink-0">
+                            <img src="https://quixoticode.github.io/data/qsounds/favicon.svg" alt="QSounds Icon" class="w-16 h-16 object-contain" onerror="this.onerror=null;this.src='https://placehold.co/64x64/e9edf1/101419?text=Icon';">
+                        </div>
+                        <div class="flex-grow flex flex-col gap-1 text-center md:text-left">
+                            <p class="text-[#101419] text-lg font-bold leading-tight">QSounds</p>
+                            <p class="text-[#58728d] text-sm font-normal leading-normal">RSA-Verschlüsselungstool</p>
+                        </div>
+                        <div class="flex-shrink-0 mt-4 md:mt-0">
+                            <button class="register-btn flex min-w-[100px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-6 bg-blue-600 text-white text-sm font-bold leading-normal hover:bg-blue-700 transition-colors">
+                                <span class="truncate">Register</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Program Card: QCode -->
+                <div class="p-4">
+                    <div class="flex flex-col md:flex-row items-center justify-between gap-6 rounded-xl border border-gray-200 p-6 bg-white shadow-sm hover:shadow-md transition-shadow">
+                        <div class="flex-shrink-0">
+                            <img src="https://quixoticode.github.io/data/qcode/favicon.svg" alt="QCode Icon" class="w-16 h-16 object-contain" onerror="this.onerror=null;this.src='https://placehold.co/64x64/e9edf1/101419?text=Icon';">
+                        </div>
+                        <div class="flex-grow flex flex-col gap-1 text-center md:text-left">
+                            <p class="text-[#101419] text-lg font-bold leading-tight">QCode</p>
+                            <p class="text-[#58728d] text-sm font-normal leading-normal">Lerne Programmiersprachen</p>
+                        </div>
+                        <div class="flex-shrink-0 mt-4 md:mt-0">
+                           <button class="register-btn flex min-w-[100px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-6 bg-blue-600 text-white text-sm font-bold leading-normal hover:bg-blue-700 transition-colors">
+                                <span class="truncate">Register</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Program Card: QPets -->
+                <div class="p-4">
+                    <div class="flex flex-col md:flex-row items-center justify-between gap-6 rounded-xl border border-gray-200 p-6 bg-white shadow-sm hover:shadow-md transition-shadow">
+                        <div class="flex-shrink-0">
+                            <img src="https://quixoticode.github.io/data/pl/favicon.svg" alt="QPets Icon" class="w-16 h-16 object-contain" onerror="this.onerror=null;this.src='https://placehold.co/64x64/e9edf1/101419?text=Icon';">
+                        </div>
+                        <div class="flex-grow flex flex-col gap-1 text-center md:text-left">
+                            <p class="text-[#101419] text-lg font-bold leading-tight">QPets</p>
+                            <p class="text-[#58728d] text-sm font-normal leading-normal">Tamagotchi-Spiel</p>
+                        </div>
+                        <div class="flex-shrink-0 mt-4 md:mt-0">
+                            <button class="register-btn flex min-w-[100px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-6 bg-blue-600 text-white text-sm font-bold leading-normal hover:bg-blue-700 transition-colors">
+                                <span class="truncate">Register</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="registerModal" class="modal-hidden fixed inset-0 bg-gray-900 bg-opacity-50 items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-xl p-6 w-11/12 max-w-md mx-auto">
+            <h3 class="text-lg font-bold text-gray-900 mb-4">Registration Notice</h3>
+            <p class="text-sm text-gray-600 mb-6">
+                You are about to be redirected. Please fill out the registration form on the next page to join the beta program.
+            </p>
+            <div class="flex justify-end gap-4">
+                <button id="closeModal" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300">Cancel</button>
+                <a href="https://quixoticode.github.io/contact" id="proceedButton" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Proceed to Register</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get the modal
+        const modal = document.getElementById('registerModal');
+        
+        // Get the buttons that open the modal
+        const registerButtons = document.querySelectorAll('.register-btn');
+
+        // Get the element that closes the modal
+        const closeModalButton = document.getElementById('closeModal');
+        
+        // Function to open the modal
+        const openModal = () => {
+            modal.classList.remove('modal-hidden');
+            modal.classList.add('modal-visible');
+        };
+
+        // Function to close the modal
+        const closeModal = () => {
+            modal.classList.remove('modal-visible');
+            modal.classList.add('modal-hidden');
+        };
+
+        // When the user clicks on a register button, open the modal
+        registerButtons.forEach(button => {
+            button.addEventListener('click', openModal);
+        });
+
+        // When the user clicks on the close button, close the modal
+        closeModalButton.addEventListener('click', closeModal);
+
+        // When the user clicks anywhere outside of the modal content, close it
+        window.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+    </script>
+  </body>
+</html>

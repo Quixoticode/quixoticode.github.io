@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontakt & Registrierung</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link rel="stylesheet" as="style" onload="this.rel='stylesheet'" href="https://fonts.googleapis.com/css2?display=swap&family=Inter:wght@400;500;700;900&family=Noto+Sans:wght@400;500;700;900" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <style>
+        /* Custom styles for embedded content */
+        .iframe-container {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            padding-top: 125%; /* Aspect ratio for typical forms */
+        }
+        .iframe-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="relative flex size-full min-h-screen flex-col group/design-root overflow-x-hidden" style='font-family: Inter, "Noto Sans", sans-serif;'>
+        <div class="layout-container flex h-full grow flex-col">
+            <!-- Header -->
+            <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#e9edf1] px-4 sm:px-10 py-3">
+                <div class="flex items-center gap-4 text-[#101419]">
+                    <div class="size-4">
+                        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z" fill="currentColor"></path></svg>
+                    </div>
+                    <h2 class="text-[#101419] text-lg font-bold leading-tight tracking-[-0.015em]">Quixoticode</h2>
+                </div>
+                <div class="flex flex-1 justify-end gap-2 sm:gap-8">
+                    <nav class="hidden sm:flex items-center gap-9">
+                        <a class="text-[#101419] text-sm font-medium leading-normal" href="https://quixoticode.github.io/">Home</a>
+                        <a class="text-[#101419] text-sm font-medium leading-normal" href="https://quixoticode.github.io/app">Programs</a>
+                        <a class="text-[#101419] text-sm font-medium leading-normal" href="mailto:leitung@quixoticode.de">Support</a>
+                        <!-- Active link style -->
+                        <a class="text-blue-600 text-sm font-bold leading-normal" href="https://quixoticode.github.io/contact" aria-current="page">Contact</a>
+                    </nav>
+                    <button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 bg-[#e9edf1] text-[#101419] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
+                        <div class="text-[#101419]" data-icon="Bell" data-size="20px" data-weight="regular">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
+                                <path d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216ZM48,184c7.7-13.24,16-43.92,16-80a64,64,0,1,1,128,0c0,36.05,8.28,66.73,16,80Z"></path>
+                            </svg>
+                        </div>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <main class="flex-1">
+                <div class="bg-white">
+                     <div class="py-12 sm:py-16 px-4 sm:px-6 lg:px-8">
+                        <div class="max-w-4xl mx-auto text-center">
+                            <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">Registrierung & Kontakt</h1>
+                            <p class="mt-4 text-lg leading-8 text-gray-600">
+                                Wähle das passende Formular für dein Anliegen
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Google Forms Container -->
+                <div id="forms-container" class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Formular-Karten werden hier per JavaScript eingefügt -->
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- HIER DEINE GOOGLE FORMS EINTRAGEN ---
+            // Trage hier den Titel und den Link zu jedem Google Formular ein.
+            // WICHTIG: Benutze den "Einbetten"-Link von Google Forms. Du findest ihn unter "Senden" -> "<>" (Einbetten).
+            // Kopiere nur die URL aus dem src="..." Attribut.
+            const googleForms = [
+                {
+                    title: 'Bewerbung',
+                    url: 'https://docs.google.com/forms/d/e/1FAIpQLScbaePadi6WlsdkKCDX2WYFDh9SsG3kaOqrw0l7tn-TzobB-g/viewform?usp=dialog'
+                },
+                {
+                    title: 'Meldeformular',
+                    url: 'https://docs.google.com/forms/d/e/1FAIpQLScpjjuCRvrhzu_-S4DbUjwv3fAOT-f7u5FI2x_ZRZQX6vYjEg/viewform?usp=dialog'
+                },
+                {
+                    title: 'Antragsformular',
+                    url: 'https://docs.google.com/forms/d/e/1FAIpQLSf_kgefdvLIEgZaDTEsyGwTbCbEbHu6YcR0hC8dE7vCMz2mCg/viewform?usp=dialog'
+                },
+                // Füge hier weitere Formulare hinzu
+                // {
+                //     title: 'Neues Formular',
+                //     url: 'DEIN_GOOGLE_FORM_EMBED_LINK_HIER'
+                // }
+            ];
+
+            const container = document.getElementById('forms-container');
+            if (container) {
+                if(googleForms.length === 0){
+                    container.innerHTML = `<p class="text-gray-500 col-span-full text-center">Derzeit sind keine Formulare verfügbar.</p>`;
+                    return;
+                }
+
+                googleForms.forEach(form => {
+                    const card = `
+                        <div class="flex flex-col bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:-translate-y-1">
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-gray-900 truncate">${form.title}</h3>
+                            </div>
+                            <div class="iframe-container bg-gray-100">
+                                <iframe src="${form.url}" loading="lazy" title="${form.title} Vorschau">Wird geladen…</iframe>
+                            </div>
+                             <div class="p-6 bg-gray-50">
+                                <a href="${form.url.replace('?embedded=true', '')}" target="_blank" rel="noopener noreferrer" class="w-full text-center block rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
+                                    In neuem Tab öffnen
+                                </a>
+                            </div>
+                        </div>
+                    `;
+                    container.innerHTML += card;
+                });
+            }
+        });
+    </script>
+</body>
+</html>
