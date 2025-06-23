@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>QHub v2.2 - Dein persönlicher Hub</title>
+    <title>QHub v2.3 - Dein persönlicher Hub</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet">
     
     <link rel="icon" type="image/svg+xml" href="https://quixoticode.github.io/data/qhub/favicon.svg" />
-    <link rel="manifest" href="data:application/manifest+json;base64,ew0KICAgICJuYW1lIjogIlFIdWIgVjIuMSIsICJzaG9ydF9uYW1lIjogIlFIdWIiLCAiZGVzY3JpcHRpb24iOiAiRGVpbiBwZXJzw7ZubGljaGVyIEh1YiBtaXQgUHJlbWl1bS1GdW5rdGlvbmVuIiwgImljb25zIjogW3sic3JjIjogImh0dHBzOi8vcXVpeG90aWNvZGUuZ2l0aHViLmlvL2RhdGEvcWh1Yi9hbmRyb2lkLWNocm9tZS0xOTJ4MTkyLnBuZyIsICJzaXplcyI6ICIxOTJ4MTkyIiwgInR5cGUiOiAiaW1hZ2UvcG5nIn0sIHsic3JjIjogImh0dHBzOi8vcXVpeG90aWNvZGUuZ2l0aHViLmlvL2RhdGEvcWh1Yi9hbmRyb2lkLWNocm9tZS01MTJ4NTEyLnBuZyIsICJzaXplcyI6ICI1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2UvcG5nIn1dLA0KICAgICJzdGFydF91cmwiOiAiLi8iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiI2YxZjVmOSIsICJ0aGVtZV9jb2xvciI6ICIjNGY0NmU1Ig0KfQ==">
+    <link rel="manifest" href="data:application/manifest+json;base64,ew0KICAgICJuYW1lIjogIlFIdWIgVjIuMyIsICJzaG9ydF9uYW1lIjogIlFIdWIiLCAiZGVzY3JpcHRpb24iOiAiRGVpbiBwZXJzw7ZubGljaGVyIEh1YiBtaXQgUHJlbWl1bS1GdW5rdGlvbmVuIiwgImljb25zIjogW3sic3JjIjogImh0dHBzOi8vcXVpeG90aWNvZGUuZ2l0aHViLmlvL2RhdGEvcWh1Yi9hbmRyb2lkLWNocm9tZS0xOTJ4MTkyLnBuZyIsICJzaXplcyI6ICIxOTJ4MTkyIiwgInR5cGUiOiAiaW1hZ2UvcG5nIn0sIHsic3JjIjogImh0dHBzOi8vcXVpeG90aWNvZGUuZ2l0aHViLmlvL2RhdGEvcWh1Yi9hbmRyb2lkLWNocm9tZS01MTJ4NTEyLnBuZyIsICJzaXplcyI6ICI1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2UvcG5nIn1dLA0KICAgICJzdGFydF91cmwiOiAiLi8iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiI2YxZjVmOSIsICJ0aGVtZV9jb2xvciI6ICIjNGY0NmU1Ig0KfQ==">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="QHub">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -48,7 +48,7 @@
         .q-main-content { flex-grow: 1; display: flex; flex-direction: column; height: 100vh; }
         .q-header { height: var(--header-height); flex-shrink: 0; background-color: var(--q-surface); border-bottom: 1px solid var(--q-outline); display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; z-index: 900; }
         .q-content-area { flex-grow: 1; overflow-y: auto; padding: 2rem; }
-        .webapp-container, .webapp-container iframe { width: 100%; height: 100%; border: none; background-color: #fff; }
+        .webapp-container, .webapp-container iframe { width: 100%; height: 100%; border: none; background-color: #fff; border-radius: var(--radius-lg); }
         .q-card { background-color: var(--q-surface); border-radius: var(--radius-lg); padding: 1.5rem; box-shadow: var(--shadow-md); border: 1px solid var(--q-outline); }
         .q-modal-backdrop { position: fixed; inset: 0; background-color: rgba(0,0,0,0.5); backdrop-filter: blur(4px); z-index: 5000; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s; padding: 1rem; }
         .q-modal-backdrop.visible { display: flex; opacity: 1; }
@@ -78,11 +78,21 @@
 
     <div class="q-app-container">
         <div class="q-activity-bar" id="activityBar">
+            <!-- Standard Apps -->
             <button class="activity-btn" data-view="dashboard" title="Dashboard"><span class="material-icons">dashboard</span></button>
+            <button class="activity-btn" data-view="web" title="Web"><span class="material-icons">public</span></button>
             <button class="activity-btn" data-view="qcode" title="QCode Lernplattform"><span class="material-icons">school</span></button>
             <button class="activity-btn" data-view="qsounds" title="QSounds"><span class="material-icons">graphic_eq</span></button>
+            
+            <!-- Premium App: QPet's -->
+            <button class="activity-btn hidden" data-view="qpets" title="QPet's"><span class="material-icons">pets</span></button>
+
+            <div class="flex-grow"></div> <!-- Spacer -->
+            
+            <!-- Untere Apps -->
+            <button class="activity-btn" data-view="contact" title="Kontakt"><span class="material-icons">contact_support</span></button>
             <button class="activity-btn" data-view="status" title="Statuspage"><span class="material-icons">error</span></button>
-            <div class="mt-auto"><button class="activity-btn" id="settingsBtn" title="Einstellungen"><span class="material-icons">settings</span></button></div>
+            <button class="activity-btn" id="settingsBtn" title="Einstellungen"><span class="material-icons">settings</span></button>
         </div>
         <aside class="q-sidebar hidden" id="qHubSidebar"></aside>
         <div class="q-main-content">
@@ -104,20 +114,16 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // GEÄNDERT: Version auf 2.2.0 für das Push-Update erhöht
-        const APP_PREFIX = 'qhub_v2.2_';
+        const APP_PREFIX = 'qhub_v2.3_';
         const SETTINGS_KEY = APP_PREFIX + 'settings';
         const USER_DATA_KEY = APP_PREFIX + 'user_data';
-        const APP_VERSION = "2.2.0";
+        const APP_VERSION = "2.3.0";
 
-        // --- ANFANG: PUSH NOTIFICATION LOGIK ---
+        // --- PUSH NOTIFICATION LOGIK ---
+        
+        // KORRIGIERT: Korrekte Server URL
+        const PUSH_SERVER_URL = 'https://qhub-push-server.glitch.me';
 
-        // WICHTIG: Ersetze diese URL durch die deines echten Servers!
-        const PUSH_SERVER_URL = 'https://https.quixoticode.de:3000';
-
-        /**
-         * Initialisiert den gesamten Push-Benachrichtigungsprozess.
-         */
         async function initPushNotifications() {
             if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
                 showToast('Push-Benachrichtigungen werden von diesem Browser nicht unterstützt.', 'error');
@@ -125,34 +131,24 @@
             }
 
             try {
-                // 1. Service Worker registrieren
                 const registration = await navigator.serviceWorker.register('./sw.js');
-                console.log('Service Worker für Push registriert.');
-
-                // 2. Warten bis der SW aktiv ist
                 await navigator.serviceWorker.ready;
-                console.log('Service Worker ist aktiv.');
                 
-                // 3. Nach der Berechtigung fragen
                 const permission = await Notification.requestPermission();
                 if (permission !== 'granted') {
                     showToast('Berechtigung für Benachrichtigungen wurde nicht erteilt.', 'info');
                     return;
                 }
                 
-                // 4. Den Public Key vom Server abrufen
                 const response = await fetch(`${PUSH_SERVER_URL}/vapidPublicKey`);
                 if (!response.ok) throw new Error('VAPID Key konnte nicht vom Server geladen werden.');
                 const publicVapidKey = await response.text();
 
-                // 5. Den Nutzer für Push-Nachrichten "abonnieren"
                 const subscription = await registration.pushManager.subscribe({
                     userVisibleOnly: true,
                     applicationServerKey: urlBase64ToUint8Array(publicVapidKey)
                 });
-                console.log('Push-Abonnement erfolgreich erstellt:', subscription);
                 
-                // 6. Das Abonnement an den Server senden
                 await sendSubscriptionToServer(subscription);
                 showToast('Benachrichtigungen erfolgreich aktiviert!', 'success');
                 
@@ -162,10 +158,6 @@
             }
         }
 
-        /**
-         * Sendet das Abonnement-Objekt an den Backend-Server.
-         * @param {PushSubscription} subscription
-         */
         async function sendSubscriptionToServer(subscription) {
             try {
                 const response = await fetch(`${PUSH_SERVER_URL}/subscribe`, {
@@ -177,14 +169,9 @@
                 console.log('Abonnement erfolgreich an den Server gesendet.');
             } catch (error) {
                 console.error('Fehler beim Senden des Abonnements an den Server:', error);
-                // Hier könntest du dem Nutzer auch Feedback geben
             }
         }
 
-        /**
-         * Konvertiert einen Base64-String in ein Uint8Array,
-         * was für den applicationServerKey benötigt wird.
-         */
         function urlBase64ToUint8Array(base64String) {
             const padding = '='.repeat((4 - base64String.length % 4) % 4);
             const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
@@ -196,23 +183,23 @@
             return outputArray;
         }
 
-        // --- ENDE: PUSH NOTIFICATION LOGIK ---
+        // --- ENDE PUSH NOTIFICATION LOGIK ---
 
 
         const initialUserData = {
             version: APP_VERSION,
             announcements: [
-                { id: "news-1", title: "Willkommen zu QHub 2.1!", content: "Entdecke das neue Premium-System und die App-Integrationen.", date: "2025-06-20", premium: false },
-                { id: "news-2", title: "Exklusiver Einblick in v2.2", content: "Als Premium-Nutzer siehst du hier exklusive Details zum nächsten großen Update, das einen Notizblock mit Markdown-Unterstützung bringen wird.", date: "2025-06-20", premium: true },
+                { id: "news-1", title: "Willkommen zu QHub 2.3!", content: "Neue WebApps und Premium-Inhalte warten auf dich.", date: "2025-06-23", premium: false },
+                { id: "news-2", title: "Premium-Special: QPet's", content: "Ziehe dein eigenes virtuelles Haustier auf! Nur für Premium-Nutzer.", date: "2025-06-23", premium: true },
             ],
             roadmap: [
-                { id: "rm-1", title: 'v2.3: Admin-Update', description: 'Update des Benutzersystems', status: 'in-progress', progress: 5 },
-                { id: "rm-2", title: 'v2.4: Kalender-Widget', description: 'Ein einfacher Kalender zur Terminübersicht direkt auf dem Dashboard.', status: 'planned', progress: 0 },
+                { id: "rm-1", title: 'v2.3: Admin-Update', description: 'Update des Benutzersystems', status: 'completed', progress: 100 },
+                { id: "rm-2", title: 'v2.4: Kalender-Widget', description: 'Ein einfacher Kalender zur Terminübersicht direkt auf dem Dashboard.', status: 'in-progress', progress: 25 },
+                { id: "rm-3", title: 'v2.5: Notizblock', description: 'Ein Notizblock mit Markdown-Unterstützung.', status: 'planned', progress: 0 },
             ],
             changelog: [
+                { version: "2.3.0", date: "2025-06-23", changes: ["Neue WebApps hinzugefügt: Web, Kontakt.", "Premium-WebApp 'QPet's' hinzugefügt.", "Fehler behoben, der Push-Benachrichtigungen und die Premium-Anmeldung blockierte.", "Allgemeine UI-Verbesserungen."] },
                 { version: "2.2.0", date: "2025-06-21", changes: ["Push-Benachrichtigungen für Updates und Ankündigungen hinzugefügt.", "Neuer Button in den Einstellungen zur Aktivierung der Benachrichtigungen.", "Allgemeine Leistungsverbesserungen."] },
-                { version: "2.1.2", date: "2025-06-20", changes: ["Behebt ein Problem, bei dem der Einstellungs-Button auf mobilen Geräten nicht klickbar war.", "Layout an den sicheren Anzeigebereich (Safe Area) von mobilen Geräten angepasst."] },
-                { version: "2.1.1", date: "2025-06-20", changes: ["Verbesserte Mobilansicht für Header und Inhaltsbereiche.", "Optimierte Darstellung der Einstellungs- & Changelog-Modals auf kleinen Bildschirmen."] },
             ],
         };
         
@@ -232,11 +219,19 @@
 
         let settings = {};
         let userData = {};
-        const dom = { activityBar: document.getElementById('activityBar'), mainContentArea: document.getElementById('mainContentArea'), headerTitle: document.getElementById('headerTitle'), searchContainer: document.getElementById('searchContainer'), qHubSidebar: document.getElementById('qHubSidebar'), mobileMenuBtn: document.getElementById('mobileMenuBtn'), };
+        const dom = { 
+            activityBar: document.getElementById('activityBar'), 
+            mainContentArea: document.getElementById('mainContentArea'), 
+            headerTitle: document.getElementById('headerTitle'), 
+            searchContainer: document.getElementById('searchContainer'), 
+            qHubSidebar: document.getElementById('qHubSidebar'), 
+            mobileMenuBtn: document.getElementById('mobileMenuBtn'), 
+        };
 
         function init() {
             loadState();
             applyTheme();
+            updatePremiumFeatures();
             renderView(settings.activeView, true);
             setupEventListeners();
             checkChangelog();
@@ -249,6 +244,7 @@
             const storedData = localStorage.getItem(USER_DATA_KEY);
             userData = storedData ? JSON.parse(storedData) : { ...initialUserData };
         }
+        
         function saveSettings() {
             settings.version = APP_VERSION;
             localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
@@ -261,35 +257,64 @@
             dom.qHubSidebar.classList.add('hidden');
             dom.searchContainer.classList.add('hidden');
             dom.mobileMenuBtn.classList.add('hidden');
+            dom.mainContentArea.innerHTML = ''; // Clear content area
             settings.activeView = viewId;
             
+            let content = '';
+            let title = '';
+
             switch(viewId) {
                 case 'dashboard':
-                    dom.headerTitle.textContent = "Dashboard";
+                    title = "Dashboard";
                     dom.searchContainer.classList.remove('hidden');
                     dom.mobileMenuBtn.classList.remove('hidden');
                     dom.qHubSidebar.classList.remove('hidden');
                     renderDashboardSidebar();
                     renderDashboardContent();
                     break;
+                case 'web':
+                    title = "Web";
+                    content = `<div class="webapp-container"><iframe src="https://quixoticode.github.io"></iframe></div>`;
+                    break;
                 case 'qcode':
-                    dom.headerTitle.textContent = "QCode Lernplattform";
-                    dom.mainContentArea.innerHTML = `<div class="webapp-container"><iframe src="https://quixoticode.github.io/app/QCode/"></iframe></div>`;
+                    title = "QCode Lernplattform";
+                    content = `<div class="webapp-container"><iframe src="https://quixoticode.github.io/app/QCode/"></iframe></div>`;
                     break;
                 case 'qsounds':
-                    dom.headerTitle.textContent = "QSounds";
-                    dom.mainContentArea.innerHTML = `<div class="webapp-container"><iframe src="https://quixoticode.github.io/app/QSounds/"></iframe></div>`;
+                    title = "QSounds";
+                    content = `<div class="webapp-container"><iframe src="https://quixoticode.github.io/app/QSounds/"></iframe></div>`;
+                    break;
+                case 'qpets':
+                    title = "QPet's";
+                    content = `<div class="webapp-container"><iframe src="https://quixoticode.github.io/app/pl"></iframe></div>`;
+                    break;
+                case 'contact':
+                    title = "Kontakt";
+                    content = `<div class="webapp-container"><iframe src="https://quixoticode.github.io/contact"></iframe></div>`;
                     break;
                 case 'status':
-                    dom.headerTitle.textContent = "StatusPage";
-                    dom.mainContentArea.innerHTML = `<div class="h-full flex flex-col items-center justify-center text-center p-4"><div class="q-card max-w-md"><span class="material-icons text-6xl text-gray-400 mb-4">link_off</span><h2 class="text-xl font-bold mb-2">Die Status-Seite kann nicht eingebettet werden.</h2><p class="text-gray-600 dark:text-gray-300 mb-6">Aus Sicherheitsgründen blockiert der Server die Anzeige in iFrames. Du kannst die Seite stattdessen direkt aufrufen.</p><a href="https://status.quixoticode.de/status/network" target="_blank" class="inline-block px-6 py-3 rounded-lg text-white font-semibold transition" style="background-color: var(--q-primary); color: var(--q-primary-text);">Status-Seite öffnen</a></div></div>`;
+                    title = "StatusPage";
+                    content = `<div class="h-full flex flex-col items-center justify-center text-center p-4"><div class="q-card max-w-md"><span class="material-icons text-6xl text-gray-400 mb-4">link_off</span><h2 class="text-xl font-bold mb-2">Die Status-Seite kann nicht eingebettet werden.</h2><p class="text-gray-600 dark:text-gray-300 mb-6">Aus Sicherheitsgründen blockiert der Server die Anzeige in iFrames. Du kannst die Seite stattdessen direkt aufrufen.</p><a href="https://status.quixoticode.de/status/network" target="_blank" class="inline-block px-6 py-3 rounded-lg text-white font-semibold transition" style="background-color: var(--q-primary); color: var(--q-primary-text);">Status-Seite öffnen</a></div></div>`;
                     break;
             }
+            
+            dom.headerTitle.textContent = title;
+            if(content) dom.mainContentArea.innerHTML = content;
+            
             saveSettings();
         }
 
         function applyTheme() { document.documentElement.setAttribute('data-theme', settings.theme); }
         
+        function updatePremiumFeatures() {
+            const qpetsBtn = document.querySelector('[data-view="qpets"]');
+            if(settings.premium.active) {
+                qpetsBtn.classList.remove('hidden');
+            } else {
+                qpetsBtn.classList.add('hidden');
+            }
+        }
+
         function renderDashboardSidebar() {
              dom.qHubSidebar.innerHTML = `<div class="flex items-center gap-3 mb-8"><span class="material-icons text-3xl" style="color: var(--q-primary);">hub</span><h1 class="text-2xl font-bold">QHub</h1></div><div class="p-4 rounded-lg mb-6 text-center" style="background-color: var(--q-highlight);"><img src="${settings.userAvatar}" class="w-16 h-16 rounded-full mx-auto mb-2 border-2 border-white shadow-md cursor-pointer" id="avatarImg"><div class="flex items-center justify-center gap-2 mt-2"><h2 class="font-bold text-lg" style="color: var(--q-highlight-text);">${settings.userName}</h2>${settings.premium.active ? `<div class="premium-badge" title="Premium-Status: ${settings.premium.type}"><span class="material-icons text-xs">star</span></div>` : ''}</div></div><nav class="flex-grow"><h3 class="px-3 text-sm font-semibold text-gray-400 uppercase tracking-wider mb-2">Sektionen</h3>${settings.dashboard.sectionOrder.map(id => `<a href="#section-${id}" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 capitalize">${id}</a>`).join('')}</nav>`;
         }
@@ -339,14 +364,14 @@
             const themeOptions = ['light', 'dark', 'forest', 'ocean', 'sunset', 'mint', 'slate', 'candy'];
             modal.innerHTML = `
                 <div class="q-modal-content">
-                    <div class="flex justify-between items-center"><h2 class="text-2xl font-bold">Einstellungen</h2><button id="closeSettingsModal" class="p-2 rounded-full hover:bg-gray-200">&times;</button></div>
-                    <div class="mt-6 border-t border-gray-200 pt-6 space-y-6">
+                    <div class="flex justify-between items-center"><h2 class="text-2xl font-bold">Einstellungen</h2><button id="closeSettingsModal" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600">&times;</button></div>
+                    <div class="mt-6 border-t border-gray-200 dark:border-gray-700 pt-6 space-y-6">
                         <!-- Premium Sektion -->
-                        <div><label class="font-semibold block mb-2">Premium-Status</label>${settings.premium.active ? `<div class="p-4 rounded-md bg-green-100 text-green-800 text-center">Premium ist aktiv! (Typ: ${settings.premium.type})</div>` : `<div class="space-y-4 p-4 border rounded-md"><h4 class="font-medium">Premium aktivieren</h4><div><label class="text-sm">Benutzername</label><input id="premiumUser" type="text" class="q-input mt-1" placeholder="Optional"></div><div><label class="text-sm">Passwort / Einmal-Code</label><input id="premiumCode" type="password" class="q-input mt-1"></div><button id="activatePremiumBtn" class="w-full p-2 text-center bg-blue-600 text-white rounded-md hover:bg-blue-700">Aktivieren</button><p class="text-xs text-gray-500 mt-2">Um einen Benutzer-Account zu erhalten, sende eine E-Mail an: <b class="font-mono">quixoticode@proton.me</b></p></div>`}</div>
+                        <div><label class="font-semibold block mb-2">Premium-Status</label>${settings.premium.active ? `<div class="p-4 rounded-md bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 text-center">Premium ist aktiv! (Typ: ${settings.premium.type})</div>` : `<div class="space-y-4 p-4 border rounded-md dark:border-gray-600"><h4 class="font-medium">Premium aktivieren</h4><div><label class="text-sm">Benutzername</label><input id="premiumUser" type="text" class="q-input mt-1" placeholder="Optional"></div><div><label class="text-sm">Passwort / Einmal-Code</label><input id="premiumCode" type="password" class="q-input mt-1"></div><button id="activatePremiumBtn" class="w-full p-2 text-center bg-blue-600 text-white rounded-md hover:bg-blue-700">Aktivieren</button><p class="text-xs text-gray-500 dark:text-gray-400 mt-2">Um einen Benutzer-Account zu erhalten, sende eine E-Mail an: <b class="font-mono">quixoticode@proton.me</b></p></div>`}</div>
                         <!-- Theme Sektion -->
                         <div><label class="font-semibold block mb-2">Theme</label><select id="themeSelector" class="q-input">${themeOptions.map(t => `<option value="${t}" class="capitalize">${t}</option>`).join('')}</select></div>
                         
-                        <!-- HINZUGEFÜGT: Benachrichtigungs-Sektion -->
+                        <!-- Benachrichtigungs-Sektion -->
                         <div>
                             <label class="font-semibold block mb-2">Benachrichtigungen</label>
                             <div class="flex gap-4">
@@ -358,25 +383,35 @@
                         </div>
 
                         <!-- Daten-Management Sektion -->
-                        <div><label class="font-semibold block mb-2">Daten-Management</label><div class="flex gap-4"><button id="exportBtn" class="w-full p-2 text-center border rounded-md hover:bg-gray-100">Exportieren</button></div></div>
+                        <div><label class="font-semibold block mb-2">Daten-Management</label><div class="flex gap-4"><button id="exportBtn" class="w-full p-2 text-center border rounded-md hover:bg-gray-100 dark:hover:bg-gray-700">Exportieren</button></div></div>
                     </div>
                 </div>`;
             
-            // Event Listeners für das Modal
             modal.querySelector('#themeSelector').value = settings.theme;
             modal.querySelector('#closeSettingsModal').addEventListener('click', () => toggleModal('settingsModal', false));
             modal.querySelector('#themeSelector').addEventListener('change', (e) => { settings.theme = e.target.value; applyTheme(); saveSettings(); });
-            modal.querySelector('#exportBtn')?.addEventListener('click', () => { /* Export-Logik hier */ }); 
+            modal.querySelector('#exportBtn')?.addEventListener('click', () => { showToast('Export-Funktion noch in Arbeit.', 'info') }); 
             modal.querySelector('#activatePremiumBtn')?.addEventListener('click', handlePremiumActivation);
-
-            // HINZUGEFÜGT: Event Listener für den Push-Button
             modal.querySelector('#activatePushBtn')?.addEventListener('click', initPushNotifications);
 
             toggleModal('settingsModal', true);
         }
 
         async function handlePremiumActivation() {
-            // ... (unveränderte Funktion)
+            const code = document.getElementById('premiumCode').value;
+            // Dummy-Prüfung - in einer echten App wäre hier ein Server-Call
+            if (code === "QCODE-PREMIUM-2025") {
+                 settings.premium = { active: true, type: 'Lifetime', user: 'QCode-User' };
+                 settings.userName = document.getElementById('premiumUser').value || 'Premium Nutzer';
+                 settings.userAvatar = `https://placehold.co/96x96/f59e0b/ffffff?text=${settings.userName.charAt(0)}`;
+                 saveSettings();
+                 updatePremiumFeatures();
+                 renderView('dashboard'); // Neu rendern, um alles zu aktualisieren
+                 toggleModal('settingsModal', false);
+                 showToast('Premium erfolgreich aktiviert!', 'success');
+            } else {
+                 showToast('Ungültiger Premium-Code.', 'error');
+            }
         }
         
         function checkChangelog() {
@@ -386,10 +421,10 @@
                 const latestChangelog = userData.changelog[0]; 
                  modal.innerHTML = `
                  <div class="q-modal-content">
-                    <h2 class="text-2xl font-bold mb-4">Willkommen zu Version ${latestChangelog.version}!</h2>
-                    <div class="text-sm text-gray-500 mb-4">Was ist neu seit Version ${lastVersion || 'unbekannt'}?</div>
-                    <ul class="list-disc list-inside space-y-2 my-6">${latestChangelog.changes.map(change => `<li>${change}</li>`).join('')}</ul>
-                    <div class="flex justify-end"><button id="closeChangelogModal" class="px-4 py-2 bg-blue-600 text-white rounded-md">Verstanden!</button></div>
+                     <h2 class="text-2xl font-bold mb-4">Willkommen zu Version ${latestChangelog.version}!</h2>
+                     <div class="text-sm text-gray-500 mb-4">Was ist neu seit Version ${lastVersion || 'deiner letzten Nutzung'}?</div>
+                     <ul class="list-disc list-inside space-y-2 my-6">${latestChangelog.changes.map(change => `<li>${change}</li>`).join('')}</ul>
+                     <div class="flex justify-end"><button id="closeChangelogModal" class="px-4 py-2 bg-blue-600 text-white rounded-md">Verstanden!</button></div>
                  </div>`;
                 modal.querySelector('#closeChangelogModal').addEventListener('click', () => {
                     toggleModal('changelogModal', false)
@@ -404,15 +439,53 @@
             const container = document.getElementById('toastContainer');
             const toast = document.createElement('div');
             const colors = { info: 'bg-blue-500', success: 'bg-green-500', error: 'bg-red-500' };
-            toast.className = `px-4 py-2 rounded-md text-white shadow-lg transition-opacity duration-300 ${colors[type] || 'bg-gray-500'}`;
+            toast.className = `px-4 py-3 rounded-lg text-white shadow-lg transition-all duration-300 transform translate-y-4 opacity-0`;
             toast.textContent = message;
+            toast.style.backgroundColor = `var(--q-${type}, #64748b)`;
+            if (type === 'success') toast.style.backgroundColor = `var(--q-primary)`;
+            if (type === 'error') toast.style.backgroundColor = `var(--q-danger)`;
+            
             container.appendChild(toast);
+            
+            // Force a reflow to enable the transition
+            toast.offsetHeight; 
+
+            toast.classList.remove('translate-y-4', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
             setTimeout(() => {
                 toast.style.opacity = '0';
                 setTimeout(() => toast.remove(), 300);
-            }, 3000);
+            }, 4000);
         }
     });
+    </script>
+    <!-- Dummy Service Worker für die PWA-Fähigkeit -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            const swContent = `
+                self.addEventListener('fetch', (event) => {
+                    // Dieser Service Worker tut nichts, aber er ist für die PWA notwendig.
+                });
+
+                self.addEventListener('push', function(event) {
+                    const data = event.data ? event.data.json() : { title: 'QHub Update', body: 'Es gibt Neuigkeiten!', icon: 'https://quixoticode.github.io/data/qhub/android-chrome-192x192.png' };
+                    event.waitUntil(
+                        self.registration.showNotification(data.title, {
+                            body: data.body,
+                            icon: data.icon
+                        })
+                    );
+                });
+            `;
+            const swBlob = new Blob([swContent], {type: 'application/javascript'});
+            const swUrl = URL.createObjectURL(swBlob);
+            navigator.serviceWorker.register(swUrl).then(reg => {
+                console.log('Dummy Service Worker registriert.', reg);
+            }).catch(err => {
+                console.error('Service Worker Registrierung fehlgeschlagen:', err);
+            });
+        }
     </script>
 </body>
 </html>
