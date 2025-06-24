@@ -10,7 +10,7 @@
       "roles": ["PREMIUM"],
       "avatar": "https://placehold.co/96x96/f59e0b/ffffff?text=A"
     },
-    "betatester": {
+    "juliuspeters": {
       "password": "beta_user_pass",
       "roles": ["BETA"],
       "avatar": "https://placehold.co/96x96/10b981/ffffff?text=B"
