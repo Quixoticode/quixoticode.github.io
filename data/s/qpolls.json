@@ -1,0 +1,31 @@
+{
+  "polls": [
+    {
+      "id": "qhub-feedback-2025-q2",
+      "title": "Feedback zu QHub v2.3",
+      "description": "Deine Meinung ist uns wichtig! Hilf uns, QHub mit deinem Feedback zu den neuesten Features zu verbessern.",
+      "status": "Offen",
+      "type": "Feedback",
+      "icon": "https://quixoticode.github.io/data/qhub/favicon.svg",
+      "formUrl": "https://docs.google.com/forms/d/e/1FAIpQLSfZIS_F-52v5c_EadA8A_j2a6Q_1iX9J2uY_8oR_9aZ-zO9w/viewform"
+    },
+    {
+      "id": "feature-poll-q3",
+      "title": "Nächstes Feature für QHub?",
+      "description": "Stimme ab! Welches Feature sollen wir als Nächstes für den QHub entwickeln? Deine Stimme zählt.",
+      "status": "Offen",
+      "type": "Umfrage",
+      "icon": "https://quixoticode.github.io/data/qhub/favicon.svg",
+      "formUrl": "https://docs.google.com/forms/d/e/1FAIpQLSfZIS_F-52v5c_EadA8A_j2a6Q_1iX9J2uY_8oR_9aZ-zO9w/viewform"
+    },
+    {
+      "id": "design-contest-2025",
+      "title": "Design-Wettbewerb (Archiv)",
+      "description": "Der Wettbewerb für das neue Logo ist beendet. Vielen Dank an alle Teilnehmer!",
+      "status": "Geschlossen",
+      "type": "Event",
+      "icon": "https://quixoticode.github.io/data/qhub/favicon.svg",
+      "formUrl": ""
+    }
+  ]
+}
