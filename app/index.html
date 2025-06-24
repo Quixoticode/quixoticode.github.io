@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>QHub v2.3.4 - Dein persönlicher Hub</title>
+    <title>QHub v2.3.6 - Dein persönlicher Hub</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet">
     
     <link rel="icon" type="image/svg+xml" href="https://quixoticode.github.io/data/qhub/favicon.svg" />
-    <link rel="manifest" href="data:application/manifest+json;base64,ew0KICAgICJuYW1lIjogIlFIdWIgVjIuNCIsICJzaG9ydF9uYW1lIjogIlFIdWIiLCAiZGVzY3JpcHRpb24iOiAiRGVpbiBwZXJzw7ZubGljaGVyIEh1YiBtaXQgUHJlbWl1bS1GdW5rdGlvbmVuIiwgImljb25zIjogW3sic3JjIjogImh0dHBzOi8vcXVpeG90aWNvZGUuZ2l0aHViLmlvL2RhdGEvcWh1Yi9hbmRyb2lkLWNocm9tZS0xOTJ4MTkyLnBuZyIsICJzaXplcyI6ICIxOTJ4MTkyIiwgInR5cGUiOiAiaW1hZ2UvcG5nIn0sIHsic3JjIjogImh0dHBzOi8vcXVpeG90aWNvZGUuZ2l0aHViLmlvL2RhdGEvcWh1Yi9hbmRyb2lkLWNocm9tZS01MTJ4NTEyLnBuZyIsICJzaXplcyI6ICI1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2UvcG5nIn1dLA0KICAgICJzdGFydF91cmwiOiAiLi8iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiI2YxZjVmOSIsICJ0aGVtZV9jb2xvciI6ICIjNGY0NmU1Ig0KfQ==">
+    <link rel="manifest" href="data:application/manifest+json;base64,ew0KICAgICJuYW1lIjogIlFIdWIgVjIuNSIsICJzaG9ydF9uYW1lIjogIlFIdWIiLCAiZGVzY3JpcHRpb24iOiAiRGVpbiBwZXJzw7ZubGljaGVyIEh1YiBtaXQgUHJlbWl1bS1GdW5rdGlvbmVuIiwgImljb25zIjogW3sic3JjIjogImh0dHBzOi8vcXVpeG90aWNvZGUuZ2l0aHViLmlvL2RhdGEvcWh1Yi9hbmRyb2lkLWNocm9tZS0xOTJ4MTkyLnBuZyIsICJzaXplcyI6ICIxOTJ4MTkyIiwgInR5cGUiOiAiaW1hZ2UvcG5nIn0sIHsic3JjIjogImh0dHBzOi8vcXVpeG90aWNvZGUuZ2l0aHViLmlvL2RhdGEvcWh1Yi9hbmRyb2lkLWNocm9tZS01MTJ4NTEyLnBuZyIsICJzaXplcyI6ICI1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2UvcG5nIn1dLA0KICAgICJzdGFydF91cmwiOiAiLi8iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiI2YxZjVmOSIsICJ0aGVtZV9jb2xvciI6ICIjNGY0NmU1Ig0KfQ==">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="QHub">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -44,7 +44,6 @@
         .q-main-content { flex-grow: 1; display: flex; flex-direction: column; height: 100vh; }
         .q-header { height: var(--header-height); flex-shrink: 0; background-color: var(--q-surface); border-bottom: 1px solid var(--q-outline); display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; z-index: 900; }
         .q-content-area { flex-grow: 1; overflow-y: auto; padding: 2rem; }
-        .webapp-container, .webapp-container iframe { width: 100%; height: 100%; border: none; background-color: #fff; border-radius: var(--radius-lg); }
         .q-card { background-color: var(--q-surface); border-radius: var(--radius-lg); padding: 1.5rem; box-shadow: var(--shadow-md); border: 1px solid var(--q-outline); }
         .q-modal-backdrop { position: fixed; inset: 0; background-color: rgba(0,0,0,0.5); backdrop-filter: blur(4px); z-index: 5000; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s; padding: 1rem; }
         .q-modal-backdrop.visible { display: flex; opacity: 1; }
@@ -79,7 +78,7 @@
             <button class="activity-btn" data-view="qsounds" title="QSounds"><span class="material-icons">graphic_eq</span></button>
             <button class="activity-btn hidden" data-view="qpets" title="QPet's"><span class="material-icons">pets</span></button>
             <div class="flex-grow"></div>
-            <button class="activity-btn hidden" id="betaBtn" title="Beta Apps"><span class="material-icons">science</span></button>
+            <button class="activity-btn" id="betaBtn" title="Beta-Programme"><span class="material-icons">science</span></button>
             <button class="activity-btn" data-view="contact" title="Kontakt"><span class="material-icons">contact_support</span></button>
             <button class="activity-btn" data-view="status" title="Statuspage"><span class="material-icons">error</span></button>
             <button class="activity-btn" id="settingsBtn" title="Einstellungen"><span class="material-icons">settings</span></button>
@@ -102,21 +101,17 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const APP_PREFIX = 'qhub_v2.3.4_';
+        const APP_PREFIX = 'qhub_v2.3.6_';
         const SETTINGS_KEY = APP_PREFIX + 'settings';
         const USER_DATA_KEY = APP_PREFIX + 'user_data';
-        const APP_VERSION = "2.3.4";
+        const APP_VERSION = "2.3.6";
 
         const initialUserData = {
-             announcements: [
-             { id: "news-1", title: "Willkommen!", content: "Dies ist dein persönlicher Hub.", date: "2025-06-25", premium: false },
-             { id: "news-2", title: "Updates ab jetzt monatlich!", content: "Die Updates werden jetzt monatlich ausgeliefert, wenn es keine wichtigen Bugfixes beinhaltet. Geplant ist immer der 25. des Monats ab Juli", date: "2025-06-25", premium: false },
-             { id: "news-3", title: "Premium aktiviert!", content: "Vielen Dank für den Erwerb!", date: "2025-06-25", premium: true }
-             ],
-             roadmap: [ { id: "rm-1", title: 'Sidebar-Verbesserung', description: 'Sidebar kann nun auf dem Desktop eingeklappt und auf Mobilgeräten einfacher geschlossen werden.', status: 'completed' } ],
+             announcements: [ { id: "news-1", title: "Willkommen!", content: "Dies ist dein persönlicher Hub.", date: "2025-06-25", premium: false } ],
+             roadmap: [ { id: "rm-1", title: 'Sidebar-Verbesserung', description: 'Sidebar kann nun auf dem Desktop eingeklappt werden.', status: 'completed' } ],
              changelog: [ 
-                 { version: "2.3.4", date: "2025-06-25", changes: ["'Projekte'-WebApp durch neue 'QPolls'-WebApp für Umfragen und Events ersetzt."] },
-                 { version: "2.3.3", date: "2025-06-25", changes: ["Sidebar kann auf Desktop eingeklappt werden.", "Sidebar kann auf Mobilgeräten durch Klick daneben geschlossen werden."] } 
+                 { version: "2.3.6", date: "2025-06-25", changes: ["Der Beta-Button ist nun immer sichtbar."] },
+                 { version: "2.3.5", date: "2025-06-25", changes: ["QHub ist jetzt ein App-Launcher. Alle externen Apps öffnen sich in einem neuen Tab.", "Der Beta-Button leitet nun direkt zur Beta-Seite weiter."] },
             ]
         };
 
@@ -171,50 +166,21 @@
 
         function renderView(viewId, isInitialLoad = false) {
             if (!isInitialLoad && settings.activeView === viewId) return;
+            
             dom.activityBar.querySelectorAll('.activity-btn[data-view]').forEach(btn => btn.classList.toggle('active', btn.dataset.view === viewId));
+            
             dom.qHubSidebar.classList.add('hidden');
             dom.mobileMenuBtn.classList.add('hidden');
             dom.mainContentArea.innerHTML = '';
             settings.activeView = viewId;
-            
             let title = '';
 
-            switch(viewId) {
-                case 'dashboard':
-                    title = "Dashboard";
-                    dom.qHubSidebar.classList.remove('hidden');
-                    dom.mobileMenuBtn.classList.remove('hidden');
-                    renderDashboardSidebar();
-                    renderDashboardContent();
-                    break;
-                case 'qpolls':
-                    title = "QPolls - Umfragen & Events";
-                    dom.mainContentArea.innerHTML = `<div class="webapp-container"><iframe src="https://quixoticode.github.io/app/qpolls"></iframe></div>`;
-                    break;
-                case 'web':
-                    title = "Web";
-                    dom.mainContentArea.innerHTML = `<div class="webapp-container"><iframe src="https://quixoticode.github.io"></iframe></div>`;
-                    break;
-                case 'qcode':
-                    title = "QCode";
-                    dom.mainContentArea.innerHTML = `<div class="webapp-container"><iframe src="https://quixoticode.github.io/app/QCode/"></iframe></div>`;
-                    break;
-                case 'qsounds':
-                    title = "QSounds";
-                    dom.mainContentArea.innerHTML = `<div class="webapp-container"><iframe src="https://quixoticode.github.io/app/QSounds/"></iframe></div>`;
-                    break;
-                case 'qpets':
-                    title = "QPet's";
-                    dom.mainContentArea.innerHTML = `<div class="webapp-container"><iframe src="https://quixoticode.github.io/app/pl"></iframe></div>`;
-                    break;
-                case 'contact':
-                    title = "Kontakt";
-                    dom.mainContentArea.innerHTML = `<div class="webapp-container"><iframe src="https://quixoticode.github.io/contact"></iframe></div>`;
-                    break;
-                case 'status':
-                    title = "Status";
-                    dom.mainContentArea.innerHTML = `<div class="h-full flex flex-col items-center justify-center text-center p-4"><div class="q-card max-w-md"><span class="material-icons text-6xl text-gray-400 mb-4">link_off</span><h2 class="text-xl font-bold mb-2">Die Status-Seite kann nicht eingebettet werden.</h2><p class="text-gray-600 dark:text-gray-300 mb-6">Du kannst die Seite stattdessen direkt aufrufen.</p><a href="https://status.quixoticode.de/status/network" target="_blank" class="inline-block px-6 py-3 rounded-lg text-white font-semibold transition" style="background-color: var(--q-primary); color: var(--q-primary-text);">Status-Seite öffnen</a></div></div>`;
-                    break;
+            if (viewId === 'dashboard') {
+                title = "Dashboard";
+                dom.qHubSidebar.classList.remove('hidden');
+                dom.mobileMenuBtn.classList.remove('hidden');
+                renderDashboardSidebar();
+                renderDashboardContent();
             }
             
             dom.headerTitle.textContent = title;
@@ -272,7 +238,7 @@
 
         function renderRoadmapContent() {
             const iconMap = { 'in-progress': 'construction', 'planned': 'flag', 'completed': 'check_circle', 'paused': 'pause_circle' };
-            return `<div class="q-card"><div class="timeline">${(userData.roadmap || []).map(item => `<div class="timeline-item"><div class="timeline-icon"><span class="material-icons">${iconMap[item.status] || 'info'}</span></div><h4 class="font-bold text-lg">${item.title}</h4><p class="text-gray-600 mt-1">${item.description}</p>${(item.status === 'in-progress' && item.progress > 0) ? `<div class="mt-2"><div class="flex justify-between text-sm mb-1"><span>Fortschritt</span><span>${item.progress}%</span></div><div class="w-full progress-bar-bg h-2 rounded-full overflow-hidden"><div class="h-2 progress-bar-fill" style="width: ${item.progress}%;"></div></div></div>` : ''}</div>`).join('') || '<div class="text-gray-500">Keine Roadmap vorhanden.</div>'}</div></div>`;
+            return `<div class="q-card"><div class="timeline">${(userData.roadmap || []).map(item => `<div class="timeline-item"><div class="timeline-icon"><span class="material-icons">${iconMap[item.status] || 'info'}</span></div><h4 class="font-bold text-lg">${item.title}</h4><p class="text-gray-600 mt-1">${item.description}</p></div>`).join('') || '<div class="text-gray-500">Keine Roadmap vorhanden.</div>'}</div></div>`;
         }
         
         function renderChangelogContent() {
@@ -283,20 +249,39 @@
         
         function updateSpecialFeatures() {
             const qpetsBtn = document.querySelector('[data-view="qpets"]');
-            const betaBtn = document.getElementById('betaBtn');
             const hasPremium = settings.roles.includes('PREMIUM') || settings.roles.includes('OWNER');
-            const hasBeta = settings.roles.includes('BETA');
             qpetsBtn.classList.toggle('hidden', !hasPremium);
-            betaBtn.classList.toggle('hidden', !hasBeta);
         }
 
         function setupEventListeners() {
+            const externalAppLinks = {
+                'qpolls': 'https://quixoticode.github.io/app/qpolls',
+                'web': 'https://quixoticode.github.io/',
+                'qcode': 'https://quixoticode.github.io/app/QCode/',
+                'qsounds': 'https://quixoticode.github.io/app/QSounds/',
+                'qpets': 'https://quixoticode.github.io/app/pl',
+                'contact': 'https://quixoticode.github.io/contact',
+                'status': 'https://status.quixoticode.de/status/network'
+            };
+
             dom.activityBar.addEventListener('click', e => {
                 const btn = e.target.closest('.activity-btn[data-view]');
-                if (btn) renderView(btn.dataset.view);
+                if (!btn) return;
+                const viewId = btn.dataset.view;
+
+                if (externalAppLinks[viewId]) {
+                    window.open(externalAppLinks[viewId], '_blank');
+                    return;
+                }
+                
+                if(viewId === 'dashboard') {
+                    renderView(viewId);
+                }
             });
-            document.getElementById('betaBtn').addEventListener('click', () => window.open('https://quixoticode.github.io/beta/app', '_blank'));
+
+            document.getElementById('betaBtn').addEventListener('click', () => window.open('https://quixoticode.github.io/beta/', '_blank'));
             document.getElementById('settingsBtn').addEventListener('click', renderAndShowSettingsModal);
+            
             dom.mobileMenuBtn.addEventListener('click', () => {
                 dom.qHubSidebar.classList.add('open');
                 dom.sidebarBackdrop.classList.remove('hidden');
@@ -305,6 +290,7 @@
                 dom.qHubSidebar.classList.remove('open');
                 dom.sidebarBackdrop.classList.add('hidden');
             });
+
             dom.qHubSidebar.addEventListener('click', e => {
                 const toggleBtn = e.target.closest('#sidebarToggleBtn');
                 if (toggleBtn) {
