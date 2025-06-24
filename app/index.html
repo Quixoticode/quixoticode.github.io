@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>QHub v2.3 - Dein persönlicher Hub</title>
+    <title>QHub v2.3.1 - Dein persönlicher Hub</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,18 +26,14 @@
             --q-on-surface: #1e293b; --q-on-surface-variant: #64748b; --q-outline: #cbd5e1;
             --q-highlight: #e0e7ff; --q-highlight-text: #3730a3; --q-danger: #dc2626;
             --q-premium: #f59e0b; --q-on-premium: #ffffff;
+            --q-beta: #10b981; --q-on-beta: #ffffff;
+            --q-owner: #7c3aed; --q-on-owner: #ffffff;
             --radius-md: 0.5rem; --radius-lg: 0.75rem; --radius-full: 9999px;
             --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
             --activity-bar-width: 60px; --sidebar-width: 280px;
             --header-height: 64px; --transition-speed: 0.3s;
         }
         [data-theme="dark"] { --q-primary: #6366f1; --q-primary-hover: #4f46e5; --q-background: #0f172a; --q-surface: #1e293b; --q-on-surface: #e2e8f0; --q-on-surface-variant: #94a3b8; --q-outline: #334155; --q-highlight: #312e81; --q-highlight-text: #c7d2fe; --q-premium: #fcd34d; --q-on-premium: #1e293b; }
-        [data-theme="forest"] { --q-primary: #166534; --q-primary-hover: #14532d; --q-background: #f0fdf4; --q-surface: #ffffff; --q-on-surface: #1e293b; --q-highlight: #dcfce7; --q-highlight-text: #14532d; }
-        [data-theme="ocean"] { --q-primary: #0369a1; --q-primary-hover: #075985; --q-background: #f0f9ff; --q-surface: #ffffff; --q-on-surface: #1e293b; --q-highlight: #e0f2fe; --q-highlight-text: #075985; }
-        [data-theme="sunset"] { --q-primary: #e11d48; --q-primary-hover: #be123c; --q-background: #fff1f2; --q-surface: #ffffff; --q-on-surface: #1e293b; --q-highlight: #ffe4e6; --q-highlight-text: #9f1239; }
-        [data-theme="mint"] { --q-primary: #059669; --q-primary-hover: #047857; --q-background: #f0fdfa; --q-surface: #ffffff; --q-on-surface: #1e293b; --q-highlight: #ccfbf1; --q-highlight-text: #065f46; }
-        [data-theme="slate"] { --q-primary: #7e22ce; --q-primary-hover: #6b21a8; --q-background: #f8fafc; --q-surface: #ffffff; --q-on-surface: #0f172a; --q-highlight: #f3e8ff; --q-highlight-text: #6b21a8; }
-        [data-theme="candy"] { --q-primary: #db2777; --q-primary-hover: #be185d; --q-background: #fdf2f8; --q-surface: #ffffff; --q-on-surface: #1e293b; --q-highlight: #fce7f3; --q-highlight-text: #9d174d; }
         body { font-family: var(--font-family-sans); background-color: var(--q-background); color: var(--q-on-surface); overflow: hidden; }
         .q-app-container { display: flex; height: 100vh; }
         .q-activity-bar { width: var(--activity-bar-width); flex-shrink: 0; background-color: var(--q-surface); border-right: 1px solid var(--q-outline); display: flex; flex-direction: column; align-items: center; padding: 1rem 0; padding-bottom: calc(1rem + env(safe-area-inset-bottom)); gap: 0.5rem; z-index: 1100; }
@@ -56,16 +52,15 @@
         @media (max-width: 768px) {
             .q-modal-backdrop.visible { overflow-y: auto; align-items: flex-start; }
             .q-modal-content { width: 95%; margin-top: 5vh; max-height: 90vh; overflow-y: auto; padding: 1.5rem; }
-        }
-        @media (max-width: 768px) { 
             .q-sidebar { position: fixed; left: var(--activity-bar-width); height: 100%; transform: translateX(-100%); } 
             .q-sidebar.open { transform: translateX(0); box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1); } 
             .q-header { padding: 0 1rem; }
             .q-content-area { padding: 1rem; }
-            #mainContentArea h2.text-2xl { font-size: 1.25rem; }
         }
-        .premium-badge { display: inline-flex; align-items: center; gap: 0.25rem; background-color: var(--q-premium); color: var(--q-on-premium); padding: 0.1rem 0.5rem; border-radius: var(--radius-full); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
-        .q-input { width: 100%; padding: 0.5rem 0.75rem; border-radius: var(--radius-md); border: 1px solid var(--q-outline); background-color: var(--q-background); }
+        .role-badge { display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.1rem 0.5rem; border-radius: var(--radius-full); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
+        .role-badge.premium { background-color: var(--q-premium); color: var(--q-on-premium); }
+        .role-badge.beta { background-color: var(--q-beta); color: var(--q-on-beta); }
+        .role-badge.owner { background-color: var(--q-owner); color: var(--q-on-owner); }
         .timeline { border-left: 2px solid var(--q-outline); margin-left: 1rem; padding-left: 1.5rem; }
         .timeline-item { position: relative; padding-bottom: 2rem; } .timeline-item:last-child { padding-bottom: 0; }
         .timeline-icon { position: absolute; left: -2.25rem; top: 0; width: 2rem; height: 2rem; background-color: var(--q-highlight); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
@@ -89,6 +84,9 @@
 
             <div class="flex-grow"></div> <!-- Spacer -->
             
+            <!-- Beta App -->
+            <button class="activity-btn hidden" id="betaBtn" title="Beta Apps"><span class="material-icons">science</span></button>
+
             <!-- Untere Apps -->
             <button class="activity-btn" data-view="contact" title="Kontakt"><span class="material-icons">contact_support</span></button>
             <button class="activity-btn" data-view="status" title="Statuspage"><span class="material-icons">error</span></button>
@@ -99,150 +97,82 @@
             <header class="q-header">
                 <button id="mobileMenuBtn" class="md:hidden p-2"><span class="material-icons">menu</span></button>
                 <div id="headerTitle" class="text-xl font-bold"></div>
-                <div class="relative w-full max-w-md hidden" id="searchContainer">
-                     <span class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
-                    <input type="text" id="globalSearchInput" placeholder="Suchen..." class="w-full pl-10 pr-4 py-2 rounded-full border" style="background-color: var(--q-background); border-color: var(--q-outline);">
-                </div>
             </header>
             <div class="q-content-area" id="mainContentArea"></div>
         </div>
     </div>
 
     <div id="settingsModal" class="q-modal-backdrop"></div>
-    <div id="changelogModal" class="q-modal-backdrop"></div>
     <div id="toastContainer" class="fixed bottom-5 right-5 z-[6000] space-y-2"></div>
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const APP_PREFIX = 'qhub_v2.3_';
+        const APP_PREFIX = 'qhub_v2.3.1_';
         const SETTINGS_KEY = APP_PREFIX + 'settings';
-        const USER_DATA_KEY = APP_PREFIX + 'user_data';
-        const APP_VERSION = "2.3.0";
-
-        // --- PUSH NOTIFICATION LOGIK ---
+        const USER_DATA_KEY = APP_PREFIX + 'user_data'; // Re-added for module data
+        const APP_VERSION = "2.3.1";
         
-        // KORRIGIERT: Korrekte Server URL
-        const PUSH_SERVER_URL = 'https://proxy.quixoticode.de';
-
-        async function initPushNotifications() {
-            if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
-                showToast('Push-Benachrichtigungen werden von diesem Browser nicht unterstützt.', 'error');
-                return;
-            }
-
-            try {
-                const registration = await navigator.serviceWorker.register('./sw.js');
-                await navigator.serviceWorker.ready;
-                
-                const permission = await Notification.requestPermission();
-                if (permission !== 'granted') {
-                    showToast('Berechtigung für Benachrichtigungen wurde nicht erteilt.', 'info');
-                    return;
-                }
-                
-                const response = await fetch(`${PUSH_SERVER_URL}/vapidPublicKey`);
-                if (!response.ok) throw new Error('VAPID Key konnte nicht vom Server geladen werden.');
-                const publicVapidKey = await response.text();
-
-                const subscription = await registration.pushManager.subscribe({
-                    userVisibleOnly: true,
-                    applicationServerKey: urlBase64ToUint8Array(publicVapidKey)
-                });
-                
-                await sendSubscriptionToServer(subscription);
-                showToast('Benachrichtigungen erfolgreich aktiviert!', 'success');
-                
-            } catch (error) {
-                console.error('Fehler während der Push-Initialisierung:', error);
-                showToast(error.message || 'Aktivierung der Benachrichtigungen fehlgeschlagen.', 'error');
-            }
-        }
-
-        async function sendSubscriptionToServer(subscription) {
-            try {
-                const response = await fetch(`${PUSH_SERVER_URL}/subscribe`, {
-                    method: 'POST',
-                    body: JSON.stringify(subscription),
-                    headers: { 'Content-Type': 'application/json' }
-                });
-                if (!response.ok) throw new Error('Server hat nicht erfolgreich geantwortet.');
-                console.log('Abonnement erfolgreich an den Server gesendet.');
-            } catch (error) {
-                console.error('Fehler beim Senden des Abonnements an den Server:', error);
-            }
-        }
-
-        function urlBase64ToUint8Array(base64String) {
-            const padding = '='.repeat((4 - base64String.length % 4) % 4);
-            const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
-            const rawData = window.atob(base64);
-            const outputArray = new Uint8Array(rawData.length);
-            for (let i = 0; i < rawData.length; ++i) {
-                outputArray[i] = rawData.charCodeAt(i);
-            }
-            return outputArray;
-        }
-
-        // --- ENDE PUSH NOTIFICATION LOGIK ---
-
-
+        // RE-ADDED: Initial data for dashboard modules
         const initialUserData = {
-            version: APP_VERSION,
             announcements: [
                 { id: "news-1", title: "Willkommen zu QHub 2.3!", content: "Neue WebApps und Premium-Inhalte warten auf dich.", date: "2025-06-23", premium: false },
                 { id: "news-2", title: "Premium-Special: QPet's", content: "Ziehe dein eigenes virtuelles Haustier auf! Nur für Premium-Nutzer.", date: "2025-06-23", premium: true },
-                { id: "news-3", title: "Web aktualisiert!", content: "Besuche quixoticode.github.io!", date: "2025-06-23", premium: false },
             ],
             roadmap: [
                 { id: "rm-1", title: 'v2.4: Admin-Update', description: 'Update des Benutzersystems', status: 'in-progress', progress: 5 },
                 { id: "rm-2", title: 'v2.5: Kalender-Widget', description: 'Ein einfacher Kalender zur Terminübersicht direkt auf dem Dashboard.', status: 'paused'},
             ],
             changelog: [
-                { version: "2.3.0", date: "2025-06-23", changes: ["Neue WebApps hinzugefügt: Web, Kontakt.", "Premium-WebApp 'QPet's' hinzugefügt.", "Fehler behoben, der Push-Benachrichtigungen und die Premium-Anmeldung blockierte.", "Allgemeine UI-Verbesserungen."] },
-                { version: "2.2.0", date: "2025-06-21", changes: ["Push-Benachrichtigungen für Updates und Ankündigungen hinzugefügt.", "Neuer Button in den Einstellungen zur Aktivierung der Benachrichtigungen.", "Allgemeine Leistungsverbesserungen."] },
+                { version: "2.3.1", date: "2025-06-24", changes: ["Neues, rollenbasiertes Benutzersystem (OWNER, PREMIUM, BETA).", "Dashboard-Module wiederhergestellt.", "Beta-Button für Nutzer mit entsprechender Rolle hinzugefügt."] },
+                { version: "2.3.0", date: "2025-06-23", changes: ["Fehler behoben, der Push-Benachrichtigungen und die Premium-Anmeldung blockierte."] },
             ],
         };
-        
+
         const defaultSettings = {
             version: APP_VERSION,
-            userName: "Gast",
-            userAvatar: `https://placehold.co/96x96/e0e7ff/3730a3?text=Guest`,
+            loggedIn: false,
+            username: "Gast",
+            userAvatar: `https://placehold.co/96x96/e0e7ff/3730a3?text=G`,
+            roles: [], // e.g., ['PREMIUM', 'BETA', 'OWNER']
             theme: "light",
             activeView: "dashboard",
-            premium: { active: false, type: null, user: null },
+            // RE-ADDED: Dashboard settings
             dashboard: {
                 sectionOrder: ["announcements", "roadmap", "changelog"],
-                layout: "1",
+                layout: "2",
             },
-            lastSeenVersion: "0.0.0"
         };
 
         let settings = {};
-        let userData = {};
+        let userData = {}; // Re-added for module data
         const dom = { 
             activityBar: document.getElementById('activityBar'), 
             mainContentArea: document.getElementById('mainContentArea'), 
             headerTitle: document.getElementById('headerTitle'), 
-            searchContainer: document.getElementById('searchContainer'), 
             qHubSidebar: document.getElementById('qHubSidebar'), 
             mobileMenuBtn: document.getElementById('mobileMenuBtn'), 
         };
 
         function init() {
-            loadState();
+            loadState(); // Changed from loadSettings
             applyTheme();
-            updatePremiumFeatures();
+            updateSpecialFeatures();
             renderView(settings.activeView, true);
             setupEventListeners();
-            checkChangelog();
         }
         init();
 
+        // UPDATED: Now loads both settings and user data
         function loadState() {
             const storedSettings = localStorage.getItem(SETTINGS_KEY);
             settings = storedSettings ? { ...defaultSettings, ...JSON.parse(storedSettings) } : { ...defaultSettings };
+            
             const storedData = localStorage.getItem(USER_DATA_KEY);
             userData = storedData ? JSON.parse(storedData) : { ...initialUserData };
+
+            if (!Array.isArray(settings.roles)) {
+                settings.roles = [];
+            }
         }
         
         function saveSettings() {
@@ -252,13 +182,14 @@
 
         function renderView(viewId, isInitialLoad = false) {
             if (!isInitialLoad && settings.activeView === viewId) return;
-            dom.activityBar.querySelectorAll('.activity-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.view === viewId));
+            dom.activityBar.querySelectorAll('.activity-btn[data-view]').forEach(btn => btn.classList.toggle('active', btn.dataset.view === viewId));
             dom.qHubSidebar.classList.remove('open');
-            dom.qHubSidebar.classList.add('hidden');
-            dom.searchContainer.classList.add('hidden');
-            dom.mobileMenuBtn.classList.add('hidden');
-            dom.mainContentArea.innerHTML = ''; // Clear content area
+            dom.mainContentArea.innerHTML = ''; 
             settings.activeView = viewId;
+            
+            // Hide sidebar and mobile menu by default, show for dashboard
+            dom.qHubSidebar.classList.add('hidden');
+            dom.mobileMenuBtn.classList.add('hidden');
             
             let content = '';
             let title = '';
@@ -266,11 +197,10 @@
             switch(viewId) {
                 case 'dashboard':
                     title = "Dashboard";
-                    dom.searchContainer.classList.remove('hidden');
                     dom.mobileMenuBtn.classList.remove('hidden');
                     dom.qHubSidebar.classList.remove('hidden');
                     renderDashboardSidebar();
-                    renderDashboardContent();
+                    renderDashboardContent(); // This now renders the modules
                     break;
                 case 'web':
                     title = "Web";
@@ -294,7 +224,7 @@
                     break;
                 case 'status':
                     title = "StatusPage";
-                    content = `<div class="h-full flex flex-col items-center justify-center text-center p-4"><div class="q-card max-w-md"><span class="material-icons text-6xl text-gray-400 mb-4">link_off</span><h2 class="text-xl font-bold mb-2">Die Status-Seite kann nicht eingebettet werden.</h2><p class="text-gray-600 dark:text-gray-300 mb-6">Aus Sicherheitsgründen blockiert der Server die Anzeige in iFrames. Du kannst die Seite stattdessen direkt aufrufen.</p><a href="https://status.quixoticode.de/status/network" target="_blank" class="inline-block px-6 py-3 rounded-lg text-white font-semibold transition" style="background-color: var(--q-primary); color: var(--q-primary-text);">Status-Seite öffnen</a></div></div>`;
+                    content = `<div class="h-full flex flex-col items-center justify-center text-center p-4"><div class="q-card max-w-md"><span class="material-icons text-6xl text-gray-400 mb-4">link_off</span><h2 class="text-xl font-bold mb-2">Die Status-Seite kann nicht eingebettet werden.</h2><p class="text-gray-600 dark:text-gray-300 mb-6">Du kannst die Seite stattdessen direkt aufrufen.</p><a href="https://status.quixoticode.de/status/network" target="_blank" class="inline-block px-6 py-3 rounded-lg text-white font-semibold transition" style="background-color: var(--q-primary); color: var(--q-primary-text);">Status-Seite öffnen</a></div></div>`;
                     break;
             }
             
@@ -306,19 +236,46 @@
 
         function applyTheme() { document.documentElement.setAttribute('data-theme', settings.theme); }
         
-        function updatePremiumFeatures() {
+        function updateSpecialFeatures() {
             const qpetsBtn = document.querySelector('[data-view="qpets"]');
-            if(settings.premium.active) {
-                qpetsBtn.classList.remove('hidden');
-            } else {
-                qpetsBtn.classList.add('hidden');
-            }
+            const betaBtn = document.getElementById('betaBtn');
+
+            const hasPremium = settings.roles.includes('PREMIUM') || settings.roles.includes('OWNER');
+            const hasBeta = settings.roles.includes('BETA');
+
+            qpetsBtn.classList.toggle('hidden', !hasPremium);
+            betaBtn.classList.toggle('hidden', !hasBeta);
         }
 
+        // UPDATED: Sidebar now includes navigation for dashboard sections
         function renderDashboardSidebar() {
-             dom.qHubSidebar.innerHTML = `<div class="flex items-center gap-3 mb-8"><span class="material-icons text-3xl" style="color: var(--q-primary);">hub</span><h1 class="text-2xl font-bold">QHub</h1></div><div class="p-4 rounded-lg mb-6 text-center" style="background-color: var(--q-highlight);"><img src="${settings.userAvatar}" class="w-16 h-16 rounded-full mx-auto mb-2 border-2 border-white shadow-md cursor-pointer" id="avatarImg"><div class="flex items-center justify-center gap-2 mt-2"><h2 class="font-bold text-lg" style="color: var(--q-highlight-text);">${settings.userName}</h2>${settings.premium.active ? `<div class="premium-badge" title="Premium-Status: ${settings.premium.type}"><span class="material-icons text-xs">star</span></div>` : ''}</div></div><nav class="flex-grow"><h3 class="px-3 text-sm font-semibold text-gray-400 uppercase tracking-wider mb-2">Sektionen</h3>${settings.dashboard.sectionOrder.map(id => `<a href="#section-${id}" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 capitalize">${id}</a>`).join('')}</nav>`;
+            const rolesHTML = settings.roles.map(role => 
+                `<div class="role-badge ${role.toLowerCase()}" title="${role}">${role}</div>`
+            ).join('');
+
+            const sectionsNav = settings.dashboard.sectionOrder.map(id => 
+                `<a href="#section-${id}" class="flex items-center gap-3 p-3 rounded-lg capitalize hover:bg-gray-100 dark:hover:bg-gray-700">${id}</a>`
+            ).join('');
+
+            dom.qHubSidebar.innerHTML = `
+                <div class="flex items-center gap-3 mb-8">
+                    <span class="material-icons text-3xl" style="color: var(--q-primary);">hub</span>
+                    <h1 class="text-2xl font-bold">QHub</h1>
+                </div>
+                <div class="p-4 rounded-lg mb-6 text-center" style="background-color: var(--q-highlight);">
+                    <img src="${settings.userAvatar}" class="w-16 h-16 rounded-full mx-auto mb-2 border-2 border-white shadow-md cursor-pointer" id="avatarImg">
+                    <div class="flex items-center justify-center gap-2 mt-2">
+                        <h2 class="font-bold text-lg" style="color: var(--q-highlight-text);">${settings.username}</h2>
+                    </div>
+                     <div class="flex items-center justify-center gap-1 mt-2 flex-wrap">${rolesHTML}</div>
+                </div>
+                <nav class="flex-grow">
+                    <h3 class="px-3 text-sm font-semibold text-gray-400 uppercase tracking-wider mb-2">Sektionen</h3>
+                    ${sectionsNav}
+                </nav>`;
         }
 
+        // --- RE-ADDED: All functions to render dashboard modules ---
         function renderDashboardContent() {
             dom.mainContentArea.innerHTML = `<div id="sectionsContainer" class="space-y-8"></div>`;
             const sectionsContainer = document.getElementById('sectionsContainer');
@@ -333,27 +290,34 @@
         }
         
         function createSectionHTML(id, title, icon, contentRenderer) {
-            return `<section id="section-${id}" data-section-id="${id}"><div class="flex items-center justify-between mb-4 p-2 rounded-lg"><h2 class="text-2xl font-bold flex items-center gap-3"><span class="material-icons text-3xl" style="color: var(--q-primary);">${icon}</span>${title}</h2></div><div>${contentRenderer()}</div></section>`;
+            return `<section id="section-${id}" data-section-id="${id}"><div class="flex items-center justify-between mb-4"><h2 class="text-2xl font-bold flex items-center gap-3"><span class="material-icons text-3xl" style="color: var(--q-primary);">${icon}</span>${title}</h2></div><div>${contentRenderer()}</div></section>`;
         }
 
         function renderAnnouncementsContent() {
-            const items = (userData.announcements || []).filter(item => !item.premium || (item.premium && settings.premium.active));
-            return `<div class="space-y-4">${items.map(item => `<div class="q-card"><div class="flex justify-between items-center mb-2"><h3 class="font-bold text-lg">${item.title}</h3>${item.premium ? `<div class="premium-badge"><span class="material-icons text-xs">star</span> Premium</div>` : ''}</div><p class="text-gray-600 mt-1">${item.content}</p><p class="text-xs text-gray-400 mt-4">${new Date(item.date).toLocaleDateString('de-DE')}</p></div>`).join('') || '<div class="q-card text-gray-500">Keine Ankündigungen vorhanden.</div>'}</div>`;
+            const hasPremium = settings.roles.includes('PREMIUM') || settings.roles.includes('OWNER');
+            const items = (userData.announcements || []).filter(item => !item.premium || (item.premium && hasPremium));
+            return `<div class="space-y-4">${items.map(item => `<div class="q-card"><div class="flex justify-between items-center mb-2"><h3 class="font-bold text-lg">${item.title}</h3>${item.premium ? `<div class="role-badge premium"><span class="material-icons text-xs">star</span></div>` : ''}</div><p class="text-gray-600 mt-1">${item.content}</p><p class="text-xs text-gray-400 mt-4">${new Date(item.date).toLocaleDateString('de-DE')}</p></div>`).join('') || '<div class="q-card text-gray-500">Keine Ankündigungen vorhanden.</div>'}</div>`;
         }
 
         function renderRoadmapContent() {
-            const iconMap = { 'in-progress': 'construction', 'planned': 'flag', 'completed': 'check_circle' };
-            return `<div class="q-card"><div class="timeline">${(userData.roadmap || []).map(item => `<div class="timeline-item"><div class="timeline-icon"><span class="material-icons">${iconMap[item.status] || 'info'}</span></div><h4 class="font-bold text-lg">${item.title}</h4><p class="text-gray-600 mt-1">${item.description}</p>${item.status !== 'completed' ? `<div class="mt-2"><div class="flex justify-between text-sm mb-1"><span>Fortschritt</span><span>${item.progress}%</span></div><div class="w-full progress-bar-bg h-2 rounded-full overflow-hidden"><div class="h-2 progress-bar-fill" style="width: ${item.progress}%;"></div></div></div>` : ''}</div>`).join('') || '<div class="text-gray-500">Keine Roadmap-Einträge vorhanden.</div>'}</div></div>`;
+            const iconMap = { 'in-progress': 'construction', 'planned': 'flag', 'completed': 'check_circle', 'paused': 'pause_circle' };
+            return `<div class="q-card"><div class="timeline">${(userData.roadmap || []).map(item => `<div class="timeline-item"><div class="timeline-icon"><span class="material-icons">${iconMap[item.status] || 'info'}</span></div><h4 class="font-bold text-lg">${item.title}</h4><p class="text-gray-600 mt-1">${item.description}</p>${(item.status === 'in-progress' && item.progress > 0) ? `<div class="mt-2"><div class="flex justify-between text-sm mb-1"><span>Fortschritt</span><span>${item.progress}%</span></div><div class="w-full progress-bar-bg h-2 rounded-full overflow-hidden"><div class="h-2 progress-bar-fill" style="width: ${item.progress}%;"></div></div></div>` : ''}</div>`).join('') || '<div class="text-gray-500">Keine Roadmap-Einträge vorhanden.</div>'}</div></div>`;
         }
         
         function renderChangelogContent() {
-             return `<div class="q-card space-y-6">${(userData.changelog || []).map(item => `<div><h4 class="font-bold text-lg">Version ${item.version} <span class="text-sm font-normal text-gray-500">- ${new Date(item.date).toLocaleDateString('de-DE')}</span></h4><ul class="list-disc list-inside mt-2 text-sm text-gray-600 space-y-1">${(item.changes || []).map(change => `<li>${change}</li>`).join('')}</ul></div>`).join('') || '<div class="text-gray-500">Kein Changelog vorhanden.</div>'}</div>`;
+            return `<div class="q-card space-y-6">${(userData.changelog || []).map(item => `<div><h4 class="font-bold text-lg">Version ${item.version} <span class="text-sm font-normal text-gray-500">- ${new Date(item.date).toLocaleDateString('de-DE')}</span></h4><ul class="list-disc list-inside mt-2 text-sm text-gray-600 space-y-1">${(item.changes || []).map(change => `<li>${change}</li>`).join('')}</ul></div>`).join('') || '<div class="text-gray-500">Kein Changelog vorhanden.</div>'}</div>`;
         }
-        
+        // --- End of re-added functions ---
+
         function setupEventListeners() {
             dom.activityBar.addEventListener('click', e => {
                 const btn = e.target.closest('.activity-btn[data-view]');
-                if (btn) renderView(btn.dataset.view);
+                if (btn) {
+                    renderView(btn.dataset.view);
+                }
+            });
+            document.getElementById('betaBtn').addEventListener('click', () => {
+                window.open('https://quixoticode.github.io/beta/app', '_blank');
             });
             document.getElementById('settingsBtn').addEventListener('click', renderAndShowSettingsModal);
             dom.mobileMenuBtn.addEventListener('click', () => dom.qHubSidebar.classList.toggle('open'));
@@ -361,131 +325,127 @@
         
         function renderAndShowSettingsModal() {
             const modal = document.getElementById('settingsModal');
-            const themeOptions = ['light', 'dark', 'forest', 'ocean', 'sunset', 'mint', 'slate', 'candy'];
+            const themeOptions = ['light', 'dark'];
             modal.innerHTML = `
                 <div class="q-modal-content">
-                    <div class="flex justify-between items-center"><h2 class="text-2xl font-bold">Einstellungen</h2><button id="closeSettingsModal" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600">&times;</button></div>
-                    <div class="mt-6 border-t border-gray-200 dark:border-gray-700 pt-6 space-y-6">
-                        <!-- Premium Sektion -->
-                        <div><label class="font-semibold block mb-2">Premium-Status</label>${settings.premium.active ? `<div class="p-4 rounded-md bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 text-center">Premium ist aktiv! (Typ: ${settings.premium.type})</div>` : `<div class="space-y-4 p-4 border rounded-md dark:border-gray-600"><h4 class="font-medium">Premium aktivieren</h4><div><label class="text-sm">Benutzername</label><input id="premiumUser" type="text" class="q-input mt-1" placeholder="Optional"></div><div><label class="text-sm">Passwort / Einmal-Code</label><input id="premiumCode" type="password" class="q-input mt-1"></div><button id="activatePremiumBtn" class="w-full p-2 text-center bg-blue-600 text-white rounded-md hover:bg-blue-700">Aktivieren</button><p class="text-xs text-gray-500 dark:text-gray-400 mt-2">Um einen Benutzer-Account zu erhalten, sende eine E-Mail an: <b class="font-mono">quixoticode@proton.me</b></p></div>`}</div>
-                        <!-- Theme Sektion -->
-                        <div><label class="font-semibold block mb-2">Theme</label><select id="themeSelector" class="q-input">${themeOptions.map(t => `<option value="${t}" class="capitalize">${t}</option>`).join('')}</select></div>
-                        
-                        <!-- Benachrichtigungs-Sektion -->
+                    <div class="flex justify-between items-center">
+                        <h2 class="text-2xl font-bold">Einstellungen</h2>
+                        <button id="closeSettingsModal" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600">&times;</button>
+                    </div>
+                    <div class="mt-6 border-t pt-6 space-y-6">
+                        <!-- Account Section -->
                         <div>
-                            <label class="font-semibold block mb-2">Benachrichtigungen</label>
-                            <div class="flex gap-4">
-                                <button id="activatePushBtn" class="w-full p-2 text-center border rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center justify-center gap-2">
-                                    <span class="material-icons">notifications_active</span>
-                                    <span>Push-Benachrichtigungen aktivieren</span>
-                                </button>
-                            </div>
+                            <label class="font-semibold block mb-2">Account</label>
+                            ${settings.loggedIn 
+                                ? `<div class="space-y-2"><div class="p-4 rounded-md bg-green-100 text-green-800 text-center">Angemeldet als ${settings.username}</div><button id="logoutBtn" class="w-full p-2 text-center border rounded-md hover:bg-red-100">Abmelden</button></div>` 
+                                : `<div class="space-y-4 p-4 border rounded-md"><h4 class="font-medium">Anmelden</h4><div><label class="text-sm">Benutzername</label><input id="loginUser" type="text" class="w-full p-2 border rounded mt-1" placeholder="Benutzername"></div><div><label class="text-sm">Passwort / Einmal-Code</label><input id="loginPass" type="password" class="w-full p-2 border rounded mt-1"></div><button id="loginBtn" class="w-full p-2 text-center bg-blue-600 text-white rounded-md hover:bg-blue-700">Anmelden</button></div>`
+                            }
                         </div>
-
-                        <!-- Daten-Management Sektion -->
-                        <div><label class="font-semibold block mb-2">Daten-Management</label><div class="flex gap-4"><button id="exportBtn" class="w-full p-2 text-center border rounded-md hover:bg-gray-100 dark:hover:bg-gray-700">Exportieren</button></div></div>
+                        <!-- Theme Section -->
+                        <div>
+                            <label for="themeSelector" class="font-semibold block mb-2">Theme</label>
+                            <select id="themeSelector" class="w-full p-2 border rounded">${themeOptions.map(t => `<option value="${t}" class="capitalize">${t}</option>`).join('')}</select>
+                        </div>
                     </div>
                 </div>`;
             
             modal.querySelector('#themeSelector').value = settings.theme;
             modal.querySelector('#closeSettingsModal').addEventListener('click', () => toggleModal('settingsModal', false));
             modal.querySelector('#themeSelector').addEventListener('change', (e) => { settings.theme = e.target.value; applyTheme(); saveSettings(); });
-            modal.querySelector('#exportBtn')?.addEventListener('click', () => { showToast('Export-Funktion noch in Arbeit.', 'info') }); 
-            modal.querySelector('#activatePremiumBtn')?.addEventListener('click', handlePremiumActivation);
-            modal.querySelector('#activatePushBtn')?.addEventListener('click', initPushNotifications);
+            modal.querySelector('#loginBtn')?.addEventListener('click', handleLogin);
+            modal.querySelector('#logoutBtn')?.addEventListener('click', handleLogout);
 
             toggleModal('settingsModal', true);
         }
 
-        async function handlePremiumActivation() {
-            const code = document.getElementById('premiumCode').value;
-            // Dummy-Prüfung - in einer echten App wäre hier ein Server-Call
-            if (code === "QCODE-PREMIUM-2025") {
-                 settings.premium = { active: true, type: 'Lifetime', user: 'QCode-User' };
-                 settings.userName = document.getElementById('premiumUser').value || 'Premium Nutzer';
-                 settings.userAvatar = `https://placehold.co/96x96/f59e0b/ffffff?text=${settings.userName.charAt(0)}`;
-                 saveSettings();
-                 updatePremiumFeatures();
-                 renderView('dashboard'); // Neu rendern, um alles zu aktualisieren
-                 toggleModal('settingsModal', false);
-                 showToast('Premium erfolgreich aktiviert!', 'success');
-            } else {
-                 showToast('Ungültiger Premium-Code.', 'error');
+        async function handleLogin() {
+            const usernameInput = document.getElementById('loginUser').value.trim().toLowerCase();
+            const passInput = document.getElementById('loginPass').value;
+            const loginButton = document.getElementById('loginBtn');
+
+            if (!usernameInput) {
+                showToast('Bitte gib einen Benutzernamen ein.', 'error');
+                return;
             }
-        }
-        
-        function checkChangelog() {
-            const lastVersion = settings.lastSeenVersion;
-            if (lastVersion !== APP_VERSION) {
-                const modal = document.getElementById('changelogModal');
-                const latestChangelog = userData.changelog[0]; 
-                 modal.innerHTML = `
-                 <div class="q-modal-content">
-                     <h2 class="text-2xl font-bold mb-4">Willkommen zu Version ${latestChangelog.version}!</h2>
-                     <div class="text-sm text-gray-500 mb-4">Was ist neu seit Version ${lastVersion || 'deiner letzten Nutzung'}?</div>
-                     <ul class="list-disc list-inside space-y-2 my-6">${latestChangelog.changes.map(change => `<li>${change}</li>`).join('')}</ul>
-                     <div class="flex justify-end"><button id="closeChangelogModal" class="px-4 py-2 bg-blue-600 text-white rounded-md">Verstanden!</button></div>
-                 </div>`;
-                modal.querySelector('#closeChangelogModal').addEventListener('click', () => {
-                    toggleModal('changelogModal', false)
-                    settings.lastSeenVersion = APP_VERSION;
+             if (!passInput) {
+                showToast('Bitte gib ein Passwort oder einen Code ein.', 'error');
+                return;
+            }
+
+            loginButton.disabled = true;
+            loginButton.innerHTML = 'Prüfe...';
+
+            try {
+                const response = await fetch(`https://quixoticode.github.io/data/s/name.json`);
+                if (!response.ok) throw new Error(`Benutzerdaten konnten nicht geladen werden (${response.status})`);
+                
+                const data = await response.json();
+                let userFound = null;
+                let finalUsername = usernameInput;
+
+                // Check for username/password
+                if (data.users[usernameInput] && data.users[usernameInput].password === passInput) {
+                    userFound = data.users[usernameInput];
+                }
+                // Check for one-time code, requires username to match
+                else if (data.one_time_codes[passInput] && data.one_time_codes[passInput].username.toLowerCase() === usernameInput) {
+                     userFound = data.users[usernameInput];
+                     finalUsername = data.one_time_codes[passInput].username;
+                }
+
+                if (userFound) {
+                    settings.loggedIn = true;
+                    settings.username = finalUsername;
+                    settings.roles = userFound.roles || [];
+                    settings.userAvatar = userFound.avatar || defaultSettings.userAvatar;
                     saveSettings();
-                });
-                toggleModal('changelogModal', true);
+                    updateSpecialFeatures();
+                    renderView('dashboard', true); // Force re-render
+                    toggleModal('settingsModal', false);
+                    showToast(`Willkommen, ${settings.username}!`, 'success');
+                } else {
+                    throw new Error('Ungültige Anmeldedaten.');
+                }
+            } catch (error) {
+                console.error("Fehler bei der Anmeldung:", error);
+                showToast(error.message, 'error');
+            } finally {
+                loginButton.disabled = false;
+                loginButton.innerHTML = 'Anmelden';
             }
         }
+
+        function handleLogout() {
+            const currentTheme = settings.theme;
+            settings = { ...defaultSettings, theme: currentTheme };
+            saveSettings();
+            updateSpecialFeatures();
+            renderView('dashboard', true); // Force re-render
+            toggleModal('settingsModal', false);
+            showToast('Erfolgreich abgemeldet.', 'info');
+        }
+
         function toggleModal(modalId, show) { document.getElementById(modalId).classList.toggle('visible', show); }
+        
         function showToast(message, type = 'info') {
             const container = document.getElementById('toastContainer');
             const toast = document.createElement('div');
-            const colors = { info: 'bg-blue-500', success: 'bg-green-500', error: 'bg-red-500' };
             toast.className = `px-4 py-3 rounded-lg text-white shadow-lg transition-all duration-300 transform translate-y-4 opacity-0`;
             toast.textContent = message;
-            toast.style.backgroundColor = `var(--q-${type}, #64748b)`;
             if (type === 'success') toast.style.backgroundColor = `var(--q-primary)`;
-            if (type === 'error') toast.style.backgroundColor = `var(--q-danger)`;
-            
+            else if (type === 'error') toast.style.backgroundColor = `var(--q-danger)`;
+            else toast.style.backgroundColor = `var(--q-on-surface-variant)`;
             container.appendChild(toast);
-            
-            // Force a reflow to enable the transition
-            toast.offsetHeight; 
-
+            toast.offsetHeight;
             toast.classList.remove('translate-y-4', 'opacity-0');
             toast.classList.add('translate-y-0', 'opacity-100');
-
             setTimeout(() => {
-                toast.style.opacity = '0';
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-4', 'opacity-0');
                 setTimeout(() => toast.remove(), 300);
             }, 4000);
         }
     });
-    </script>
-    <!-- Dummy Service Worker für die PWA-Fähigkeit -->
-    <script>
-        if ('serviceWorker' in navigator) {
-            const swContent = `
-                self.addEventListener('fetch', (event) => {
-                    // Dieser Service Worker tut nichts, aber er ist für die PWA notwendig.
-                });
-
-                self.addEventListener('push', function(event) {
-                    const data = event.data ? event.data.json() : { title: 'QHub Update', body: 'Es gibt Neuigkeiten!', icon: 'https://quixoticode.github.io/data/qhub/android-chrome-192x192.png' };
-                    event.waitUntil(
-                        self.registration.showNotification(data.title, {
-                            body: data.body,
-                            icon: data.icon
-                        })
-                    );
-                });
-            `;
-            const swBlob = new Blob([swContent], {type: 'application/javascript'});
-            const swUrl = URL.createObjectURL(swBlob);
-            navigator.serviceWorker.register(swUrl).then(reg => {
-                console.log('Dummy Service Worker registriert.', reg);
-            }).catch(err => {
-                console.error('Service Worker Registrierung fehlgeschlagen:', err);
-            });
-        }
     </script>
 </body>
 </html>
