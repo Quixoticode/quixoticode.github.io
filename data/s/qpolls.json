@@ -2,8 +2,8 @@
   "polls": [
     {
       "id": "qhub-feedback-2025-q2",
-      "title": "Feedback zu QHub v2.3",
-      "description": "Deine Meinung ist uns wichtig! Hilf uns, QHub mit deinem Feedback zu den neuesten Features zu verbessern.",
+      "title": "Die neue Funktion für Juli 2025",
+      "description": "Deine Meinung ist uns wichtig! Hilf uns, mit deinem Feedback zu den neuesten Features zu kommen.",
       "status": "Offen",
       "type": "Feedback",
       "icon": "https://quixoticode.github.io/data/qhub/favicon.svg",

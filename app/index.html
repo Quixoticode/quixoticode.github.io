@@ -108,7 +108,11 @@
         const APP_VERSION = "2.3.4";
 
         const initialUserData = {
-             announcements: [ { id: "news-1", title: "Willkommen!", content: "Dies ist dein persönlicher Hub.", date: "2025-06-25", premium: false } ],
+             announcements: [
+             { id: "news-1", title: "Willkommen!", content: "Dies ist dein persönlicher Hub.", date: "2025-06-25", premium: false },
+             { id: "news-2", title: "Updates ab jetzt monatlich!", content: "Die Updates werden jetzt monatlich ausgeliefert, wenn es keine wichtigen Bugfixes beinhaltet. Geplant ist immer der 25. des Monats ab Juli", date: "2025-06-25", premium: false },
+             { id: "news-3", title: "Premium aktiviert!", content: "Vielen Dank für den Erwerb!", date: "2025-06-25", premium: true }
+             ],
              roadmap: [ { id: "rm-1", title: 'Sidebar-Verbesserung', description: 'Sidebar kann nun auf dem Desktop eingeklappt und auf Mobilgeräten einfacher geschlossen werden.', status: 'completed' } ],
              changelog: [ 
                  { version: "2.3.4", date: "2025-06-25", changes: ["'Projekte'-WebApp durch neue 'QPolls'-WebApp für Umfragen und Events ersetzt."] },
