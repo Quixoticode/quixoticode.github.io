@@ -3,17 +3,17 @@
     "quixoticode": {
       "password": "26032010",
       "roles": ["OWNER", "PREMIUM", "BETA"],
-      "avatar": "https://github.com/Quixoticode.png"
+      "avatar": "https://avatars.githubusercontent.com/u/171915973?v=4"
     },
     "agent777": {
       "password": "20062025",
       "roles": ["PREMIUM", "BETA"],
-      "avatar": "https://placehold.co/96x96/f59e0b/ffffff?text=A"
+      "avatar": "https://avatars.githubusercontent.com/u/190483406?v=4"
     },
     "juliuspeters": {
       "password": "beta_user_pass",
       "roles": ["BETA", "PREMIUM"],
-      "avatar": "https://placehold.co/96x96/10b981/ffffff?text=B"
+      "avatar": "https://avatars.githubusercontent.com/u/211497121?v=4"
     }
   },
   "one_time_codes": {
