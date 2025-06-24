@@ -12,7 +12,7 @@
     },
     "juliuspeters": {
       "password": "beta_user_pass",
-      "roles": ["BETA"],
+      "roles": ["BETA", "PREMIUM"],
       "avatar": "https://placehold.co/96x96/10b981/ffffff?text=B"
     }
   },
