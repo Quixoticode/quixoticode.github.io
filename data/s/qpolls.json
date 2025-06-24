@@ -5,18 +5,18 @@
       "title": "Die neue Funktion für Juli 2025",
       "description": "Deine Meinung ist uns wichtig! Hilf uns, mit deinem Feedback zu den neuesten Features zu kommen.",
       "status": "Offen",
-      "type": "Feedback",
+      "type": "Umfrage",
       "icon": "https://quixoticode.github.io/data/qhub/favicon.svg",
-      "formUrl": "https://docs.google.com/forms/d/e/1FAIpQLSfZIS_F-52v5c_EadA8A_j2a6Q_1iX9J2uY_8oR_9aZ-zO9w/viewform"
+      "formUrl": "https://docs.google.com/forms/d/e/1FAIpQLSeGLfSUWgZuDLdZk6BBoLr_p8rvpQyU6sfZ_akiXqdFifOq3A/viewform?usp=dialog"
     },
     {
       "id": "feature-poll-q3",
-      "title": "Nächstes Feature für QHub?",
+      "title": "Nächstes Feature für Premium?",
       "description": "Stimme ab! Welches Feature sollen wir als Nächstes für den QHub entwickeln? Deine Stimme zählt.",
       "status": "Offen",
       "type": "Umfrage",
       "icon": "https://quixoticode.github.io/data/qhub/favicon.svg",
-      "formUrl": "https://docs.google.com/forms/d/e/1FAIpQLSfZIS_F-52v5c_EadA8A_j2a6Q_1iX9J2uY_8oR_9aZ-zO9w/viewform"
+      "formUrl": "https://docs.google.com/forms/d/e/1FAIpQLSdLG5Bg3Idys7Ec27btzeJJ2ljRykM8JrH17qrjnEjjwJx88Q/viewform?usp=dialog"
     },
     {
       "id": "design-contest-2025",
