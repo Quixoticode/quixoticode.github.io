@@ -7,7 +7,7 @@
     },
     "agent777": {
       "password": "20062025",
-      "roles": ["PREMIUM"],
+      "roles": ["PREMIUM", "BETA"],
       "avatar": "https://placehold.co/96x96/f59e0b/ffffff?text=A"
     },
     "juliuspeters": {
