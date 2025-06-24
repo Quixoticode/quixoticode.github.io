@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual Studio Code - Dein mächtiger Editor | QCode</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+
+        .container {
+            width: 85%;
+            max-width: 900px; /* Etwas schmaler für besseren Lesefluss bei Textseiten */
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+
+        header.page-header {
+            background-color: #007ACC; /* VS Code Blau */
+            color: #fff;
+            padding: 1.5rem 0;
+            text-align: center;
+            margin-bottom: 30px;
+            border-radius: 8px 8px 0 0;
+        }
+
+        header.page-header h1 {
+            margin: 0;
+            font-size: 2.2rem;
+        }
+
+        nav ul {
+            padding: 0;
+            list-style: none;
+            text-align: center;
+            background: #333;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        nav ul li {
+            display: inline;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 12px 18px;
+            display: inline-block;
+        }
+
+        nav ul li a:hover {
+            background: #007ACC;
+            color: #fff;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        .section:last-of-type {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .section h2 {
+            color: #005A9E; /* Dunkleres VS Code Blau */
+            border-bottom: 2px solid #007ACC;
+            padding-bottom: 10px;
+            margin-top: 0;
+            font-size: 1.8rem;
+        }
+         .section h3 {
+            color: #333;
+            font-size: 1.4rem;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        .example-code {
+            background-color: #282c34;
+            color: #abb2bf;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+
+        code {
+            background-color: #e7e7e7;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .keybinding {
+            display: inline-block;
+            background-color: #e0e0e0;
+            color: #333;
+            padding: 2px 6px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.9em;
+            margin: 0 2px;
+        }
+
+        .note {
+            background-color: #e7f3fe;
+            border-left: 4px solid #2196F3; /* Blau für Hinweise */
+            padding: 12px 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        .note p {
+            margin: 0;
+        }
+
+        ul, ol {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+
+        .official-link {
+            display: inline-block;
+            background-color: #007ACC;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+        .official-link:hover {
+            background-color: #005A9E;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #343a40;
+            color: #fff;
+            margin-top: 30px;
+            border-radius: 0 0 8px 8px;
+        }
+        footer a { color: #00A1F1; text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+
+    </style>
+</head>
+<body>
+
+    <header class="page-header">
+        <h1>Visual Studio Code: Dein mächtiger Editor</h1>
+    </header>
+
+    <div class="container">
+        <nav>
+            <ul>
+                <li><a href="#was-ist-vscode">Einführung</a></li>
+                <li><a href="#installation">Installation</a></li>
+                <li><a href="#oberflaeche">Oberfläche</a></li>
+                <li><a href="#bedienung">Bedienung</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#erweiterungen">Erweiterungen</a></li>
+                <li><a href="#shortcuts">Shortcuts</a></li>
+                <li><a href="#anpassung">Anpassung</a></li>
+            </ul>
+        </nav>
+
+        <section id="was-ist-vscode" class="section">
+            <h2>Was ist Visual Studio Code?</h2>
+            <p>Visual Studio Code (oft als VS Code abgekürzt) ist ein kostenloser, quelloffener und sehr leistungsfähiger Code-Editor, der von Microsoft entwickelt wurde. Er läuft auf Windows, macOS und Linux und hat sich dank seiner Geschwindigkeit, Flexibilität und umfangreichen Feature-Set zu einem der beliebtesten Editoren für Webentwickler und Programmierer weltweit entwickelt.</p>
+            <p><strong>Kernmerkmale sind:</strong></p>
+            <ul>
+                <li><strong>IntelliSense:</strong> Intelligente Code-Vervollständigung, Parameter-Infos und mehr.</li>
+                <li><strong>Debugging:</strong> Integrierte Debugging-Tools für viele Sprachen, insbesondere JavaScript.</li>
+                <li><strong>Git-Integration:</strong> Nahtlose Verwaltung von Git-Repositories direkt im Editor.</li>
+                <li><strong>Erweiterbarkeit:</strong> Ein riesiger Marktplatz an Erweiterungen (Extensions), um den Editor an deine Bedürfnisse anzupassen und neue Funktionen hinzuzufügen.</li>
+                <li><strong>Terminal-Integration:</strong> Ein eingebautes Terminal, sodass du die Kommandozeile nicht verlassen musst.</li>
+                <li><strong>Hohe Anpassbarkeit:</strong> Themes, Tastenkürzel, Einstellungen – fast alles lässt sich konfigurieren.</li>
+            </ul>
+        </section>
+
+        <section id="installation" class="section">
+            <h2>Installation</h2>
+            <p>Die Installation von VS Code ist unkompliziert:</p>
+            <ol>
+                <li>Besuche die offizielle Download-Seite: <a href="https://code.visualstudio.com/download" target="_blank" class="official-link">VS Code herunterladen</a></li>
+                <li>Wähle den passenden Installer für dein Betriebssystem (Windows, Linux .deb/.rpm, macOS).</li>
+                <li>Führe den Installer aus und folge den Anweisungen. Unter Windows wird empfohlen, die Optionen "Zu PATH hinzufügen" (damit du VS Code aus der Kommandozeile mit <code>code .</code> starten kannst) und "Öffnen mit Code Kontextmenü" zu aktivieren.</li>
+            </ol>
+            <p>Nach der Installation kannst du VS Code starten und mit der Einrichtung beginnen.</p>
+        </section>
+
+        <section id="oberflaeche" class="section">
+            <h2>Benutzeroberfläche im Überblick</h2>
+            <p>Die Benutzeroberfläche von VS Code ist übersichtlich und in mehrere Hauptbereiche unterteilt:</p>
+            <div class="note"><p>Stell dir hier ein beschriftetes Screenshot der VS Code Oberfläche vor.</p></div>
+            <ul>
+                <li><strong>Activity Bar (Aktivitätsleiste):</strong> Links. Ermöglicht den schnellen Wechsel zwischen Ansichten wie Explorer, Suche, Quellcodeverwaltung (Git), Debugging und Erweiterungen.</li>
+                <li><strong>Side Bar (Seitenleiste):</strong> Links neben dem Editor. Zeigt den Inhalt der aktiven Ansicht aus der Activity Bar an (z.B. deine Projektdateien im Explorer).</li>
+                <li><strong>Editor:</strong> Der Hauptbereich, in dem du deinen Code schreibst und bearbeitest. Du kannst mehrere Editoren nebeneinander oder untereinander öffnen (Split Editor).</li>
+                <li><strong>Panel:</strong> Unten. Kann verschiedene Panels anzeigen, wie das Terminal, die Konsole für Debug-Ausgaben, Probleme (Fehler/Warnungen) und die Ausgabe von Tasks.</li>
+                <li><strong>Status Bar (Statusleiste):</strong> Ganz unten. Zeigt Informationen zum aktuellen Projekt, Fehler/Warnungen, Git-Branch, Einrückungseinstellungen, Sprachmodus etc. an.</li>
+            </ul>
+        </section>
+
+        <section id="bedienung" class="section">
+            <h2>Grundlegende Bedienung</h2>
+            <h3>Dateien und Ordner öffnen</h3>
+            <ul>
+                <li>Über <code>Datei > Ordner öffnen...</code> (oder <span class="keybinding">Ctrl+K</span> <span class="keybinding">Ctrl+O</span>) öffnest du ein ganzes Projektverzeichnis. Dies ist der empfohlene Weg.</li>
+                <li>Über <code>Datei > Datei öffnen...</code> (<span class="keybinding">Ctrl+O</span>) öffnest du einzelne Dateien.</li>
+                <li>Du kannst Dateien/Ordner auch per Drag & Drop in das VS Code Fenster ziehen.</li>
+            </ul>
+
+            <h3>Neue Dateien/Ordner erstellen</h3>
+            <p>Im Explorer-Panel der Seitenleiste kannst du mit Rechtsklick auf einen Ordner oder einen leeren Bereich "Neue Datei" oder "Neuer Ordner" wählen. Es gibt auch Icons dafür am oberen Rand des Explorer-Panels.</p>
+
+            <h3>Speichern</h3>
+            <p>Mit <span class="keybinding">Ctrl+S</span> (Windows/Linux) bzw. <span class="keybinding">Cmd+S</span> (macOS) speicherst du die aktive Datei. Mit <span class="keybinding">Ctrl+Shift+S</span> / <span class="keybinding">Cmd+Shift+S</span> speicherst du unter einem neuen Namen.</p>
+
+            <h3>Command Palette (Befehlspalette)</h3>
+            <p>Eines der mächtigsten Werkzeuge in VS Code! Öffne sie mit <span class="keybinding">Ctrl+Shift+P</span> (Windows/Linux) oder <span class="keybinding">Cmd+Shift+P</span> (macOS).</p>
+            <p>Hier kannst du nach fast jedem Befehl und jeder Einstellung in VS Code suchen und diese ausführen, ohne dich durch Menüs klicken zu müssen. Beispiele:</p>
+            <ul>
+                <li><code>Preferences: Open User Settings</code> (um Einstellungen zu ändern)</li>
+                <li><code>Git: Clone</code> (um ein Git-Repository zu klonen)</li>
+                <li><code>View: Toggle Terminal</code> (um das Terminal ein-/auszublenden)</li>
+                <li><code>Format Document</code> (um den Code zu formatieren, wenn ein Formatter installiert ist)</li>
+            </ul>
+            <p>Wenn du das <code>></code> am Anfang der Command Palette entfernst, kannst du direkt nach Dateien in deinem Projekt suchen (entspricht <span class="keybinding">Ctrl+P</span> / <span class="keybinding">Cmd+P</span>).</p>
+        </section>
+
+        <section id="features" class="section">
+            <h2>Wichtige Features für Webentwicklung</h2>
+            <h3>IntelliSense & Autovervollständigung</h3>
+            <p>VS Code bietet hervorragende Unterstützung für HTML, CSS, JavaScript und viele andere Sprachen. Während du tippst, erhältst du Vorschläge für Tags, Attribute, CSS-Eigenschaften, JavaScript-Funktionen und -Variablen.</p>
+
+            <h3>Emmet-Abkürzungen</h3>
+            <p>Emmet ist standardmäßig integriert und beschleunigt das Schreiben von HTML und CSS enorm. Tippe eine Abkürzung und drücke <span class="keybinding">Tab</span>.</p>
+            <div class="example-code">
+<span class="comment">HTML Beispiel:</span>
+ul>li.item$*5{Inhalt $}  <span class="comment">+ Tab wird zu:</span>
+
+&lt;ul&gt;
+    &lt;li class="item1"&gt;Inhalt 1&lt;/li&gt;
+    &lt;li class="item2"&gt;Inhalt 2&lt;/li&gt;
+    &lt;li class="item3"&gt;Inhalt 3&lt;/li&gt;
+    &lt;li class="item4"&gt;Inhalt 4&lt;/li&gt;
+    &lt;li class="item5"&gt;Inhalt 5&lt;/li&gt;
+&lt;/ul&gt;
+
+<span class="comment">CSS Beispiel:</span>
+p10m5  <span class="comment">+ Tab wird zu:</span>
+padding: 10px;
+margin: 5px;
+            </div>
+
+            <h3>Integriertes Terminal</h3>
+            <p>Öffne es mit <span class="keybinding">Ctrl+`</span> (Backtick, links neben der 1) oder über die Command Palette. Du kannst hier npm-Befehle, Git-Befehle oder andere Kommandozeilen-Tools ausführen, ohne VS Code zu verlassen.</p>
+
+            <h3>Debugging-Grundlagen (JavaScript)</h3>
+            <p>VS Code hat einen eingebauten Debugger für JavaScript (Node.js und Browser).</p>
+            <ol>
+                <li>Öffne die Debug-Ansicht (Käfer-Icon in der Activity Bar).</li>
+                <li>Klicke auf "create a launch.json file" und wähle deine Umgebung (z.B. "Web App (Chrome)" oder "Node.js"). Dies erstellt eine Konfigurationsdatei.</li>
+                <li>Setze Haltepunkte (Breakpoints) in deinem Code, indem du links neben die Zeilennummer klickst.</li>
+                <li>Starte das Debugging mit <span class="keybinding">F5</span> oder dem grünen Play-Button in der Debug-Ansicht.</li>
+                <li>Wenn ein Breakpoint erreicht wird, hält die Ausführung an, und du kannst Variablen inspizieren, Code schrittweise ausführen etc.</li>
+            </ol>
+            <div class="note"><p>Für das Debuggen von Web-Apps im Browser benötigst du oft eine Erweiterung wie "Debugger for Chrome" oder "Debugger for Firefox", oder nutzt die in neueren VS Code Versionen verbesserte Standardkonfiguration.</p></div>
+
+            <h3>Quellcodeverwaltung mit Git</h3>
+            <p>VS Code erkennt automatisch Git-Repositories. In der Quellcodeverwaltungs-Ansicht (Verzweigungs-Icon) kannst du:</p>
+            <ul>
+                <li>Änderungen anzeigen (Diffs).</li>
+                <li>Änderungen stagen (zum Commit vorbereiten).</li>
+                <li>Commits erstellen und pushen.</li>
+                <li>Branches erstellen und wechseln.</li>
+                <li>Und vieles mehr.</li>
+            </ul>
+        </section>
+
+        <section id="erweiterungen" class="section">
+            <h2>Erweiterungen (Extensions)</h2>
+            <p>Erweiterungen sind das Herzstück der Anpassbarkeit von VS Code. Du kannst sie über die Extensions-Ansicht (Puzzle-Icon in der Activity Bar) durchsuchen und installieren.</p>
+            <h3>Empfehlenswerte Extensions für Webentwicklung:</h3>
+            <ul>
+                <li><strong>Prettier - Code formatter:</strong> Formatiert deinen Code automatisch nach einheitlichen Regeln.</li>
+                <li><strong>Live Server:</strong> Startet einen lokalen Entwicklungsserver mit Live-Reload-Funktion für HTML/CSS/JS-Dateien. Sehr nützlich!</li>
+                <li><strong>ESLint:</strong> Hilft, Fehler und Stilprobleme in JavaScript-Code zu finden und zu beheben.</li>
+                <li><strong>Path IntelliSense:</strong> Autovervollständigung für Dateipfade.</li>
+                <li><strong>Auto Rename Tag:</strong> Benennt automatisch das schließende HTML-Tag um, wenn du das öffnende änderst (und umgekehrt).</li>
+                <li><strong>German Language Pack for Visual Studio Code:</strong> Für eine deutsche Benutzeroberfläche.</li>
+                <li><strong>Material Icon Theme / vscode-icons:</strong> Für schönere Datei- und Ordner-Icons im Explorer.</li>
+                <li><strong>GitLens:</strong> Erweitert die Git-Funktionen massiv (Code-Autorenschaft, History etc.).</li>
+            </ul>
+            <p>Installiere nur Erweiterungen, denen du vertraust und die du wirklich benötigst, um die Performance nicht zu beeinträchtigen.</p>
+        </section>
+
+        <section id="shortcuts" class="section">
+            <h2>Nützliche Tastenkürzel (Auswahl)</h2>
+            <p>(Windows/Linux-Tasten, für macOS meist <span class="keybinding">Cmd</span> statt <span class="keybinding">Ctrl</span> und <span class="keybinding">Option</span> statt <span class="keybinding">Alt</span>)</p>
+            <ul>
+                <li>Command Palette: <span class="keybinding">Ctrl+Shift+P</span></li>
+                <li>Datei schnell öffnen: <span class="keybinding">Ctrl+P</span></li>
+                <li>Neue Datei: <span class="keybinding">Ctrl+N</span></li>
+                <li>Datei speichern: <span class="keybinding">Ctrl+S</span></li>
+                <li>Alle Dateien speichern: <span class="keybinding">Ctrl+K</span> <span class="keybinding">S</span></li>
+                <li>Seitenleiste ein-/ausblenden: <span class="keybinding">Ctrl+B</span></li>
+                <li>Integriertes Terminal ein-/ausblenden: <span class="keybinding">Ctrl+`</span></li>
+                <li>Zeile(n) nach oben/unten verschieben: <span class="keybinding">Alt+↑</span> / <span class="keybinding">Alt+↓</span></li>
+                <li>Zeile(n) duplizieren: <span class="keybinding">Shift+Alt+↑</span> / <span class="keybinding">Shift+Alt+↓</span></li>
+                <li>Zeile(n) auskommentieren: <span class="keybinding">Ctrl+/</span></li>
+                <li>Blockkommentar: <span class="keybinding">Shift+Alt+A</span></li>
+                <li>Suchen: <span class="keybinding">Ctrl+F</span></li>
+                <li>Ersetzen: <span class="keybinding">Ctrl+H</span></li>
+                <li>Multi-Cursor: <span class="keybinding">Alt+Klick</span> (Cursor hinzufügen) oder <span class="keybinding">Ctrl+Alt+↑/↓</span> (Cursor in Zeile darüber/darunter hinzufügen)</li>
+                <li>Wort markieren und nächste Vorkommen finden: <span class="keybinding">Ctrl+D</span></li>
+            </ul>
+            <p>Eine vollständige Liste findest du unter <code>Datei > Einstellungen > Tastenkombinationen</code> oder online.</p>
+        </section>
+
+        <section id="anpassung" class="section">
+            <h2>Anpassung</h2>
+            <h3>Themes</h3>
+            <p>VS Code kommt mit einigen eingebauten Themes. Weitere Themes (Farbgestaltung für UI und Syntax-Highlighting) kannst du über die Extensions-Ansicht installieren.</p>
+            <p>Wechsle Themes über <code>Datei > Einstellungen > Farbdesign</code> (oder <span class="keybinding">Ctrl+K</span> <span class="keybinding">Ctrl+T</span>).</p>
+
+            <h3>Einstellungen (Settings)</h3>
+            <p>Fast jeder Aspekt von VS Code lässt sich anpassen. Öffne die Einstellungen:</p>
+            <ul>
+                <li>Über die UI: <code>Datei > Einstellungen > Einstellungen</code> (oder <span class="keybinding">Ctrl+,</span>)</li>
+                <li>Als JSON: Öffne die Command Palette (<span class="keybinding">Ctrl+Shift+P</span>) und suche nach <code>Preferences: Open User Settings (JSON)</code>.</li>
+            </ul>
+            <p>Beispiele für nützliche Einstellungen:</p>
+            <div class="example-code">
+{
+    "editor.fontSize": 14,
+    "editor.tabSize": 2,
+    "editor.wordWrap": "on", <span class="comment">// Zeilenumbruch aktivieren</span>
+    "files.autoSave": "afterDelay", <span class="comment">// Automatisches Speichern</span>
+    "files.autoSaveDelay": 1000, <span class="comment">// Nach 1 Sekunde Inaktivität</span>
+    "editor.formatOnSave": true, <span class="comment">// Automatisch formatieren beim Speichern (Formatter muss konfiguriert sein)</span>
+    "workbench.iconTheme": "vscode-icons", <span class="comment">// Falls "vscode-icons" installiert ist</span>
+    "[javascript]": { <span class="comment">// Sprachspezifische Einstellungen</span>
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
+}
+            </div>
+        </section>
+
+        <div class="note">
+            <p>Visual Studio Code ist ein extrem vielseitiges Werkzeug. Diese Anleitung kratzt nur an der Oberfläche. Die beste Methode, VS Code zu meistern, ist, es täglich zu verwenden, die Dokumentation zu lesen und mit verschiedenen Features und Erweiterungen zu experimentieren!</p>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; <span id="currentYearVsCode"></span> QCode Anleitungen. <a href="index.html">Zurück zur Startseite</a></p>
+        <script>document.getElementById('currentYearVsCode').textContent = new Date().getFullYear();</script>
+    </footer>
+
+</body>
+</html>

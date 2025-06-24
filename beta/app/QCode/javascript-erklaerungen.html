@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <link rel="icon" type="image/png" href="https://quixoticode.github.io/data/qcode/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="https://quixoticode.github.io/data/qcode/favicon.svg" />
+    <link rel="shortcut icon" href="https://quixoticode.github.io/data/qcode/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="https://quixoticode.github.io/data/qcode/apple-touch-icon.png" />
+    <link rel="manifest" href="https://quixoticode.github.io/data/qcode/site.webmanifest" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="QCode">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript-Grundlagen Erklärt</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+
+        .container {
+            width: 85%;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 12px rgba(0,0,0,0.1);
+        }
+
+        header {
+            background-color: #f0db4f; /* JavaScript Gelb */
+            color: #323330; /* Dunkler Kontrast für Gelb */
+            padding: 1rem 0;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        nav ul {
+            padding: 0;
+            list-style: none;
+            text-align: center;
+            background: #323330;
+            margin-bottom: 20px;
+        }
+
+        nav ul li {
+            display: inline;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 15px 20px;
+            display: inline-block;
+        }
+
+        nav ul li a:hover {
+            background: #f0db4f;
+            color: #323330;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-left: 5px solid #f0db4f;
+        }
+
+        .section h2 {
+            color: #323330;
+            border-bottom: 2px solid #f0db4f;
+            padding-bottom: 10px;
+        }
+
+        .example-display {
+            background-color: #fff;
+            padding: 15px;
+            border: 1px solid #ddd;
+            margin-top: 10px;
+            border-radius: 4px;
+        }
+
+        .example-code {
+            background-color: #282c34;
+            color: #abb2bf;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            white-space: pre-wrap; /* Erhält Leerzeichen und Zeilenumbrüche, erlaubt Umbruch */
+            overflow-x: auto; /* Horizontales Scrollen für langen Code */
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+        .example-code .comment { color: #5c6370; font-style: italic; }
+        .example-code .keyword { color: #c678dd; }
+        .example-code .string { color: #98c379; }
+        .example-code .number { color: #d19a66; }
+        .example-code .boolean { color: #d19a66; }
+        .example-code .function { color: #61afef; }
+        .example-code .variable { color: #e06c75; }
+        .example-code .operator { color: #56b6c2; }
+        .example-code .console { color: #abb2bf; }
+
+
+        code {
+            background-color: #e7e7e7;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        button {
+            background-color: #f0db4f;
+            color: #323330;
+            border: 1px solid #323330;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 5px;
+            margin-right: 5px;
+        }
+
+        button:hover {
+            background-color: #e4c742;
+        }
+
+        .output-area {
+            background-color: #e9e9e9;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px dashed #aaa;
+            min-height: 20px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .note {
+            background-color: #fffbe6;
+            border-left: 4px solid #ffc107;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+         #domDemoBox {
+            width: 100px;
+            height: 100px;
+            background-color: lightblue;
+            border: 1px solid blue;
+            text-align: center;
+            line-height: 100px;
+            margin-top:10px;
+            transition: all 0.3s ease;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #323330;
+            color: #fff;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>JavaScript-Grundlagen Leicht Erklärt</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#was-ist-js">Was ist JS?</a></li>
+            <li><a href="#einbindung">Einbindung</a></li>
+            <li><a href="#variablen">Variablen & Datentypen</a></li>
+            <li><a href="#operatoren">Operatoren</a></li>
+            <li><a href="#kontrollstrukturen">Kontrollstrukturen</a></li>
+            <li><a href="#funktionen">Funktionen</a></li>
+            <li><a href="#objekte">Objekte</a></li>
+            <li><a href="#arrays">Arrays</a></li>
+            <li><a href="#dom">DOM-Manipulation</a></li>
+            <li><a href="#events">Events</a></li>
+            <li><a href="#es6">ES6+</a></li>
+            <li><a href="#fehler">Fehlerbehandlung</a></li>
+            <li><a href="#weiteres">Weiteres</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+
+        <section id="was-ist-js" class="section">
+            <h2>Was ist JavaScript?</h2>
+            <p>JavaScript (oft abgekürzt als JS) ist eine dynamische, interpretierte Skriptsprache, die hauptsächlich im Webbrowser verwendet wird, um Webseiten interaktiv zu gestalten. Es ist eine der Kerntechnologien des World Wide Web, neben HTML und CSS.</p>
+            <p>Mit JavaScript kannst du:</p>
+            <ul>
+                <li>HTML-Inhalte und CSS-Stile dynamisch verändern.</li>
+                <li>Auf Benutzeraktionen reagieren (Klicks, Tastatureingaben, Mausbewegungen).</li>
+                <li>Daten im Hintergrund laden (AJAX).</li>
+                <li>Animationen erstellen.</li>
+                <li>Formulare validieren.</li>
+                <li>Und vieles mehr!</li>
+            </ul>
+            <p>Obwohl es ursprünglich für Browser entwickelt wurde, kann JavaScript dank Umgebungen wie Node.js auch serverseitig (Backend) oder für Desktop- und Mobile-Anwendungen verwendet werden.</p>
+            <div class="note">
+                <p><strong>Wichtig:</strong> JavaScript ist <strong>nicht</strong> dasselbe wie Java! Es sind zwei unterschiedliche Programmiersprachen mit unterschiedlichen Anwendungsgebieten, auch wenn der Name ähnlich klingt.</p>
+            </div>
+        </section>
+
+        <section id="einbindung" class="section">
+            <h2>Einbindung von JavaScript in HTML</h2>
+            <p>Es gibt hauptsächlich zwei Wege, JavaScript-Code in eine HTML-Datei einzubinden:</p>
+
+            <h3>Internes JavaScript (im <code><script></code>-Tag)</h3>
+            <p>Du kannst JavaScript-Code direkt in <code><script></code>-Tags innerhalb deiner HTML-Datei schreiben. Diese können im <code><head></code> oder im <code><body></code> platziert werden. Es wird oft empfohlen, Skripte am Ende des <code><body></code> zu platzieren, damit der HTML-Inhalt zuerst geladen und angezeigt werden kann, bevor das Skript ausgeführt wird (was das Laden blockieren könnte).</p>
+            <div class="example-code">
+<span class="comment">&lt;!-- Im &lt;head&gt; oder (besser) am Ende des &lt;body&gt; --&gt;</span>
+&lt;<span class="keyword">script</span>&gt;
+  <span class="console">console</span>.log(<span class="string">'Hallo von internem JavaScript!'</span>);
+  <span class="function">alert</span>(<span class="string">'Diese Nachricht kommt von JavaScript!'</span>); <span class="comment">// Zeigt ein Pop-up Fenster</span>
+&lt;/<span class="keyword">script</span>&gt;
+            </div>
+            <div class="example-display">
+                <button onclick="alert('Internes JavaScript wurde gerade ausgeführt!')">Internes JS testen</button>
+            </div>
+
+            <h3>Externes JavaScript (Verlinkung einer <code>.js</code>-Datei)</h3>
+            <p>Für größere Projekte oder wenn du denselben Code auf mehreren Seiten verwenden möchtest, ist es besser, den JavaScript-Code in eine separate Datei mit der Endung <code>.js</code> auszulagern und diese dann im HTML zu verlinken.</p>
+            <div class="example-code">
+<span class="comment">&lt;!-- Angenommen, du hast eine Datei namens "mein_skript.js" --&gt;</span>
+&lt;<span class="keyword">script</span> src=<span class="string">"mein_skript.js"</span>&gt;&lt;/<span class="keyword">script</span>&gt;
+
+<span class="comment">&lt;!-- Attribute 'async' und 'defer': --&gt;</span>
+<span class="comment">&lt;!-- 'async': Lädt das Skript asynchron, führt es aber aus, sobald es geladen ist (kann Reihenfolge stören). --&gt;</span>
+&lt;<span class="keyword">script</span> src=<span class="string">"anderes_skript.js"</span> async&gt;&lt;/<span class="keyword">script</span>&gt;
+<span class="comment">&lt;!-- 'defer': Lädt das Skript asynchron, führt es aber erst aus, nachdem das HTML-Dokument vollständig geparst wurde (Reihenfolge bleibt erhalten). Empfohlen für viele Fälle. --&gt;</span>
+&lt;<span class="keyword">script</span> src=<span class="string">"noch_ein_skript.js"</span> defer&gt;&lt;/<span class="keyword">script</span>&gt;
+            </div>
+            <p>In der Datei <code>mein_skript.js</code> könnte dann stehen:</p>
+            <div class="example-code">
+<span class="comment">// Inhalt von mein_skript.js</span>
+<span class="console">console</span>.log(<span class="string">'Hallo von externem JavaScript!'</span>);
+<span class="keyword">function</span> <span class="function">grussAusDatei</span>() {
+  <span class="function">alert</span>(<span class="string">'Diese Funktion kommt aus der externen Datei!'</span>);
+}
+            </div>
+             <div class="example-display">
+                <button onclick="grussAusDateiExtern()">Externes JS testen</button>
+                <script>
+                    function grussAusDateiExtern() { // Für dieses Demo-Beispiel direkt hier, sonst in externer Datei
+                        alert('Diese Funktion würde aus der externen Datei kommen!');
+                    }
+                </script>
+            </div>
+            <p><strong>Wo platzieren?</strong> Auch hier gilt: Oft am Ende des <code><body></code>, es sei denn, das Skript wird z.B. für das initiale Rendern von Inhalten benötigt oder <code>defer</code> wird verwendet.</p>
+        </section>
+
+        <section id="variablen" class="section">
+            <h2>Variablen und Datentypen</h2>
+            <p>Variablen sind Container zum Speichern von Datenwerten.</p>
+            <h3>Variablen deklarieren</h3>
+            <p>In modernem JavaScript (ES6+) werden Variablen hauptsächlich mit <code>let</code> und <code>const</code> deklariert. <code>var</code> ist eine ältere Methode und sollte vermieden werden.</p>
+            <ul>
+                <li><code>let</code>: Deklariert eine Variable, deren Wert neu zugewiesen werden kann. Sie ist block-scoped (nur innerhalb des Blocks gültig, in dem sie definiert wurde).</li>
+                <li><code>const</code>: Deklariert eine Konstante, deren Wert nach der ersten Zuweisung nicht mehr geändert werden kann. Auch block-scoped.</li>
+                <li><code>var</code>: Ältere Deklaration. Ist funktions-scoped oder global-scoped und hat einige Eigenheiten (Hoisting), die zu Verwirrung führen können.</li>
+            </ul>
+            <div class="example-code">
+<span class="keyword">let</span> <span class="variable">alter</span> <span class="operator">=</span> <span class="number">30</span>;
+<span class="variable">alter</span> <span class="operator">=</span> <span class="number">31</span>; <span class="comment">// Ok</span>
+
+<span class="keyword">const</span> <span class="variable">name</span> <span class="operator">=</span> <span class="string">"Max"</span>;
+<span class="comment">// name = "Moritz"; // Fehler! Konstanten können nicht neu zugewiesen werden.</span>
+
+<span class="keyword">var</span> <span class="variable">stadt</span> <span class="operator">=</span> <span class="string">"Berlin"</span>; <span class="comment">// Ältere Schreibweise</span>
+
+<span class="console">console</span>.log(<span class="variable">alter</span>);     <span class="comment">// Gibt 31 aus</span>
+<span class="console">console</span>.log(<span class="variable">name</span>);      <span class="comment">// Gibt "Max" aus</span>
+<span class="console">console</span>.log(<span class="variable">stadt</span>);     <span class="comment">// Gibt "Berlin" aus</span>
+            </div>
+
+            <h3>Datentypen</h3>
+            <p>JavaScript ist eine dynamisch typisierte Sprache, d.h. der Datentyp einer Variablen wird zur Laufzeit bestimmt und kann sich ändern.</p>
+            <p><strong>Primitive Datentypen:</strong></p>
+            <ul>
+                <li><strong>String:</strong> Eine Zeichenkette, z.B. <code>"Hallo Welt"</code> oder <code>'JavaScript'</code>.</li>
+                <li><strong>Number:</strong> Eine Zahl, z.B. <code>42</code> oder <code>3.14</code>. (Es gibt keine Unterscheidung zwischen Integer und Float).</li>
+                <li><strong>Boolean:</strong> Ein Wahrheitswert, entweder <code>true</code> oder <code>false</code>.</li>
+                <li><strong>Undefined:</strong> Eine Variable, die deklariert, aber nicht initialisiert wurde, hat den Wert <code>undefined</code>.</li>
+                <li><strong>Null:</strong> Repräsentiert absichtlich das Nichtvorhandensein eines Objektwertes. Es ist ein zugewiesener Wert.</li>
+                <li><strong>Symbol (ES6):</strong> Ein eindeutiger und unveränderlicher primitiver Wert, der als Schlüssel für Objekteigenschaften verwendet werden kann.</li>
+                <li><strong>BigInt (ES2020):</strong> Für ganze Zahlen, die größer sind als der Bereich, den der Number-Typ sicher darstellen kann.</li>
+            </ul>
+            <p><strong>Komplexer Datentyp:</strong></p>
+            <ul>
+                <li><strong>Object:</strong> Eine Sammlung von Schlüssel-Wert-Paaren. Arrays und Funktionen sind spezielle Arten von Objekten.</li>
+            </ul>
+            <div class="example-code">
+<span class="keyword">let</span> <span class="variable">text</span> <span class="operator">=</span> <span class="string">"Hallo"</span>;       <span class="comment">// String</span>
+<span class="keyword">let</span> <span class="variable">zahl</span> <span class="operator">=</span> <span class="number">123</span>;         <span class="comment">// Number</span>
+<span class="keyword">let</span> <span class="variable">istWahr</span> <span class="operator">=</span> <span class="boolean">true</span>;    <span class="comment">// Boolean</span>
+<span class="keyword">let</span> <span class="variable">nichtDefiniert</span>;    <span class="comment">// Undefined (automatisch)</span>
+<span class="keyword">let</span> <span class="variable">leer</span> <span class="operator">=</span> <span class="keyword">null</span>;        <span class="comment">// Null</span>
+
+<span class="keyword">let</span> <span class="variable">person</span> <span class="operator">=</span> { <span class="comment">// Object</span>
+  <span class="variable">vorname</span>: <span class="string">"Anna"</span>,
+  <span class="variable">nachname</span>: <span class="string">"Muster"</span>
+};
+
+<span class="keyword">let</span> <span class="variable">farben</span> <span class="operator">=</span> [<span class="string">"rot"</span>, <span class="string">"grün"</span>, <span class="string">"blau"</span>]; <span class="comment">// Array (spezielles Objekt)</span>
+
+<span class="console">console</span>.log(<span class="keyword">typeof</span> <span class="variable">text</span>);  <span class="comment">// "string"</span>
+<span class="console">console</span>.log(<span class="keyword">typeof</span> <span class="variable">zahl</span>);  <span class="comment">// "number"</span>
+<span class="console">console</span>.log(<span class="keyword">typeof</span> <span class="variable">person</span>); <span class="comment">// "object"</span>
+            </div>
+            <div class="example-display">
+                <button onclick="showDataTypes()">Datentypen anzeigen</button>
+                <div id="dataTypesOutput" class="output-area"></div>
+                <script>
+                    function showDataTypes() {
+                        let text = "Hallo";
+                        let zahl = 123;
+                        let istWahr = true;
+                        let nichtDefiniert;
+                        let leer = null;
+                        let person = { vorname: "Anna", nachname: "Muster" };
+                        let farben = ["rot", "grün", "blau"];
+                        document.getElementById('dataTypesOutput').innerHTML =
+                            `text: ${text} (Typ: ${typeof text})<br>` +
+                            `zahl: ${zahl} (Typ: ${typeof zahl})<br>` +
+                            `istWahr: ${istWahr} (Typ: ${typeof istWahr})<br>` +
+                            `nichtDefiniert: ${nichtDefiniert} (Typ: ${typeof nichtDefiniert})<br>` +
+                            `leer: ${leer} (Typ: ${typeof leer}) (Achtung: typeof null ist "object")<br>` +
+                            `person: ${JSON.stringify(person)} (Typ: ${typeof person})<br>` +
+                            `farben: ${farben.join(', ')} (Typ: ${typeof farben}, ist Array: ${Array.isArray(farben)})`;
+                    }
+                </script>
+            </div>
+        </section>
+
+        <section id="operatoren" class="section">
+            <h2>Operatoren</h2>
+            <p>Operatoren werden verwendet, um Operationen auf Werten und Variablen durchzuführen.</p>
+            <h3>Arithmetische Operatoren</h3>
+            <p><code>+</code> (Addition), <code>-</code> (Subtraktion), <code>*</code> (Multiplikation), <code>/</code> (Division), <code>%</code> (Modulo, Rest einer Division), <code>**</code> (Exponentiation, ES7).</p>
+            <div class="example-code">
+<span class="keyword">let</span> <span class="variable">a</span> <span class="operator">=</span> <span class="number">10</span>;
+<span class="keyword">let</span> <span class="variable">b</span> <span class="operator">=</span> <span class="number">3</span>;
+<span class="console">console</span>.log(<span class="variable">a</span> <span class="operator">+</span> <span class="variable">b</span>); <span class="comment">// 13</span>
+<span class="console">console</span>.log(<span class="variable">a</span> <span class="operator">%</span> <span class="variable">b</span>); <span class="comment">// 1</span>
+<span class="console">console</span>.log(<span class="number">2</span> <span class="operator">**</span> <span class="number">3</span>); <span class="comment">// 8 (2 hoch 3)</span>
+            </div>
+
+            <h3>Zuweisungsoperatoren</h3>
+            <p><code>=</code>, <code>+=</code>, <code>-=</code>, <code>*=</code>, <code>/=</code>, <code>%=</code>.</p>
+            <div class="example-code">
+<span class="keyword">let</span> <span class="variable">x</span> <span class="operator">=</span> <span class="number">5</span>;
+<span class="variable">x</span> <span class="operator">+=</span> <span class="number">3</span>; <span class="comment">// Äquivalent zu x = x + 3; (x ist jetzt 8)</span>
+            </div>
+
+            <h3>Vergleichsoperatoren</h3>
+            <p><code>==</code> (gleich, mit Typumwandlung), <code>===</code> (strikt gleich, Wert und Typ müssen gleich sein), <code>!=</code> (ungleich, mit Typumwandlung), <code>!==</code> (strikt ungleich), <code>></code> (größer als), <code><</code> (kleiner als), <code>>=</code> (größer oder gleich), <code><=</code> (kleiner oder gleich).</p>
+            <div class="note">
+                <p><strong>Empfehlung:</strong> Verwende fast immer <code>===</code> und <code>!==</code>, um unerwartetes Verhalten durch automatische Typumwandlung zu vermeiden.</p>
+            </div>
+            <div class="example-code">
+<span class="console">console</span>.log(<span class="number">5</span> <span class="operator">==</span> <span class="string">"5"</span>);  <span class="comment">// true (Typumwandlung)</span>
+<span class="console">console</span>.log(<span class="number">5</span> <span class="operator">===</span> <span class="string">"5"</span>); <span class="comment">// false (keine Typumwandlung)</span>
+<span class="console">console</span>.log(<span class="number">10</span> <span class="operator">></span> <span class="number">5</span>);   <span class="comment">// true</span>
+            </div>
+
+            <h3>Logische Operatoren</h3>
+            <p><code>&&</code> (logisches UND), <code>||</code> (logisches ODER), <code>!</code> (logisches NICHT).</p>
+             <div class="example-code">
+<span class="keyword">let</span> <span class="variable">istErwachsen</span> <span class="operator">=</span> <span class="boolean">true</span>;
+<span class="keyword">let</span> <span class="variable">hatTicket</span> <span class="operator">=</span> <span class="boolean">false</span>;
+<span class="console">console</span>.log(<span class="variable">istErwachsen</span> <span class="operator">&&</span> <span class="variable">hatTicket</span>); <span class="comment">// false</span>
+<span class="console">console</span>.log(<span class="variable">istErwachsen</span> <span class="operator">||</span> <span class="variable">hatTicket</span>); <span class="comment">// true</span>
+<span class="console">console</span>.log(<span class="operator">!</span><span class="variable">hatTicket</span>);             <span class="comment">// true</span>
+            </div>
+
+            <h3>Weitere Operatoren</h3>
+            <ul>
+                <li><strong>Inkrement/Dekrement:</strong> <code>++</code>, <code>--</code> (z.B. <code>x++</code> oder <code>++x</code>).</li>
+                <li><strong>Ternärer Operator (Bedingungsoperator):</strong> <code>bedingung ? wert_wenn_wahr : wert_wenn_falsch</code>.</li>
+                <li><strong>typeof Operator:</strong> Gibt den Typ einer Variablen als String zurück.</li>
+            </ul>
+            <div class="example-code">
+<span class="keyword">let</span> <span class="variable">alter</span> <span class="operator">=</span> <span class="number">18</span>;
+<span class="keyword">let</span> <span class="variable">status</span> <span class="operator">=</span> (<span class="variable">alter</span> <span class="operator">>=</span> <span class="number">18</span>) <span class="operator">?</span> <span class="string">"Volljährig"</span> <span class="operator">:</span> <span class="string">"Minderjährig"</span>;
+<span class="console">console</span>.log(<span class="variable">status</span>); <span class="comment">// "Volljährig"</span>
+
+<span class="keyword">let</span> <span class="variable">wert</span> <span class="operator">=</span> <span class="number">42</span>;
+<span class="console">console</span>.log(<span class="keyword">typeof</span> <span class="variable">wert</span>); <span class="comment">// "number"</span>
+            </div>
+            <div class="example-display">
+                <button onclick="showOperators()">Operatoren testen</button>
+                <div id="operatorsOutput" class="output-area"></div>
+                <script>
+                    function showOperators() {
+                        let a = 10, b = 4;
+                        let output = `a = ${a}, b = ${b}<br>`;
+                        output += `a + b = ${a + b}<br>`;
+                        output += `a % b = ${a % b}<br>`;
+                        output += `5 == "5": ${5 == "5"}<br>`;
+                        output += `5 === "5": ${5 === "5"}<br>`;
+                        let alter = 17;
+                        output += `Alter: ${alter}, Status: ${(alter >= 18) ? "Volljährig" : "Minderjährig"}`;
+                        document.getElementById('operatorsOutput').innerHTML = output;
+                    }
+                </script>
+            </div>
+        </section>
+
+        <section id="kontrollstrukturen" class="section">
+            <h2>Kontrollstrukturen</h2>
+            <p>Steuern den Ablauf eines Programms.</p>
+
+            <h3>Bedingte Anweisungen (<code>if, else if, else</code>)</h3>
+            <p>Führt Codeblöcke basierend auf Bedingungen aus.</p>
+            <div class="example-code">
+<span class="keyword">let</span> <span class="variable">note</span> <span class="operator">=</span> <span class="number">2</span>;
+<span class="keyword">if</span> (<span class="variable">note</span> <span class="operator">===</span> <span class="number">1</span>) {
+  <span class="console">console</span>.log(<span class="string">"Sehr gut!"</span>);
+} <span class="keyword">else if</span> (<span class="variable">note</span> <span class="operator">===</span> <span class="number">2</span>) {
+  <span class="console">console</span>.log(<span class="string">"Gut!"</span>);
+} <span class="keyword">else if</span> (<span class="variable">note</span> <span class="operator">===</span> <span class="number">3</span>) {
+  <span class="console">console</span>.log(<span class="string">"Befriedigend."</span>);
+} <span class="keyword">else</span> {
+  <span class="console">console</span>.log(<span class="string">"Ausreichend oder schlechter."</span>);
+}
+            </div>
+
+            <h3>Switch-Anweisung (<code>switch</code>)</h3>
+            <p>Eine Alternative zu vielen <code>else if</code>-Blöcken, wenn eine Variable mit mehreren Werten verglichen wird.</p>
+            <div class="example-code">
+<span class="keyword">let</span> <span class="variable">tag</span> <span class="operator">=</span> <span class="string">"Montag"</span>;
+<span class="keyword">switch</span> (<span class="variable">tag</span>) {
+  <span class="keyword">case</span> <span class="string">"Montag"</span>:
+    <span class="console">console</span>.log(<span class="string">"Wochenstart!"</span>);
+    <span class="keyword">break</span>; <span class="comment">// Wichtig, sonst "Fallthrough"</span>
+  <span class="keyword">case</span> <span class="string">"Freitag"</span>:
+    <span class="console">console</span>.log(<span class="string">"Fast Wochenende!"</span>);
+    <span class="keyword">break</span>;
+  <span class="keyword">default</span>: <span class="comment">// Optional, wenn kein case zutrifft</span>
+    <span class="console">console</span>.log(<span class="string">"Ein normaler Tag."</span>);
+}
+            </div>
+
+            <h3>Schleifen</h3>
+            <p>Wiederholen Codeblöcke.</p>
+            <h4><code>for</code>-Schleife</h4>
+            <p>Wird verwendet, wenn die Anzahl der Wiederholungen bekannt ist.</p>
+            <div class="example-code">
+<span class="keyword">for</span> (<span class="keyword">let</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; <span class="variable">i</span> <span class="operator"><</span> <span class="number">5</span>; <span class="variable">i</span><span class="operator">++</span>) {
+  <span class="console">console</span>.log(<span class="string">"Durchlauf Nummer: "</span> <span class="operator">+</span> <span class="variable">i</span>);
+}
+            </div>
+
+            <h4><code>while</code>-Schleife</h4>
+            <p>Wird verwendet, solange eine Bedingung wahr ist. Die Bedingung wird vor jeder Iteration geprüft.</p>
+            <div class="example-code">
+<span class="keyword">let</span> <span class="variable">zaehler</span> <span class="operator">=</span> <span class="number">0</span>;
+<span class="keyword">while</span> (<span class="variable">zaehler</span> <span class="operator"><</span> <span class="number">3</span>) {
+  <span class="console">console</span>.log(<span class="string">"Zähler: "</span> <span class="operator">+</span> <span class="variable">zaehler</span>);
+  <span class="variable">zaehler</span><span class="operator">++</span>;
+}
+            </div>
+
+            <h4><code>do...while</code>-Schleife</h4>
+            <p>Ähnlich wie <code>while</code>, aber der Codeblock wird mindestens einmal ausgeführt, da die Bedingung erst nach der Iteration geprüft wird.</p>
+            <div class="example-code">
+<span class="keyword">let</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>;
+<span class="keyword">do</span> {
+  <span class="console">console</span>.log(<span class="string">"j ist: "</span> <span class="operator">+</span> <span class="variable">j</span>);
+  <span class="variable">j</span><span class="operator">++</span>;
+} <span class="keyword">while</span> (<span class="variable">j</span> <span class="operator"><</span> <span class="number">0</span>); <span class="comment">// Wird trotzdem einmal ausgeführt, obwohl j nicht < 0 ist.</span>
+            </div>
+
+            <h4><code>for...of</code>-Schleife (ES6)</h4>
+            <p>Iteriert über die Werte von iterierbaren Objekten (z.B. Arrays, Strings).</p>
+            <div class="example-code">
+<span class="keyword">const</span> <span class="variable">farbenArray</span> <span class="operator">=</span> [<span class="string">'rot'</span>, <span class="string">'grün'</span>, <span class="string">'blau'</span>];
+<span class="keyword">for</span> (<span class="keyword">const</span> <span class="variable">farbe</span> <span class="keyword">of</span> <span class="variable">farbenArray</span>) {
+  <span class="console">console</span>.log(<span class="variable">farbe</span>);
+}
+            </div>
+
+            <h4><code>for...in</code>-Schleife</h4>
+            <p>Iteriert über die Schlüssel (Eigenschaften) eines Objekts. Kann auch für Arrays verwendet werden, liefert dann aber die Indizes.</p>
+            <div class="example-code">
+<span class="keyword">const</span> <span class="variable">auto</span> <span class="operator">=</span> { <span class="variable">marke</span>: <span class="string">'VW'</span>, <span class="variable">modell</span>: <span class="string">'Golf'</span>, <span class="variable">jahr</span>: <span class="number">2020</span> };
+<span class="keyword">for</span> (<span class="keyword">const</span> <span class="variable">eigenschaft</span> <span class="keyword">in</span> <span class="variable">auto</span>) {
+  <span class="console">console</span>.log(<span class="variable">eigenschaft</span> <span class="operator">+</span> <span class="string">": "</span> <span class="operator">+</span> <span class="variable">auto</span>[<span class="variable">eigenschaft</span>]);
+}
+            </div>
+            <div class="example-display">
+                <label for="numberInputControl">Zahl eingeben (1-5):</label>
+                <input type="number" id="numberInputControl" min="1" max="5" value="3">
+                <button onclick="runControlStructures()">Kontrollstrukturen testen</button>
+                <div id="controlStructuresOutput" class="output-area"></div>
+                <script>
+                    function runControlStructures() {
+                        const num = parseInt(document.getElementById('numberInputControl').value);
+                        let output = "";
+
+                        // if-else
+                        if (num === 1) output += "Eins ist super!<br>";
+                        else if (num < 3) output += "Ziemlich klein.<br>";
+                        else output += "Größer oder gleich 3.<br>";
+
+                        // switch
+                        switch (num) {
+                            case 1: output += "Switch sagt: Nummer 1!<br>"; break;
+                            case 5: output += "Switch sagt: Fünf Sterne!<br>"; break;
+                            default: output += "Switch sagt: Irgendwas dazwischen.<br>";
+                        }
+
+                        // for-Schleife
+                        output += "For-Schleife (0 bis " + (num -1) + "): ";
+                        for (let i = 0; i < num; i++) {
+                            output += i + " ";
+                        }
+                        output += "<br>";
+
+                        document.getElementById('controlStructuresOutput').innerHTML = output;
+                    }
+                </script>
+            </div>
+        </section>
+
+        <section id="funktionen" class="section">
+            <h2>Funktionen</h2>
+            <p>Funktionen sind wiederverwendbare Codeblöcke, die eine bestimmte Aufgabe erfüllen. Sie können Parameter entgegennehmen und einen Wert zurückgeben.</p>
+
+            <h3>Funktionsdeklaration (Function Declaration)</h3>
+            <div class="example-code">
+<span class="keyword">function</span> <span class="function">addiere</span>(<span class="variable">a</span>, <span class="variable">b</span>) {
+  <span class="keyword">return</span> <span class="variable">a</span> <span class="operator">+</span> <span class="variable">b</span>;
+}
+<span class="keyword">let</span> <span class="variable">summe</span> <span class="operator">=</span> <span class="function">addiere</span>(<span class="number">5</span>, <span class="number">3</span>); <span class="comment">// summe ist 8</span>
+<span class="console">console</span>.log(<span class="variable">summe</span>);
+            </div>
+
+            <h3>Funktionsausdruck (Function Expression)</h3>
+            <p>Eine Funktion kann auch einer Variablen zugewiesen werden.</p>
+            <div class="example-code">
+<span class="keyword">const</span> <span class="variable">multipliziere</span> <span class="operator">=</span> <span class="keyword">function</span>(<span class="variable">a</span>, <span class="variable">b</span>) {
+  <span class="keyword">return</span> <span class="variable">a</span> <span class="operator">*</span> <span class="variable">b</span>;
+};
+<span class="keyword">let</span> <span class="variable">produkt</span> <span class="operator">=</span> <span class="function">multipliziere</span>(<span class="number">4</span>, <span class="number">2</span>); <span class="comment">// produkt ist 8</span>
+<span class="console">console</span>.log(<span class="variable">produkt</span>);
+            </div>
+
+            <h3>Pfeilfunktionen (Arrow Functions, ES6)</h3>
+            <p>Eine kürzere Syntax für Funktionsausdrücke. Sie haben auch ein anderes Verhalten bezüglich <code>this</code>.</p>
+            <div class="example-code">
+<span class="keyword">const</span> <span class="variable">subtrahiere</span> <span class="operator">=</span> (<span class="variable">a</span>, <span class="variable">b</span>) <span class="operator">=></span> <span class="variable">a</span> <span class="operator">-</span> <span class="variable">b</span>; <span class="comment">// Kurzform, wenn nur ein Ausdruck zurückgegeben wird</span>
+<span class="keyword">let</span> <span class="variable">differenz</span> <span class="operator">=</span> <span class="function">subtrahiere</span>(<span class="number">10</span>, <span class="number">7</span>); <span class="comment">// differenz ist 3</span>
+
+<span class="keyword">const</span> <span class="variable">gruss</span> <span class="operator">=</span> <span class="variable">name</span> <span class="operator">=></span> <span class="console">console</span>.log(<span class="string">`Hallo, ${name}!`</span>); <span class="comment">// Ein Parameter, keine Klammern nötig</span>
+<span class="function">gruss</span>(<span class="string">'Peter'</span>);
+
+<span class="keyword">const</span> <span class="variable">komplexeFunktion</span> <span class="operator">=</span> (<span class="variable">a</span>, <span class="variable">b</span>) <span class="operator">=></span> { <span class="comment">// Mehrere Anweisungen, geschweifte Klammern und 'return' nötig</span>
+  <span class="keyword">const</span> <span class="variable">resultat</span> <span class="operator">=</span> <span class="variable">a</span> <span class="operator">+</span> <span class="variable">b</span>;
+  <span class="keyword">return</span> <span class="variable">resultat</span> <span class="operator">*</span> <span class="number">2</span>;
+};
+            </div>
+            <div class="example-display">
+                <input type="number" id="funcInputA" value="7" style="width:50px;"> +
+                <input type="number" id="funcInputB" value="8" style="width:50px;">
+                <button onclick="executeFunction()">Funktion ausführen</button>
+                <div id="functionOutput" class="output-area"></div>
+                <script>
+                    function addiereDemo(a, b) {
+                        return a + b;
+                    }
+                    const multipliziereDemo = (a, b) => a * b;
+
+                    function executeFunction() {
+                        const a = parseInt(document.getElementById('funcInputA').value);
+                        const b = parseInt(document.getElementById('funcInputB').value);
+                        document.getElementById('functionOutput').innerHTML =
+                            `Addition (klassisch): ${addiereDemo(a, b)}<br>` +
+                            `Multiplikation (Pfeilfunktion): ${multipliziereDemo(a, b)}`;
+                    }
+                </script>
+            </div>
+             <p><strong>Parameter und Argumente:</strong> Parameter sind die Namen, die in der Funktionsdefinition aufgelistet sind. Argumente sind die tatsächlichen Werte, die beim Aufruf der Funktion übergeben werden.</p>
+            <p><strong>Default-Parameter (ES6):</strong> Ermöglicht das Setzen von Standardwerten für Parameter, falls keine Argumente übergeben werden.</p>
+            <div class="example-code">
+<span class="keyword">function</span> <span class="function">halloSagen</span>(<span class="variable">name</span> <span class="operator">=</span> <span class="string">"Gast"</span>) {
+  <span class="console">console</span>.log(<span class="string">`Hallo, ${name}!`</span>);
+}
+<span class="function">halloSagen</span>(<span class="string">"Lisa"</span>); <span class="comment">// Hallo, Lisa!</span>
+<span class="function">halloSagen</span>();     <span class="comment">// Hallo, Gast!</span>
+            </div>
+        </section>
+
+         <section id="objekte" class="section">
+            <h2>Objekte</h2>
+            <p>Objekte sind Sammlungen von Schlüssel-Wert-Paaren (Eigenschaften und Methoden). Eigenschaften sind Daten, Methoden sind Funktionen, die mit den Daten des Objekts arbeiten können.</p>
+
+            <h3>Objektliteral</h3>
+            <p>Der einfachste Weg, ein Objekt zu erstellen.</p>
+            <div class="example-code">
+<span class="keyword">const</span> <span class="variable">meinAuto</span> <span class="operator">=</span> {
+  <span class="variable">marke</span>: <span class="string">"BMW"</span>,
+  <span class="variable">modell</span>: <span class="string">"X5"</span>,
+  <span class="variable">farbe</span>: <span class="string">"schwarz"</span>,
+  <span class="variable">baujahr</span>: <span class="number">2022</span>,
+  <span class="function">detailsAnzeigen</span>: <span class="keyword">function</span>() {
+    <span class="comment">// 'this' bezieht sich auf das aktuelle Objekt (meinAuto)</span>
+    <span class="console">console</span>.log(<span class="string">`Marke: ${this.marke}, Modell: ${this.modell}, Baujahr: ${this.baujahr}`</span>);
+  },
+  <span class="comment">// ES6 Kurzschreibweise für Methoden</span>
+  <span class="function">hupen</span>() {
+    <span class="console">console</span>.log(<span class="string">"Hup Hup!"</span>);
+  }
+};
+
+<span class="comment">// Zugriff auf Eigenschaften</span>
+<span class="console">console</span>.log(<span class="variable">meinAuto</span>.<span class="variable">marke</span>); <span class="comment">// BMW (Dot Notation)</span>
+<span class="console">console</span>.log(<span class="variable">meinAuto</span>[<span class="string">'modell'</span>]); <span class="comment">// X5 (Bracket Notation - nützlich für dynamische Schlüssel)</span>
+
+<span class="comment">// Eigenschaft ändern</span>
+<span class="variable">meinAuto</span>.<span class="variable">farbe</span> <span class="operator">=</span> <span class="string">"rot"</span>;
+<span class="console">console</span>.log(<span class="variable">meinAuto</span>.<span class="variable">farbe</span>); <span class="comment">// rot</span>
+
+<span class="comment">// Methode aufrufen</span>
+<span class="variable">meinAuto</span>.<span class="function">detailsAnzeigen</span>();
+<span class="variable">meinAuto</span>.<span class="function">hupen</span>();
+            </div>
+
+            <h3>Konstruktor-Funktionen</h3>
+            <p>Eine Vorlage zum Erstellen mehrerer Objekte desselben Typs.</p>
+             <div class="example-code">
+<span class="keyword">function</span> <span class="function">Auto</span>(<span class="variable">marke</span>, <span class="variable">modell</span>, <span class="variable">baujahr</span>) {
+  <span class="keyword">this</span>.<span class="variable">marke</span> <span class="operator">=</span> <span class="variable">marke</span>;
+  <span class="keyword">this</span>.<span class="variable">modell</span> <span class="operator">=</span> <span class="variable">modell</span>;
+  <span class="keyword">this</span>.<span class="variable">baujahr</span> <span class="operator">=</span> <span class="variable">baujahr</span>;
+  <span class="keyword">this</span>.<span class="function">details</span> <span class="operator">=</span> <span class="keyword">function</span>() {
+    <span class="console">console</span>.log(<span class="string">`${this.marke} ${this.modell} (${this.baujahr})`</span>);
+  };
+}
+
+<span class="keyword">const</span> <span class="variable">auto1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="function">Auto</span>(<span class="string">'Audi'</span>, <span class="string">'A4'</span>, <span class="number">2021</span>);
+<span class="keyword">const</span> <span class="variable">auto2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="function">Auto</span>(<span class="string">'Mercedes'</span>, <span class="string">'C-Klasse'</span>, <span class="number">2023</span>);
+
+<span class="variable">auto1</span>.<span class="function">details</span>(); <span class="comment">// Audi A4 (2021)</span>
+<span class="variable">auto2</span>.<span class="function">details</span>(); <span class="comment">// Mercedes C-Klasse (2023)</span>
+            </div>
+
+            <h3>Klassen (ES6)</h3>
+            <p>Eine modernere Syntax für Konstruktor-Funktionen (syntaktischer Zucker über Prototypen).</p>
+            <div class="example-code">
+<span class="keyword">class</span> <span class="function">Fahrzeug</span> {
+  <span class="function">constructor</span>(<span class="variable">marke</span>, <span class="variable">modell</span>) {
+    <span class="keyword">this</span>.<span class="variable">marke</span> <span class="operator">=</span> <span class="variable">marke</span>;
+    <span class="keyword">this</span>.<span class="variable">modell</span> <span class="operator">=</span> <span class="variable">modell</span>;
+  }
+
+  <span class="function">zeigeInfo</span>() {
+    <span class="console">console</span>.log(<span class="string">`Fahrzeug: ${this.marke} ${this.modell}`</span>);
+  }
+}
+
+<span class="keyword">const</span> <span class="variable">meinFahrzeug</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="function">Fahrzeug</span>(<span class="string">'Tesla'</span>, <span class="string">'Model S'</span>);
+<span class="variable">meinFahrzeug</span>.<span class="function">zeigeInfo</span>(); <span class="comment">// Fahrzeug: Tesla Model S</span>
+
+<span class="keyword">class</span> <span class="function">PKW</span> <span class="keyword">extends</span> <span class="function">Fahrzeug</span> { <span class="comment">// Vererbung</span>
+  <span class="function">constructor</span>(<span class="variable">marke</span>, <span class="variable">modell</span>, <span class="variable">tueren</span>) {
+    <span class="function">super</span>(<span class="variable">marke</span>, <span class="variable">modell</span>); <span class="comment">// Ruft den Konstruktor der Elternklasse auf</span>
+    <span class="keyword">this</span>.<span class="variable">tueren</span> <span class="operator">=</span> <span class="variable">tueren</span>;
+  }
+
+  <span class="function">zeigeInfo</span>() { <span class="comment">// Methode überschreiben</span>
+    <span class="function">super</span>.<span class="function">zeigeInfo</span>();
+    <span class="console">console</span>.log(<span class="string">`Anzahl Türen: ${this.tueren}`</span>);
+  }
+}
+<span class="keyword">const</span> <span class="variable">meinPKW</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="function">PKW</span>(<span class="string">'VW'</span>, <span class="string">'Golf'</span>, <span class="number">5</span>);
+<span class="variable">meinPKW</span>.<span class="function">zeigeInfo</span>();
+<span class="comment">// Fahrzeug: VW Golf</span>
+<span class="comment">// Anzahl Türen: 5</span>
+            </div>
+            <div class="example-display">
+                <button onclick="createObject()">Objekt erstellen & testen</button>
+                <div id="objectOutput" class="output-area"></div>
+                <script>
+                    function createObject() {
+                        const person = {
+                            vorname: "Erika",
+                            nachname: "Mustermann",
+                            alter: 28,
+                            beruf: "Entwicklerin",
+                            zeigeVollerName: function() {
+                                return this.vorname + " " + this.nachname;
+                            }
+                        };
+                        document.getElementById('objectOutput').innerHTML =
+                            `Name: ${person.zeigeVollerName()}<br>` +
+                            `Alter: ${person.alter}<br>` +
+                            `Beruf: ${person['beruf']}`; // Bracket Notation
+                    }
+                </script>
+            </div>
+        </section>
+
+        <section id="arrays" class="section">
+            <h2>Arrays</h2>
+            <p>Arrays sind geordnete Listen von Werten. Ein Array kann Werte verschiedener Datentypen enthalten.</p>
+            <div class="example-code">
+<span class="comment">// Array-Literal</span>
+<span class="keyword">const</span> <span class="variable">fruechte</span> <span class="operator">=</span> [<span class="string">"Apfel"</span>, <span class="string">"Banane"</span>, <span class="string">"Orange"</span>];
+<span class="keyword">const</span> <span class="variable">gemischt</span> <span class="operator">=</span> [<span class="number">1</span>, <span class="string">"Text"</span>, <span class="boolean">true</span>, { <span class="variable">id</span>: <span class="number">7</span> }];
+
+<span class="comment">// Zugriff auf Elemente (Index beginnt bei 0)</span>
+<span class="console">console</span>.log(<span class="variable">fruechte</span>[<span class="number">0</span>]); <span class="comment">// "Apfel"</span>
+<span class="console">console</span>.log(<span class="variable">fruechte</span>[<span class="number">1</span>]); <span class="comment">// "Banane"</span>
+
+<span class="comment">// Element ändern</span>
+<span class="variable">fruechte</span>[<span class="number">1</span>] <span class="operator">=</span> <span class="string">"Birne"</span>;
+<span class="console">console</span>.log(<span class="variable">fruechte</span>); <span class="comment">// ["Apfel", "Birne", "Orange"]</span>
+
+<span class="comment">// Länge des Arrays</span>
+<span class="console">console</span>.log(<span class="variable">fruechte</span>.<span class="variable">length</span>); <span class="comment">// 3</span>
+            </div>
+
+            <h3>Nützliche Array-Methoden</h3>
+            <ul>
+                <li><code>push()</code>: Fügt ein Element am Ende hinzu.</li>
+                <li><code>pop()</code>: Entfernt das letzte Element und gibt es zurück.</li>
+                <li><code>shift()</code>: Entfernt das erste Element und gibt es zurück.</li>
+                <li><code>unshift()</code>: Fügt ein Element am Anfang hinzu.</li>
+                <li><code>splice(index, anzahlEntfernen, element1, ...)</code>: Fügt Elemente hinzu/entfernt Elemente an einer bestimmten Position.</li>
+                <li><code>slice(startIndex, endIndex)</code>: Erstellt eine Kopie eines Teils des Arrays (<code>endIndex</code> nicht inklusive).</li>
+                <li><code>concat(array2, ...)</code>: Verbindet Arrays.</li>
+                <li><code>join(separator)</code>: Wandelt alle Elemente in einen String um, getrennt durch den Separator.</li>
+                <li><code>indexOf(element)</code>: Gibt den ersten Index eines Elements zurück (-1, wenn nicht gefunden).</li>
+                <li><code>includes(element)</code> (ES7): Prüft, ob ein Element im Array enthalten ist (gibt <code>true</code>/<code>false</code> zurück).</li>
+            </ul>
+            <p><strong>Iterationsmethoden (ES5+):</strong></p>
+            <ul>
+                <li><code>forEach(callbackFn)</code>: Führt eine Funktion für jedes Element aus.</li>
+                <li><code>map(callbackFn)</code>: Erstellt ein neues Array mit den Ergebnissen der Callback-Funktion für jedes Element.</li>
+                <li><code>filter(callbackFn)</code>: Erstellt ein neues Array mit allen Elementen, für die die Callback-Funktion <code>true</code> zurückgibt.</li>
+                <li><code>reduce(callbackFn, initialValue)</code>: Reduziert das Array auf einen einzelnen Wert.</li>
+                <li><code>find(callbackFn)</code>: Gibt das erste Element zurück, das die Bedingung der Callback-Funktion erfüllt.</li>
+                <li><code>findIndex(callbackFn)</code>: Gibt den Index des ersten Elements zurück, das die Bedingung erfüllt.</li>
+                <li><code>some(callbackFn)</code>: Prüft, ob mindestens ein Element die Bedingung erfüllt.</li>
+                <li><code>every(callbackFn)</code>: Prüft, ob alle Elemente die Bedingung erfüllen.</li>
+            </ul>
+             <div class="example-code">
+<span class="keyword">const</span> <span class="variable">zahlen</span> <span class="operator">=</span> [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];
+
+<span class="variable">zahlen</span>.<span class="function">push</span>(<span class="number">6</span>); <span class="comment">// [1, 2, 3, 4, 5, 6]</span>
+<span class="variable">zahlen</span>.<span class="function">pop</span>();   <span class="comment">// [1, 2, 3, 4, 5]</span>
+
+<span class="variable">zahlen</span>.<span class="function">forEach</span>(<span class="keyword">function</span>(<span class="variable">zahl</span>) {
+  <span class="console">console</span>.log(<span class="variable">zahl</span> <span class="operator">*</span> <span class="number">2</span>);
+}); <span class="comment">// Gibt 2, 4, 6, 8, 10 aus</span>
+
+<span class="keyword">const</span> <span class="variable">quadrate</span> <span class="operator">=</span> <span class="variable">zahlen</span>.<span class="function">map</span>(<span class="variable">zahl</span> <span class="operator">=></span> <span class="variable">zahl</span> <span class="operator">*</span> <span class="variable">zahl</span>);
+<span class="console">console</span>.log(<span class="variable">quadrate</span>); <span class="comment">// [1, 4, 9, 16, 25]</span>
+
+<span class="keyword">const</span> <span class="variable">geradeZahlen</span> <span class="operator">=</span> <span class="variable">zahlen</span>.<span class="function">filter</span>(<span class="variable">zahl</span> <span class="operator">=></span> <span class="variable">zahl</span> <span class="operator">%</span> <span class="number">2</span> <span class="operator">===</span> <span class="number">0</span>);
+<span class="console">console</span>.log(<span class="variable">geradeZahlen</span>); <span class="comment">// [2, 4]</span>
+            </div>
+            <div class="example-display">
+                <input type="text" id="arrayInput" placeholder="Element hinzufügen (Komma-getrennt für mehrere)">
+                <button onclick="manipulateArray()">Array bearbeiten</button>
+                <div id="arrayOutput" class="output-area"></div>
+                <script>
+                    let demoArray = ["Apfel", "Banane", "Kirsche"];
+                    function displayArray() {
+                        document.getElementById('arrayOutput').innerHTML =
+                            `Aktuelles Array: [${demoArray.join(', ')}]<br>` +
+                            `Länge: ${demoArray.length}<br>` +
+                            `Quadrate (map [1,2,3]): ${[1,2,3].map(x => x*x).join(', ')}`;
+                    }
+                    displayArray(); // Initialanzeige
+
+                    function manipulateArray() {
+                        const inputVal = document.getElementById('arrayInput').value;
+                        if (inputVal) {
+                            const newItems = inputVal.split(',').map(item => item.trim());
+                            newItems.forEach(item => demoArray.push(item));
+                            document.getElementById('arrayInput').value = ''; // Feld leeren
+                        } else {
+                           if (demoArray.length > 0) demoArray.pop(); // Letztes Element entfernen
+                        }
+                        displayArray();
+                    }
+                </script>
+            </div>
+        </section>
+
+        <section id="dom" class="section">
+            <h2>DOM-Manipulation</h2>
+            <p>Das <strong>D</strong>ocument <strong>O</strong>bject <strong>M</strong>odel (DOM) ist eine Programmierschnittstelle für HTML- und XML-Dokumente. Es repräsentiert die Seitenstruktur als Baum von Objekten (Nodes), sodass JavaScript darauf zugreifen und den Inhalt, die Struktur und das Styling der Seite dynamisch verändern kann.</p>
+
+            <h3>Elemente auswählen</h3>
+            <ul>
+                <li><code>document.getElementById('id')</code>: Wählt ein Element anhand seiner ID aus (schnellste Methode).</li>
+                <li><code>document.getElementsByTagName('tagname')</code>: Gibt eine HTMLCollection aller Elemente mit dem angegebenen Tag-Namen zurück.</li>
+                <li><code>document.getElementsByClassName('classname')</code>: Gibt eine HTMLCollection aller Elemente mit der angegebenen Klasse zurück.</li>
+                <li><code>document.querySelector('css-selector')</code>: Gibt das erste Element zurück, das auf den CSS-Selektor passt.</li>
+                <li><code>document.querySelectorAll('css-selector')</code>: Gibt eine NodeList aller Elemente zurück, die auf den CSS-Selektor passen.</li>
+            </ul>
+            <div class="example-code">
+<span class="comment">&lt;div id="meinDiv" class="box"&gt;Hallo&lt;/div&gt;</span>
+
+<span class="keyword">const</span> <span class="variable">divById</span> <span class="operator">=</span> <span class="variable">document</span>.<span class="function">getElementById</span>(<span class="string">'meinDiv'</span>);
+<span class="keyword">const</span> <span class="variable">divsByTag</span> <span class="operator">=</span> <span class="variable">document</span>.<span class="function">getElementsByTagName</span>(<span class="string">'div'</span>); <span class="comment">// HTMLCollection</span>
+<span class="keyword">const</span> <span class="variable">boxesByClass</span> <span class="operator">=</span> <span class="variable">document</span>.<span class="function">getElementsByClassName</span>(<span class="string">'box'</span>); <span class="comment">// HTMLCollection</span>
+
+<span class="keyword">const</span> <span class="variable">erstesDiv</span> <span class="operator">=</span> <span class="variable">document</span>.<span class="function">querySelector</span>(<span class="string">'div.box'</span>); <span class="comment">// Erstes Element</span>
+<span class="keyword">const</span> <span class="variable">alleDivs</span> <span class="operator">=</span> <span class="variable">document</span>.<span class="function">querySelectorAll</span>(<span class="string">'div'</span>); <span class="comment">// NodeList</span>
+
+<span class="console">console</span>.log(<span class="variable">divById</span>.<span class="variable">innerHTML</span>); <span class="comment">// "Hallo"</span>
+            </div>
+
+            <h3>Inhalt und Attribute ändern</h3>
+            <ul>
+                <li><code>element.innerHTML</code>: Liest oder setzt den HTML-Inhalt eines Elements. (Vorsicht bei Benutzereingaben wegen XSS-Gefahr).</li>
+                <li><code>element.textContent</code>: Liest oder setzt den Textinhalt eines Elements (sicherer als <code>innerHTML</code> für reinen Text).</li>
+                <li><code>element.setAttribute('attributname', 'wert')</code>: Setzt den Wert eines Attributs.</li>
+                <li><code>element.getAttribute('attributname')</code>: Liest den Wert eines Attributs.</li>
+                <li><code>element.removeAttribute('attributname')</code>: Entfernt ein Attribut.</li>
+                <li><code>element.style.eigenschaft = 'wert'</code>: Ändert CSS-Stile (z.B. <code>element.style.color = 'red'</code>).</li>
+                <li><code>element.classList.add('klasse')</code>, <code>remove('klasse')</code>, <code>toggle('klasse')</code>, <code>contains('klasse')</code>: Manipuliert CSS-Klassen.</li>
+            </ul>
+             <div class="example-code">
+<span class="keyword">const</span> <span class="variable">meinElement</span> <span class="operator">=</span> <span class="variable">document</span>.<span class="function">getElementById</span>(<span class="string">'meinDiv'</span>);
+<span class="keyword">if</span> (<span class="variable">meinElement</span>) {
+  <span class="variable">meinElement</span>.<span class="variable">innerHTML</span> <span class="operator">=</span> <span class="string">'Neuer <strong>HTML</strong> Inhalt!'</span>;
+  <span class="variable">meinElement</span>.<span class="variable">style</span>.<span class="variable">backgroundColor</span> <span class="operator">=</span> <span class="string">'yellow'</span>;
+  <span class="variable">meinElement</span>.<span class="function">setAttribute</span>(<span class="string">'data-custom'</span>, <span class="string">'123'</span>);
+  <span class="variable">meinElement</span>.<span class="variable">classList</span>.<span class="function">add</span>(<span class="string">'hervorgehoben'</span>);
+}
+            </div>
+
+            <h3>Elemente erstellen und hinzufügen/entfernen</h3>
+            <ul>
+                <li><code>document.createElement('tagname')</code>: Erstellt ein neues HTML-Element.</li>
+                <li><code>element.appendChild(kindElement)</code>: Fügt ein Kindelement am Ende eines Elements hinzu.</li>
+                <li><code>element.insertBefore(neuesElement, referenzElement)</code>: Fügt ein neues Element vor einem Referenz-Kindelement ein.</li>
+                <li><code>element.removeChild(kindElement)</code>: Entfernt ein Kindelement.</li>
+                <li><code>element.replaceChild(neuesKind, altesKind)</code>: Ersetzt ein Kindelement durch ein anderes.</li>
+            </ul>
+            <div class="example-code">
+<span class="keyword">const</span> <span class="variable">neuerP</span> <span class="operator">=</span> <span class="variable">document</span>.<span class="function">createElement</span>(<span class="string">'p'</span>);
+<span class="variable">neuerP</span>.<span class="variable">textContent</span> <span class="operator">=</span> <span class="string">'Dies ist ein neuer Paragraph.'</span>;
+<span class="variable">document</span>.<span class="variable">body</span>.<span class="function">appendChild</span>(<span class="variable">neuerP</span>); <span class="comment">// Fügt den Paragraphen am Ende des Body hinzu</span>
+            </div>
+            <div class="example-display">
+                <div id="domDemoBox">Box</div>
+                <button onclick="changeBoxColor()">Farbe ändern</button>
+                <button onclick="changeBoxText()">Text ändern</button>
+                <button onclick="toggleBoxVisibility()">Ein-/Ausblenden</button>
+                <button onclick="addListItem()">Listenelement hinzufügen</button>
+                <ul id="domDemoList"></ul>
+                <script>
+                    const box = document.getElementById('domDemoBox');
+                    const list = document.getElementById('domDemoList');
+                    let itemCount = 0;
+
+                    function changeBoxColor() {
+                        const r = Math.floor(Math.random() * 256);
+                        const g = Math.floor(Math.random() * 256);
+                        const b = Math.floor(Math.random() * 256);
+                        box.style.backgroundColor = `rgb(${r},${g},${b})`;
+                    }
+                    function changeBoxText() {
+                        box.textContent = "Neuer Text!";
+                    }
+                    function toggleBoxVisibility() {
+                        // if (box.style.display === "none") {
+                        //     box.style.display = "block";
+                        // } else {
+                        //     box.style.display = "none";
+                        // }
+                        box.classList.toggle('hidden-by-js'); // Besser mit CSS-Klasse
+                    }
+                    function addListItem() {
+                        itemCount++;
+                        const newItem = document.createElement('li');
+                        newItem.textContent = `Neues Element ${itemCount}`;
+                        list.appendChild(newItem);
+                    }
+                </style>
+                <style>.hidden-by-js { display: none !important; }</style>
+            </div>
+        </section>
+
+        <section id="events" class="section">
+            <h2>Events (Ereignisse)</h2>
+            <p>Events sind Aktionen oder Vorkommnisse, die im Browser passieren, z.B. wenn ein Benutzer auf ein Element klickt, eine Taste drückt, die Maus bewegt oder die Seite vollständig geladen ist. JavaScript kann auf diese Events "lauschen" und darauf reagieren.</p>
+
+            <h3>Event-Handler-Attribute (Inline, nicht empfohlen)</h3>
+            <p>Events können direkt als Attribute im HTML-Tag definiert werden.</p>
+            <div class="example-code">
+&lt;<span class="keyword">button</span> onclick=<span class="string">"alert('Button geklickt!');"</span>&gt;Klick mich&lt;/<span class="keyword">button</span>&gt;
+            </div>
+            <p>Diese Methode ist für kleine Dinge ok, aber vermischt HTML und JavaScript und ist schwerer zu warten.</p>
+
+            <h3>DOM-Eigenschaft (Property)</h3>
+            <p>Einem Element kann eine Event-Handler-Funktion direkt als Eigenschaft zugewiesen werden.</p>
+            <div class="example-code">
+<span class="keyword">const</span> <span class="variable">meinButton</span> <span class="operator">=</span> <span class="variable">document</span>.<span class="function">getElementById</span>(<span class="string">'buttonId'</span>);
+<span class="keyword">if</span> (<span class="variable">meinButton</span>) {
+  <span class="variable">meinButton</span>.<span class="variable">onclick</span> <span class="operator">=</span> <span class="keyword">function</span>() {
+    <span class="console">console</span>.log(<span class="string">'Button über DOM-Property geklickt!'</span>);
+  };
+  <span class="comment">// Nur ein Handler pro Event-Typ möglich!</span>
+}
+            </div>
+
+            <h3><code>addEventListener()</code> (Empfohlen)</h3>
+            <p>Die modernste und flexibelste Methode. Erlaubt das Hinzufügen mehrerer Event-Listener für dasselbe Event und bietet mehr Kontrolle.</p>
+            <p>Syntax: <code>element.addEventListener('eventtyp', callbackFunktion, useCapture);</code></p>
+            <ul>
+                <li><code>eventtyp</code>: Der Name des Events ohne "on" (z.B. <code>'click'</code>, <code>'mouseover'</code>, <code>'keydown'</code>).</li>
+                <li><code>callbackFunktion</code>: Die Funktion, die ausgeführt wird, wenn das Event eintritt. Sie erhält ein Event-Objekt als Argument.</li>
+                <li><code>useCapture</code> (optional, boolean): Gibt an, ob das Event in der Capturing-Phase (von außen nach innen) oder Bubbling-Phase (von innen nach außen, Standard) behandelt wird. Meist <code>false</code> oder weggelassen.</li>
+            </ul>
+            <div class="example-code">
+<span class="keyword">const</span> <span class="variable">andererButton</span> <span class="operator">=</span> <span class="variable">document</span>.<span class="function">getElementById</span>(<span class="string">'andererButtonId'</span>);
+<span class="keyword">if</span> (<span class="variable">andererButton</span>) {
+  <span class="variable">andererButton</span>.<span class="function">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span>(<span class="variable">event</span>) {
+    <span class="console">console</span>.log(<span class="string">'Button mit addEventListener geklickt!'</span>);
+    <span class="console">console</span>.log(<span class="string">'Event-Typ: '</span> <span class="operator">+</span> <span class="variable">event</span>.<span class="variable">type</span>); <span class="comment">// "click"</span>
+    <span class="console">console</span>.log(<span class="string">'Ziel-Element: '</span>, <span class="variable">event</span>.<span class="variable">target</span>); <span class="comment">// Der Button selbst</span>
+    <span class="comment">// event.preventDefault(); // Verhindert Standardaktion (z.B. Absenden eines Formulars)</span>
+    <span class="comment">// event.stopPropagation(); // Verhindert Event Bubbling zu Elternelementen</span>
+  });
+
+  <span class="comment">// Man kann auch benannte Funktionen verwenden oder mehrere Listener hinzufügen</span>
+  <span class="keyword">function</span> <span class="function">zweiterHandler</span>() { <span class="console">console</span>.log(<span class="string">'Zweiter Click Handler!'</span>); }
+  <span class="variable">andererButton</span>.<span class="function">addEventListener</span>(<span class="string">'click'</span>, <span class="variable">zweiterHandler</span>);
+
+  <span class="comment">// Listener entfernen:</span>
+  <span class="comment">// andererButton.removeEventListener('click', zweiterHandler);</span>
+}
+            </div>
+
+            <h3>Gängige Events</h3>
+            <ul>
+                <li><strong>Maus-Events:</strong> <code>click</code>, <code>dblclick</code>, <code>mousedown</code>, <code>mouseup</code>, <code>mouseover</code>, <code>mouseout</code>, <code>mousemove</code>, <code>contextmenu</code> (Rechtsklick).</li>
+                <li><strong>Tastatur-Events:</strong> <code>keydown</code>, <code>keyup</code>, <code>keypress</code> (veraltet).</li>
+                <li><strong>Formular-Events:</strong> <code>submit</code> (auf dem <code><form></code>-Element), <code>change</code> (wenn Wert eines Feldes sich ändert und es den Fokus verliert), <code>input</code> (sofort bei Wertänderung), <code>focus</code>, <code>blur</code>.</li>
+                <li><strong>Fenster/Dokument-Events:</strong> <code>load</code> (wenn Seite und Ressourcen geladen sind), <code>DOMContentLoaded</code> (wenn HTML-DOM geladen und geparst ist, ohne Bilder etc.), <code>resize</code>, <code>scroll</code>.</li>
+            </ul>
+            <div class="example-display">
+                <button id="eventButton">Klick mich für ein Event!</button>
+                <input type="text" id="eventInput" placeholder="Tippe hier...">
+                <div id="eventOutput" class="output-area"></div>
+                <script>
+                    const eBtn = document.getElementById('eventButton');
+                    const eInput = document.getElementById('eventInput');
+                    const eOutput = document.getElementById('eventOutput');
+
+                    eBtn.addEventListener('click', function(event) {
+                        eOutput.innerHTML = `Button geklickt! Event-Typ: ${event.type}. Target-ID: ${event.target.id}`;
+                    });
+                    eBtn.addEventListener('mouseover', () => eBtn.style.backgroundColor = 'lightgreen');
+                    eBtn.addEventListener('mouseout', () => eBtn.style.backgroundColor = ''); // Zurücksetzen
+
+                    eInput.addEventListener('input', function(event) {
+                        eOutput.innerHTML = `Eingabe: ${event.target.value}`;
+                    });
+                    eInput.addEventListener('focus', () => eInput.style.borderColor = 'blue');
+                    eInput.addEventListener('blur', () => eInput.style.borderColor = '');
+                </script>
+            </div>
+        </section>
+
+         <section id="es6" class="section">
+            <h2>Moderne JavaScript-Features (ES6+)</h2>
+            <p>ECMAScript ist der Standard, auf dem JavaScript basiert. ECMAScript 2015 (ES6) brachte viele wichtige Neuerungen. Seitdem gibt es jährliche Updates.</p>
+            <ul>
+                <li><strong><code>let</code> und <code>const</code>:</strong> Wurden bereits bei <a href="#variablen">Variablen</a> behandelt.</li>
+                <li><strong>Pfeilfunktionen (Arrow Functions):</strong> Siehe <a href="#funktionen">Funktionen</a>.</li>
+                <li><strong>Template Literals (Template Strings):</strong> Erlauben eingebettete Ausdrücke und mehrzeilige Strings mit Backticks (<code>`</code>).
+                    <div class="example-code">
+<span class="keyword">const</span> <span class="variable">name</span> <span class="operator">=</span> <span class="string">"Welt"</span>;
+<span class="keyword">const</span> <span class="variable">alter</span> <span class="operator">=</span> <span class="number">10</span>;
+<span class="keyword">const</span> <span class="variable">gruss</span> <span class="operator">=</span> <span class="string">`Hallo ${name}!
+Du bist ${alter} Jahre alt.`</span>;
+<span class="console">console</span>.log(<span class="variable">gruss</span>);
+                    </div>
+                </li>
+                <li><strong>Default-Parameter:</strong> Siehe <a href="#funktionen">Funktionen</a>.</li>
+                <li><strong>Rest-Parameter (<code>...</code>):</strong> Fasst "restliche" Funktionsargumente zu einem Array zusammen.
+                    <div class="example-code">
+<span class="keyword">function</span> <span class="function">summiereAlle</span>(...<span class="variable">zahlen</span>) { <span class="comment">// zahlen ist ein Array</span>
+  <span class="keyword">return</span> <span class="variable">zahlen</span>.<span class="function">reduce</span>((<span class="variable">summe</span>, <span class="variable">zahl</span>) <span class="operator">=></span> <span class="variable">summe</span> <span class="operator">+</span> <span class="variable">zahl</span>, <span class="number">0</span>);
+}
+<span class="console">console</span>.log(<span class="function">summiereAlle</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)); <span class="comment">// 10</span>
+                    </div>
+                </li>
+                <li><strong>Spread-Operator (<code>...</code>):</strong> Erweitert ein Array oder Objekt an Stellen, wo mehrere Elemente/Eigenschaften erwartet werden.
+                    <div class="example-code">
+<span class="keyword">const</span> <span class="variable">arr1</span> <span class="operator">=</span> [<span class="number">1</span>, <span class="number">2</span>];
+<span class="keyword">const</span> <span class="variable">arr2</span> <span class="operator">=</span> [...<span class="variable">arr1</span>, <span class="number">3</span>, <span class="number">4</span>]; <span class="comment">// [1, 2, 3, 4]</span>
+<span class="console">console</span>.log(<span class="variable">arr2</span>);
+
+<span class="keyword">const</span> <span class="variable">obj1</span> <span class="operator">=</span> { <span class="variable">a</span>: <span class="number">1</span>, <span class="variable">b</span>: <span class="number">2</span> };
+<span class="keyword">const</span> <span class="variable">obj2</span> <span class="operator">=</span> { ...<span class="variable">obj1</span>, <span class="variable">c</span>: <span class="number">3</span> }; <span class="comment">// { a: 1, b: 2, c: 3 }</span>
+<span class="console">console</span>.log(<span class="variable">obj2</span>);
+                    </div>
+                </li>
+                <li><strong>Destrukturierung (Destructuring Assignment):</strong> Ermöglicht das Extrahieren von Werten aus Arrays oder Eigenschaften aus Objekten in separate Variablen.
+                    <div class="example-code">
+<span class="comment">// Array Destrukturierung</span>
+<span class="keyword">const</span> [<span class="variable">erster</span>, <span class="variable">zweiter</span>] <span class="operator">=</span> [<span class="string">"Apfel"</span>, <span class="string">"Banane"</span>];
+<span class="console">console</span>.log(<span class="variable">erster</span>); <span class="comment">// "Apfel"</span>
+
+<span class="comment">// Objekt Destrukturierung</span>
+<span class="keyword">const</span> <span class="variable">person</span> <span class="operator">=</span> { <span class="variable">vorname</span>: <span class="string">"Max"</span>, <span class="variable">nachname</span>: <span class="string">"Mustermann"</span> };
+<span class="keyword">const</span> { <span class="variable">vorname</span>, <span class="variable">nachname</span> } <span class="operator">=</span> <span class="variable">person</span>;
+<span class="console">console</span>.log(<span class="string">`${vorname} ${nachname}`</span>); <span class="comment">// "Max Mustermann"</span>
+
+<span class="comment">// Mit Umbenennung</span>
+<span class="keyword">const</span> { <span class="variable">vorname</span>: <span class="variable">vName</span>, <span class="variable">nachname</span>: <span class="variable">nName</span> } <span class="operator">=</span> <span class="variable">person</span>;
+<span class="console">console</span>.log(<span class="string">`${vName} ${nName}`</span>);
+                    </div>
+                </li>
+                <li><strong>Klassen:</strong> Siehe <a href="#objekte">Objekte</a>.</li>
+                <li><strong>Promises und Async/Await:</strong> Für asynchrone Programmierung (z.B. Daten von einem Server laden).
+                    <div class="example-code">
+<span class="comment">// Promise Beispiel</span>
+<span class="keyword">function</span> <span class="function">ladeDaten</span>() {
+  <span class="keyword">return</span> <span class="keyword">new</span> <span class="function">Promise</span>((<span class="variable">resolve</span>, <span class="variable">reject</span>) <span class="operator">=></span> {
+    <span class="comment">// Simuliere eine Serveranfrage</span>
+    <span class="function">setTimeout</span>(() <span class="operator">=></span> {
+      <span class="keyword">const</span> <span class="variable">erfolg</span> <span class="operator">=</span> <span class="boolean">true</span>; <span class="comment">// Ändere dies zu false, um den reject-Fall zu testen</span>
+      <span class="keyword">if</span> (<span class="variable">erfolg</span>) {
+        <span class="function">resolve</span>(<span class="string">"Daten erfolgreich geladen!"</span>);
+      } <span class="keyword">else</span> {
+        <span class="function">reject</span>(<span class="string">"Fehler beim Laden der Daten."</span>);
+      }
+    }, <span class="number">1000</span>);
+  });
+}
+
+<span class="function">ladeDaten</span>()
+  .<span class="function">then</span>(<span class="variable">nachricht</span> <span class="operator">=></span> <span class="console">console</span>.log(<span class="variable">nachricht</span>))
+  .<span class="keyword">catch</span>(<span class="variable">fehler</span> <span class="operator">=></span> <span class="console">console</span>.error(<span class="variable">fehler</span>));
+
+<span class="comment">// Async/Await Beispiel (syntaktischer Zucker für Promises)</span>
+<span class="keyword">async</span> <span class="keyword">function</span> <span class="function">holeUndZeigeDaten</span>() {
+  <span class="keyword">try</span> {
+    <span class="keyword">const</span> <span class="variable">daten</span> <span class="operator">=</span> <span class="keyword">await</span> <span class="function">ladeDaten</span>(); <span class="comment">// Wartet, bis das Promise resolved oder rejected wird</span>
+    <span class="console">console</span>.log(<span class="string">"Async/Await: "</span> <span class="operator">+</span> <span class="variable">daten</span>);
+  } <span class="keyword">catch</span> (<span class="variable">error</span>) {
+    <span class="console">console</span>.error(<span class="string">"Async/Await Fehler: "</span> <span class="operator">+</span> <span class="variable">error</span>);
+  }
+}
+<span class="function">holeUndZeigeDaten</span>();
+                    </div>
+                </li>
+                <li><strong>Module (Import/Export):</strong> Ermöglichen das Aufteilen von Code in wiederverwendbare Module.
+                    <div class="example-code">
+<span class="comment">// In datei "helfer.js":</span>
+<span class="comment">// export const PI = 3.14159;</span>
+<span class="comment">// export function add(a, b) { return a + b; }</span>
+
+<span class="comment">// In anderer Datei "main.js":</span>
+<span class="comment">// import { PI, add } from './helfer.js';</span>
+<span class="comment">// console.log(PI);</span>
+<span class="comment">// console.log(add(2, 3));</span>
+<span class="note">Hinweis: Module funktionieren im Browser oft nur mit speziellen Setups (z.B. Bundler wie Webpack/Parcel oder <code>type="module"</code> im script-Tag).</span>
+                    </div>
+                </li>
+            </ul>
+             <div class="example-display">
+                <button onclick="testES6Features()">ES6+ Features testen</button>
+                <div id="es6Output" class="output-area"></div>
+                <script>
+                    function testES6Features() {
+                        let output = "";
+                        // Template Literals
+                        const name = "Tester";
+                        output += `Template Literal: Hallo ${name}!<br>`;
+
+                        // Destructuring
+                        const user = { id: 1, username: "testuser" };
+                        const { id, username } = user;
+                        output += `Destructuring: ID=${id}, Username=${username}<br>`;
+
+                        // Spread Operator (Array)
+                        const arr1 = [10, 20];
+                        const arr2 = [...arr1, 30, 40];
+                        output += `Spread Array: [${arr2.join(', ')}]<br>`;
+
+                        // Async/Await Demo (simplifiziert)
+                        async function fakeFetch() {
+                            output += "Async: Starte Fetch...<br>";
+                            await new Promise(resolve => setTimeout(resolve, 500)); // Simuliere Wartezeit
+                            output += "Async: Fetch beendet!<br>";
+                            document.getElementById('es6Output').innerHTML = output; // Update DOM hier
+                        }
+                        fakeFetch();
+                        // Der Rest der Ausgabe wird sofort angezeigt, bevor fakeFetch fertig ist
+                        document.getElementById('es6Output').innerHTML = output;
+                    }
+                </script>
+            </div>
+        </section>
+
+        <section id="fehler" class="section">
+            <h2>Fehlerbehandlung (Error Handling)</h2>
+            <p>Fehler können in JavaScript auftreten. Es ist wichtig, sie abzufangen und angemessen darauf zu reagieren, um Abstürze des Skripts zu verhindern.</p>
+            <h3><code>try...catch...finally</code></h3>
+            <ul>
+                <li><code>try</code>: Umschließt den Code, der möglicherweise einen Fehler auslöst.</li>
+                <li><code>catch (error)</code>: Fängt den Fehler ab, falls einer im <code>try</code>-Block auftritt. Das <code>error</code>-Objekt enthält Informationen zum Fehler (z.B. <code>error.message</code>, <code>error.name</code>).</li>
+                <li><code>finally</code> (optional): Code in diesem Block wird immer ausgeführt, egal ob ein Fehler aufgetreten ist oder nicht (z.B. zum Aufräumen).</li>
+            </ul>
+            <div class="example-code">
+<span class="keyword">try</span> {
+  <span class="console">console</span>.log(<span class="string">"Versuche etwas..."</span>);
+  <span class="comment">// nichtDefinierteFunktion(); // Dies würde einen Fehler auslösen</span>
+  <span class="keyword">let</span> <span class="variable">ergebnis</span> <span class="operator">=</span> <span class="number">10</span> / <span class="number">0</span>; <span class="comment">// Ergibt Infinity, kein direkter Fehler hier, aber z.B. JSON.parse("ungültig") würde Fehler werfen</span>
+  <span class="keyword">if</span> (ergebnis <span class="operator">===</span> <span class="variable">Infinity</span>) {
+      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">"Division durch Null ist nicht erlaubt in diesem Kontext!"</span>); <span class="comment">// Eigenen Fehler werfen</span>
+  }
+  <span class="console">console</span>.log(<span class="string">"Das hat geklappt!"</span>);
+} <span class="keyword">catch</span> (<span class="variable">fehler</span>) {
+  <span class="console">console</span>.error(<span class="string">"Ein Fehler ist aufgetreten!"</span>);
+  <span class="console">error</span>(<span class="string">"Fehlermeldung: "</span> <span class="operator">+</span> <span class="variable">fehler</span>.<span class="variable">message</span>);
+  <span class="console">error</span>(<span class="string">"Fehlertyp: "</span> <span class="operator">+</span> <span class="variable">fehler</span>.<span class="variable">name</span>);
+  <span class="comment">// console.error(fehler.stack); // Gibt den Stack Trace aus</span>
+} <span class="keyword">finally</span> {
+  <span class="console">log</span>(<span class="string">"Dieser Block wird immer ausgeführt."</span>);
+}
+            </div>
+            <div class="example-display">
+                <button onclick="testErrorHandling(true)">Fehler provozieren</button>
+                <button onclick="testErrorHandling(false)">Kein Fehler</button>
+                <div id="errorOutput" class="output-area"></div>
+                <script>
+                    function testErrorHandling(provokeError) {
+                        let output = "";
+                        try {
+                            output += "Versuche Code auszuführen...<br>";
+                            if (provokeError) {
+                                output += "Provoziere Fehler...<br>";
+                                // JSON.parse("ungültiges JSON"); // Würde Fehler werfen
+                                throw new Error("Ein absichtlicher Testfehler!");
+                            }
+                            output += "Code erfolgreich ausgeführt!<br>";
+                        } catch (e) {
+                            output += `<b>Fehler abgefangen!</b><br>`;
+                            output += `Meldung: ${e.message}<br>`;
+                            output += `Typ: ${e.name}<br>`;
+                        } finally {
+                            output += "Finally-Block wurde ausgeführt.<br>";
+                        }
+                        document.getElementById('errorOutput').innerHTML = output;
+                    }
+                </script>
+            </div>
+            <h3><code>throw</code> Anweisung</h3>
+            <p>Mit <code>throw</code> kann man eigene Fehler erstellen und werfen.</p>
+             <div class="example-code">
+<span class="keyword">function</span> <span class="function">checkAge</span>(<span class="variable">alter</span>) {
+  <span class="keyword">if</span> (<span class="variable">alter</span> <span class="operator"><</span> <span class="number">18</span>) {
+    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">"Zugriff verweigert: Du musst mindestens 18 Jahre alt sein."</span>);
+  }
+  <span class="keyword">return</span> <span class="string">"Zugriff gewährt."</span>;
+}
+
+<span class="keyword">try</span> {
+  <span class="console">console</span>.log(<span class="function">checkAge</span>(<span class="number">16</span>));
+} <span class="keyword">catch</span> (<span class="variable">e</span>) {
+  <span class="console">error</span>(<span class="variable">e</span>.<span class="variable">message</span>); <span class="comment">// "Zugriff verweigert: Du musst mindestens 18 Jahre alt sein."</span>
+}
+            </div>
+        </section>
+
+        <section id="weiteres" class="section">
+            <h2>Weitere wichtige Konzepte</h2>
+            <ul>
+                <li><strong>JSON (JavaScript Object Notation):</strong> Ein leichtgewichtiges Datenformat, das oft für den Datenaustausch zwischen Client und Server verwendet wird. Sieht aus wie JavaScript-Objektliterale.
+                    <ul>
+                        <li><code>JSON.stringify(objekt)</code>: Wandelt ein JavaScript-Objekt in einen JSON-String um.</li>
+                        <li><code>JSON.parse(jsonString)</code>: Wandelt einen JSON-String in ein JavaScript-Objekt um.</li>
+                    </ul>
+                     <div class="example-code">
+<span class="keyword">const</span> <span class="variable">datenObjekt</span> <span class="operator">=</span> { <span class="variable">name</span>: <span class="string">"Test"</span>, <span class="variable">wert</span>: <span class="number">123</span> };
+<span class="keyword">const</span> <span class="variable">jsonString</span> <span class="operator">=</span> <span class="variable">JSON</span>.<span class="function">stringify</span>(<span class="variable">datenObjekt</span>);
+<span class="console">console</span>.log(<span class="variable">jsonString</span>); <span class="comment">// '{"name":"Test","wert":123}'</span>
+
+<span class="keyword">const</span> <span class="variable">zurueckObjekt</span> <span class="operator">=</span> <span class="variable">JSON</span>.<span class="function">parse</span>(<span class="variable">jsonString</span>);
+<span class="console">console</span>.log(<span class="variable">zurueckObjekt</span>.<span class="variable">name</span>); <span class="comment">// "Test"</span>
+                    </div>
+                </li>
+                <li><strong><code>this</code>-Schlüsselwort:</strong> Der Wert von <code>this</code> hängt davon ab, wie eine Funktion aufgerufen wird (Kontext). Bei Pfeilfunktionen erbt <code>this</code> vom umgebenden Kontext. Das Verhalten von <code>this</code> kann komplex sein und ist eine häufige Fehlerquelle.</li>
+                <li><strong>Scope (Gültigkeitsbereich):</strong> Definiert, wo Variablen und Funktionen zugänglich sind (Global Scope, Function Scope, Block Scope).</li>
+                <li><strong>Hoisting:</strong> Ein Mechanismus in JavaScript, bei dem Deklarationen von Variablen (mit <code>var</code>) und Funktionen an den Anfang ihres Scopes "gehoben" werden, bevor der Code ausgeführt wird. Zuweisungen bleiben an ihrer Stelle. <code>let</code> und <code>const</code> werden auch gehoistet, aber nicht initialisiert (Temporal Dead Zone).</li>
+                <li><strong>Closures:</strong> Eine Funktion hat Zugriff auf Variablen aus ihrem äußeren (umschließenden) Scope, auch nachdem die äußere Funktion ihre Ausführung beendet hat.</li>
+                <li><strong>Asynchrone Programmierung:</strong> Behandelt Operationen, die Zeit in Anspruch nehmen (z.B. API-Aufrufe, Timer), ohne den Hauptthread zu blockieren. Wichtige Konzepte sind Callbacks, Promises und Async/Await (siehe <a href="#es6">ES6+</a>).</li>
+                <li><strong>Strict Mode (<code>"use strict";</code>):</strong> Aktiviert einen strengeren Modus in JavaScript, der einige "stille" Fehler in echte Fehler umwandelt und einige unsichere Praktiken verbietet. Sollte am Anfang eines Skripts oder einer Funktion stehen.</li>
+                 <div class="example-code">
+<span class="string">"use strict"</span>; <span class="comment">// Aktiviert den Strict Mode für das gesamte Skript (wenn ganz oben)</span>
+
+<span class="keyword">function</span> <span class="function">meineFunktion</span>() {
+  <span class="comment">// "use strict"; // Kann auch pro Funktion aktiviert werden</span>
+  <span class="comment">// x = 3.14; // Fehler im Strict Mode (Variable nicht deklariert)</span>
+  <span class="keyword">let</span> <span class="variable">y</span> <span class="operator">=</span> <span class="number">10</span>;
+  <span class="console">console</span>.log(<span class="variable">y</span>);
+}
+<span class="function">meineFunktion</span>();
+                    </div>
+            </ul>
+        </section>
+
+        <footer>
+            <p>© <time datetime="2025">2025</time> JavaScript Lernressource. Viel Spaß beim Experimentieren und Coden!</p>
+            <p>Denke daran, die Entwicklerkonsole deines Browsers (F12) zu nutzen, um Ausgaben zu sehen und Fehler zu debuggen.</p>
+        </footer>
+    </div>
+
+</body>
+</html>

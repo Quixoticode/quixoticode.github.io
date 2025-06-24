@@ -1,17 +1,27 @@
 {
-  "users": [
-    {
-      "username": "Quixoticode",
-      "password": "26032010"
+  "users": {
+    "quixoticode": {
+      "password": "a_very_secure_password_2025",
+      "roles": ["OWNER", "PREMIUM", "BETA"],
+      "avatar": "https://placehold.co/96x96/7c3aed/ffffff?text=Q"
     },
-    {
-      "username": "Agent777",
-      "password": "20062025"
+    "agent777": {
+      "password": "another_secure_password",
+      "roles": ["PREMIUM"],
+      "avatar": "https://placehold.co/96x96/f59e0b/ffffff?text=A"
+    },
+    "betatester": {
+      "password": "beta_user_pass",
+      "roles": ["BETA"],
+      "avatar": "https://placehold.co/96x96/10b981/ffffff?text=B"
     }
-  ],
-  "one_time_codes": [
-    128797,
-    123655,
-    987654
-  ]
+  },
+  "one_time_codes": {
+    "otc_123456": {
+      "username": "quixoticode"
+    },
+    "otc_987654": {
+      "username": "agent777"
+    }
+  }
 }
