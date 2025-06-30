@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>QHub v2.3.1 - Dein persönlicher Hub</title>
+    <title>QHub - Dein persönlicher Hub</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -72,33 +72,28 @@
 <body>
 
     <div class="q-app-container">
+        <!-- Activity Bar: Icons for main navigation -->
         <div class="q-activity-bar" id="activityBar">
-            <!-- Standard Apps -->
             <button class="activity-btn" data-view="dashboard" title="Dashboard"><span class="material-icons">dashboard</span></button>
             <button class="activity-btn" data-view="web" title="Web"><span class="material-icons">public</span></button>
             <button class="activity-btn" data-view="qcode" title="QCode Lernplattform"><span class="material-icons">school</span></button>
             <button class="activity-btn" data-view="qsounds" title="QSounds"><span class="material-icons">graphic_eq</span></button>
-            
-            <!-- Premium App: QPet's -->
             <button class="activity-btn hidden" data-view="qpets" title="QPet's"><span class="material-icons">pets</span></button>
-
-            <div class="flex-grow"></div> <!-- Spacer -->
-            
-            <!-- Beta App -->
+            <div class="flex-grow"></div>
             <button class="activity-btn hidden" id="betaBtn" title="Beta Apps"><span class="material-icons">science</span></button>
-
-            <!-- Untere Apps -->
             <button class="activity-btn" data-view="contact" title="Kontakt"><span class="material-icons">contact_support</span></button>
             <button class="activity-btn" data-view="status" title="Statuspage"><span class="material-icons">error</span></button>
             <button class="activity-btn" id="settingsBtn" title="Einstellungen"><span class="material-icons">settings</span></button>
         </div>
+        
         <aside class="q-sidebar hidden" id="qHubSidebar"></aside>
+
         <div class="q-main-content">
             <header class="q-header">
                 <button id="mobileMenuBtn" class="md:hidden p-2"><span class="material-icons">menu</span></button>
                 <div id="headerTitle" class="text-xl font-bold"></div>
             </header>
-            <div class="q-content-area" id="mainContentArea"></div>
+            <main class="q-content-area" id="mainContentArea"></main>
         </div>
     </div>
 
@@ -107,72 +102,186 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const APP_PREFIX = 'qhub_v2.3.1_';
+        const APP_PREFIX = 'qhub_v2.5.0_';
         const SETTINGS_KEY = APP_PREFIX + 'settings';
-        const USER_DATA_KEY = APP_PREFIX + 'user_data'; // Re-added for module data
-        const APP_VERSION = "2.3.1";
+        const APP_VERSION = "2.5.0";
+
+        // --- TRANSLATION DATA ---
         
-        // RE-ADDED: Initial data for dashboard modules
-        const initialUserData = {
+        // Static UI translations
+        const translations = {
+            de: {
+                viewTitles: { dashboard: "Dashboard", web: "Web", qcode: "QCode Lernplattform", qsounds: "QSounds", qpets: "QPet's", contact: "Kontakt", status: "Statuspage", settings: "Einstellungen", beta: "Beta Apps" },
+                sidebar: { sections: "Sektionen" },
+                dashboardModules: { announcements: { title: "Ankündigungen", none: "Keine Ankündigungen vorhanden." }, roadmap: { title: "Roadmap", none: "Keine Roadmap-Einträge vorhanden.", progress: "Fortschritt" }, changelog: { title: "Changelog", none: "Kein Changelog vorhanden.", version: "Version" } },
+                statusPage: { cannot_embed_title: "Die Status-Seite kann nicht eingebettet werden.", cannot_embed_desc: "Du kannst die Seite stattdessen direkt aufrufen.", open_button: "Status-Seite öffnen" },
+                settingsModal: { title: "Einstellungen", account: "Account", loggedInAs: "Angemeldet als", logout: "Abmelden", login: "Anmelden", username: "Benutzername", password: "Passwort / Einmal-Code", theme: "Theme", language: "Sprache" },
+                toasts: { welcome: "Willkommen", logout_success: "Erfolgreich abgemeldet.", login_error: "Ungültige Anmeldedaten.", user_not_found: "Benutzerdaten konnten nicht geladen werden", enter_username: "Bitte gib einen Benutzernamen ein.", enter_password: "Bitte gib ein Passwort oder einen Code ein." },
+                login: { checking: "Prüfe..." }
+            },
+            en: {
+                viewTitles: { dashboard: "Dashboard", web: "Web", qcode: "QCode Learning Platform", qsounds: "QSounds", qpets: "QPet's", contact: "Contact", status: "Status Page", settings: "Settings", beta: "Beta Apps" },
+                sidebar: { sections: "Sections" },
+                dashboardModules: { announcements: { title: "Announcements", none: "No announcements available." }, roadmap: { title: "Roadmap", none: "No roadmap items available.", progress: "Progress" }, changelog: { title: "Changelog", none: "No changelog available.", version: "Version" } },
+                statusPage: { cannot_embed_title: "The status page cannot be embedded.", cannot_embed_desc: "You can visit the page directly instead.", open_button: "Open Status Page" },
+                settingsModal: { title: "Settings", account: "Account", loggedInAs: "Logged in as", logout: "Log out", login: "Log in", username: "Username", password: "Password / One-Time Code", theme: "Theme", language: "Language" },
+                toasts: { welcome: "Welcome", logout_success: "Successfully logged out.", login_error: "Invalid credentials.", user_not_found: "Could not load user data", enter_username: "Please enter a username.", enter_password: "Please enter a password or code." },
+                login: { checking: "Checking..." }
+            },
+            fi: {
+                viewTitles: { dashboard: "Kojelauta", web: "Verkko", qcode: "QCode Oppimisalusta", qsounds: "QSounds", qpets: "QPet's", contact: "Ota yhteyttä", status: "Tilasivu", settings: "Asetukset", beta: "Beetasovellukset" },
+                sidebar: { sections: "Osastot" },
+                dashboardModules: { announcements: { title: "Ilmoitukset", none: "Ei ilmoituksia saatavilla." }, roadmap: { title: "Tiekartta", none: "Tiekarttaa ei ole saatavilla.", progress: "Edistyminen" }, changelog: { title: "Muutosloki", none: "Muutoslokia ei ole saatavilla.", version: "Versio" } },
+                statusPage: { cannot_embed_title: "Tilasivua ei voi upottaa.", cannot_embed_desc: "Voit sen sijaan vierailla sivulla suoraan.", open_button: "Avaa Tilasivu" },
+                settingsModal: { title: "Asetukset", account: "Tili", loggedInAs: "Kirjautuneena nimellä", logout: "Kirjaudu ulos", login: "Kirjaudu sisään", username: "Käyttäjätunnus", password: "Salasana / Kertakäyttökoodi", theme: "Teema", language: "Kieli" },
+                toasts: { welcome: "Tervetuloa", logout_success: "Uloskirjautuminen onnistui.", login_error: "Virheelliset tunnisteet.", user_not_found: "Käyttäjätietoja ei voitu ladata", enter_username: "Anna käyttäjätunnus.", enter_password: "Anna salasana tai koodi." },
+                login: { checking: "Tarkistetaan..." }
+            },
+            ja: {
+                viewTitles: { dashboard: "ダッシュボード", web: "ウェブ", qcode: "QCode学習プラットフォーム", qsounds: "QSounds", qpets: "QPet's", contact: "お問い合わせ", status: "ステータスページ", settings: "設定", beta: "ベータアプリ" },
+                sidebar: { sections: "セクション" },
+                dashboardModules: { announcements: { title: "お知らせ", none: "お知らせはありません。" }, roadmap: { title: "ロードマップ", none: "ロードマップ項目はありません。", progress: "進捗" }, changelog: { title: "変更履歴", none: "変更履歴はありません。", version: "バージョン" } },
+                statusPage: { cannot_embed_title: "ステータスページは埋め込めません。", cannot_embed_desc: "代わりに直接ページにアクセスできます。", open_button: "ステータスページを開く" },
+                settingsModal: { title: "設定", account: "アカウント", loggedInAs: "でログイン中", logout: "ログアウト", login: "ログイン", username: "ユーザー名", password: "パスワード / ワンタイムコード", theme: "テーマ", language: "言語" },
+                toasts: { welcome: "ようこそ", logout_success: "正常にログアウトしました。", login_error: "無効な認証情報です。", user_not_found: "ユーザーデータを読み込めませんでした", enter_username: "ユーザー名を入力してください。", enter_password: "パスワードまたはコードを入力してください。" },
+                login: { checking: "確認中..." }
+            },
+            fr: {
+                viewTitles: { dashboard: "Tableau de bord", web: "Web", qcode: "Plateforme d'apprentissage QCode", qsounds: "QSounds", qpets: "QPet's", contact: "Contact", status: "Page de statut", settings: "Paramètres", beta: "Applications Bêta" },
+                sidebar: { sections: "Sections" },
+                dashboardModules: { announcements: { title: "Annonces", none: "Aucune annonce disponible." }, roadmap: { title: "Feuille de route", none: "Aucun élément de feuille de route disponible.", progress: "Progression" }, changelog: { title: "Journal des modifications", none: "Aucun journal des modifications disponible.", version: "Version" } },
+                statusPage: { cannot_embed_title: "La page de statut ne peut pas être intégrée.", cannot_embed_desc: "Vous pouvez visiter la page directement à la place.", open_button: "Ouvrir la page de statut" },
+                settingsModal: { title: "Paramètres", account: "Compte", loggedInAs: "Connecté en tant que", logout: "Se déconnecter", login: "Se connecter", username: "Nom d'utilisateur", password: "Mot de passe / Code unique", theme: "Thème", language: "Langue" },
+                toasts: { welcome: "Bienvenue", logout_success: "Déconnexion réussie.", login_error: "Identifiants invalides.", user_not_found: "Impossible de charger les données utilisateur", enter_username: "Veuillez entrer un nom d'utilisateur.", enter_password: "Veuillez entrer un mot de passe ou un code." },
+                login: { checking: "Vérification..." }
+            }
+        };
+
+        // Dynamic, translatable content for dashboard modules
+        const dynamicContent = {
             announcements: [
-                { id: "news-1", title: "Willkommen zu QHub 2.3!", content: "Neue WebApps und Premium-Inhalte warten auf dich.", date: "2025-06-23", premium: false },
-                { id: "news-2", title: "Premium-Special: QPet's", content: "Ziehe dein eigenes virtuelles Haustier auf! Nur für Premium-Nutzer.", date: "2025-06-23", premium: true },
+                { 
+                    id: "news-1", date: "2025-07-01", premium: false,
+                    translations: {
+                        de: { title: "Willkommen zu QHub 2.5!", content: "Die App ist jetzt vollständig mehrsprachig! Ändere die Sprache in den Einstellungen, um auch die Inhalte übersetzt zu sehen." },
+                        en: { title: "Welcome to QHub 2.5!", content: "The app is now fully multilingual! Change the language in the settings to see the content translated as well." },
+                        fi: { title: "Tervetuloa QHub 2.5:een!", content: "Sovellus on nyt täysin monikielinen! Vaihda kieltä asetuksista nähdäksesi myös sisällön käännettynä." },
+                        ja: { title: "QHub 2.5へようこそ！", content: "アプリは完全に多言語対応になりました！設定で言語を変更して、コンテンツも翻訳してご覧ください。" },
+                        fr: { title: "Bienvenue sur QHub 2.5 !", content: "L'application est maintenant entièrement multilingue ! Changez la langue dans les paramètres pour voir également le contenu traduit." }
+                    }
+                },
+                { 
+                    id: "news-2", date: "2025-06-23", premium: true,
+                    translations: {
+                        de: { title: "Premium-Special: QPet's", content: "Ziehe dein eigenes virtuelles Haustier auf! Nur für Premium-Nutzer." },
+                        en: { title: "Premium Special: QPet's", content: "Raise your own virtual pet! Only for Premium users." },
+                        fi: { title: "Premium-erikoisuus: QPet's", content: "Kasvata oma virtuaalinen lemmikkisi! Vain Premium-käyttäjille." },
+                        ja: { title: "プレミアムスペシャル：QPet's", content: "自分だけのバーチャルペットを育てよう！プレミアムユーザー限定。" },
+                        fr: { title: "Spécial Premium : QPet's", content: "Élevez votre propre animal de compagnie virtuel ! Uniquement pour les utilisateurs Premium." }
+                    }
+                },
             ],
             roadmap: [
-                { id: "rm-1", title: 'v2.4: Admin-Update', description: 'Update des Benutzersystems', status: 'in-progress', progress: 5 },
-                { id: "rm-2", title: 'v2.5: Kalender-Widget', description: 'Ein einfacher Kalender zur Terminübersicht direkt auf dem Dashboard.', status: 'paused'},
+                { 
+                    id: "rm-1", status: 'in-progress', progress: 50,
+                    translations: {
+                        de: { title: 'v2.6: Admin-Update', description: 'Verbesserungen am Benutzersystem und den Rollen.' },
+                        en: { title: 'v2.6: Admin Update', description: 'Improvements to the user system and roles.' },
+                        fi: { title: 'v2.6: Järjestelmänvalvojan päivitys', description: 'Parannuksia käyttäjäjärjestelmään ja rooleihin.' },
+                        ja: { title: 'v2.6: 管理者アップデート', description: 'ユーザーシステムと役割の改善。' },
+                        fr: { title: 'v2.6: Mise à jour Admin', description: 'Améliorations du système utilisateur et des rôles.' }
+                    }
+                },
+                { 
+                    id: "rm-2", status: 'planned',
+                    translations: {
+                        de: { title: 'v2.7: Kalender-Widget', description: 'Ein einfacher Kalender zur Terminübersicht direkt auf dem Dashboard.' },
+                        en: { title: 'v2.7: Calendar Widget', description: 'A simple calendar for an overview of appointments directly on the dashboard.' },
+                        fi: { title: 'v2.7: Kalenteri-widget', description: 'Yksinkertainen kalenteri tapaamisten yleiskatsaukseen suoraan kojelaudalla.' },
+                        ja: { title: 'v2.7: カレンダーウィジェット', description: 'ダッシュボードで直接予定を概観できるシンプルなカレンダー。' },
+                        fr: { title: 'v2.7: Widget Calendrier', description: 'Un calendrier simple pour un aperçu des rendez-vous directement sur le tableau de bord.' }
+                    }
+                },
             ],
             changelog: [
-                { version: "2.3.1", date: "2025-06-24", changes: ["Neues, rollenbasiertes Benutzersystem (OWNER, PREMIUM, BETA).", "Dashboard-Module wiederhergestellt.", "Beta-Button für Nutzer mit entsprechender Rolle hinzugefügt."] },
-                { version: "2.3.0", date: "2025-06-23", changes: ["Fehler behoben, der Push-Benachrichtigungen und die Premium-Anmeldung blockierte."] },
+                { 
+                    version: "2.5.0", date: "2025-07-01",
+                    translations: {
+                        de: { changes: ["Vollständige Inhaltsübersetzung (Ankündigungen etc.).", "Neue Sprachen hinzugefügt: Finnisch, Japanisch, Französisch.", "Datenstruktur für einfache Erweiterbarkeit überarbeitet."] },
+                        en: { changes: ["Full content translation (announcements, etc.).", "Added new languages: Finnish, Japanese, French.", "Revised data structure for easy scalability."] },
+                        fi: { changes: ["Täysi sisältökäännös (ilmoitukset jne.).", "Lisätty uusia kieliä: suomi, japani, ranska.", "Datan rakenne uudistettu helpon laajennettavuuden vuoksi."] },
+                        ja: { changes: ["完全なコンテンツ翻訳（お知らせなど）。", "新しい言語を追加：フィンランド語、日本語、フランス語。", "簡単な拡張性のためのデータ構造を改訂。"] },
+                        fr: { changes: ["Traduction complète du contenu (annonces, etc.).", "Ajout de nouvelles langues : finnois, japonais, français.", "Structure de données révisée pour une évolutivité facile."] }
+                    }
+                },
+                { 
+                    version: "2.4.0", date: "2025-06-30",
+                    translations: {
+                        de: { changes: ["Komplettes UI-Übersetzungssystem (DE/EN) hinzugefügt.", "Sprach-Umschalter in den Einstellungen implementiert."] },
+                        en: { changes: ["Added full UI translation system (DE/EN).", "Implemented language switcher in settings."] },
+                        fi: { changes: ["Lisätty täydellinen käyttöliittymän käännösjärjestelmä (DE/EN).", "Toteutettu kielenvalitsin asetuksiin."] },
+                        ja: { changes: ["完全なUI翻訳システム（DE/EN）を追加。", "設定に言語切り替え機能を実装。"] },
+                        fr: { changes: ["Ajout d'un système de traduction complet de l'interface utilisateur (DE/EN).", "Implémentation du sélecteur de langue dans les paramètres."] }
+                    }
+                }
             ],
         };
+        
+        // --- APP LOGIC ---
 
         const defaultSettings = {
             version: APP_VERSION,
             loggedIn: false,
             username: "Gast",
             userAvatar: `https://placehold.co/96x96/e0e7ff/3730a3?text=G`,
-            roles: [], // e.g., ['PREMIUM', 'BETA', 'OWNER']
+            roles: [],
             theme: "light",
+            language: "de",
             activeView: "dashboard",
-            // RE-ADDED: Dashboard settings
-            dashboard: {
-                sectionOrder: ["announcements", "roadmap", "changelog"],
-                layout: "2",
-            },
+            dashboard: { sectionOrder: ["announcements", "roadmap", "changelog"], layout: "2" },
         };
 
         let settings = {};
-        let userData = {}; // Re-added for module data
         const dom = { 
             activityBar: document.getElementById('activityBar'), 
             mainContentArea: document.getElementById('mainContentArea'), 
             headerTitle: document.getElementById('headerTitle'), 
             qHubSidebar: document.getElementById('qHubSidebar'), 
             mobileMenuBtn: document.getElementById('mobileMenuBtn'), 
+            html: document.documentElement
         };
+        
+        function t(key, replacements = {}) {
+            const keys = key.split('.');
+            const lang = translations[settings.language] ? settings.language : 'de';
+            let result = keys.reduce((obj, k) => (obj || {})[k], translations[lang]);
+
+            if (!result) {
+                result = keys.reduce((obj, k) => (obj || {})[k], translations.en) || key;
+            }
+            
+            for(const placeholder in replacements) {
+                result = result.replace(`{${placeholder}}`, replacements[placeholder]);
+            }
+
+            return result;
+        }
 
         function init() {
-            loadState(); // Changed from loadSettings
+            loadSettings();
             applyTheme();
+            applyLanguage();
             updateSpecialFeatures();
+            updateUIText();
             renderView(settings.activeView, true);
             setupEventListeners();
         }
         init();
 
-        // UPDATED: Now loads both settings and user data
-        function loadState() {
+        function loadSettings() {
             const storedSettings = localStorage.getItem(SETTINGS_KEY);
             settings = storedSettings ? { ...defaultSettings, ...JSON.parse(storedSettings) } : { ...defaultSettings };
-            
-            const storedData = localStorage.getItem(USER_DATA_KEY);
-            userData = storedData ? JSON.parse(storedData) : { ...initialUserData };
-
-            if (!Array.isArray(settings.roles)) {
-                settings.roles = [];
-            }
+            if (!Array.isArray(settings.roles)) settings.roles = [];
         }
         
         function saveSettings() {
@@ -182,80 +291,63 @@
 
         function renderView(viewId, isInitialLoad = false) {
             if (!isInitialLoad && settings.activeView === viewId) return;
+            
             dom.activityBar.querySelectorAll('.activity-btn[data-view]').forEach(btn => btn.classList.toggle('active', btn.dataset.view === viewId));
             dom.qHubSidebar.classList.remove('open');
             dom.mainContentArea.innerHTML = ''; 
             settings.activeView = viewId;
             
-            // Hide sidebar and mobile menu by default, show for dashboard
             dom.qHubSidebar.classList.add('hidden');
             dom.mobileMenuBtn.classList.add('hidden');
             
             let content = '';
-            let title = '';
+            const title = t(`viewTitles.${viewId}`);
 
             switch(viewId) {
                 case 'dashboard':
-                    title = "Dashboard";
                     dom.mobileMenuBtn.classList.remove('hidden');
                     dom.qHubSidebar.classList.remove('hidden');
                     renderDashboardSidebar();
-                    renderDashboardContent(); // This now renders the modules
+                    renderDashboardContent();
                     break;
-                case 'web':
-                    title = "Web";
-                    content = `<div class="webapp-container"><iframe src="https://quixoticode.github.io"></iframe></div>`;
-                    break;
-                case 'qcode':
-                    title = "QCode Lernplattform";
-                    content = `<div class="webapp-container"><iframe src="https://quixoticode.github.io/app/QCode/"></iframe></div>`;
-                    break;
-                case 'qsounds':
-                    title = "QSounds";
-                    content = `<div class="webapp-container"><iframe src="https://quixoticode.github.io/app/QSounds/"></iframe></div>`;
-                    break;
-                case 'qpets':
-                    title = "QPet's";
-                    content = `<div class="webapp-container"><iframe src="https://quixoticode.github.io/app/pl"></iframe></div>`;
-                    break;
-                case 'contact':
-                    title = "Kontakt";
-                    content = `<div class="webapp-container"><iframe src="https://quixoticode.github.io/contact"></iframe></div>`;
-                    break;
+                case 'web': content = `<div class="webapp-container"><iframe src="https://quixoticode.github.io"></iframe></div>`; break;
+                case 'qcode': content = `<div class="webapp-container"><iframe src="https://quixoticode.github.io/app/QCode/"></iframe></div>`; break;
+                case 'qsounds': content = `<div class="webapp-container"><iframe src="https://quixoticode.github.io/app/QSounds/"></iframe></div>`; break;
+                case 'qpets': content = `<div class="webapp-container"><iframe src="https://quixoticode.github.io/app/pl"></iframe></div>`; break;
+                case 'contact': content = `<div class="webapp-container"><iframe src="https://quixoticode.github.io/contact"></iframe></div>`; break;
                 case 'status':
-                    title = "StatusPage";
-                    content = `<div class="h-full flex flex-col items-center justify-center text-center p-4"><div class="q-card max-w-md"><span class="material-icons text-6xl text-gray-400 mb-4">link_off</span><h2 class="text-xl font-bold mb-2">Die Status-Seite kann nicht eingebettet werden.</h2><p class="text-gray-600 dark:text-gray-300 mb-6">Du kannst die Seite stattdessen direkt aufrufen.</p><a href="https://status.quixoticode.de/status/network" target="_blank" class="inline-block px-6 py-3 rounded-lg text-white font-semibold transition" style="background-color: var(--q-primary); color: var(--q-primary-text);">Status-Seite öffnen</a></div></div>`;
+                    content = `<div class="h-full flex flex-col items-center justify-center text-center p-4"><div class="q-card max-w-md"><span class="material-icons text-6xl text-gray-400 mb-4">link_off</span><h2 class="text-xl font-bold mb-2">${t('statusPage.cannot_embed_title')}</h2><p class="text-gray-600 dark:text-gray-300 mb-6">${t('statusPage.cannot_embed_desc')}</p><a href="https://status.quixoticode.de/status/network" target="_blank" class="inline-block px-6 py-3 rounded-lg font-semibold transition" style="background-color: var(--q-primary); color: var(--q-primary-text);">${t('statusPage.open_button')}</a></div></div>`;
                     break;
             }
             
             dom.headerTitle.textContent = title;
+            document.title = "QHub - " + title;
             if(content) dom.mainContentArea.innerHTML = content;
             
             saveSettings();
         }
 
-        function applyTheme() { document.documentElement.setAttribute('data-theme', settings.theme); }
+        function applyTheme() { dom.html.setAttribute('data-theme', settings.theme); }
+        function applyLanguage() { dom.html.lang = settings.language; }
         
-        function updateSpecialFeatures() {
-            const qpetsBtn = document.querySelector('[data-view="qpets"]');
-            const betaBtn = document.getElementById('betaBtn');
-
-            const hasPremium = settings.roles.includes('PREMIUM') || settings.roles.includes('OWNER');
-            const hasBeta = settings.roles.includes('BETA');
-
-            qpetsBtn.classList.toggle('hidden', !hasPremium);
-            betaBtn.classList.toggle('hidden', !hasBeta);
+        function updateUIText() {
+             dom.activityBar.querySelectorAll('.activity-btn[data-view]').forEach(btn => {
+                 btn.title = t(`viewTitles.${btn.dataset.view}`);
+             });
+             document.getElementById('betaBtn').title = t('viewTitles.beta');
+             document.getElementById('settingsBtn').title = t('viewTitles.settings');
         }
 
-        // UPDATED: Sidebar now includes navigation for dashboard sections
-        function renderDashboardSidebar() {
-            const rolesHTML = settings.roles.map(role => 
-                `<div class="role-badge ${role.toLowerCase()}" title="${role}">${role}</div>`
-            ).join('');
+        function updateSpecialFeatures() {
+            const hasPremium = settings.roles.includes('PREMIUM') || settings.roles.includes('OWNER');
+            const hasBeta = settings.roles.includes('BETA');
+            dom.activityBar.querySelector('[data-view="qpets"]').classList.toggle('hidden', !hasPremium);
+            dom.activityBar.querySelector('#betaBtn').classList.toggle('hidden', !hasBeta);
+        }
 
-            const sectionsNav = settings.dashboard.sectionOrder.map(id => 
-                `<a href="#section-${id}" class="flex items-center gap-3 p-3 rounded-lg capitalize hover:bg-gray-100 dark:hover:bg-gray-700">${id}</a>`
-            ).join('');
+        function renderDashboardSidebar() {
+            const rolesHTML = settings.roles.map(role => `<div class="role-badge ${role.toLowerCase()}" title="${role}">${role}</div>`).join('');
+            const sectionsNav = settings.dashboard.sectionOrder.map(id => `<a href="#section-${id}" class="flex items-center gap-3 p-3 rounded-lg capitalize hover:bg-gray-100 dark:hover:bg-gray-700">${t('dashboardModules.'+id+'.title')}</a>`).join('');
 
             dom.qHubSidebar.innerHTML = `
                 <div class="flex items-center gap-3 mb-8">
@@ -264,61 +356,89 @@
                 </div>
                 <div class="p-4 rounded-lg mb-6 text-center" style="background-color: var(--q-highlight);">
                     <img src="${settings.userAvatar}" class="w-16 h-16 rounded-full mx-auto mb-2 border-2 border-white shadow-md cursor-pointer" id="avatarImg">
-                    <div class="flex items-center justify-center gap-2 mt-2">
-                        <h2 class="font-bold text-lg" style="color: var(--q-highlight-text);">${settings.username}</h2>
-                    </div>
-                     <div class="flex items-center justify-center gap-1 mt-2 flex-wrap">${rolesHTML}</div>
+                    <h2 class="font-bold text-lg" style="color: var(--q-highlight-text);">${settings.username}</h2>
+                    <div class="flex items-center justify-center gap-1 mt-2 flex-wrap">${rolesHTML}</div>
                 </div>
                 <nav class="flex-grow">
-                    <h3 class="px-3 text-sm font-semibold text-gray-400 uppercase tracking-wider mb-2">Sektionen</h3>
+                    <h3 class="px-3 text-sm font-semibold text-gray-400 uppercase tracking-wider mb-2">${t('sidebar.sections')}</h3>
                     ${sectionsNav}
                 </nav>`;
         }
 
-        // --- RE-ADDED: All functions to render dashboard modules ---
         function renderDashboardContent() {
             dom.mainContentArea.innerHTML = `<div id="sectionsContainer" class="space-y-8"></div>`;
             const sectionsContainer = document.getElementById('sectionsContainer');
             const layoutClasses = { '1': 'grid-cols-1', '2': 'md:grid-cols-2', '3': 'lg:grid-cols-3' };
             sectionsContainer.className = `grid gap-6 ${layoutClasses[settings.dashboard.layout] || 'grid-cols-1 md:grid-cols-2'}`;
             const sectionMap = {
-                announcements: { title: 'Ankündigungen', icon: 'campaign', renderer: renderAnnouncementsContent },
-                roadmap: { title: 'Roadmap', icon: 'signpost', renderer: renderRoadmapContent },
-                changelog: { title: 'Changelog', icon: 'history', renderer: renderChangelogContent },
+                announcements: { icon: 'campaign', renderer: renderAnnouncementsContent },
+                roadmap: { icon: 'signpost', renderer: renderRoadmapContent },
+                changelog: { icon: 'history', renderer: renderChangelogContent },
             };
-            sectionsContainer.innerHTML = settings.dashboard.sectionOrder.map(id => sectionMap[id] ? createSectionHTML(id, sectionMap[id].title, sectionMap[id].icon, sectionMap[id].renderer) : '').join('');
+            sectionsContainer.innerHTML = settings.dashboard.sectionOrder.map(id => sectionMap[id] ? createSectionHTML(id, t(`dashboardModules.${id}.title`), sectionMap[id].icon, sectionMap[id].renderer) : '').join('');
         }
         
-        function createSectionHTML(id, title, icon, contentRenderer) {
-            return `<section id="section-${id}" data-section-id="${id}"><div class="flex items-center justify-between mb-4"><h2 class="text-2xl font-bold flex items-center gap-3"><span class="material-icons text-3xl" style="color: var(--q-primary);">${icon}</span>${title}</h2></div><div>${contentRenderer()}</div></section>`;
+        function createSectionHTML(id, title, icon, renderer) {
+            return `<section id="section-${id}" data-section-id="${id}"><div class="flex items-center justify-between mb-4"><h2 class="text-2xl font-bold flex items-center gap-3"><span class="material-icons text-3xl" style="color: var(--q-primary);">${icon}</span>${title}</h2></div><div>${renderer()}</div></section>`;
         }
+
+        // --- UPDATED RENDERING FUNCTIONS FOR DYNAMIC CONTENT ---
 
         function renderAnnouncementsContent() {
             const hasPremium = settings.roles.includes('PREMIUM') || settings.roles.includes('OWNER');
-            const items = (userData.announcements || []).filter(item => !item.premium || (item.premium && hasPremium));
-            return `<div class="space-y-4">${items.map(item => `<div class="q-card"><div class="flex justify-between items-center mb-2"><h3 class="font-bold text-lg">${item.title}</h3>${item.premium ? `<div class="role-badge premium"><span class="material-icons text-xs">star</span></div>` : ''}</div><p class="text-gray-600 mt-1">${item.content}</p><p class="text-xs text-gray-400 mt-4">${new Date(item.date).toLocaleDateString('de-DE')}</p></div>`).join('') || '<div class="q-card text-gray-500">Keine Ankündigungen vorhanden.</div>'}</div>`;
+            const items = dynamicContent.announcements.filter(item => !item.premium || hasPremium);
+            if (items.length === 0) return `<div class="q-card text-gray-500">${t('dashboardModules.announcements.none')}</div>`;
+
+            return `<div class="space-y-4">${items.map(item => {
+                const translation = item.translations[settings.language] || item.translations.en;
+                return `<div class="q-card">
+                    <div class="flex justify-between items-center mb-2">
+                        <h3 class="font-bold text-lg">${translation.title}</h3>
+                        ${item.premium ? `<div class="role-badge premium"><span class="material-icons text-xs">star</span></div>` : ''}
+                    </div>
+                    <p class="text-gray-600 mt-1">${translation.content}</p>
+                    <p class="text-xs text-gray-400 mt-4">${new Date(item.date).toLocaleDateString(settings.language)}</p>
+                </div>`;
+            }).join('')}</div>`;
         }
 
         function renderRoadmapContent() {
+            const items = dynamicContent.roadmap;
+            if (items.length === 0) return `<div class="q-card text-gray-500">${t('dashboardModules.roadmap.none')}</div>`;
+            
             const iconMap = { 'in-progress': 'construction', 'planned': 'flag', 'completed': 'check_circle', 'paused': 'pause_circle' };
-            return `<div class="q-card"><div class="timeline">${(userData.roadmap || []).map(item => `<div class="timeline-item"><div class="timeline-icon"><span class="material-icons">${iconMap[item.status] || 'info'}</span></div><h4 class="font-bold text-lg">${item.title}</h4><p class="text-gray-600 mt-1">${item.description}</p>${(item.status === 'in-progress' && item.progress > 0) ? `<div class="mt-2"><div class="flex justify-between text-sm mb-1"><span>Fortschritt</span><span>${item.progress}%</span></div><div class="w-full progress-bar-bg h-2 rounded-full overflow-hidden"><div class="h-2 progress-bar-fill" style="width: ${item.progress}%;"></div></div></div>` : ''}</div>`).join('') || '<div class="text-gray-500">Keine Roadmap-Einträge vorhanden.</div>'}</div></div>`;
+            return `<div class="q-card"><div class="timeline">${items.map(item => {
+                const translation = item.translations[settings.language] || item.translations.en;
+                const progressHTML = (item.status === 'in-progress' && item.progress > 0) ? `<div class="mt-2"><div class="flex justify-between text-sm mb-1"><span>${t('dashboardModules.roadmap.progress')}</span><span>${item.progress}%</span></div><div class="w-full progress-bar-bg h-2 rounded-full overflow-hidden"><div class="h-2 progress-bar-fill" style="width: ${item.progress}%;"></div></div></div>` : '';
+                return `<div class="timeline-item">
+                    <div class="timeline-icon"><span class="material-icons">${iconMap[item.status] || 'info'}</span></div>
+                    <h4 class="font-bold text-lg">${translation.title}</h4>
+                    <p class="text-gray-600 mt-1">${translation.description}</p>
+                    ${progressHTML}
+                </div>`;
+            }).join('')}</div></div>`;
         }
         
         function renderChangelogContent() {
-            return `<div class="q-card space-y-6">${(userData.changelog || []).map(item => `<div><h4 class="font-bold text-lg">Version ${item.version} <span class="text-sm font-normal text-gray-500">- ${new Date(item.date).toLocaleDateString('de-DE')}</span></h4><ul class="list-disc list-inside mt-2 text-sm text-gray-600 space-y-1">${(item.changes || []).map(change => `<li>${change}</li>`).join('')}</ul></div>`).join('') || '<div class="text-gray-500">Kein Changelog vorhanden.</div>'}</div>`;
-        }
-        // --- End of re-added functions ---
+            const items = dynamicContent.changelog;
+            if (items.length === 0) return `<div class="q-card text-gray-500">${t('dashboardModules.changelog.none')}</div>`;
 
+            return `<div class="q-card space-y-6">${items.map(item => {
+                const translation = item.translations[settings.language] || item.translations.en;
+                const changesHTML = (translation.changes || []).map(change => `<li>${change}</li>`).join('');
+                return `<div>
+                    <h4 class="font-bold text-lg">${t('dashboardModules.changelog.version')} ${item.version} <span class="text-sm font-normal text-gray-500">- ${new Date(item.date).toLocaleDateString(settings.language)}</span></h4>
+                    <ul class="list-disc list-inside mt-2 text-sm text-gray-600 space-y-1">${changesHTML}</ul>
+                </div>`;
+            }).join('')}</div>`;
+        }
+        
         function setupEventListeners() {
             dom.activityBar.addEventListener('click', e => {
                 const btn = e.target.closest('.activity-btn[data-view]');
-                if (btn) {
-                    renderView(btn.dataset.view);
-                }
+                if (btn) renderView(btn.dataset.view);
             });
-            document.getElementById('betaBtn').addEventListener('click', () => {
-                window.open('https://quixoticode.github.io/beta/app', '_blank');
-            });
+            document.getElementById('betaBtn').addEventListener('click', () => window.open('https://quixoticode.github.io/beta/app', '_blank'));
             document.getElementById('settingsBtn').addEventListener('click', renderAndShowSettingsModal);
             dom.mobileMenuBtn.addEventListener('click', () => dom.qHubSidebar.classList.toggle('open'));
         }
@@ -326,34 +446,90 @@
         function renderAndShowSettingsModal() {
             const modal = document.getElementById('settingsModal');
             const themeOptions = ['light', 'dark'];
+            const langOptions = [
+                { code: 'de', name: 'Deutsch', flag: 'https://flagcdn.com/de.svg' },
+                { code: 'en', name: 'English', flag: 'https://flagcdn.com/gb.svg' },
+                { code: 'fr', name: 'Français', flag: 'https://flagcdn.com/fr.svg' },
+                { code: 'fi', name: 'Suomi', flag: 'https://flagcdn.com/fi.svg' },
+                { code: 'ja', name: '日本語', flag: 'https://flagcdn.com/jp.svg' }
+            ];
+
             modal.innerHTML = `
                 <div class="q-modal-content">
-                    <div class="flex justify-between items-center">
-                        <h2 class="text-2xl font-bold">Einstellungen</h2>
-                        <button id="closeSettingsModal" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600">&times;</button>
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-bold">${t('settingsModal.title')}</h2>
+                        <button id="closeSettingsModal" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 material-icons">close</button>
                     </div>
-                    <div class="mt-6 border-t pt-6 space-y-6">
+                    <div class="space-y-6">
                         <!-- Account Section -->
                         <div>
-                            <label class="font-semibold block mb-2">Account</label>
+                            <label class="font-semibold block mb-2">${t('settingsModal.account')}</label>
                             ${settings.loggedIn 
-                                ? `<div class="space-y-2"><div class="p-4 rounded-md bg-green-100 text-green-800 text-center">Angemeldet als ${settings.username}</div><button id="logoutBtn" class="w-full p-2 text-center border rounded-md hover:bg-red-100">Abmelden</button></div>` 
-                                : `<div class="space-y-4 p-4 border rounded-md"><h4 class="font-medium">Anmelden</h4><div><label class="text-sm">Benutzername</label><input id="loginUser" type="text" class="w-full p-2 border rounded mt-1" placeholder="Benutzername"></div><div><label class="text-sm">Passwort / Einmal-Code</label><input id="loginPass" type="password" class="w-full p-2 border rounded mt-1"></div><button id="loginBtn" class="w-full p-2 text-center bg-blue-600 text-white rounded-md hover:bg-blue-700">Anmelden</button></div>`
+                                ? `<div class="space-y-2"><div class="p-4 rounded-md bg-green-100 dark:bg-green-900 dark:text-green-100 text-green-800 text-center">${t('settingsModal.loggedInAs')} ${settings.username}</div><button id="logoutBtn" class="w-full p-2 text-center border rounded-md hover:bg-red-100 dark:hover:bg-red-800">${t('settingsModal.logout')}</button></div>` 
+                                : `<div class="space-y-4 p-4 border rounded-md">
+                                    <h4 class="font-medium">${t('settingsModal.login')}</h4>
+                                    <div><label class="text-sm">${t('settingsModal.username')}</label><input id="loginUser" type="text" class="w-full p-2 border rounded mt-1 bg-transparent" placeholder="${t('settingsModal.username')}"></div>
+                                    <div><label class="text-sm">${t('settingsModal.password')}</label><input id="loginPass" type="password" class="w-full p-2 border rounded mt-1 bg-transparent"></div>
+                                    <button id="loginBtn" class="w-full p-2 text-center text-white rounded-md" style="background-color: var(--q-primary); color: var(--q-primary-text);">${t('settingsModal.login')}</button>
+                                   </div>`
                             }
                         </div>
-                        <!-- Theme Section -->
-                        <div>
-                            <label for="themeSelector" class="font-semibold block mb-2">Theme</label>
-                            <select id="themeSelector" class="w-full p-2 border rounded">${themeOptions.map(t => `<option value="${t}" class="capitalize">${t}</option>`).join('')}</select>
+                        <!-- Appearance Section -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label for="themeSelector" class="font-semibold block mb-2">${t('settingsModal.theme')}</label>
+                                <select id="themeSelector" class="w-full p-2 border rounded bg-transparent">${themeOptions.map(th => `<option value="${th}" ${settings.theme === th ? 'selected' : ''} class="capitalize bg-white dark:bg-black">${th}</option>`).join('')}</select>
+                            </div>
+                            <div>
+                                <label for="languageSelectorBtn" class="font-semibold block mb-2">${t('settingsModal.language')}</label>
+                                <div class="relative">
+                                    <button id="languageSelectorBtn" class="w-full p-2 border rounded text-left flex justify-between items-center bg-transparent">
+                                        <span id="selectedLanguageText" class="flex items-center gap-2"></span>
+                                        <span class="material-icons">unfold_more</span>
+                                    </button>
+                                    <div id="languageDropdown" class="hidden absolute bottom-full mb-1 w-full rounded-md shadow-lg border z-10" style="background-color: var(--q-surface);">
+                                        ${langOptions.map(lang => `<div data-lang="${lang.code}" class="lang-option p-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer flex items-center gap-2">
+                                            <img src="${lang.flag}" width="20" alt="${lang.name} flag"> ${lang.name}
+                                        </div>`).join('')}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>`;
             
-            modal.querySelector('#themeSelector').value = settings.theme;
+            // Event Listeners for Modal
             modal.querySelector('#closeSettingsModal').addEventListener('click', () => toggleModal('settingsModal', false));
             modal.querySelector('#themeSelector').addEventListener('change', (e) => { settings.theme = e.target.value; applyTheme(); saveSettings(); });
             modal.querySelector('#loginBtn')?.addEventListener('click', handleLogin);
             modal.querySelector('#logoutBtn')?.addEventListener('click', handleLogout);
+
+            const langBtn = modal.querySelector('#languageSelectorBtn');
+            const langDropdown = modal.querySelector('#languageDropdown');
+            const selectedLangText = modal.querySelector('#selectedLanguageText');
+            
+            function updateLangButton() {
+                const currentLang = langOptions.find(l => l.code === settings.language) || langOptions[0];
+                selectedLangText.innerHTML = `<img src="${currentLang.flag}" width="20" alt="${currentLang.name} flag"> ${currentLang.name}`;
+            }
+            updateLangButton();
+
+            langBtn.addEventListener('click', () => langDropdown.classList.toggle('hidden'));
+            
+            modal.querySelectorAll('.lang-option').forEach(option => {
+                option.addEventListener('click', () => {
+                    const newLang = option.dataset.lang;
+                    langDropdown.classList.add('hidden');
+                    if (newLang !== settings.language) {
+                        settings.language = newLang;
+                        saveSettings();
+                        applyLanguage();
+                        updateUIText();
+                        renderView(settings.activeView, true);
+                        renderAndShowSettingsModal(); 
+                    }
+                });
+            });
 
             toggleModal('settingsModal', true);
         }
@@ -363,34 +539,25 @@
             const passInput = document.getElementById('loginPass').value;
             const loginButton = document.getElementById('loginBtn');
 
-            if (!usernameInput) {
-                showToast('Bitte gib einen Benutzernamen ein.', 'error');
-                return;
-            }
-             if (!passInput) {
-                showToast('Bitte gib ein Passwort oder einen Code ein.', 'error');
-                return;
-            }
+            if (!usernameInput) { showToast(t('toasts.enter_username'), 'error'); return; }
+            if (!passInput) { showToast(t('toasts.enter_password'), 'error'); return; }
 
             loginButton.disabled = true;
-            loginButton.innerHTML = 'Prüfe...';
+            loginButton.innerHTML = t('login.checking');
 
             try {
                 const response = await fetch(`https://quixoticode.github.io/data/s/name.json`);
-                if (!response.ok) throw new Error(`Benutzerdaten konnten nicht geladen werden (${response.status})`);
+                if (!response.ok) throw new Error(`${t('toasts.user_not_found')} (${response.status})`);
                 
                 const data = await response.json();
                 let userFound = null;
                 let finalUsername = usernameInput;
 
-                // Check for username/password
                 if (data.users[usernameInput] && data.users[usernameInput].password === passInput) {
                     userFound = data.users[usernameInput];
-                }
-                // Check for one-time code, requires username to match
-                else if (data.one_time_codes[passInput] && data.one_time_codes[passInput].username.toLowerCase() === usernameInput) {
-                     userFound = data.users[usernameInput];
-                     finalUsername = data.one_time_codes[passInput].username;
+                } else if (data.one_time_codes[passInput] && data.one_time_codes[passInput].username.toLowerCase() === usernameInput) {
+                    userFound = data.users[usernameInput];
+                    finalUsername = data.one_time_codes[passInput].username;
                 }
 
                 if (userFound) {
@@ -400,29 +567,29 @@
                     settings.userAvatar = userFound.avatar || defaultSettings.userAvatar;
                     saveSettings();
                     updateSpecialFeatures();
-                    renderView('dashboard', true); // Force re-render
+                    renderView('dashboard', true);
                     toggleModal('settingsModal', false);
-                    showToast(`Willkommen, ${settings.username}!`, 'success');
+                    showToast(t('toasts.welcome', {username: settings.username}), 'success');
                 } else {
-                    throw new Error('Ungültige Anmeldedaten.');
+                    throw new Error(t('toasts.login_error'));
                 }
             } catch (error) {
-                console.error("Fehler bei der Anmeldung:", error);
+                console.error("Login Error:", error);
                 showToast(error.message, 'error');
-            } finally {
                 loginButton.disabled = false;
-                loginButton.innerHTML = 'Anmelden';
+                loginButton.innerHTML = t('settingsModal.login');
             }
         }
 
         function handleLogout() {
             const currentTheme = settings.theme;
-            settings = { ...defaultSettings, theme: currentTheme };
+            const currentLang = settings.language;
+            settings = { ...defaultSettings, theme: currentTheme, language: currentLang };
             saveSettings();
             updateSpecialFeatures();
-            renderView('dashboard', true); // Force re-render
+            renderView('dashboard', true);
             toggleModal('settingsModal', false);
-            showToast('Erfolgreich abgemeldet.', 'info');
+            showToast(t('toasts.logout_success'), 'info');
         }
 
         function toggleModal(modalId, show) { document.getElementById(modalId).classList.toggle('visible', show); }
@@ -436,9 +603,10 @@
             else if (type === 'error') toast.style.backgroundColor = `var(--q-danger)`;
             else toast.style.backgroundColor = `var(--q-on-surface-variant)`;
             container.appendChild(toast);
-            toast.offsetHeight;
-            toast.classList.remove('translate-y-4', 'opacity-0');
-            toast.classList.add('translate-y-0', 'opacity-100');
+            requestAnimationFrame(() => {
+                toast.classList.remove('translate-y-4', 'opacity-0');
+                toast.classList.add('translate-y-0', 'opacity-100');
+            });
             setTimeout(() => {
                 toast.classList.remove('translate-y-0', 'opacity-100');
                 toast.classList.add('translate-y-4', 'opacity-0');
