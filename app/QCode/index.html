@@ -383,13 +383,15 @@
     </div>
 
     <footer>
-        <p>&copy; <span id="currentYear"></span> QCode von [Dein Name/Organisation]. Alle Rechte vorbehalten.</p>
+        <p>&copy; <span id="currentYear"></span> QCode von Quixoticode. Alle Rechte vorbehalten.</p>
         <p>Inspiriert und erstellt, um das Lernen von Code zugänglicher zu machen. <a href="#">Kontakt</a></p>
+        <p style="font-size: 0.8em; opacity: 0.7; margin-top: 8px;">Version: <span class="app-version">...</span></p>
     </footer>
 
     <script>
         document.getElementById('currentYear').textContent = new Date().getFullYear();
     </script>
+    <script type="module" src="/common/version-loader.js"></script>
 
 </body>
 </html>

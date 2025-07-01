@@ -1,0 +1,66 @@
+name: Version in jede Programm-Datei schreiben
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  write-version-for-each-app:
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, 'Bot: Update version files')"
+
+    steps:
+      # 1. Code auschecken
+      - name: Code auschecken
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # 2. Alle Hauptordner finden
+      - name: Alle Programmordner finden
+        id: dirs
+        run: |
+          echo "matrix=$(ls -d */ | grep -v '.github' | jq -R -s -c 'split("\n")[:-1]')" >> $GITHUB_OUTPUT
+
+      # 3. Für jeden gefundenen Ordner die Version erstellen
+      - name: Version für jeden Ordner erstellen und schreiben
+        strategy:
+          matrix:
+            dir: ${{ fromJson(steps.dirs.outputs.matrix) }}
+        run: |
+          echo "Erstelle Version für Ordner: ${{ matrix.dir }}"
+          
+          # --- HIER IST DIE ÄNDERUNG ---
+          # Prüfe, ob der Ordner 'beta/' ist
+          if [[ "${{ matrix.dir }}" == "beta/" ]]; then
+            QUALIFIER="BETA"
+          else
+            QUALIFIER=$(cat QUALIFIER)
+          fi
+          # --- ENDE DER ÄNDERUNG ---
+
+          # Versions-Teile generieren
+          VERSION=$(cat VERSION)
+          COMMIT_DATE=$(git log -1 --format=%cd --date=format:%d%m%Y)
+          COMMIT_HASH=$(git rev-parse --short HEAD)
+          
+          # Finale Version zusammenbauen
+          FULL_VERSION="${VERSION}+${QUALIFIER}.${COMMIT_DATE}.${COMMIT_HASH}"
+          
+          # Version in die version.txt im jeweiligen Unterordner schreiben
+          # Wir erstellen die Datei im Unterordner 'app' innerhalb von 'beta'
+          if [[ "${{ matrix.dir }}" == "beta/" ]]; then
+            mkdir -p ${{ matrix.dir }}app
+            echo $FULL_VERSION > ${{ matrix.dir }}app/version.txt
+          else
+            echo $FULL_VERSION > ${{ matrix.dir }}version.txt
+          fi
+          
+          echo "Version für ${{ matrix.dir }} ist ${FULL_VERSION}"
+
+      # 4. Alle neuen version.txt Dateien auf einmal committen
+      - name: Änderungen an allen version.txt Dateien committen
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Bot: Update version files"
+          file_pattern: "**/version.txt"

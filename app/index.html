@@ -318,6 +318,7 @@
                             <select id="themeSelector" class="w-full p-2 border rounded"><option value="light">Light</option><option value="dark">Dark</option></select>
                         </div>
                     </div>
+                    <p class="text-xs text-gray-500 mt-4">Version: <span class="app-version font-mono">...</span></p>
                 </div>`;
             
             modal.querySelector('#themeSelector').value = settings.theme;
@@ -401,5 +402,7 @@
         }
     });
     </script>
+
+    <script type="module" src="/common/version-loader.js"></script>
 </body>
 </html>
