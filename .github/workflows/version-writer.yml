@@ -5,62 +5,67 @@ on:
     branches: [main]
 
 jobs:
-  write-version-for-each-app:
+  write-and-commit:
     runs-on: ubuntu-latest
+    # Verhindert, dass der Bot seine eigenen Commits erneut auslöst
     if: "!contains(github.event.head_commit.message, 'Bot: Update version files')"
 
     steps:
-      # 1. Code auschecken
+      # 1. Code auschecken, um auf die Dateien zugreifen zu können
       - name: Code auschecken
         uses: actions/checkout@v4
         with:
+          # Notwendig, um das Commit-Datum zu lesen
           fetch-depth: 0
 
-      # 2. Alle Hauptordner finden
-      - name: Alle Programmordner finden
-        id: dirs
+      # 2. Version für jeden Ordner in einer Schleife erstellen
+      - name: Versionen erstellen und schreiben
         run: |
-          echo "matrix=$(ls -d */ | grep -v '.github' | jq -R -s -c 'split("\n")[:-1]')" >> $GITHUB_OUTPUT
+          # Finde alle Ordner im Hauptverzeichnis, außer '.github'
+          for dir in $(ls -d */ | grep -v '.github'); do
+            echo "--- Bearbeite Ordner: ${dir} ---"
+            
+            # Standard-Qualifier aus der Datei lesen
+            QUALIFIER_FROM_FILE=$(cat QUALIFIER)
+            FINAL_QUALIFIER=""
 
-      # 3. Für jeden gefundenen Ordner die Version erstellen
-      - name: Version für jeden Ordner erstellen und schreiben
-        strategy:
-          matrix:
-            dir: ${{ fromJson(steps.dirs.outputs.matrix) }}
-        run: |
-          echo "Erstelle Version für Ordner: ${{ matrix.dir }}"
-          
-          # --- HIER IST DIE ÄNDERUNG ---
-          # Prüfe, ob der Ordner 'beta/' ist
-          if [[ "${{ matrix.dir }}" == "beta/" ]]; then
-            QUALIFIER="BETA"
-          else
-            QUALIFIER=$(cat QUALIFIER)
-          fi
-          # --- ENDE DER ÄNDERUNG ---
+            # Prüfe, ob es der spezielle 'beta/' Ordner ist
+            if [[ "${dir}" == "beta/" ]]; then
+              FINAL_QUALIFIER="BETA"
+              echo "Sonderregel: Qualifier auf 'BETA' gesetzt."
+            else
+              FINAL_QUALIFIER=$QUALIFIER_FROM_FILE
+              echo "Standard-Qualifier '${FINAL_QUALIFIER}' wird verwendet."
+            fi
 
-          # Versions-Teile generieren
-          VERSION=$(cat VERSION)
-          COMMIT_DATE=$(git log -1 --format=%cd --date=format:%d%m%Y)
-          COMMIT_HASH=$(git rev-parse --short HEAD)
-          
-          # Finale Version zusammenbauen
-          FULL_VERSION="${VERSION}+${QUALIFIER}.${COMMIT_DATE}.${COMMIT_HASH}"
-          
-          # Version in die version.txt im jeweiligen Unterordner schreiben
-          # Wir erstellen die Datei im Unterordner 'app' innerhalb von 'beta'
-          if [[ "${{ matrix.dir }}" == "beta/" ]]; then
-            mkdir -p ${{ matrix.dir }}app
-            echo $FULL_VERSION > ${{ matrix.dir }}app/version.txt
-          else
-            echo $FULL_VERSION > ${{ matrix.dir }}version.txt
-          fi
-          
-          echo "Version für ${{ matrix.dir }} ist ${FULL_VERSION}"
+            # Dynamische Teile generieren
+            VERSION=$(cat VERSION)
+            COMMIT_DATE=$(git log -1 --format=%cd --date=format:%d%m%Y)
+            COMMIT_HASH=$(git rev-parse --short HEAD)
+            
+            # Finale Version zusammenbauen
+            FULL_VERSION="${VERSION}+${FINAL_QUALIFIER}.${COMMIT_DATE}.${COMMIT_HASH}"
+            
+            # Zieldatei bestimmen (Sonderfall für 'beta/app/')
+            TARGET_FILE=""
+            if [[ "${dir}" == "beta/" ]]; then
+              # Stelle sicher, dass der Unterordner 'app' existiert
+              mkdir -p "${dir}app"
+              TARGET_FILE="${dir}app/version.txt"
+            else
+              TARGET_FILE="${dir}version.txt"
+            fi
+            
+            # Version in die Zieldatei schreiben
+            echo "Schreibe '${FULL_VERSION}' in '${TARGET_FILE}'"
+            echo "${FULL_VERSION}" > "${TARGET_FILE}"
+          done
 
-      # 4. Alle neuen version.txt Dateien auf einmal committen
+      # 3. Alle geänderten 'version.txt' Dateien auf einmal committen
       - name: Änderungen an allen version.txt Dateien committen
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Bot: Update version files"
+          # Sucht in allen Unterordnern nach einer Datei namens version.txt
           file_pattern: "**/version.txt"
+
