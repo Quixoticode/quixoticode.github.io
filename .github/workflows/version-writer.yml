@@ -10,6 +10,11 @@ jobs:
     # Verhindert, dass der Bot seine eigenen Commits erneut auslöst
     if: "!contains(github.event.head_commit.message, 'Bot: Update version files')"
 
+    # HIER IST DIE KORREKTUR:
+    # Gib dem Job die Berechtigung, den Inhalt des Repositorys zu schreiben.
+    permissions:
+      contents: write
+
     steps:
       # 1. Code auschecken, um auf die Dateien zugreifen zu können
       - name: Code auschecken
