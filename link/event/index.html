@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schnitzeljagd '25 - Deluxe</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0a0a;
+            background-image: radial-gradient(#1a1a1a 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .gradient-text {
+            background: linear-gradient(45deg, #34d399, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .clue-card {
+            transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+            transform-style: preserve-3d;
+        }
+        .clue-card .card-face {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .clue-card .card-back {
+            transform: rotateY(180deg);
+        }
+        .clue-card.is-flipped {
+            transform: rotateY(180deg);
+        }
+        .initial-hidden {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        .fade-in-up {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+    </style>
+</head>
+<body class="text-gray-300">
+
+    <div class="container mx-auto p-4 sm:p-6 md:p-8 max-w-5xl">
+
+        <!-- Header Section -->
+        <header class="text-center mb-10 initial-hidden">
+            <h1 class="text-5xl md:text-7xl font-black tracking-tighter gradient-text mb-2">Schnitzeljagd '25</h1>
+            <p class="text-lg text-gray-400">Der ultimative Wettstreit um Ruhm und Ehre!</p>
+        </header>
+
+        <!-- Progress Bar -->
+        <div class="mb-10 initial-hidden">
+            <div class="flex justify-between items-center mb-2">
+                 <h2 class="text-lg font-bold text-white">Fortschritt</h2>
+                 <span id="progress-text" class="text-sm font-medium text-blue-400">0/6 Hinweise freigeschaltet</span>
+            </div>
+            <div class="w-full bg-gray-700 rounded-full h-2.5">
+                <div id="progress-bar" class="bg-gradient-to-r from-green-400 to-blue-500 h-2.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 lg:gap-8">
+            
+            <!-- Rules Section (Left Column on Desktop) -->
+            <div class="lg:col-span-1 mb-10 lg:mb-0 initial-hidden">
+                <div class="bg-gray-800/50 border border-gray-700 rounded-2xl p-6 sticky top-8">
+                    <h2 class="text-2xl font-bold text-white mb-4 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3 text-yellow-400"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.5a1.5 1.5 0 0 1-3 0V9a1.5 1.5 0 0 1 3 0v5.5Z"></path><path d="M17 14.5a1.5 1.5 0 0 1-3 0V9a1.5 1.5 0 0 1 3 0v5.5Z"></path><path d="M12 22V2"></path></svg>
+                        Der Preis
+                    </h2>
+                    <p class="mb-6 text-gray-300">Der Champion erhält ein <strong class="text-green-400">4-monatiges Probeabo im Wert von 88€</strong>. Gültig bis <strong class="text-yellow-400">19.07.2025</strong>.</p>
+                    
+                    <h2 class="text-2xl font-bold text-white mb-4 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3 text-blue-400"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path><line x1="12" x2="12" y1="11" y2="17"></line><line x1="9" x2="15" y1="14" y2="14"></line></svg>
+                        Regeln & Einsendung
+                    </h2>
+                    <ul class="space-y-3 text-gray-300">
+                        <li class="flex items-start"><span class="text-blue-400 mr-2 mt-1 flex-shrink-0">✓</span><span>Beweise jede Lösung mit einem <strong class="font-medium">Screenshot</strong>.</span></li>
+                        <li class="flex items-start"><span class="text-blue-400 mr-2 mt-1 flex-shrink-0">✓</span><span>Sende alle Screenshots in <strong class="font-medium">einer einzigen E-Mail</strong>.</span></li>
+                        <li class="flex items-start"><span class="text-blue-400 mr-2 mt-1 flex-shrink-0">✓</span><span>Einsendeschluss: <strong class="font-medium">16.07.2025</strong>.</span></li>
+                        <li class="flex items-start"><span class="text-blue-400 mr-2 mt-1 flex-shrink-0">✓</span><span>An: <strong class="text-yellow-400 font-medium">leitung@quixoticode.de</strong></span></li>
+                        <li class="flex items-start"><span class="text-blue-400 mr-2 mt-1 flex-shrink-0">✓</span><span>Betreff: <strong class="text-yellow-400 font-medium">Schnitzeljagd 25</strong></span></li>
+                        <li class="flex items-start"><span class="text-blue-400 mr-2 mt-1 flex-shrink-0">✓</span><span><strong class="font-medium">Telefonnummer</strong> für die Gewinnbenachrichtigung nicht vergessen!</span></li>
+                    </ul>
+                    <p class="text-xs text-gray-500 mt-6 text-center">Unterstützt durch Google.</p>
+                </div>
+            </div>
+
+            <!-- Clues Section (Right Column on Desktop) -->
+            <div id="clues-container" class="lg:col-span-2 space-y-6">
+                <!-- Clues will be dynamically inserted here by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- Configuration ---
+            const clues = [
+                { revealDate: new Date('2025-07-02T08:00:00'), task: 'Finde die allererste Nachricht bei Ankündigungen in WhatsApp.', points: 1 },
+                { revealDate: new Date('2025-07-04T10:00:00'), task: 'Finde das Secret-Hologram auf dem Minecraft Server.', points: 2 },
+                { revealDate: new Date('2025-07-06T12:00:00'), task: 'Finde das Meme von den WhatsApp Ankündigungen.', points: 1 },
+                { revealDate: new Date('2025-07-08T14:00:00'), task: 'Finde das Easteregg im Beta Programm von Hub.', points: 4 },
+                { revealDate: new Date('2025-07-10T16:00:00'), task: 'Lade 10 Leute erfolgreich in die WhatsApp Community ein.', points: 10 },
+                { revealDate: new Date('2025-07-12T18:00:00'), task: 'Melde 2 Bugs (Fehler) in einem unserer Systeme.', points: 2 }
+            ];
+
+            const cluesContainer = document.getElementById('clues-container');
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            const totalClues = clues.length;
+
+            /**
+             * Creates the HTML for the "front" of the card (the revealed clue).
+             * @param {object} clue - The clue data.
+             * @param {number} index - The clue's index.
+             * @returns {string} HTML string for the revealed card face.
+             */
+            function createRevealedFace(clue, index) {
+                const options = { weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' };
+                const formattedDate = clue.revealDate.toLocaleDateString('de-DE', options);
+                return `
+                    <div class="absolute inset-0 w-full h-full card-face card-back bg-gray-800/80 border border-green-500/50 rounded-2xl p-6 shadow-lg shadow-green-500/10 flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <h3 class="text-xl md:text-2xl font-bold text-white">Hinweis #${index + 1}</h3>
+                                    <p class="text-sm text-gray-400">Aufgedeckt am ${formattedDate} Uhr</p>
+                                </div>
+                                <div class="bg-green-500 text-gray-900 text-sm font-bold px-3 py-1 rounded-full flex items-center">
+                                    <span>${clue.points}</span>P
+                                </div>
+                            </div>
+                            <p class="text-lg md:text-xl text-green-300 p-4 bg-gray-900/70 rounded-lg text-center">${clue.task}</p>
+                        </div>
+                    </div>
+                `;
+            }
+
+            /**
+             * Creates the HTML for the "back" of the card (the locked state with countdown).
+             * @param {object} clue - The clue data.
+             * @param {number} index - The clue's index.
+             * @returns {string} HTML string for the locked card face.
+             */
+            function createLockedFace(clue, index) {
+                return `
+                    <div class="absolute inset-0 w-full h-full card-face bg-gray-800/50 border border-gray-700 rounded-2xl p-6 flex flex-col justify-center items-center text-center">
+                        <div class="flex justify-between items-center w-full absolute top-6 px-6">
+                            <h3 class="text-xl font-bold text-gray-500">Hinweis #${index + 1}</h3>
+                            <div class="bg-gray-600 text-white text-sm font-bold px-3 py-1 rounded-full">
+                                <span>${clue.points}</span>P
+                            </div>
+                        </div>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-auto text-gray-600 mb-3"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                            <p class="text-gray-400 mb-2">Wird freigeschaltet in:</p>
+                            <div class="countdown-timer text-2xl md:text-3xl font-mono font-bold text-blue-400" data-revealdatestr="${clue.revealDate.toISOString()}">
+                                --:--:--:--
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            /**
+             * Initializes all clue cards, adding them to the DOM.
+             */
+            function initializeClues() {
+                clues.forEach((clue, index) => {
+                    const cardContainer = document.createElement('div');
+                    cardContainer.className = 'clue-card-container h-48 relative initial-hidden';
+                    
+                    const card = document.createElement('div');
+                    card.id = `clue-card-${index}`;
+                    card.className = 'clue-card w-full h-full';
+                    card.dataset.revealed = 'false';
+
+                    card.innerHTML = createLockedFace(clue, index) + createRevealedFace(clue, index);
+                    
+                    cardContainer.appendChild(card);
+                    cluesContainer.appendChild(cardContainer);
+                });
+            }
+
+            /**
+             * Updates the countdown timers and flips cards when their time comes.
+             */
+            function updateTimersAndStates() {
+                const now = new Date();
+                let revealedCount = 0;
+
+                clues.forEach((clue, index) => {
+                    const card = document.getElementById(`clue-card-${index}`);
+                    const isRevealed = now >= clue.revealDate;
+                    
+                    if (isRevealed) {
+                        revealedCount++;
+                        if (card.dataset.revealed === 'false') {
+                            card.classList.add('is-flipped');
+                            card.dataset.revealed = 'true';
+                        }
+                    } else {
+                        // Update countdown only for locked cards
+                        const timerElement = card.querySelector('.countdown-timer');
+                        if (timerElement) {
+                            const timeLeft = clue.revealDate - now;
+                            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                            timerElement.textContent = `${String(days).padStart(2, '0')}d ${String(hours).padStart(2, '0')}h ${String(minutes).padStart(2, '0')}m ${String(seconds).padStart(2, '0')}s`;
+                        }
+                    }
+                });
+
+                // Update progress bar
+                const progressPercentage = (revealedCount / totalClues) * 100;
+                progressBar.style.width = `${progressPercentage}%`;
+                progressText.textContent = `${revealedCount}/${totalClues} Hinweise freigeschaltet`;
+            }
+
+            /**
+             * Fades in elements sequentially for a nice loading animation.
+             */
+            function animateInitialLoad() {
+                const elements = document.querySelectorAll('.initial-hidden');
+                elements.forEach((el, index) => {
+                    setTimeout(() => {
+                        el.classList.add('fade-in-up');
+                    }, index * 150);
+                });
+            }
+
+            // --- Start the application ---
+            initializeClues();
+            updateTimersAndStates(); // Initial call to set correct states immediately
+            animateInitialLoad();
+            setInterval(updateTimersAndStates, 1000);
+        });
+    </script>
+
+</body>
+</html>
