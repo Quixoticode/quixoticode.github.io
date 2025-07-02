@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Center v2.1</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- Tone.js für Sound-Effekte -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js"></script>
+
+    <style>
+        /* --- Grundlegende Stile und Variablen --- */
+        :root {
+            --bg-color: #0d0d2b;
+            --card-bg: rgba(18, 16, 48, 0.75);
+            --primary-glow: #00c6ff;
+            --secondary-glow: #0072ff;
+            --danger-glow: #ff4d4d;
+            --highlight-glow: #ffc83d;
+            --text-color: #e0e0e0;
+            --text-color-dark: #a0a0a0;
+            --border-color: rgba(0, 198, 255, 0.2);
+            --font-family: 'Poppins', sans-serif;
+            --font-title: 'Orbitron', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 1rem;
+            overflow: hidden;
+        }
+
+        /* --- Animierter Partikel-Hintergrund --- */
+        #particle-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background-color: var(--primary-glow);
+            border-radius: 50%;
+            opacity: 0;
+            animation: rise 10s infinite linear;
+        }
+
+        @keyframes rise {
+            0% { transform: translateY(100vh) scale(0.5); opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+        }
+
+        /* --- Hauptcontainer und Wizard-Schritte --- */
+        .wizard-container {
+            width: 100%;
+            max-width: 650px;
+            position: relative;
+            perspective: 1500px;
+        }
+
+        .step {
+            display: none;
+            animation: fadeIn 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+        }
+
+        .step.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px) scale(0.97); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* --- Karten-Stil mit 3D-Tilt-Effekt --- */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px;
+            border: 1px solid var(--border-color);
+            padding: 2.5rem 3rem;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0, 198, 255, 0.1), 0 0 40px rgba(0, 114, 255, 0.1);
+            transition: transform 0.1s linear;
+            transform-style: preserve-3d;
+        }
+
+        /* --- Textelemente --- */
+        h1 {
+            font-family: var(--font-title);
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            background: linear-gradient(90deg, var(--primary-glow), #a6f2ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(0, 198, 255, 0.3);
+            min-height: 45px;
+        }
+
+        p.subtitle {
+            font-size: 1.1rem;
+            color: var(--text-color-dark);
+            margin-bottom: 2.5rem;
+        }
+
+        /* --- Buttons --- */
+        .btn-grid { display: grid; gap: 1.25rem; }
+        .btn {
+            background: linear-gradient(45deg, rgba(0, 114, 255, 0.1), rgba(0, 198, 255, 0.1));
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 1rem;
+            border-radius: 14px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 0 10px rgba(0, 198, 255, 0.2);
+        }
+        .btn:before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s ease;
+        }
+        .btn:hover:before { left: 100%; }
+        .btn:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 0 20px var(--primary-glow);
+            border-color: var(--primary-glow);
+        }
+        .btn.danger {
+            border-color: rgba(255, 77, 77, 0.5);
+            box-shadow: inset 0 0 10px rgba(255, 77, 77, 0.3);
+        }
+        .btn.danger:hover {
+            border-color: var(--danger-glow);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 0 20px var(--danger-glow);
+        }
+        .btn-back {
+            margin-top: 2rem; background: transparent; border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--text-color-dark);
+        }
+        .btn-back:hover { background: rgba(255, 255, 255, 0.1); color: var(--text-color); }
+
+        /* --- Spezifische Elemente --- */
+        .version-display {
+            background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 12px;
+            margin-bottom: 2rem; border: 1px solid var(--border-color); font-family: var(--font-title);
+        }
+        .version-display .label { color: var(--text-color-dark); font-size: 0.9rem; }
+        .version-number {
+            font-size: 1.8rem; font-weight: 700; color: var(--text-color);
+            text-shadow: 0 0 10px var(--primary-glow);
+        }
+        .version-number .version-highlight {
+            color: var(--highlight-glow);
+            text-shadow: 0 0 8px var(--highlight-glow);
+        }
+        .version-hint {
+            font-size: 0.8rem; color: var(--text-color-dark); margin-top: 0.75rem;
+            font-style: italic; opacity: 0.8;
+        }
+
+        .instruction-list {
+            text-align: left; color: var(--text-color-dark); line-height: 1.7;
+            background: rgba(0,0,0,0.2); padding: 1.5rem; border-radius: 12px;
+        }
+        .instruction-list h3 {
+            font-family: var(--font-title); color: var(--primary-glow); margin-top: 1rem; margin-bottom: 0.5rem;
+        }
+        .instruction-list h3:first-child { margin-top: 0; }
+
+        .iframe-container {
+            width: 100%; height: 70vh; border-radius: 12px; overflow: hidden;
+            border: 1px solid var(--border-color); background: #fff;
+        }
+        iframe { width: 100%; height: 100%; border: none; }
+    </style>
+</head>
+<body>
+    <div id="particle-container"></div>
+    <div class="wizard-container">
+
+        <!-- Step 1: Auswahl des Report-Typs -->
+        <div id="step-start" class="step active">
+            <div class="card">
+                <h1 data-text="Report Center"></h1>
+                <p class="subtitle">Wähle die Art der Meldung, die du erstellen möchtest.</p>
+                <div class="btn-grid">
+                    <button class="btn" data-next="step-bug-check" data-type="bug">🐞 Bug Report</button>
+                    <button class="btn" data-next="step-form" data-type="player">👤 Spieler-Meldung</button>
+                    <button class="btn" data-next="step-scam" data-type="scam">💰 Scam / Betrug</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 2: Bug Report - Versions-Check -->
+        <div id="step-bug-check" class="step">
+            <div class="card">
+                <h1 data-text="Versions-Check"></h1>
+                <p class="subtitle">Stimmt die angezeigte Version mit der deines Programms überein?</p>
+                <div class="version-display">
+                    <div class="label">Aktuelle Programmversion</div>
+                    <div class="app-version version-number">wird geladen...</div>
+                    <div class="version-hint">Der markierte Teil (Datum & Build) ist für den Report am wichtigsten.</div>
+                </div>
+                <div class="btn-grid" style="grid-template-columns: 1fr 1fr;">
+                    <button class="btn" data-next="step-form">Ja, stimmt</button>
+                    <button class="btn danger" data-next="step-bug-clear">Nein, falsch</button>
+                </div>
+                <button class="btn btn-back" data-next="step-start">Zurück</button>
+            </div>
+        </div>
+
+        <!-- Step 3: Bug Report - Local Storage leeren -->
+        <div id="step-bug-clear" class="step">
+            <div class="card">
+                <h1 data-text="Cache leeren"></h1>
+                <p class="subtitle">Eine veraltete Version wird oft durch gespeicherte Daten verursacht. Bitte folge dieser Anleitung.</p>
+                <div class="instruction-list">
+                    <h3>Google Chrome</h3><p>Einstellungen → Datenschutz → Websitedaten → [Deine Seite] → Daten löschen.</p>
+                    <h3>Firefox</h3><p>Einstellungen → Datenschutz & Sicherheit → Cookies und Website-Daten → Daten verwalten → [Deine Seite] → Entfernen.</p>
+                    <h3>Entwicklerkonsole</h3><p>Drücke F12, gehe zum Tab "Anwendung" (Application) und klicke auf "Speicher" (Storage) → "Lokalen Speicher löschen" (Clear site data).</p>
+                </div>
+                <button class="btn btn-back" data-next="step-bug-check">Zurück</button>
+            </div>
+        </div>
+
+        <!-- Step 4: Scam Report - Auswahl -->
+        <div id="step-scam" class="step">
+            <div class="card">
+                <h1 data-text="Scam / Betrug"></h1>
+                <p class="subtitle">Worum handelt es sich? Deine Auswahl hilft uns bei der Bearbeitung.</p>
+                <div class="btn-grid">
+                    <button class="btn" data-next="step-form">Phishing (Gefälschte Seiten)</button>
+                    <button class="btn" data-next="step-form">Handels-Betrug</button>
+                    <button class="btn" data-next="step-form">Identitätsdiebstahl</button>
+                    <button class="btn" data-next="step-form">Anderes</button>
+                </div>
+                <button class="btn btn-back" data-next="step-start">Zurück</button>
+            </div>
+        </div>
+
+        <!-- Step 5: Google Form iFrame -->
+        <div id="step-form" class="step">
+            <div class="card">
+                <h1 id="form-title" data-text="Meldung ausfüllen"></h1>
+                <p class="subtitle">Bitte fülle das Formular so detailliert wie möglich aus.</p>
+                <div class="iframe-container">
+                    <iframe id="report-iframe" src="" title="Report Form">Wird geladen...</iframe>
+                </div>
+                <button class="btn btn-back" data-next="step-start">Neue Meldung erstellen</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    // --- NEUE, INTEGRIERTE VERSION-LADE-LOGIK ---
+    (function() {
+        let versionString = null;
+        let hasFetched = false;
+
+        function updateVersionPlaceholders() {
+            if (!hasFetched) return;
+            const versionDisplays = document.querySelectorAll('.app-version:not(.js-version-loaded)');
+            
+            versionDisplays.forEach(element => {
+                if (versionString && versionString !== 'n/a') {
+                    // Logik zum Hervorheben des wichtigen Teils
+                    const parts = versionString.split('+');
+                    if (parts.length > 1) {
+                        const mainVersion = parts[0] + '+';
+                        const qualifierAndRest = parts[1].split('.');
+                        const qualifier = qualifierAndRest.shift();
+                        const importantPart = '.' + qualifierAndRest.join('.');
+                        
+                        element.innerHTML = `${mainVersion}${qualifier}<span class="version-highlight">${importantPart}</span>`;
+                    } else {
+                        element.textContent = versionString; // Fallback
+                    }
+                } else if (versionString) {
+                    element.textContent = versionString; // Zeigt 'n/a' an
+                }
+                element.classList.add('js-version-loaded');
+            });
+        }
+
+        function fetchVersion() {
+            if (hasFetched) {
+                updateVersionPlaceholders();
+                return;
+            }
+            hasFetched = true;
+            fetch('version.txt')
+                .then(response => {
+                    if (!response.ok) throw new Error(`version.txt nicht gefunden (Status: ${response.status})`);
+                    return response.text();
+                })
+                .then(version => {
+                    versionString = version.trim();
+                    updateVersionPlaceholders();
+                })
+                .catch(error => {
+                    console.error('Fehler beim Laden der Version:', error);
+                    versionString = 'n/a';
+                    updateVersionPlaceholders();
+                });
+        }
+
+        const observer = new MutationObserver((mutations) => {
+            const hasAddedNodes = mutations.some(mutation => mutation.addedNodes.length > 0);
+            if (hasAddedNodes) {
+                updateVersionPlaceholders();
+            }
+        });
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', fetchVersion, { once: true });
+        } else {
+            fetchVersion();
+        }
+
+        observer.observe(document.body, { childList: true, subtree: true });
+    })();
+
+
+    // --- WIZARD UND EFFEKT-LOGIK (unverändert) ---
+    document.addEventListener('DOMContentLoaded', () => {
+        const GOOGLE_FORMS = {
+            bug: 'https://docs.google.com/forms/d/e/1FAIpQLSfwZbR_o_Tj_g1d-f8r-c-d-e-v-i-l-l-e/viewform?embedded=true',
+            player: 'https://docs.google.com/forms/d/e/1FAIpQLScaN-c-e-l-e-b-r-i-t-y/viewform?embedded=true',
+            scam: 'https://docs.google.com/forms/d/e/1FAIpQLSc-a-m-m-e-r-s/viewform?embedded=true',
+        };
+        
+        let currentReportType = 'bug';
+        let typingTimeout;
+        const allSteps = document.querySelectorAll('.step');
+        const allButtons = document.querySelectorAll('.btn, .btn-back');
+        const iframeEl = document.getElementById('report-iframe');
+        const formTitleEl = document.getElementById('form-title');
+        const card = document.querySelector('.wizard-container');
+
+        let soundReady = false;
+        const synth = new Tone.Synth({
+            oscillator: { type: 'sine' },
+            envelope: { attack: 0.005, decay: 0.1, sustain: 0.3, release: 0.1 }
+        }).toDestination();
+        
+        const clickSound = () => { if (soundReady) synth.triggerAttackRelease('C5', '8n'); };
+        const transitionSound = () => { if (soundReady) synth.triggerAttackRelease('G5', '16n'); };
+
+        document.body.addEventListener('click', async () => {
+            if (!soundReady) {
+                await Tone.start();
+                soundReady = true;
+            }
+        }, { once: true });
+
+        card.addEventListener('mousemove', (e) => {
+            const { left, top, width, height } = card.getBoundingClientRect();
+            const x = (e.clientX - left) / width - 0.5;
+            const y = (e.clientY - top) / height - 0.5;
+            card.style.transform = `rotateX(${y * -10}deg) rotateY(${x * 10}deg)`;
+        });
+        card.addEventListener('mouseleave', () => { card.style.transform = 'rotateX(0) rotateY(0)'; });
+
+        const particleContainer = document.getElementById('particle-container');
+        for (let i = 0; i < 50; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            const size = Math.random() * 3 + 1;
+            particle.style.width = `${size}px`; particle.style.height = `${size}px`;
+            particle.style.left = `${Math.random() * 100}vw`;
+            particle.style.animationDuration = `${Math.random() * 5 + 5}s`;
+            particle.style.animationDelay = `${Math.random() * 5}s`;
+            particleContainer.appendChild(particle);
+        }
+
+        function typeWriter(element) {
+            clearTimeout(typingTimeout);
+            const text = element.dataset.text;
+            element.innerHTML = '';
+            let i = 0;
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i); i++;
+                    typingTimeout = setTimeout(type, 50);
+                }
+            }
+            type();
+        }
+        
+        function showStep(stepId) {
+            allSteps.forEach(step => step.classList.remove('active'));
+            const nextStep = document.getElementById(stepId);
+            if (nextStep) {
+                nextStep.classList.add('active');
+                const titleElement = nextStep.querySelector('h1');
+                if (titleElement && titleElement.dataset.text) typeWriter(titleElement);
+                transitionSound();
+            }
+        }
+
+        function handleButtonClick(event) {
+            clickSound();
+            const button = event.currentTarget;
+            const nextStepId = button.dataset.next;
+            if (button.dataset.type) currentReportType = button.dataset.type;
+            if (nextStepId === 'step-form') loadForm();
+            if (nextStepId) showStep(nextStepId);
+        }
+        
+        function loadForm() {
+            if (iframeEl && GOOGLE_FORMS[currentReportType]) {
+                iframeEl.src = GOOGLE_FORMS[currentReportType];
+                const titles = { bug: 'Bug Report', player: 'Spieler-Meldung', scam: 'Scam-Meldung' };
+                formTitleEl.dataset.text = titles[currentReportType] || 'Meldung ausfüllen';
+            }
+        }
+
+        allButtons.forEach(button => button.addEventListener('click', handleButtonClick));
+        showStep('step-start');
+    });
+    </script>
+</body>
+</html>
