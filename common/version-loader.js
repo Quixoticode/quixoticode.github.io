@@ -1,37 +1,95 @@
-// Diese Funktion wird automatisch ausgeführt, wenn das Dokument geladen ist.
+// version-loader.js
+
 (function() {
-  // Pfad zur version.txt. Passt für jede Unterseite,
-  // da es im selben Ordner wie die HTML-Datei sucht.
-  const versionFilePath = 'version.txt';
+  // Diese Variable speichert die Versionsnummer, nachdem sie einmal geladen wurde,
+  // um unnötige, wiederholte Ladevorgänge zu vermeiden.
+  let versionString = null;
+  let hasFetched = false;
 
-  // Finde alle Elemente auf der Seite, die für die Version vorgesehen sind.
-  const versionDisplays = document.querySelectorAll('.app-version');
+  /**
+   * Sucht nach allen noch nicht aktualisierten .app-version Platzhaltern
+   * und füllt sie mit der geladenen Versionsnummer.
+   */
+  function updateVersionPlaceholders() {
+    // Führe die Funktion nur aus, wenn die Version bereits geladen (oder fehlgeschlagen) ist.
+    if (!hasFetched) {
+      return;
+    }
 
-  // Wenn keine Platzhalter-Elemente gefunden wurden, tue nichts.
-  if (versionDisplays.length === 0) {
-    return;
+    // Wähle nur die Platzhalter aus, die noch nicht bearbeitet wurden.
+    const versionDisplays = document.querySelectorAll('.app-version:not(.js-version-loaded)');
+    
+    versionDisplays.forEach(element => {
+      if (versionString) {
+        element.textContent = versionString;
+      }
+      // Markiere das Element als "bearbeitet", damit es nicht erneut durchlaufen wird.
+      element.classList.add('js-version-loaded');
+    });
   }
 
-  // Lade die Versionsdatei vom Server.
-  fetch(versionFilePath)
-    .then(response => {
-      // Prüfe, ob die Datei gefunden wurde.
-      if (!response.ok) {
-        throw new Error('version.txt nicht gefunden');
-      }
-      return response.text();
-    })
-    .then(version => {
-      // Setze den Text für alle gefundenen Platzhalter-Elemente.
-      versionDisplays.forEach(element => {
-        element.textContent = version.trim();
+  /**
+   * Lädt die version.txt Datei vom Server.
+   * Dies geschieht nur ein einziges Mal.
+   */
+  function fetchVersion() {
+    // Verhindere mehrfaches Laden
+    if (hasFetched) {
+      updateVersionPlaceholders();
+      return;
+    }
+    
+    hasFetched = true;
+
+    // Sucht nach der version.txt im selben Ordner wie die HTML-Datei
+    fetch('version.txt')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('version.txt nicht gefunden');
+        }
+        return response.text();
+      })
+      .then(version => {
+        versionString = version.trim();
+        // Führe die Aktualisierung sofort aus für alle bereits sichtbaren Elemente.
+        updateVersionPlaceholders();
+      })
+      .catch(error => {
+        console.error('Fehler beim Laden der Version:', error);
+        versionString = 'n/a';
+        // Führe die Aktualisierung auch im Fehlerfall aus.
+        updateVersionPlaceholders();
       });
-    })
-    .catch(error => {
-      // Falls ein Fehler auftritt (z.B. offline), zeige eine Meldung an.
-      console.error('Fehler beim Laden der Version:', error);
-      versionDisplays.forEach(element => {
-        element.textContent = 'n/a';
-      });
-    });
+  }
+
+  /**
+   * Der "Beobachter", der auf Änderungen an der Webseite wartet.
+   * Wenn neue Elemente (wie ein Modal) hinzugefügt werden, wird er aktiv.
+   */
+  const observer = new MutationObserver((mutations) => {
+    // Prüfe, ob neue Elemente hinzugefügt wurden.
+    const hasAddedNodes = mutations.some(mutation => mutation.addedNodes.length > 0);
+    
+    if (hasAddedNodes) {
+      // Wenn ja, versuche erneut, die Platzhalter zu füllen.
+      // Die Version wird aus dem Speicher genommen, nicht neu geladen.
+      updateVersionPlaceholders();
+    }
+  });
+
+  // --- Start der Ausführung ---
+
+  // 1. Wenn das Dokument bereit ist, lade die Version zum ersten Mal.
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', fetchVersion);
+  } else {
+    fetchVersion();
+  }
+
+  // 2. Starte den Beobachter, um auf zukünftige Änderungen zu lauern.
+  observer.observe(document.body, {
+    childList: true, // Achte auf hinzugefügte/entfernte Kind-Elemente
+    subtree: true    // Beziehe alle Unterelemente mit ein
+  });
+
 })();
