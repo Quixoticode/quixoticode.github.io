@@ -253,6 +253,31 @@
             qpetsBtn.classList.toggle('hidden', !hasPremium);
         }
 
+        // --- NEUE FUNKTION ZUM LADEN DER VERSION ---
+        function loadVersion() {
+            // Sucht nach der version.txt im selben Ordner wie diese HTML-Datei.
+            // Für /app/index.html sucht es nach /app/version.txt
+            fetch('version.txt')
+                .then(response => {
+                    if (!response.ok) throw new Error('Datei nicht gefunden');
+                    return response.text();
+                })
+                .then(version => {
+                    // Finde ALLE Platzhalter und setze den Text
+                    const versionDisplays = document.querySelectorAll('.app-version');
+                    versionDisplays.forEach(element => {
+                        element.textContent = version.trim();
+                    });
+                })
+                .catch(error => {
+                    console.error('Fehler beim Laden der Version:', error);
+                    const versionDisplays = document.querySelectorAll('.app-version');
+                    versionDisplays.forEach(element => {
+                        element.textContent = 'n/a';
+                    });
+                });
+        }
+
         function setupEventListeners() {
             const externalAppLinks = {
                 'qpolls': 'https://quixoticode.github.io/app/qpolls',
@@ -328,6 +353,9 @@
             modal.querySelector('#logoutBtn')?.addEventListener('click', handleLogout);
 
             toggleModal('settingsModal', true);
+
+            // --- KORREKTUR: Version laden, NACHDEM das Modal im DOM ist ---
+            loadVersion();
         }
 
         async function handleLogin() {
@@ -400,43 +428,6 @@
                 setTimeout(() => toast.remove(), 300);
             }, 4000);
         }
-        // Diese Funktion wird automatisch ausgeführt, wenn das Dokument geladen ist.
-(function() {
-  // Pfad zur version.txt. Passt für jede Unterseite,
-  // da es im selben Ordner wie die HTML-Datei sucht.
-  const versionFilePath = 'version.txt';
-
-  // Finde alle Elemente auf der Seite, die für die Version vorgesehen sind.
-  const versionDisplays = document.querySelectorAll('.app-version');
-
-  // Wenn keine Platzhalter-Elemente gefunden wurden, tue nichts.
-  if (versionDisplays.length === 0) {
-    return;
-  }
-
-  // Lade die Versionsdatei vom Server.
-  fetch(versionFilePath)
-    .then(response => {
-      // Prüfe, ob die Datei gefunden wurde.
-      if (!response.ok) {
-        throw new Error('version.txt nicht gefunden');
-      }
-      return response.text();
-    })
-    .then(version => {
-      // Setze den Text für alle gefundenen Platzhalter-Elemente.
-      versionDisplays.forEach(element => {
-        element.textContent = version.trim();
-      });
-    })
-    .catch(error => {
-      // Falls ein Fehler auftritt (z.B. offline), zeige eine Meldung an.
-      console.error('Fehler beim Laden der Version:', error);
-      versionDisplays.forEach(element => {
-        element.textContent = 'n/a';
-      });
-    });
-})();
     });
     </script>
 </body>
