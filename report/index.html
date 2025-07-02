@@ -312,9 +312,10 @@
                 return;
             }
             hasFetched = true;
-            fetch('version.txt')
+            // *** HIER IST DIE ÄNDERUNG: Die URL wurde aktualisiert ***
+            fetch('https://quixoticode.github.io/app/version.txt')
                 .then(response => {
-                    if (!response.ok) throw new Error(`version.txt nicht gefunden (Status: ${response.status})`);
+                    if (!response.ok) throw new Error(`Versionsdatei nicht unter URL gefunden (Status: ${response.status})`);
                     return response.text();
                 })
                 .then(version => {

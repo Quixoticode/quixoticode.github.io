@@ -57,17 +57,6 @@ jobs:
             echo "Ordner /app nicht gefunden, überspringe."
           fi
 
-          # --- /app/ und alle Unterordner bearbeiten ---
-          echo "--- Bearbeite /report und alle Unterordner ---"
-          if [ -d "report" ]; then
-            for dir in $(find report -type d); do
-              echo "Schreibe Standard-Version in ${dir}/version.txt"
-              echo "${FULL_VERSION_DEFAULT}" > "${dir}/version.txt"
-            done
-          else
-            echo "Ordner /report nicht gefunden, überspringe."
-          fi
-
           # --- /beta/app/ und alle Unterordner bearbeiten ---
           echo "--- Bearbeite /beta/app und alle Unterordner ---"
           if [ -d "beta/app" ]; then
