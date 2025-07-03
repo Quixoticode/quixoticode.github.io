@@ -24,19 +24,11 @@
     .info-card { 
       transition: all 0.3s ease-in-out;
       border: 1px solid #2D3748; 
+      height: 100%; /* Stellt sicher, dass alle Karten die gleiche Höhe haben */
     }
     .info-card:hover {
       transform: translateY(-2px); 
-      border-color: #3b82f6; 
-      box-shadow: 0 4px 10px -2px rgba(59, 130, 246, 0.1);
-    }
-    .rules-link-button { 
-      transition: all 0.3s ease-in-out;
-      display: inline-block; 
-    }
-    .rules-link-button:hover {
-      transform: translateY(-1px);
-      text-decoration: underline;
+      box-shadow: 0 4px 10px -2px rgba(0,0,0,0.2);
     }
     .main-rules-link-button { 
       transition: all 0.3s ease-in-out;
@@ -49,7 +41,11 @@
       border-color: #10b981; 
       box-shadow: 0 4px 10px -2px rgba(16, 185, 129, 0.1);
     }
-    .icon-container i, .icon-container svg {
+    .events-card:hover {
+        border-color: #f97316; /* orange-500 */
+        box-shadow: 0 4px 10px -2px rgba(249, 115, 22, 0.1);
+    }
+    .icon-container i {
       font-size: 2.5rem; 
       line-height: 1;
     }
@@ -57,17 +53,13 @@
     .icon-container .fa-instagram { color: #E4405F; }
     .icon-container .fa-discord { color: #5865F2; }
     .icon-container .fa-book-open-reader { color: #10b981; }
+    .icon-container .fa-calendar-days { color: #f97316; }
 
-    /* Stellt sicher, dass der Link die Karte vollständig ausfüllt und Standard-Link-Stile entfernt */
     a.card-link {
-        display: block;
+        display: flex;
         text-decoration: none;
-        color: inherit; /* Erbt die Textfarbe vom Elternelement */
+        color: inherit;
     }
-    a.card-link:hover .info-card { /* Stellt sicher, dass Hover-Effekte auf der Karte bleiben */
-        /* Hover-Effekte sind bereits durch .info-card:hover definiert */
-    }
-
   </style>
   <script>
     tailwind.config = {
@@ -84,7 +76,7 @@
             'instagram-text': '#E4405F',
             'discord-text': '#5865F2',
             'tutorials-text': '#10b981',
-            'rules-link-text': '#fca5a5', 
+            'events-text': '#f97316', /* orange-500 */
           },
           fontFamily: {
             sans: ['Inter', 'sans-serif'],
@@ -105,73 +97,70 @@
         Zurück zur Hauptseite
       </a>
       <h1 class="text-4xl sm:text-5xl font-extrabold text-custom-accent glow mb-4">
-        Link-Übersicht, Anleitungen & Community
+        Anlaufstellen der Community
       </h1>
       <p class="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
-        Diese Seite dient als zentrale Anlaufstelle für Informationen zu unseren Community-Kanälen, Anleitungen und wichtigen Verweisen.
+        Deine Übersicht für Wissensartikel, Community-Events, soziale Netzwerke und Regeln.
       </p>
     </header>
 
     <main class="w-full mb-12">
-      <section id="social-links" class="mb-12">
-        <h2 class="text-2xl sm:text-3xl font-bold text-accent-secondary mb-8">Unsere Präsenzen:</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
 
-          <div class="bg-custom-card rounded-xl p-6 info-card flex flex-col items-center text-center">
-            <div class="mb-5 icon-container">
-              <i class="fab fa-whatsapp"></i>
-            </div>
-            <h3 class="text-xl font-semibold text-whatsapp-text mb-2">WhatsApp</h3>
-            <p class="text-gray-400 text-sm mb-4">
-              Informationen und Links zu unserer WhatsApp-Community.
-            </p>
-            <a href="/link/rules/wa.html" class="text-rules-link-text hover:text-red-400 font-medium rules-link-button text-sm mt-auto py-1">
-              Regeln durchlesen
-            </a>
-          </div>
-
-          <div class="bg-custom-card rounded-xl p-6 info-card flex flex-col items-center text-center">
-            <div class="mb-5 icon-container">
-              <i class="fab fa-instagram"></i>
-            </div>
-            <h3 class="text-xl font-semibold text-instagram-text mb-2">Instagram</h3>
-            <p class="text-gray-400 text-sm">
-              Hier werden Links zu unserem Instagram-Profil geteilt.
-            </p>
-            </div>
-
-          <div class="bg-custom-card rounded-xl p-6 info-card flex flex-col items-center text-center">
-            <div class="mb-5 icon-container">
-                <i class="fab fa-discord"></i>
-            </div>
-            <h3 class="text-xl font-semibold text-discord-text mb-2">Discord</h3>
-            <p class="text-gray-400 text-sm">
-              Hier findest du Verlinkungen zu unserem Discord-Server.
-            </p>
-            </div>
-        </div>
-      </section>
-
-      <section id="tutorials" class="mb-12">
-        <h2 class="text-2xl sm:text-3xl font-bold text-tutorials-text mb-8">Anleitungen & Tutorials:</h2>
-        <a href="/knowledge/" class="card-link">
-            <div class="bg-custom-card rounded-xl p-6 info-card tutorials-card flex flex-col items-center text-center md:col-span-3">
+      <section id="main-hubs" class="mb-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          
+          <a href="/knowledge/" class="card-link">
+            <div class="bg-custom-card rounded-xl p-6 info-card tutorials-card flex flex-col items-center text-center">
                 <div class="mb-5 icon-container">
                     <i class="fas fa-book-open-reader"></i>
                 </div>
                 <h3 class="text-xl font-semibold text-tutorials-text mb-2">Wissensdatenbank</h3>
                 <p class="text-gray-400 text-sm max-w-lg mx-auto">
-                    In diesem Bereich werden zukünftig Anleitungen, Tutorials und Hilfestellungen zu verschiedenen Themen rund um Quixoticode-Projekte, Programmierung und verwandte Technologien gesammelt.
+                  Anleitungen, Tutorials und Hilfestellungen zu Projekten, Programmierung und mehr.
                 </p>
             </div>
-        </a>
+          </a>
+
+          <a href="/event/" class="card-link">
+            <div class="bg-custom-card rounded-xl p-6 info-card events-card flex flex-col items-center text-center">
+                <div class="mb-5 icon-container">
+                    <i class="fas fa-calendar-days"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-events-text mb-2">Events & Termine</h3>
+                <p class="text-gray-400 text-sm max-w-lg mx-auto">
+                  Alle anstehenden Community-Events, Termine und besondere Ankündigungen.
+                </p>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <section id="social-links" class="mb-12">
+        <h2 class="text-2xl sm:text-3xl font-bold text-accent-secondary mb-8">Unsere Präsenzen</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+            <div class="bg-custom-card rounded-xl p-6 flex flex-col items-center text-center border border-transparent">
+              <div class="mb-5 icon-container"><i class="fab fa-whatsapp"></i></div>
+              <h3 class="text-xl font-semibold text-whatsapp-text mb-2">WhatsApp</h3>
+              <p class="text-gray-400 text-sm mb-4">Infos und Links zur Community.</p>
+              <a href="/link/rules/wa.html" class="text-red-400 hover:text-red-300 font-medium text-sm mt-auto py-1 transition-colors">Regeln anzeigen</a>
+            </div>
+            <div class="bg-custom-card rounded-xl p-6 flex flex-col items-center text-center border border-transparent">
+              <div class="mb-5 icon-container"><i class="fab fa-instagram"></i></div>
+              <h3 class="text-xl font-semibold text-instagram-text mb-2">Instagram</h3>
+              <p class="text-gray-400 text-sm">Links zu unserem Instagram-Profil.</p>
+            </div>
+            <div class="bg-custom-card rounded-xl p-6 flex flex-col items-center text-center border border-transparent">
+              <div class="mb-5 icon-container"><i class="fab fa-discord"></i></div>
+              <h3 class="text-xl font-semibold text-discord-text mb-2">Discord</h3>
+              <p class="text-gray-400 text-sm">Verlinkungen zu unserem Server.</p>
+            </div>
+        </div>
       </section>
 
       <section id="community-rules-general" class="w-full py-10 border-t border-custom-border">
-        <h2 class="text-2xl font-semibold text-accent-secondary mb-6">Allgemeine Community Regeln</h2>
+        <h2 class="text-2xl font-semibold text-accent-secondary mb-6">Allgemeine Regeln</h2>
         <p class="text-gray-400 mb-6 max-w-xl mx-auto">
-          Für ein faires und freundliches Miteinander haben wir übergreifende Regeln aufgestellt.
-          Spezifische Regeln für einzelne Plattformen (wie WhatsApp) findest du ggf. direkt dort verlinkt.
+          Für ein faires und freundliches Miteinander haben wir übergreifende Regeln aufgestellt, die für alle Plattformen gelten.
         </p>
         <a href="/link/rules/" class="inline-block bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-8 rounded-lg main-rules-link-button">
           Zu den allgemeinen Regeln
