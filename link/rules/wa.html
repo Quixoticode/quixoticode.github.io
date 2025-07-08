@@ -1,219 +1,239 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quixoticode – WhatsApp Community Regeln</title>
-  <link rel="icon" href="/favicon.ico" type="image/x-icon"> <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #0A0F1A;
-      color: #E0E0E0;
-    }
-    .glow {
-      animation: glow 2.5s infinite alternate;
-    }
-    @keyframes glow {
-      from { text-shadow: 0 0 6px #ef4444, 0 0 12px #ef4444, 0 0 18px #f87171; } /* red-500 & red-400 */
-      to   { text-shadow: 0 0 12px #f87171, 0 0 24px #fca5a5, 0 0 36px #fca5a5; } /* red-400 & red-300 */
-    }
-    .content-section h2 {
-      border-bottom: 2px solid #ef4444; /* red-500 */
-      padding-bottom: 0.5rem;
-      margin-bottom: 1.5rem;
-      color: #f87171; /* red-400 */
-    }
-    .content-section h3 {
-      color: #fca5a5; /* red-300 */
-      margin-top: 1.5rem;
-      margin-bottom: 0.75rem;
-    }
-    .content-section ul {
-      list-style-position: outside;
-      padding-left: 1.5rem; /* Einrücken der Liste */
-    }
-    .content-section ul li {
-      margin-bottom: 0.75rem;
-      padding-left: 0.5rem; /* Kleiner Abstand zwischen Bullet und Text */
-    }
-    .content-section ul li::marker { /* Styling für die Bullet Points */
-      color: #f87171; /* red-400 */
-    }
-    .content-section strong {
-      color: #fca5a5; /* red-300 */
-    }
-    .content-section .reasoning { /* Für die "Warum?" Erklärungen */
-      font-size: 0.875rem; /* text-sm */
-      color: #a1a1aa; /* zinc-500 oder gray-500 */
-      margin-top: 0.25rem;
-      padding-left: 1rem; /* Etwas eingerückt */
-      border-left: 2px solid #3f3f46; /* zinc-700 oder gray-700 */
-    }
-    .admin-application-note {
-      background-color: rgba(239, 68, 68, 0.05); /* Leichter roter Hintergrund */
-      border-left: 4px solid #ef4444; /* red-500 */
-    }
-  </style>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            'custom-dark': '#0A0F1A',
-            'custom-card': '#1A202C',
-            'custom-border': '#2D3748',
-            'custom-light': '#E0E0E0',
-            'custom-accent': '#3b82f6',
-            'accent-secondary': '#60a5fa',
-            'rules-accent': '#ef4444',
-            'rules-light': '#f87171',
-          },
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-          },
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quixoticode – Umfassendes Community-Regelwerk</title>
+    <link rel="icon" href="https://placehold.co/32x32/075985/E0F2FE?text=Q" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Lucide script is now loaded at the end of the body for better performance and reliability -->
+    <style>
+        /* Modernes & klares Design mit Cyan/Teal Akzenten */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #020617; /* Slate 950 */
+            color: #cbd5e1; /* Slate 300 */
         }
-      }
-    }
-  </script>
-</head>
-<body class="bg-custom-dark text-custom-light flex flex-col items-center min-h-screen p-4 sm:p-6 selection:bg-rules-accent selection:text-white">
 
-  <div class="max-w-4xl w-full">
-    <header class="my-10 md:my-12 text-center">
-      <a href="/link/" class="inline-block mb-6 text-custom-accent hover:text-accent-secondary transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 inline-block mr-2 align-middle">
-          <path fill-rule="evenodd" d="M9.53 2.47a.75.75 0 010 1.06L4.81 8.25H15a6.75 6.75 0 010 13.5h-3a.75.75 0 010-1.5h3a5.25 5.25 0 100-10.5H4.81l4.72 4.72a.75.75 0 11-1.06 1.06l-6-6a.75.75 0 010-1.06l6-6a.75.75 0 011.06 0z" clip-rule="evenodd" />
-        </svg>
-        Zurück zur Link-Übersicht
-      </a>
-      <h1 class="text-4xl sm:text-5xl font-extrabold text-rules-accent glow mb-4">
-        Quixoticode WhatsApp Community Regeln
-      </h1>
-      <p class="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
-        Diese Regeln dienen einem harmonischen und konstruktiven Miteinander in unserer WhatsApp-Community. Ihre Einhaltung ist für alle Mitglieder verbindlich.
-      </p>
-    </header>
+        .gradient-text {
+            background: linear-gradient(to right, #06b6d4, #67e8f9); /* Cyan 500 to 300 */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+        }
 
-    <main class="w-full bg-custom-card shadow-2xl rounded-xl p-6 md:p-10 text-left">
+        .content-section h2 {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border-bottom: 2px solid #0e7490; /* Cyan 700 */
+            padding-bottom: 0.75rem;
+            margin-bottom: 1.75rem;
+            color: #22d3ee; /* Cyan 400 */
+            font-size: 1.75rem;
+            font-weight: 800;
+        }
 
-      <section class="content-section mb-10">
-        <h2 class="text-2xl sm:text-3xl font-bold">§1 Allgemeine Verhaltensregeln</h2>
-        <ul class="space-y-4 text-gray-300">
-          <li><strong>§1.1 Respektvoller Umgang:</strong> Behandelt alle Mitglieder und Admins stets respektvoll, höflich und freundlich. Persönliche Angriffe, Beleidigungen, Diskriminierung (jeglicher Art), Hassrede oder Mobbing sind strengstens untersagt.</li>
-          <li><strong>§1.2 Konstruktive Kommunikation:</strong> Diskussionen sind erwünscht, sollten aber sachlich und konstruktiv geführt werden. Meinungsverschiedenheiten sind normal, müssen aber zivilisiert ausgetragen werden.</li>
-          <li><strong>§1.3 Keine illegalen Inhalte:</strong> Das Teilen von illegalen, urheberrechtlich geschützten (ohne Erlaubnis), pornografischen, gewaltverherrlichenden oder anderweitig anstößigen Inhalten ist verboten.</li>
-          <li><strong>§1.4 Kein Spam & Werbung:</strong> Unaufgeforderte Werbung für eigene Produkte, Dienstleistungen, andere Gruppen oder Webseiten ist nicht gestattet. Kurze Hinweise auf eigene Projekte im thematischen Kontext können nach Absprache mit Admins erlaubt sein. Exzessives Posten von Nachrichten (Spam) ist zu unterlassen.</li>
-          <li><strong>§1.5 Themenrelevanz:</strong> Versucht, euch an die Hauptthemen der Community zu halten. Für Off-Topic-Gespräche gibt es ggf. separate Bereiche oder es sollte in Maßen geschehen.</li>
-          <li><strong>§1.6 Datenschutz & Privatsphäre:</strong> Teilt keine privaten Informationen (Telefonnummern, Adressen, private Chatverläufe etc.) von euch oder anderen Mitgliedern ohne deren ausdrückliche Zustimmung. Seid vorsichtig mit dem Teilen persönlicher Daten.</li>
-          <li><strong>§1.7 Sprache & Ausdruck:</strong> Die Hauptkommunikationssprache in der Gruppe ist <strong>Deutsch</strong>. Bitte achtet auf eine verständliche Ausdrucksweise und verzichtet auf übermäßige Nutzung von Slang oder schwer verständlicher Abkürzungen, sofern dies andere Mitglieder ausschließt.
-            <p class="reasoning">Dies fördert die Inklusion und das gegenseitige Verständnis, besonders in altersgemischten oder potenziell international beeinflussten Gruppen.</p>
-          </li>
-          <li><strong>§1.8 Umgang mit sensiblen Themen:</strong> Bei Diskussionen zu sensiblen Themen (z.B. Politik, Religion, psychische Gesundheit etc.) ist besondere Rücksichtnahme und Respekt geboten. Vermeidet Provokationen oder verletzende Aussagen.
-            <p class="reasoning">Klare Hinweise auf die gebotene Sensibilität können Eskalationen vorbeugen und einen sicheren Raum für alle gewährleisten.</p>
-          </li>
-           <li><strong>§1.9 Profilgestaltung:</strong> Verwendet keine anstößigen oder irreführenden Profilbilder oder Namen. (Vorher §1.7, nun §1.9)</li>
-        </ul>
-      </section>
-
-      <section class="content-section mb-10">
-        <h2 class="text-2xl sm:text-3xl font-bold">§2 Umgang mit Abstimmungen & Umfragen</h2>
-        <p class="text-gray-300 mb-4">Um Abstimmungen fair und effizient zu gestalten und das Admin-Team zu entlasten, gelten folgende Richtlinien:</p>
-        <ul class="space-y-3 text-gray-300">
-          <li><strong>Klare Fragestellung:</strong> Wer eine Abstimmung startet (insbesondere Admins), sollte eine klare, unmissverständliche Frage und eindeutige Antwortoptionen formulieren.</li>
-          <li><strong>Relevanz:</strong> Abstimmungen sollten für die Community relevante Themen betreffen.</li>
-          <li><strong>Keine Manipulation:</strong> Jeglicher Versuch, Abstimmungsergebnisse zu manipulieren, ist untersagt.</li>
-          <li><strong>Akzeptanz des Ergebnisses:</strong> Das Ergebnis einer offiziellen Abstimmung ist von allen Mitgliedern zu akzeptieren.</li>
-          <li><strong>Admin-Entscheid bei Unklarheiten:</strong> Bei Unklarheiten oder Störungen behält sich das Admin-Team das Recht vor, eine endgültige Entscheidung zu treffen.</li>
-          <li><strong>Vorschläge für Abstimmungen:</strong> Mitglieder können Themen vorschlagen, die Durchführung obliegt primär den Admins.</li>
-        </ul>
-      </section>
-
-      <section class="content-section mb-10">
-        <h2 class="text-2xl sm:text-3xl font-bold">§3 Schutz der Mitglieder</h2>
-        <ul class="space-y-3 text-gray-300">
-          <li><strong>Meldung von Verstößen:</strong> Meldet Verstöße oder unangemessenes Verhalten umgehend und diskret einem Admin (mit Screenshots als Beweis, falls möglich). Greift nicht zur Selbstjustiz.</li>
-          <li><strong>Blockieren & Ignorieren:</strong> Nutzt die Blockierfunktion von WhatsApp bei Belästigung.</li>
-          <li><strong>Kein Doxing:</strong> Das Veröffentlichen privater Informationen anderer ohne Zustimmung ist streng verboten.</li>
-          <li><strong>Schutz vor Betrug:</strong> Seid wachsam gegenüber Scams und Phishing. Meldet Verdächtiges.</li>
-        </ul>
-      </section>
-
-      <section class="content-section mb-10">
-        <h2 class="text-2xl sm:text-3xl font-bold">§4 Konsequenzen bei Verstößen</h2>
-        <p class="text-gray-300 mb-4">Verstöße gegen die Community-Regeln können je nach Schweregrad folgende Konsequenzen nach sich ziehen:</p>
-        <ul class="space-y-3 text-gray-300">
-          <li>Mündliche Verwarnung.</li>
-          <li>Schriftliche Verwarnung.</li>
-          <li>Temporärer Ausschluss (Kick).</li>
-          <li>Permanenter Ausschluss (Bann).</li>
-          <li><strong>§4.1 Transparenz bei Sanktionen:</strong> Das Admin-Team kann bei schwerwiegenden Vorfällen eine kurze, sachliche Information über getroffene Maßnahmen (z.B. Ausschluss eines Mitglieds) in der Gruppe teilen – unter Wahrung der Privatsphäre des Betroffenen soweit möglich und sinnvoll.
-            <p class="reasoning">Dies dient der Erhöhung der Transparenz und kann das Vertrauen in Admin-Entscheidungen stärken, ohne sensible Details preiszugeben.</p>
-          </li>
-          <li>Entscheidungen über Konsequenzen werden vom Admin-Team getroffen und sind endgültig.</li>
-        </ul>
-      </section>
-
-      <section class="content-section mb-10">
-        <h2 class="text-2xl sm:text-3xl font-bold">§5 Admin-Team & Bewerbung</h2>
-        <p class="text-gray-300 mb-4">Das Admin-Team ist für die Moderation der Community und die Durchsetzung der Regeln zuständig. Die Anweisungen der Admins sind zu befolgen.</p>
+        .content-section h3 {
+            color: #94a3b8; /* Slate 400 */
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            border-left: 3px solid #155e75; /* Cyan 800 */
+            padding-left: 0.75rem;
+        }
         
-        <h3>5.1 Aufgaben der Admins</h3>
-        <ul class="space-y-2 text-gray-300">
-          <li>Moderation von Diskussionen und Inhalten.</li>
-          <li>Durchsetzung der Community-Regeln.</li>
-          <li>Ansprechpartner für Fragen, Probleme und Meldungen.</li>
-          <li>Organisation von Community-Aktivitäten (optional).</li>
-          <li>Treffen von Entscheidungen im Sinne der Community.</li>
-        </ul>
+        .content-section ul {
+            list-style: none;
+            padding-left: 0.5rem;
+        }
 
-        <h3>5.2 Anforderungen für Admin-Bewerber</h3>
-        <p class="text-gray-300 mb-4">Um als Admin in Betracht gezogen zu werden, müssen folgende Mindestanforderungen erfüllt sein:</p>
-        <ul class="space-y-3 text-gray-300">
-          <li><strong>Mindestalter:</strong> In der Regel 18 Jahre.</li>
-          <li><strong>Community-Zugehörigkeit:</strong> Aktive, positive Teilnahme für mindestens 3-6 Monate.</li>
-          <li><strong>Regelkenntnis:</strong> Umfassendes Verständnis dieser Regeln.</li>
-          <li><strong>Vorbildfunktion:</strong> Tadelloses Verhalten.</li>
-          <li><strong>Zeitliche Verfügbarkeit:</strong> Ausreichend Zeit für Admin-Aufgaben.</li>
-          <li><strong>Kommunikationsfähigkeit:</strong> Klar, respektvoll, deeskalierend.</li>
-          <li><strong>Konfliktlösungskompetenz:</strong> Objektive Bewertung und Lösung.</li>
-          <li><strong>Verantwortungsbewusstsein:</strong> Ernsthaftigkeit und Zuverlässigkeit.</li>
-          <li><strong>Technische Affinität:</strong> Grundlegendes Verständnis von WhatsApp.</li>
-          <li><strong>Unparteilichkeit:</strong> Faire Entscheidungen ohne persönliche Vorlieben.</li>
-          <li><strong>Teamfähigkeit:</strong> Enge Zusammenarbeit im Admin-Team.</li>
-          <li><strong>Keine negativen Vorerfahrungen:</strong> Keine schweren Regelverstöße.</li>
-        </ul>
+        .content-section ul li {
+            position: relative;
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+            line-height: 1.6;
+        }
+        
+        .content-section ul li::before {
+            content: '';
+            position: absolute;
+            left: 0.5rem;
+            top: 0.6rem;
+            width: 0.5rem;
+            height: 0.5rem;
+            background-color: #06b6d4; /* Cyan 500 */
+            border-radius: 50%;
+        }
 
-        <h3>5.3 Bewerbungsprozess</h3>
-        <p class="text-gray-300 mb-4">
-          Bei Bedarf werden Admin-Positionen bekannt gegeben. Interessenten können sich formlos bei einem Admin melden.
-          Die Entscheidung trifft das bestehende Admin-Team. Es besteht kein Anspruch auf eine Admin-Position.
-        </p>
+        .content-section strong {
+            color: #67e8f9; /* Cyan 300 */
+            font-weight: 600;
+        }
 
-        <div class="admin-application-note p-4 rounded-md my-6">
-          <h4 class="text-lg font-semibold text-rules-light mb-2">Wichtiger Hinweis zu Ausnahmen bei Admin-Anforderungen:</h4>
-          <p class="text-gray-200 text-sm">
-            Das Admin-Team behält sich das Recht vor, in begründeten Einzelfällen Ausnahmen von formalen Anforderungen zu machen, wenn ein Kandidat durch außergewöhnliches Engagement, besondere Fähigkeiten oder hohe Reife überzeugt und das Team einstimmig von seiner Eignung überzeugt ist. Solche Ausnahmen sind nicht die Regel.
-          </p>
-        </div>
-      </section>
+        .reasoning, .example {
+            font-size: 0.9rem;
+            color: #94a3b8; /* Slate 400 */
+            margin-top: 0.75rem;
+            padding: 0.75rem 1rem;
+            border-left: 3px solid #164e63; /* Cyan 900 */
+            background-color: #0f172a; /* Slate 900 */
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+        .example::before {
+            content: "Beispiel:";
+            font-weight: 600;
+            color: #94a3b8;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
 
-      <section class="content-section">
-        <h2 class="text-2xl sm:text-3xl font-bold">§6 Schlusswort</h2>
-        <p class="text-gray-300">
-          Diese Regeln sollen eine positive und sichere Umgebung für alle schaffen. Wir zählen auf eure Kooperation. Bei Fragen wendet euch an das Admin-Team.
-          Lasst uns gemeinsam eine großartige Community gestalten!
-        </p>
-      </section>
-    </main>
+        .note-box, .warning-box {
+            border-left-width: 4px;
+            padding: 1.25rem;
+            border-radius: 0.5rem;
+            margin: 1.5rem 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+        .note-box {
+            background-color: rgba(6, 182, 212, 0.05);
+            border-color: #06b6d4; /* Cyan 500 */
+        }
+        .warning-box {
+            background-color: rgba(248, 113, 113, 0.05); /* Red 400 */
+            border-color: #f87171; /* Red 400 */
+        }
+        .warning-box strong {
+             color: #fca5a5; /* Red 300 */
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-300 flex flex-col items-center min-h-screen p-4 sm:p-6 selection:bg-cyan-500 selection:text-white">
 
-    <footer class="mt-12 md:mt-16 py-8 border-t border-custom-border text-center">
-      <p class="text-sm text-gray-500">
-        &copy; 2025 Quixoticode – WhatsApp Community-Regeln.<br>
-        Diese Regeln können bei Bedarf vom Admin-Team angepasst werden. Stand: Mai 2025.
-      </p>
-    </footer>
-  </div>
+    <div class="max-w-5xl w-full">
+        <header class="my-10 md:my-12 text-center">
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold gradient-text mb-4">
+                Quixoticode Community-Regelwerk
+            </h1>
+            <p class="text-lg sm:text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed">
+                Dieses umfassende Regelwerk ist die verbindliche Grundlage für eine sichere, respektvolle und gesetzeskonforme Community.
+            </p>
+        </header>
+
+        <main class="w-full bg-slate-900 shadow-2xl rounded-xl p-6 md:p-10 text-left border border-slate-800">
+
+            <section class="content-section mb-16">
+                <h2 class="font-bold"><i data-lucide="users-2"></i>§1 Grundprinzipien & Soziales Verhalten</h2>
+                <ul>
+                    <li><strong>§1.1 Respekt als Fundament:</strong> Behandelt alle Mitglieder und Admins stets höflich, fair und mit grundlegendem Anstand. Provokationen, Beleidigungen, Herabwürdigungen und persönliche Angriffe sind strengstens untersagt.</li>
+                    <li><strong>§1.2 Nulltoleranz bei Diskriminierung & Hassrede:</strong> Jegliche Form von Diskriminierung oder Herabwürdigung aufgrund von Herkunft, Nationalität, Hautfarbe, Religion, Weltanschauung, Geschlecht, sexueller Orientierung, Alter, Behinderung oder sonstigen persönlichen Merkmalen ist verboten und führt zum Ausschluss.</li>
+                    <li><strong>§1.3 Konstruktive Diskussionskultur:</strong> Meinungsverschiedenheiten sind willkommen, müssen aber sachlich und lösungsorientiert ausgetragen werden. Geht von guten Absichten aus ("Assume Good Faith") und versucht, die Perspektive des anderen zu verstehen, anstatt nur die eigene durchzusetzen.</li>
+                    <li><strong>§1.4 Verbot von destruktivem Verhalten:</strong> Verhalten, das gezielt die Community stört, spaltet, Mitglieder gegeneinander aufhetzt oder die Administration untergräbt, ist verboten. Dazu zählen das Stiften von Unruhe, das Lächerlichmachen der Gruppe und das systematische Provozieren von Konflikten. Solche Handlungen werden als Angriff auf die Community gewertet und führen zum Ausschluss.</li>
+                    <li><strong>§1.5 Schutz der Privatsphäre (Doxing-Verbot):</strong> Das Teilen privater Daten (Namen, Adressen, Nummern, private Chatverläufe, Arbeitgeber etc.) anderer Mitglieder ohne deren ausdrückliche und nachweisbare Zustimmung ist eine schwere Verletzung der Privatsphäre und führt zum sofortigen, permanenten Ausschluss.</li>
+                    <li><strong>§1.6 Keine Selbstjustiz oder "Backseat-Modding":</strong> Wenn ihr einen Regelverstoß bemerkt, meldet ihn diskret einem Admin. Greift nicht zur Selbstjustiz, indem ihr die Person öffentlich anprangert oder selbst versucht, Sanktionen durchzusetzen. Dies ist Aufgabe der Admins.</li>
+                </ul>
+            </section>
+
+            <section class="content-section mb-16">
+                <h2 class="font-bold"><i data-lucide="gavel"></i>§2 Gesetze, Medien & Inhalte</h2>
+                <h3>§2.1 Grundsatz: Geltendes Recht & Plattform-Richtlinien</h3>
+                <p class="text-slate-400 mb-4">In dieser Community gelten ausnahmslos die Gesetze der Bundesrepublik Deutschland sowie die Nutzungsbedingungen von WhatsApp. Unwissenheit schützt nicht vor Konsequenzen. Jedes Mitglied ist für die von ihm geteilten Inhalte selbst verantwortlich.</p>
+                
+                <div class="warning-box">
+                    <i data-lucide="shield-alert" class="text-red-400 w-8 h-8 flex-shrink-0 mt-1"></i>
+                    <div>
+                        <h4 class="font-bold text-lg text-red-300 mb-1">Absolut verbotene Inhalte mit Nulltoleranz</h4>
+                        <p class="text-red-200">Ein Verstoß gegen die folgenden Punkte wird als schwerwiegender Angriff auf die Werte und die Sicherheit der Community betrachtet. Er führt ausnahmslos zum <strong>sofortigen, permanenten Ausschluss</strong> und wird bei strafrechtlicher Relevanz konsequent <strong>zur Anzeige gebracht</strong>.</p>
+                    </div>
+                </div>
+                <ul class="space-y-5 text-slate-300">
+                    <li>
+                        <strong>Verwendung von Kennzeichen verfassungswidriger und terroristischer Organisationen (§ 86a StGB):</strong>
+                        Das Erstellen, Teilen, Gutheißen oder Verbreiten von Inhalten, die Symbole wie das Hakenkreuz, die SS-Sigrune, den Hitlergruß oder Kennzeichen anderer verbotener Organisationen (z.B. IS-Flagge) darstellen, ist strengstens untersagt.
+                        <div class="reasoning">
+                            Dies schließt explizit auch Sticker, Memes, "satirische", "ironische" oder verharmlosende Verwendungen ein. Es gibt hier keinerlei Toleranz oder Interpretationsspielraum. Ein Vorfall wie das Teilen eines "Hitler-Stickers" fällt direkt unter diese Regel.
+                        </div>
+                    </li>
+                    <li>
+                        <strong>Volksverhetzung (§ 130 StGB) und Hassrede:</strong>
+                        Inhalte, die zum Hass gegen Teile der Bevölkerung aufstacheln, zu Gewalt- oder Willkürmaßnahmen auffordern oder die Menschenwürde anderer durch Beschimpfen, böswilliges Verächtlichmachen oder Verleumden angreifen, sind verboten.
+                    </li>
+                    <li>
+                        <strong>Pornografische und gewaltverherrlichende Inhalte:</strong>
+                        Das Teilen von pornografischen Schriften oder Bildern (§ 184 StGB) sowie die Darstellung oder Verherrlichung von grausamer oder unmenschlicher Gewalt (§ 131 StGB) ist verboten.</li>
+                </ul>
+                
+                <h3>§2.2 Weitere unzulässige Inhalte</h3>
+                 <ul class="space-y-4 text-slate-300 mt-6">
+                    <li><strong>Spam & Werbung:</strong> Unaufgeforderte kommerzielle Werbung ist verboten. Hinweise auf eigene, nicht-kommerzielle Projekte sind nach Absprache mit Admins möglich.</li>
+                    <li><strong>Urheberrecht:</strong> Teilt keine urheberrechtlich geschützten Inhalte, für die ihr keine Lizenz besitzt. Dies betrifft insbesondere ganze Filme, Musikalben oder kostenpflichtige Software.</li>
+                    <li><strong>KI-generierte Inhalte & Falschinformationen:</strong> Wer KI-Inhalte teilt, ist für deren Konformität mit allen hier genannten Regeln verantwortlich. Die bewusste Verbreitung von Falschinformationen (Fake News), Verschwörungstheorien oder gefährlichen Hoaxes ist untersagt.</li>
+                     <li><strong>Gefährliche Handlungen:</strong> Das Posten von Inhalten, die zu gefährlichen "Challenges" aufrufen oder selbstverletzendes Verhalten fördern oder verherrlichen, ist strengstens verboten.</li>
+                </ul>
+            </section>
+
+            <section class="content-section mb-16">
+                <h2 class="font-bold"><i data-lucide="message-square-quote"></i>§3 Chat-Etikette & Kommunikation</h2>
+                 <ul class="space-y-4 text-slate-300">
+                    <li><strong>Antwort-Funktion nutzen:</strong> Nutzt die "Antworten"-Funktion von WhatsApp, um auf eine bestimmte Nachricht zu reagieren. Dies erhält den Kontext und verhindert Missverständnisse in belebten Diskussionen.</li>
+                    <li><strong>Kein Nachrichten-Flooding:</strong> Vermeidet es, viele sehr kurze Nachrichten direkt hintereinander zu senden. Fasst eure Gedanken lieber in einer einzigen, längeren Nachricht zusammen, um den Chat übersichtlich zu halten.</li>
+                    <li><strong>Umgang mit Sprachnachrichten:</strong> Fragt bei längeren Sprachnachrichten (> 2 Minuten) kurz nach, ob dies für die Empfänger in Ordnung ist. Nicht jeder kann oder möchte lange Sprachnachrichten abhören.</li>
+                    <li><strong>Kein Massen-Tagging:</strong> Markiert nicht mehrere Mitglieder oder `@alle` ohne triftigen, wichtigen Grund, der die Aufmerksamkeit aller erfordert. Gezieltes Ansprechen einzelner Personen ist vorzuziehen.</li>
+                </ul>
+            </section>
+
+            <section class="content-section mb-16">
+                <h2 class="font-bold"><i data-lucide="shield"></i>§4 Administration & Moderation</h2>
+                <ul class="space-y-4 text-slate-300">
+                    <li><strong>Rolle der Admins:</strong> Die Admins sind für die Durchsetzung der Regeln und die Aufrechterhaltung einer positiven Community-Atmosphäre verantwortlich. Ihren Anweisungen ist Folge zu leisten.</li>
+                    <li><strong>Kontakt zum Admin-Team:</strong> Bei Fragen, Problemen oder zur Meldung von Verstößen kontaktiert einen Admin bitte per Privatnachricht. Öffentliches Taggen von Admins für Kleinigkeiten sollte vermieden werden.</li>
+                    <li><strong>Ermessensspielraum der Admins:</strong> Die Admins behalten sich das Recht vor, auch in Situationen einzugreifen, die nicht explizit in diesem Regelwerk aufgeführt sind, wenn das Verhalten eines Mitglieds dem Wohl der Community schadet.</li>
+                </ul>
+            </section>
+
+            <section class="content-section">
+                <h2 class="font-bold"><i data-lucide="siren"></i>§5 Konsequenzen & Verfahren</h2>
+                <h3>§5.1 Eskalationsstufen bei allgemeinen Verstößen</h3>
+                <p class="text-slate-400 mb-4">Bei Verstößen gegen allgemeine Verhaltens- und Etikette-Regeln (z.B. §1.1, §1.6, §3) greift folgendes System:</p>
+                <ol class="list-decimal pl-5 text-slate-300 space-y-3">
+                    <li><strong>Ermahnung:</strong> Ein freundlicher Hinweis im Chat oder per Privatnachricht.</li>
+                    <li><strong>Formelle Verwarnung:</strong> Eine klare schriftliche Verwarnung durch einen Admin mit dem Hinweis auf weitere Konsequenzen.</li>
+                    <li><strong>Temporärer Ausschluss:</strong> Ein Ausschluss aus der Gruppe für eine festgelegte Zeit (z.B. 24 Stunden bis 7 Tage).</li>
+                    <li><strong>Permanenter Ausschluss (Bann):</strong> Bei wiederholten oder uneinsichtigen Verstößen erfolgt der endgültige Ausschluss.</li>
+                </ol>
+
+                <h3>§5.2 Sofortmaßnahmen bei schweren Verstößen</h3>
+                <div class="note-box">
+                    <i data-lucide="zap" class="text-cyan-400 w-6 h-6 flex-shrink-0 mt-1"></i>
+                    <div>
+                        <h4 class="font-bold text-lg text-cyan-300 mb-1">Nulltoleranz-Verfahren</h4>
+                        <p class="text-slate-300">Bei schweren Verstößen, insbesondere gegen die Regeln in <strong>§2.2</strong> (z.B. Hakenkreuz-Sticker, Volksverhetzung) oder <strong>§1.5</strong> (Doxing), wird das Eskalationssystem übersprungen. Die Konsequenz ist der <strong>sofortige und permanente Ausschluss</strong> aus der Community. Eine Wiederaufnahme ist ausgeschlossen. Strafrechtlich relevante Vorfälle werden konsequent zur Anzeige gebracht.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="mt-12 md:mt-16 py-8 border-t border-slate-800 text-center">
+            <p class="text-sm text-slate-500">
+                &copy; 2025 Quixoticode – Umfassendes Community-Regelwerk.<br>
+                Diese Regeln können bei Bedarf vom Admin-Team angepasst werden. Stand: 09. Juli 2025.
+            </p>
+        </footer>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/lucide-static@latest/dist/lucide.min.js"></script>
+    <script>
+      // Wait for the DOM to be fully loaded before trying to initialize the icons
+      document.addEventListener('DOMContentLoaded', () => {
+        try {
+          lucide.createIcons();
+        } catch (e) {
+          console.error("Lucide icons could not be created.", e);
+        }
+      });
+    </script>
 </body>
 </html>
