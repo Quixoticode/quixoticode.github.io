@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twitch Chat Simulator (v15 - Definitive Edition)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #0e0e10; }
+        .chat-messages::-webkit-scrollbar { width: 8px; }
+        .chat-messages::-webkit-scrollbar-track { background: #18181b; }
+        .chat-messages::-webkit-scrollbar-thumb { background: #464649; border-radius: 4px; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .message, .system-message, .event-message { animation: fadeIn 0.3s ease-out; cursor: grab; }
+        .message:active, .event-message:active { cursor: grabbing; }
+        .message .controls { opacity: 0; transition: opacity 0.2s; pointer-events: none; }
+        .message:hover .controls { opacity: 1; pointer-events: all; }
+        details > summary { list-style: none; }
+        details > summary::-webkit-details-marker { display: none; }
+        details[open] summary .arrow { transform: rotate(90deg); }
+        .arrow { transition: transform 0.2s; }
+        .highlighted-message { background-color: #3a3a3d; border-left: 4px solid #9146ff; }
+        .first-time-chatter { border: 1px dashed #464649; }
+        .badge-icon { opacity: 0.4; transition: opacity 0.2s; cursor: pointer; }
+        .badge-icon.active { opacity: 1; }
+        .dragging { opacity: 0.5; background: #3a3a3d; }
+    </style>
+</head>
+<body class="text-gray-200">
+
+    <!-- Modal -->
+    <div id="confirmation-modal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 hidden"><div class="bg-[#18181b] border border-gray-700 rounded-lg shadow-xl p-6 w-full max-w-sm text-center"><h3 id="modal-title" class="text-xl font-bold text-white mb-4">Aktion bestätigen</h3><p id="modal-text" class="text-gray-300 mb-6">Möchtest du das wirklich tun?</p><div class="flex justify-center gap-4"><button id="modal-cancel-btn" class="px-4 py-2 bg-gray-600 hover:bg-gray-500 rounded-md font-semibold text-white transition">Abbrechen</button><button id="modal-confirm-btn" class="px-4 py-2 bg-red-600 hover:bg-red-700 rounded-md font-semibold text-white transition">Bestätigen</button></div></div></div>
+
+    <div class="container mx-auto p-4 max-w-7xl">
+        <header class="text-center mb-8"><h1 class="text-4xl font-bold text-white">Twitch Chat Simulator</h1><p class="text-purple-400">v15 - The Definitive Edition</p></header>
+        <div class="flex flex-col md:flex-row gap-8">
+            <aside class="w-full md:w-1/3 bg-[#18181b] p-6 rounded-lg shadow-lg border border-gray-700 flex flex-col gap-6">
+                
+                <details open>
+                    <summary class="text-xl font-bold text-white cursor-pointer flex justify-between items-center"><span>Nachricht senden</span><span class="arrow text-purple-400"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/></svg></span></summary>
+                    <form id="message-form" class="space-y-4 mt-4">
+                        <div><label for="username" class="block text-sm font-medium text-gray-300 mb-1">Benutzername</label><input type="text" id="username" list="user-library" placeholder="Namen auswählen oder tippen..." class="w-full bg-[#3a3a3d] border border-gray-600 rounded-md px-3 py-2 text-white"><datalist id="user-library"></datalist></div>
+                        <div><label for="user-type-override" class="block text-sm font-medium text-gray-300 mb-1">Benutzer-Typ (Temporär)</label><select id="user-type-override" class="w-full bg-[#3a3a3d] border border-gray-600 rounded-md px-3 py-2 text-white"><option value="default">Gespeicherten Typ nutzen</option><option value="none">Normal (kein Badge)</option><option value="sub">Abonnent</option><option value="vip">VIP</option><option value="mod">Moderator</option><option value="broadcaster">Streamer</option></select></div>
+                        <div><label for="message" class="block text-sm font-medium text-gray-300 mb-1">Nachricht</label><textarea id="message" rows="3" placeholder="Schreibe eine Nachricht..." class="w-full bg-[#3a3a3d] border border-gray-600 rounded-md px-3 py-2 text-white"></textarea></div>
+                        <button type="submit" id="send-message-btn" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-md flex items-center justify-center gap-2 transition-opacity disabled:opacity-50">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-4.995-3.178 11.13-6.483Z"/></svg>
+                            <span id="send-message-text">Nachricht senden</span>
+                        </button>
+                    </form>
+                </details>
+
+                <details>
+                    <summary class="text-xl font-bold text-white cursor-pointer flex justify-between items-center"><span>Stream-Event auslösen</span><span class="arrow text-purple-400"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/></svg></span></summary>
+                    <div id="event-form" class="space-y-4 mt-4">
+                        <div class="grid grid-cols-2 gap-2"><button data-event="follow" class="event-btn bg-blue-600 hover:bg-blue-700 p-2 rounded-md">Follow</button><button data-event="sub" class="event-btn bg-purple-600 hover:bg-purple-700 p-2 rounded-md">Abo</button><button data-event="giftsub" class="event-btn bg-green-600 hover:bg-green-700 p-2 rounded-md">Geschenk-Abo</button><button data-event="raid" class="event-btn bg-red-600 hover:bg-red-700 p-2 rounded-md">Raid</button><button data-event="cheer" class="event-btn bg-yellow-500 hover:bg-yellow-600 p-2 rounded-md text-black">Cheer</button></div>
+                        <div id="event-details" class="hidden space-y-2 p-3 bg-[#2a2a2e] rounded-md"><h3 id="event-title" class="font-bold text-center">Event Details</h3><input type="text" id="event-user" placeholder="Benutzername..." class="w-full bg-[#3a3a3d] border border-gray-600 rounded-md px-3 py-2 text-white"><input type="number" id="event-amount" placeholder="Anzahl..." class="w-full bg-[#3a3a3d] border border-gray-600 rounded-md px-3 py-2 text-white"><textarea id="event-message" rows="2" placeholder="Nachricht (optional)..." class="w-full bg-[#3a3a3d] border border-gray-600 rounded-md px-3 py-2 text-white"></textarea><label id="anonymous-wrapper" class="hidden items-center"><input type="checkbox" id="event-anonymous" class="mr-2">Anonym</label><button id="event-submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-md">Event auslösen</button></div>
+                    </div>
+                </details>
+                
+                <details>
+                    <summary class="text-xl font-bold text-white cursor-pointer flex justify-between items-center"><span>Benutzer-Verwaltung</span><span class="arrow text-purple-400"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/></svg></span></summary>
+                    <div class="mt-4 space-y-4"><form id="add-user-form" class="flex gap-2"><input type="text" id="new-username" placeholder="Neuer Benutzer..." class="flex-grow bg-[#3a3a3d] border border-gray-600 rounded-md px-3 py-2 text-white"><button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-bold p-2 rounded-md transition-all"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/></svg></button></form><div id="user-list-container" class="max-h-48 overflow-y-auto space-y-2 pr-2"></div></div>
+                </details>
+                <details>
+                    <summary class="text-xl font-bold text-white cursor-pointer flex justify-between items-center"><span>Einstellungen</span><span class="arrow text-purple-400"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/></svg></span></summary>
+                     <div class="mt-4 space-y-3"><div class="flex items-center justify-between bg-[#2a2a2e] p-3 rounded-md"><span class="font-medium">Bot-Simulation</span><label class="inline-flex relative items-center cursor-pointer"><input type="checkbox" id="bot-toggle" class="sr-only peer"><div class="w-11 h-6 bg-gray-600 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-500"></div></label></div><div class="flex items-center justify-between bg-[#2a2a2e] p-3 rounded-md"><span class="font-medium">Zeitstempel</span><label class="inline-flex relative items-center cursor-pointer"><input type="checkbox" id="timestamp-toggle" class="sr-only peer"><div class="w-11 h-6 bg-gray-600 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-500"></div></label></div><div class="flex items-center justify-between bg-[#2a2a2e] p-3 rounded-md"><span class="font-medium">Sub-Only Modus</span><label class="inline-flex relative items-center cursor-pointer"><input type="checkbox" id="sub-only-toggle" class="sr-only peer"><div class="w-11 h-6 bg-gray-600 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-500"></div></label></div><div class="flex items-center justify-between bg-[#2a2a2e] p-3 rounded-md"><span class="font-medium">Slow Mode (3s)</span><label class="inline-flex relative items-center cursor-pointer"><input type="checkbox" id="slow-mode-toggle" class="sr-only peer"><div class="w-11 h-6 bg-gray-600 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-500"></div></label></div><button id="export-config-btn" class="w-full mt-2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md flex items-center justify-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L6.354 8.146a.5.5 0 1 0-.708.708l2 2z"/></svg>Konfiguration exportieren</button><button id="import-config-btn" class="w-full mt-2 bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded-md flex items-center justify-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M10.854 8.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 .708-.708L7.5 10.293V1.5a.5.5 0 0 1 1 0v8.793l2.354-2.353a.5.5 0 0 1 .708 0z"/><path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z"/></svg>Konfiguration importieren</button><input type="file" id="import-file-input" class="hidden" accept=".json"><button id="clear-chat-btn" class="w-full mt-2 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md flex items-center justify-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5z"/></svg>Chat leeren</button></div>
+                </details>
+            </aside>
+            <main class="w-full md:w-2/3">
+                <div class="chat-container bg-[#18181b] h-[85vh] rounded-lg shadow-lg border border-gray-700 flex flex-col transition-all duration-300">
+                    <div class="chat-header p-4 font-bold border-b border-gray-700 text-white text-center">Stream Chat</div>
+                    <div class="chat-messages flex-grow p-4 overflow-y-auto space-y-1"></div>
+                    <div class="chat-footer p-4 border-t border-gray-700"><div class="flex items-center gap-4"><input type="text" placeholder="Nachricht senden..." class="w-full bg-[#3a3a3d] border border-gray-600 rounded-md px-3 py-2 text-white" disabled><button class="bg-purple-600 text-white font-bold py-2 px-4 rounded-md opacity-50 cursor-not-allowed">Chat</button></div></div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+    // --- DOM Elements ---
+    const dom = {
+        messageForm: document.getElementById('message-form'), usernameInput: document.getElementById('username'), userLibraryDatalist: document.getElementById('user-library'), userTypeOverride: document.getElementById('user-type-override'), messageInput: document.getElementById('message'), sendMessageBtn: document.getElementById('send-message-btn'), sendMessageText: document.getElementById('send-message-text'), chatMessagesContainer: document.querySelector('.chat-messages'), botToggle: document.getElementById('bot-toggle'), timestampToggle: document.getElementById('timestamp-toggle'), subOnlyToggle: document.getElementById('sub-only-toggle'), slowModeToggle: document.getElementById('slow-mode-toggle'), clearChatBtn: document.getElementById('clear-chat-btn'), exportConfigBtn: document.getElementById('export-config-btn'), importConfigBtn: document.getElementById('import-config-btn'), importFileInput: document.getElementById('import-file-input'), addUserForm: document.getElementById('add-user-form'), newUsernameInput: document.getElementById('new-username'), userListContainer: document.getElementById('user-list-container'), modal: document.getElementById('confirmation-modal'), modalTitle: document.getElementById('modal-title'), modalText: document.getElementById('modal-text'), modalConfirmBtn: document.getElementById('modal-confirm-btn'), modalCancelBtn: document.getElementById('modal-cancel-btn'), eventForm: document.getElementById('event-form'), eventDetails: document.getElementById('event-details'), eventTitle: document.getElementById('event-title'), eventUser: document.getElementById('event-user'), eventAmount: document.getElementById('event-amount'), eventMessage: document.getElementById('event-message'), eventSubmit: document.getElementById('event-submit'), anonymousWrapper: document.getElementById('anonymous-wrapper'), eventAnonymous: document.getElementById('event-anonymous'),
+    };
+
+    // --- Data & State ---
+    const EMOTES = { 'Pog': 'https://cdn.frankerfacez.com/emote/210704/1', 'LUL': 'https://cdn.frankerfacez.com/emote/425618/1', 'KEKW': 'https://cdn.frankerfacez.com/emote/381872/1', 'Sadge': 'https://cdn.frankerfacez.com/emote/471234/1' };
+    const BADGES = { 
+        sub: 'https://static-cdn.jtvnw.net/badges/v1/5d9f2208-5dd8-4b3c-a499-7ab33612f377/1',
+        vip: 'https://static-cdn.jtvnw.net/badges/v1/b817aba4-fad8-49e2-b88a-7cc744dfa6ec/1',
+        mod: 'https://static-cdn.jtvnw.net/badges/v1/3267646d-33f0-4b17-b3df-f923a41db1d0/1',
+        broadcaster: 'https://static-cdn.jtvnw.net/badges/v1/5527c58c-fb7d-422d-b71b-f3499ee265db/1', 
+        cheer: (amount) => { const a = parseInt(amount,10); if(a>=10000) return 'https://static-cdn.jtvnw.net/bits/dark/animated/red/1'; if(a>=5000) return 'https://static-cdn.jtvnw.net/bits/dark/animated/blue/1'; if(a>=1000) return 'https://static-cdn.jtvnw.net/bits/dark/animated/green/1'; if(a>=100) return 'https://static-cdn.jtvnw.net/bits/dark/animated/purple/1'; return 'https://static-cdn.jtvnw.net/bits/dark/animated/gray/1'; } 
+    };
+    const BOTS = [ { name: 'Nightbot', messages: ['Folgt dem Streamer auf Social Media!', '!commands'] }, { name: 'GamerBot99', messages: ['Was für ein krasser Spielzug!', 'LOL', 'GG'] }];
+    let botIntervalId = null; let modalConfirmCallback = null; let currentEventType = null; let draggedItem = null;
+
+    let state = {
+        messages: [],
+        users: {},
+        settings: { botsEnabled: false, timestampsVisible: false, subOnlyMode: false, slowMode: false }
+    };
+
+    // --- Core Functions ---
+    function saveState() { localStorage.setItem('twitchSimState_v15', JSON.stringify(state)); }
+    function loadState() { const savedState = localStorage.getItem('twitchSimState_v15'); if (savedState) { state = JSON.parse(savedState); } else { state.users = {'CoolDude42': {badges:['sub', 'vip'], hasChatted: false}, 'Anna_2005': {badges:['mod'], hasChatted: false}, 'xX_GamerPro_Xx': {badges:[], hasChatted: false}, 'PixelQueen': {badges:['sub'], hasChatted: false}}; }}
+    function escapeHTML(str) { const p = document.createElement('p'); p.textContent = str; return p.innerHTML; }
+    function generateRandomColor() { const h = Math.floor(Math.random() * 360); const s = Math.floor(Math.random() * 30) + 70; const l = Math.floor(Math.random() * 20) + 60; return `hsl(${h}, ${s}%, ${l}%)`; }
+    function getUser(username) { if (!state.users[username]) { state.users[username] = { badges: [], hasChatted: false, color: generateRandomColor() }; } if (!state.users[username].color) { state.users[username].color = generateRandomColor(); } return state.users[username]; }
+    function parseEmotes(message) { const words = message.split(' '); return words.map(word => EMOTES[word] ? `<img src="${EMOTES[word]}" alt="${word}" class="inline-block h-7 w-auto mx-0.5 align-middle">` : escapeHTML(word)).join(' '); }
+    function addMessageToState(msg) { state.messages.push(msg); renderChat(); saveState(); }
+    
+    // --- Rendering ---
+    function renderMessage(msg) {
+        let el;
+        switch (msg.type) {
+            case 'user': el = renderUserMessage(msg); break;
+            case 'event': el = renderEventMessage(msg); break;
+            case 'system': el = renderSystemMessage(msg); break;
+            default: el = document.createElement('div');
+        }
+        el.setAttribute('draggable', true);
+        el.dataset.id = msg.id;
+        return el;
+    }
+    function renderSystemMessage(msg) { const el = document.createElement('div'); el.id = msg.id; el.className = 'system-message text-sm text-center text-gray-500 italic py-1'; el.textContent = msg.text; return el; }
+    function renderUserMessage(msg) {
+        const user = getUser(msg.username);
+        const el = document.createElement('div');
+        el.id = msg.id; 
+        let classes = 'message p-2 leading-relaxed group flex items-start gap-2 text-gray-200 rounded-sm';
+        if (msg.isHighlighted) classes += ' highlighted-message';
+        if (msg.isFirst) classes += ' first-time-chatter';
+        el.className = classes;
+
+        let badgeHTML = '';
+        const badgesToShow = msg.badgeOverride ? msg.badgeOverride : user.badges;
+        if (badgesToShow) { badgesToShow.forEach(badgeType => { if(badgeType === 'none') return; const badgeUrl = BADGES[badgeType]; if(badgeUrl) badgeHTML += `<img src="${badgeUrl}" alt="${badgeType}" class="inline-block h-5 w-5 mr-1.5 align-middle">`; }); }
+        if (msg.isCheer) { badgeHTML += `<img src="${BADGES.cheer(msg.amount)}" alt="cheer" class="inline-block h-5 w-5 mr-1.5 align-middle">`; }
+
+        let timestampHTML = state.settings.timestampsVisible ? `<span class="text-xs text-gray-500 mr-2">[${new Date(msg.timestamp).toLocaleTimeString('de-DE')}]</span>` : '';
+        const usernameHTML = `<span class="font-bold" style="color: ${user.color};">${escapeHTML(msg.username)}</span>`;
+        const messageHTML = `<span class="message-content ml-1.5 break-words" style="${msg.isCheer ? `color:${user.color};font-weight:bold;` : ''}">${parseEmotes(msg.text)}</span>`;
+        el.innerHTML = `<div class="flex-grow">${timestampHTML}${badgeHTML}${usernameHTML}: ${messageHTML}</div><div class="controls flex items-center gap-2"><button title="Hervorheben" class="highlight-btn text-gray-500 hover:text-purple-400" data-message-id="${msg.id}"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/></svg></button><button title="Nachricht bearbeiten" class="edit-btn text-gray-500 hover:text-yellow-400" data-message-id="${msg.id}"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/><path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/></svg></button><button title="Nachricht löschen" class="delete-btn text-gray-500 hover:text-red-400" data-message-id="${msg.id}"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/></svg></button></div>`;
+        return el;
+    }
+    function renderEventMessage(msg) { const el = document.createElement('div'); el.id = msg.id; el.className = 'event-message text-sm p-2 rounded-md border'; let content = ''; switch (msg.eventType) { case 'follow': el.className += ' bg-blue-900/50 border-blue-700 text-blue-300'; content = `⭐ ${escapeHTML(msg.username)} ist jetzt ein Follower!`; break; case 'sub': el.className += ' bg-purple-900/50 border-purple-700 text-purple-300'; content = `💖 ${escapeHTML(msg.username)} hat abonniert!`; break; case 'giftsub': el.className += ' bg-green-900/50 border-green-700 text-green-300'; content = `🎁 ${escapeHTML(msg.username)} hat ${msg.amount} Abo(s) verschenkt!`; break; case 'raid': el.className += ' bg-red-900/50 border-red-700 text-red-300'; content = `⚔️ ${escapeHTML(msg.username)} raidt mit einer Gruppe von ${msg.amount}!`; break; } el.innerHTML = content; return el; }
+    function renderAll() { renderChat(); renderUserLibrary(); renderSettings(); }
+    function renderChat() { dom.chatMessagesContainer.innerHTML = ''; state.messages.forEach(msg => dom.chatMessagesContainer.appendChild(renderMessage(msg))); dom.chatMessagesContainer.scrollTop = dom.chatMessagesContainer.scrollHeight; }
+    function renderUserLibrary() {
+        dom.userLibraryDatalist.innerHTML = ''; dom.userListContainer.innerHTML = '';
+        Object.keys(state.users).forEach(username => {
+            const user = state.users[username];
+            const option = document.createElement('option'); option.value = username; dom.userLibraryDatalist.appendChild(option);
+            const userElement = document.createElement('div'); userElement.className = 'bg-[#2a2a2e] p-3 rounded-md';
+            let badgeHtml = '';
+            ['sub', 'vip', 'mod', 'broadcaster'].forEach(badge => {
+                badgeHtml += `<img src="${BADGES[badge]}" class="h-5 w-5 badge-icon ${user.badges.includes(badge) ? 'active' : ''}" data-username="${username}" data-badge="${badge}" title="${badge}">`;
+            });
+            userElement.innerHTML = `<div class="flex items-center justify-between mb-2"><span class="text-gray-200 font-semibold user-name" data-username="${escapeHTML(username)}">${escapeHTML(username)}</span><button data-username="${escapeHTML(username)}" class="remove-user-btn text-gray-500 hover:text-red-400 text-lg">✖</button></div><div class="flex gap-3">${badgeHtml}</div>`;
+            dom.userListContainer.appendChild(userElement);
+        });
+    }
+    function renderSettings() { dom.botToggle.checked = state.settings.botsEnabled; dom.timestampToggle.checked = state.settings.timestampsVisible; dom.subOnlyToggle.checked = state.settings.subOnlyMode; dom.slowModeToggle.checked = state.settings.slowMode; }
+    function showModal(title, text, onConfirm) { dom.modalTitle.textContent = title; dom.modalText.textContent = text; modalConfirmCallback = onConfirm; dom.modal.classList.remove('hidden'); }
+    function hideModal() { dom.modal.classList.add('hidden'); modalConfirmCallback = null; }
+    function exportConfig() { const configJson = JSON.stringify(state, null, 2); const blob = new Blob([configJson], { type: 'application/json' }); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = `twitch-sim-config-${new Date().toISOString().slice(0,10)}.json`; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url); }
+    function importConfig(e) { const file = e.target.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = (event) => { try { const importedState = JSON.parse(event.target.result); if (importedState.messages && importedState.users && importedState.settings) { state = importedState; saveState(); renderAll(); } else { throw new Error('Invalid config file structure.'); } } catch (error) { alert('Fehler beim Importieren der Konfiguration.'); } }; reader.readAsText(file); e.target.value = ''; }
+    function enterEditMode(messageId) {
+        const messageNode = document.getElementById(messageId);
+        const message = state.messages.find(m => m.id === messageId);
+        if (!messageNode || !message) return;
+        const contentSpan = messageNode.querySelector('.message-content');
+        contentSpan.innerHTML = `<input type="text" class="edit-input w-full bg-[#464649] border border-purple-500 rounded px-2 py-1 text-white" value="${escapeHTML(message.text)}">`;
+        const input = contentSpan.querySelector('.edit-input'); input.focus(); input.select();
+        function saveEdit() { const newText = input.value.trim(); if (newText) { message.text = newText; saveState(); } renderChat(); }
+        input.addEventListener('keydown', (e) => { if (e.key === 'Enter') saveEdit(); if (e.key === 'Escape') renderChat(); });
+        input.addEventListener('blur', saveEdit, { once: true });
+    }
+
+    // --- Event Listeners ---
+    dom.messageForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const username = dom.usernameInput.value.trim();
+        const text = dom.messageInput.value.trim();
+        const badgeOverrideValue = dom.userTypeOverride.value;
+        if (!username || !text) return;
+        
+        const user = getUser(username);
+        if (state.settings.subOnlyMode && !user.badges.includes('sub') && badgeOverrideValue !== 'sub') {
+            addMessageToState({type: 'system', text: `Dieser Raum ist im Subscriber-Only-Modus.`, id: `sys-${Date.now()}`});
+            return;
+        }
+
+        const badgeOverride = badgeOverrideValue !== 'default' ? [badgeOverrideValue] : null;
+        addMessageToState({ type: 'user', id: `msg-${Date.now()}-${Math.random()}`, username, text, badgeOverride, isFirst: !user.hasChatted, timestamp: Date.now() });
+        user.hasChatted = true;
+        dom.usernameInput.value = '';
+        dom.messageInput.value = '';
+        dom.usernameInput.focus();
+        saveState();
+
+        if (state.settings.slowMode) {
+            dom.sendMessageBtn.disabled = true;
+            let countdown = 3;
+            dom.sendMessageText.textContent = `Slow Mode (${countdown}s)`;
+            const interval = setInterval(() => {
+                countdown--;
+                dom.sendMessageText.textContent = `Slow Mode (${countdown}s)`;
+                if (countdown <= 0) {
+                    clearInterval(interval);
+                    dom.sendMessageBtn.disabled = false;
+                    dom.sendMessageText.textContent = 'Nachricht senden';
+                }
+            }, 1000);
+        }
+    });
+    dom.eventForm.addEventListener('click', (e) => {
+        if (e.target.classList.contains('event-btn')) {
+            currentEventType = e.target.dataset.event;
+            dom.eventTitle.textContent = e.target.textContent + " auslösen";
+            dom.eventDetails.classList.remove('hidden');
+            dom.eventAmount.style.display = (currentEventType === 'giftsub' || currentEventType === 'raid' || currentEventType === 'cheer') ? 'block' : 'none';
+            dom.eventMessage.style.display = (currentEventType === 'sub' || currentEventType === 'cheer') ? 'block' : 'none';
+            dom.anonymousWrapper.style.display = (currentEventType === 'giftsub' || currentEventType === 'cheer') ? 'flex' : 'none';
+            if (currentEventType === 'cheer') { dom.eventAmount.placeholder = 'Bit-Anzahl...'; } else if (currentEventType === 'raid') { dom.eventAmount.placeholder = 'Zuschaueranzahl...'; } else { dom.eventAmount.placeholder = 'Anzahl...'; }
+        }
+    });
+    dom.eventSubmit.addEventListener('click', () => {
+        const isAnonymous = dom.eventAnonymous.checked;
+        let username = isAnonymous ? (currentEventType === 'cheer' ? 'AnAnonymousCheerer' : 'AnAnonymousGifter') : dom.eventUser.value.trim();
+        const amount = dom.eventAmount.value.trim();
+        const message = dom.eventMessage.value.trim();
+        if (!username) return;
+        const user = getUser(username);
+
+        if (currentEventType === 'cheer') {
+            if (!amount) return;
+            addMessageToState({ type: 'user', id: `msg-${Date.now()}-${Math.random()}`, username, text: message, amount: amount, isCheer: true, isFirst: !user.hasChatted, timestamp: Date.now() });
+            user.hasChatted = true;
+        } else {
+            if ((dom.eventAmount.style.display !== 'none') && !amount) return;
+            addMessageToState({ type: 'event', eventType: currentEventType, id: `evt-${Date.now()}-${Math.random()}`, username, amount, timestamp: Date.now() });
+            if (currentEventType === 'sub' || currentEventType === 'giftsub') {
+                if (!user.badges.includes('sub')) user.badges.push('sub');
+                if (message) {
+                    addMessageToState({ type: 'user', id: `msg-${Date.now()}-${Math.random()}`, username, text: message, isFirst: !user.hasChatted, timestamp: Date.now() });
+                    user.hasChatted = true;
+                }
+            }
+        }
+        dom.eventUser.value = ''; dom.eventAmount.value = ''; dom.eventMessage.value = ''; dom.eventAnonymous.checked = false;
+        dom.eventDetails.classList.add('hidden');
+        saveState();
+        renderUserLibrary();
+    });
+
+    dom.clearChatBtn.addEventListener('click', () => showModal('Chat leeren?', 'Alle Nachrichten werden permanent gelöscht.', () => { state.messages = []; Object.keys(state.users).forEach(u => state.users[u].hasChatted = false); addMessageToState({ type: 'system', text: 'Chat wurde von einem Moderator geleert.', id: `sys-${Date.now()}` }); hideModal(); }));
+    dom.exportConfigBtn.addEventListener('click', exportConfig);
+    dom.importConfigBtn.addEventListener('click', () => dom.importFileInput.click());
+    dom.importFileInput.addEventListener('change', importConfig);
+    dom.chatMessagesContainer.addEventListener('click', (e) => {
+        const target = e.target;
+        const messageId = target.closest('.message, .event-message, .system-message')?.dataset.id;
+        if (!messageId) return;
+        const message = state.messages.find(m => m.id === messageId);
+        if (!message) return;
+        if (target.closest('.delete-btn')) { state.messages = state.messages.filter(m => m.id !== messageId); renderChat(); saveState(); }
+        if (target.closest('.edit-btn')) { enterEditMode(messageId); }
+        if (target.closest('.highlight-btn')) { message.isHighlighted = !message.isHighlighted; renderChat(); saveState(); }
+    });
+    dom.addUserForm.addEventListener('submit', (e) => { e.preventDefault(); const newUsername = dom.newUsernameInput.value.trim(); if (newUsername) { getUser(newUsername); renderUserLibrary(); saveState(); } dom.newUsernameInput.value = ''; });
+    dom.userListContainer.addEventListener('click', (e) => {
+        const target = e.target;
+        const username = target.dataset.username;
+        if (!username) return;
+        
+        if (target.classList.contains('remove-user-btn')) { delete state.users[username]; renderUserLibrary(); saveState(); }
+        if (target.classList.contains('badge-icon')) {
+            const badge = target.dataset.badge;
+            const user = getUser(username);
+            if (user.badges.includes(badge)) {
+                user.badges = user.badges.filter(b => b !== badge);
+            } else {
+                user.badges.push(badge);
+            }
+            target.classList.toggle('active');
+            saveState();
+        }
+    });
+    dom.userListContainer.addEventListener('dblclick', (e) => {
+        const target = e.target;
+        if (target.classList.contains('user-name')) {
+            const oldUsername = target.dataset.username;
+            target.contentEditable = true;
+            target.focus();
+            const range = document.createRange();
+            range.selectNodeContents(target);
+            const sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(range);
+            
+            target.addEventListener('blur', () => {
+                target.contentEditable = false;
+                const newUsername = target.textContent.trim();
+                if (newUsername && newUsername !== oldUsername) {
+                    state.users[newUsername] = state.users[oldUsername];
+                    delete state.users[oldUsername];
+                    state.messages.forEach(msg => { if(msg.username === oldUsername) msg.username = newUsername; });
+                    renderAll();
+                    saveState();
+                } else {
+                    target.textContent = oldUsername;
+                }
+            }, { once: true });
+            target.addEventListener('keydown', (evt) => { if(evt.key === 'Enter') target.blur(); });
+        }
+    });
+
+    dom.chatMessagesContainer.addEventListener('dragstart', (e) => { draggedItem = e.target; setTimeout(() => e.target.classList.add('dragging'), 0); });
+    dom.chatMessagesContainer.addEventListener('dragend', (e) => { e.target.classList.remove('dragging'); });
+    dom.chatMessagesContainer.addEventListener('dragover', (e) => { e.preventDefault(); const afterElement = getDragAfterElement(dom.chatMessagesContainer, e.clientY); const draggable = document.querySelector('.dragging'); if (afterElement == null) { dom.chatMessagesContainer.appendChild(draggable); } else { dom.chatMessagesContainer.insertBefore(draggable, afterElement); } });
+    dom.chatMessagesContainer.addEventListener('drop', (e) => { e.preventDefault(); const newMessages = []; Array.from(dom.chatMessagesContainer.children).forEach(child => { const msg = state.messages.find(m => m.id === child.dataset.id); if (msg) newMessages.push(msg); }); state.messages = newMessages; saveState(); });
+    function getDragAfterElement(container, y) { const draggableElements = [...container.querySelectorAll('[draggable="true"]:not(.dragging)')]; return draggableElements.reduce((closest, child) => { const box = child.getBoundingClientRect(); const offset = y - box.top - box.height / 2; if (offset < 0 && offset > closest.offset) { return { offset: offset, element: child }; } else { return closest; } }, { offset: Number.NEGATIVE_INFINITY }).element; }
+
+    ['botToggle', 'timestampToggle', 'subOnlyToggle', 'slowModeToggle'].forEach(id => { dom[id].addEventListener('change', (e) => { const key = id.replace('Toggle', ''); state.settings[key] = e.target.checked; renderChat(); saveState(); }); });
+    dom.modalCancelBtn.addEventListener('click', hideModal);
+    dom.modalConfirmBtn.addEventListener('click', () => { if (modalConfirmCallback) modalConfirmCallback(); });
+    
+    function init() { loadState(); renderAll(); if (state.messages.length === 0) { addMessageToState({type: 'system', text: 'Willkommen in der Twitch Simulator Final Edition!', id: `sys-${Date.now()}`}); } if (state.settings.botsEnabled) { dom.botToggle.checked = true; dom.botToggle.dispatchEvent(new Event('change')); } }
+    init();
+    </script>
+</body>
+</html>
