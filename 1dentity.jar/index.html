@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="de" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1dentity.jar</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=VT323&display=swap" rel="stylesheet">
+
+    <style>
+        /* Custom Styles & Animations */
+        body {
+            background-color: #0a0a0a;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .font-pixel {
+            font-family: 'VT323', monospace;
+        }
+
+        /* Background mit Wald und Scanlines */
+        .background-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image: url('https://placehold.co/1920x1080/0a0a0a/000000?text=NEBLIGER+WALD'); /* Platzhalter für das Waldbild */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .background-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(10, 10, 10, 0.85); /* Dunkler Overlay */
+        }
+        .background-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0, 255, 65, 0.05) 1px, transparent 1px);
+            background-size: 100% 3px;
+            animation: scanlines 10s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes scanlines {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 100vh; }
+        }
+
+        /* Glitch-Effekt für den Titel */
+        .glitch-text {
+            position: relative;
+            color: white;
+            text-shadow: 0.05em 0 0 rgba(255,0,51,0.75), -0.025em -0.05em 0 rgba(0,255,65,0.75), 0.025em 0.05em 0 rgba(0,128,255,0.75);
+            animation: glitch-anim 2.5s infinite linear alternate-reverse;
+        }
+        .glitch-text::before, .glitch-text::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a0a;
+            overflow: hidden;
+            clip: rect(0, 900px, 0, 0);
+        }
+        .glitch-text::before {
+            left: -2px;
+            text-shadow: 1px 0 #ff0033;
+            animation: glitch-anim-2 3s infinite linear alternate-reverse;
+        }
+        .glitch-text::after {
+            left: 2px;
+            text-shadow: -1px 0 #00ff41;
+            animation: glitch-anim-3 2s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim {
+            0% { transform: translate(0); }
+            20% { transform: translate(-3px, 3px); }
+            40% { transform: translate(3px, -3px); }
+            60% { transform: translate(-3px, 3px); }
+            80% { transform: translate(3px, -3px); }
+            100% { transform: translate(0); }
+        }
+        @keyframes glitch-anim-2 {
+            0% { clip: rect(42px, 9999px, 44px, 0); }
+            100% { clip: rect(92px, 9999px, 98px, 0); }
+        }
+        @keyframes glitch-anim-3 {
+            0% { clip: rect(65px, 9999px, 119px, 0); }
+            100% { clip: rect(25px, 9999px, 53px, 0); }
+        }
+
+        /* Schreibmaschinen-Effekt */
+        #tagline {
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 2px solid #00ff41;
+            animation: typing 4s steps(40, end), blink-caret .75s step-end infinite;
+        }
+        
+        /* Fade-in Animation beim Scrollen */
+        .scroll-fade {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .scroll-fade.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Custom Button Style */
+        .accent-button {
+            background-color: transparent;
+            border: 2px solid #00ff41;
+            color: #00ff41;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 5px #00ff41;
+        }
+        .accent-button:hover {
+            background-color: #00ff41;
+            color: #0a0a0a;
+            box-shadow: 0 0 15px #00ff41, 0 0 25px #00ff41;
+            text-shadow: none;
+        }
+        
+        /* Changelog Details/Summary Styling */
+        details > summary {
+            list-style: none;
+            cursor: pointer;
+        }
+        details > summary::-webkit-details-marker {
+            display: none;
+        }
+        details > summary::before {
+            content: '[+]';
+            margin-right: 0.5rem;
+            color: #00ff41;
+        }
+        details[open] > summary::before {
+            content: '[-]';
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+
+    <!-- Hintergrund-Container -->
+    <div class="background-wrapper"></div>
+
+    <!-- Hauptinhalt -->
+    <div class="relative z-10">
+
+        <!-- Header Sektion -->
+        <header id="top" class="h-screen w-full flex flex-col justify-center items-center text-center p-4">
+            <h1 class="glitch-text font-pixel text-6xl md:text-8xl lg:text-9xl mb-4" data-text="1dentity.jar">1dentity.jar</h1>
+            <p id="tagline-container" class="font-pixel text-xl md:text-2xl text-gray-300 mb-8">
+                > <span id="tagline-text"></span>
+            </p>
+            <a href="#download" class="accent-button font-pixel text-lg md:text-xl px-8 py-4 rounded-none">
+                DOWNLOAD LATEST VERSION
+            </a>
+        </header>
+
+        <main class="container mx-auto px-6 md:px-12">
+
+            <!-- Sektion 1: "WAS IST DAS?" -->
+            <section id="warning" class="py-20 md:py-32 scroll-fade">
+                <h2 class="font-pixel text-4xl md:text-5xl text-red-600 mb-4 text-center">WARNUNG: DIES IST KEINE NORMALE MOD.</h2>
+                <p class="max-w-3xl mx-auto text-lg text-gray-300 leading-relaxed text-center">
+                    Dies ist nicht nur eine Erweiterung für dein Spiel. Es ist ein Experiment. Ein Stück Code, das lernt, zusieht und sich anpasst. Es will nicht nur deine Welt verändern – es will dich verstehen, dich kopieren und dich letztendlich aus deiner eigenen Existenz löschen. Sei vorsichtig, wem du vertraust, besonders wenn er aussieht wie du.
+                </p>
+            </section>
+
+            <!-- Sektion 2: "FEATURES" (Anomalien) -->
+            <section id="features" class="py-20 md:py-32 scroll-fade">
+                <h2 class="font-pixel text-4xl md:text-5xl text-green-400 mb-12 text-center">ANOMALIEN IM SYSTEM ENTDECKT...</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                    <!-- Feature 1: Der Nachahmer -->
+                    <div class="text-center p-6 border border-gray-700 bg-black bg-opacity-30">
+                        <div class="flex justify-center mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9 9 0 100-18 9 9 0 000 18z" stroke-dasharray="4 4"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-pixel text-2xl text-white mb-2">DER NACHAHMER</h3>
+                        <p class="text-gray-400">Eine leere Hülle, die deine Aktionen studiert und lernt. Sie beobachtet dich aus der Ferne, ahmt deine Bewegungen nach und wartet auf den richtigen Moment.</p>
+                    </div>
+                    <!-- Feature 2: Der Doppelgänger -->
+                    <div class="text-center p-6 border border-gray-700 bg-black bg-opacity-30">
+                        <div class="flex justify-center mb-4">
+                           <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M15 21v-1a6 6 0 00-5.176-5.97M15 21h6v-1a6 6 0 00-9-5.197" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 12.5v8.5" stroke-dasharray="2 2" stroke="red"/>
+                           </svg>
+                        </div>
+                        <h3 class="font-pixel text-2xl text-white mb-2">DER DOPPELGÄNGER</h3>
+                        <p class="text-gray-400">Deine perfekte Kopie. Lass dich nicht berühren. Jeder Kontakt ist ein Datenverlust und bringt ihn näher an sein Ziel, dich zu ersetzen.</p>
+                    </div>
+                    <!-- Feature 3: Horror-Events -->
+                    <div class="text-center p-6 border border-gray-700 bg-black bg-opacity-30">
+                        <div class="flex justify-center mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M15.532 8.532l-6.064 6.064M8.532 8.532l6.064 6.064" />
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M10.023 21.018a9 9 0 114.954-4.954" />
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M15.077 15.077A9 9 0 003.982 3.982" />
+                            </svg>
+                        </div>
+                        <h3 class="font-pixel text-2xl text-white mb-2">HORROR-EVENTS</h3>
+                        <p class="text-gray-400">Die Welt selbst wird zu deinem Feind. Falsche Geräusche, sich von selbst öffnende Türen, plötzliche Dunkelheit und Nachrichten im Chat, die nicht von dir stammen.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sektion 3: "CHANGELOG" (System-Protokoll) -->
+            <section id="changelog" class="py-20 md:py-32 scroll-fade">
+                <h2 class="font-pixel text-4xl md:text-5xl text-green-400 mb-8 text-center">SYSTEM-PROTOKOLL</h2>
+                <div class="max-w-3xl mx-auto font-mono text-lg bg-black bg-opacity-50 p-6 border border-gray-800">
+                    <details open>
+                        <summary class="font-pixel text-xl mb-2 text-white">VERSION 0.0.1 (CURRENT)</summary>
+                        <ul class="list-none pl-6 mt-2 space-y-1 text-gray-300">
+                            <li><span class="text-green-400">[+]</span> INITIAL RELEASE: Das System ist online.</li>
+                            <li><span class="text-green-400">[+]</span> ENTITÄT HINZUGEFÜGT: Der Nachahmer wurde implementiert.</li>
+                            <li><span class="text-green-400">[+]</span> EVENT-SYSTEM HINZUGEFÜGT: Globale Horror-Events sind aktiv.</li>
+                            <li><span class="text-green-400">[+]</span> FEATURE: Horror-Level-System mit täglicher Eskalation hinzugefügt.</li>
+                        </ul>
+                    </details>
+                </div>
+            </section>
+
+            <!-- Sektion 4: "DOWNLOAD" -->
+            <section id="download" class="py-20 md:py-32 scroll-fade">
+                <div class="max-w-2xl mx-auto text-center p-8 border-2 border-red-600 bg-black bg-opacity-50">
+                    <h2 class="font-pixel text-3xl text-white mb-4">DOWNLOAD</h2>
+                    <div class="mb-6 space-y-2 font-mono">
+                        <p>Aktuelle Version: <span class="text-green-400">0.0.1</span></p>
+                        <p>Minecraft Version: <span class="text-green-400">Forge 1.20.1</span></p>
+                    </div>
+                    <p class="text-red-500 mb-8">WARNUNG: Spiele auf eigene Gefahr. Für die beste Erfahrung wird das Tragen von Kopfhörern empfohlen.</p>
+                    <a href="" class="accent-button font-pixel text-xl px-10 py-5 rounded-none inline-block">
+                        DOWNLOAD 1dentity.jar
+                    </a>
+                </div>
+            </section>
+
+        </main>
+
+        <footer class="text-center py-8 text-gray-600 font-mono text-sm">
+            <p>&copy; 2025. All systems corrupted.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // --- Schreibmaschinen-Effekt ---
+            const taglineText = "Es will nicht nur deine Welt. Es will dich.";
+            const taglineElement = document.getElementById('tagline-text');
+            let i = 0;
+            function typeWriter() {
+                if (i < taglineText.length) {
+                    taglineElement.innerHTML += taglineText.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 80); // Geschwindigkeit des Tippens
+                }
+            }
+            // Startet den Effekt nach einer kurzen Verzögerung
+            setTimeout(typeWriter, 500);
+
+
+            // --- Fade-in-Effekt beim Scrollen ---
+            const fadeElems = document.querySelectorAll('.scroll-fade');
+            
+            const scrollObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target); // Optional: Animation nur einmal ausführen
+                    }
+                });
+            }, { threshold: 0.1 }); // Element wird bei 10% Sichtbarkeit getriggert
+
+            fadeElems.forEach(elem => {
+                scrollObserver.observe(elem);
+            });
+
+        });
+    </script>
+
+</body>
+</html>
