@@ -13,7 +13,12 @@
     "juliuspeters": {
       "password": "beta_user_pass",
       "roles": ["BETA", "PREMIUM"],
-      "avatar": "https://avatars.githubusercontent.com/u/211497121?v=4"
+      "avatar": "https://Avatars.githubusercontent.com/u/211497121?v=4"
+    },
+    "joaijo": {
+      "password": "18072025",
+      "roles": ["BETA", "PREMIUM"],
+      "avatar": ""
     }
   },
   "one_time_codes": {
