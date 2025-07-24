@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QConvert - Dateikonverter</title>
+    <!-- Tailwind CSS CDN für einfaches Styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter für eine moderne Schriftart -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Ein interessanter Hintergrund mit einem Farbverlauf */
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.95); /* Leicht transparentes Weiß */
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+            position: relative;
+            overflow: hidden;
+        }
+        .version-info {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 0.8em;
+            color: #666;
+        }
+        input[type="file"] {
+            display: none; /* Versteckt den Standard-Dateiauswahl-Button */
+        }
+        .custom-file-upload {
+            border: 2px dashed #a78bfa; /* Lila gestrichelte Linie */
+            background-color: #ede9fe; /* Helles Lila */
+            color: #6d28d9; /* Dunkles Lila */
+            padding: 15px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: inline-block;
+            margin-top: 20px;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        .custom-file-upload:hover {
+            background-color: #ddd6fe; /* Noch helleres Lila beim Hover */
+            border-color: #8b5cf6; /* Kräftigeres Lila beim Hover */
+        }
+        button {
+            background-color: #8b5cf6; /* Lila */
+            color: white;
+            padding: 12px 25px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        button:hover {
+            background-color: #7c3aed; /* Dunkleres Lila beim Hover */
+            transform: translateY(-2px);
+        }
+        button:disabled {
+            background-color: #a78bfa; /* Helleres Lila, wenn deaktiviert */
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+        .message {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.9em;
+        }
+        .message.info {
+            background-color: #e0f2fe; /* Helles Blau */
+            color: #0c4a6e; /* Dunkles Blau */
+        }
+        .message.success {
+            background-color: #dcfce7; /* Helles Grün */
+            color: #166534; /* Dunkles Grün */
+        }
+        .message.error {
+            background-color: #fee2e2; /* Helles Rot */
+            color: #991b1b; /* Dunkles Rot */
+        }
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-top: 4px solid #8b5cf6;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+            display: none; /* Standardmäßig versteckt */
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .download-link {
+            display: block;
+            margin-top: 20px;
+            color: #8b5cf6;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        .download-link:hover {
+            color: #7c3aed;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Versionsinformationen -->
+        <div class="version-info">Version: 1.0.0</div>
+        <!-- Hinweis zur lokalen Verarbeitung -->
+        <p class="text-gray-600 mb-4 text-sm">
+            <strong class="text-purple-700">Wichtiger Hinweis:</strong> Alle Umwandlungen werden direkt auf Ihrem Gerät verarbeitet. Dies bedeutet, dass Ihre Dateien niemals auf einen Server hochgeladen werden. Die Verarbeitungszeit kann je nach Dateigröße und Leistung Ihres Geräts variieren.
+        </p>
+
+        <h1 class="text-3xl font-bold text-gray-800 mb-6">QConvert</h1>
+
+        <div class="mb-4">
+            <label for="fileInput" class="custom-file-upload">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                </svg>
+                Datei auswählen
+            </label>
+            <input type="file" id="fileInput" accept=".png, .jpg, .jpeg">
+            <p id="fileNameDisplay" class="text-gray-500 mt-2 text-sm"></p>
+        </div>
+
+        <div class="mb-6">
+            <label for="conversionType" class="block text-gray-700 text-sm font-bold mb-2">
+                Umwandlungsart auswählen:
+            </label>
+            <select id="conversionType" class="shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-purple-500">
+                <option value="">Bitte wählen...</option>
+                <option value="png-to-jpg">PNG zu JPG</option>
+                <option value="jpg-to-png">JPG zu PNG</option>
+                <!-- Hinweis zu Audio/Video-Formaten -->
+                <option value="audio-video-placeholder" disabled>Audio/Video (derzeit nicht unterstützt)</option>
+            </select>
+        </div>
+
+        <button id="convertButton" disabled>Konvertieren</button>
+
+        <div id="loadingSpinner" class="spinner"></div>
+        <div id="messageDisplay" class="message hidden"></div>
+        <a id="downloadLink" class="download-link hidden" download>Hier herunterladen</a>
+    </div>
+
+    <script>
+        // DOM-Elemente abrufen
+        const fileInput = document.getElementById('fileInput');
+        const fileNameDisplay = document.getElementById('fileNameDisplay');
+        const conversionTypeSelect = document.getElementById('conversionType');
+        const convertButton = document.getElementById('convertButton');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const messageDisplay = document.getElementById('messageDisplay');
+        const downloadLink = document.getElementById('downloadLink');
+
+        let selectedFile = null; // Speichert die aktuell ausgewählte Datei
+
+        // Event-Listener für Dateiauswahl
+        fileInput.addEventListener('change', (event) => {
+            selectedFile = event.target.files[0];
+            if (selectedFile) {
+                fileNameDisplay.textContent = `Ausgewählte Datei: ${selectedFile.name}`;
+                // Aktiviert den Konvertierungs-Button, wenn eine Datei und ein Konvertierungstyp ausgewählt sind
+                checkFormValidity();
+                hideMessageAndDownloadLink();
+            } else {
+                fileNameDisplay.textContent = '';
+                selectedFile = null;
+                convertButton.disabled = true;
+            }
+        });
+
+        // Event-Listener für die Auswahl des Konvertierungstyps
+        conversionTypeSelect.addEventListener('change', () => {
+            checkFormValidity();
+            hideMessageAndDownloadLink();
+        });
+
+        // Überprüft, ob der Konvertierungs-Button aktiviert werden soll
+        function checkFormValidity() {
+            if (selectedFile && conversionTypeSelect.value !== '') {
+                convertButton.disabled = false;
+            } else {
+                convertButton.disabled = true;
+            }
+        }
+
+        // Blendet Nachrichten und Download-Link aus
+        function hideMessageAndDownloadLink() {
+            messageDisplay.classList.add('hidden');
+            downloadLink.classList.add('hidden');
+        }
+
+        // Zeigt eine Nachricht an (Erfolg, Info, Fehler)
+        function showMessage(text, type) {
+            messageDisplay.textContent = text;
+            messageDisplay.className = `message ${type}`; // Setzt die Klasse basierend auf dem Typ
+            messageDisplay.classList.remove('hidden');
+        }
+
+        // Event-Listener für den Konvertierungs-Button
+        convertButton.addEventListener('click', async () => {
+            if (!selectedFile) {
+                showMessage('Bitte wählen Sie zuerst eine Datei aus.', 'error');
+                return;
+            }
+            if (conversionTypeSelect.value === '') {
+                showMessage('Bitte wählen Sie eine Umwandlungsart aus.', 'error');
+                return;
+            }
+
+            // Deaktiviert den Button und zeigt den Lade-Spinner an
+            convertButton.disabled = true;
+            loadingSpinner.style.display = 'block';
+            hideMessageAndDownloadLink();
+
+            try {
+                const reader = new FileReader();
+
+                reader.onload = async (e) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+
+                        canvas.width = img.width;
+                        canvas.height = img.height;
+                        ctx.drawImage(img, 0, 0);
+
+                        let outputMimeType = '';
+                        let outputFileName = '';
+                        const originalFileNameWithoutExt = selectedFile.name.split('.').slice(0, -1).join('.');
+
+                        switch (conversionTypeSelect.value) {
+                            case 'png-to-jpg':
+                                outputMimeType = 'image/jpeg';
+                                outputFileName = `${originalFileNameWithoutExt}.jpg`;
+                                break;
+                            case 'jpg-to-png':
+                                outputMimeType = 'image/png';
+                                outputFileName = `${originalFileNameWithoutExt}.png`;
+                                break;
+                            default:
+                                showMessage('Ungültige Umwandlungsart ausgewählt.', 'error');
+                                loadingSpinner.style.display = 'none';
+                                convertButton.disabled = false;
+                                return;
+                        }
+
+                        // Konvertiert das Bild und erstellt einen Download-Link
+                        const dataUrl = canvas.toDataURL(outputMimeType, 0.9); // 0.9 für JPG-Qualität
+                        downloadLink.href = dataUrl;
+                        downloadLink.download = outputFileName;
+                        downloadLink.textContent = `"${outputFileName}" herunterladen`;
+                        downloadLink.classList.remove('hidden');
+
+                        showMessage('Konvertierung erfolgreich!', 'success');
+                    };
+                    img.onerror = () => {
+                        showMessage('Fehler beim Laden des Bildes. Ist es ein gültiges Bildformat?', 'error');
+                    };
+                    img.src = e.target.result; // Setzt die Quelle des Bildes auf das gelesene Data URL
+                };
+
+                reader.onerror = () => {
+                    showMessage('Fehler beim Lesen der Datei.', 'error');
+                };
+
+                // Überprüft den Dateityp, bevor der FileReader gestartet wird
+                if (selectedFile.type.startsWith('image/')) {
+                    reader.readAsDataURL(selectedFile); // Liest die Datei als Data URL
+                } else {
+                    showMessage('Derzeit werden nur Bildformate (PNG, JPG) unterstützt.', 'error');
+                }
+
+            } catch (error) {
+                console.error('Konvertierungsfehler:', error);
+                showMessage('Ein unerwarteter Fehler ist aufgetreten.', 'error');
+            } finally {
+                // Setzt den Button zurück und versteckt den Spinner
+                loadingSpinner.style.display = 'none';
+                convertButton.disabled = false;
+            }
+        });
+
+        // Initialer Check, falls die Seite neu geladen wird und keine Datei ausgewählt ist
+        checkFormValidity();
+    </script>
+</body>
+</html>
