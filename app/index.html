@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>QHub v2.3.6 - Dein persönlicher Hub</title>
+    <title>QHub - Dein persönlicher Hub</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet">
     
     <link rel="icon" type="image/svg+xml" href="https://quixoticode.github.io/data/qhub/favicon.svg" />
-    <link rel="manifest" href="data:application/manifest+json;base64,ew0KICAgICJuYW1lIjogIlFIdWIgVjIuNSIsICJzaG9ydF9uYW1lIjogIlFIdWIiLCAiZGVzY3JpcHRpb24iOiAiRGVpbiBwZXJzw7ZubGljaGVyIEh1YiBtaXQgUHJlbWl1bS1GdW5rdGlvbmVuIiwgImljb25zIjogW3sic3JjIjogImh0dHBzOi8vcXVpeG90aWNvZGUuZ2l0aHViLmlvL2RhdGEvcWh1Yi9hbmRyb2lkLWNocm9tZS0xOTJ4MTkyLnBuZyIsICJzaXplcyI6ICIxOTJ4MTkyIiwgInR5cGUiOiAiaW1hZ2UvcG5nIn0sIHsic3JjIjogImh0dHBzOi8vcXVpeG90aWNvZGUuZ2l0aHViLmlvL2RhdGEvcWh1Yi9hbmRyb2lkLWNocm9tZS01MTJ4NTEyLnBuZyIsICJzaXplcyI6ICI1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2UvcG5nIn1dLA0KICAgICJzdGFydF91cmwiOiAiLi8iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiI2YxZjVmOSIsICJ0aGVtZV9jb2xvciI6ICIjNGY0NmU1Ig0KfQ==">
+    <link rel="manifest" href="data:application/manifest+json;base64,ew0KICAgICJuYW1lIjogIlFIdWIgVjIuOSIsICJzaG9ydF9uYW1lIjogIlFIdWIiLCAiZGVzY3JpcHRpb24iOiAiRGVpbiBwZXJzw7ZubGljaGVyIEh1YiBtaXQgUHJlbWl1bS1GdW5rdGlvbmVuIiwgImljb25zIjogW3sic3JjIjogImh0dHBzOi8vcXVpeG90aWNvZGUuZ2l0aHViLmlvL2RhdGEvcWh1Yi9hbmRyb2lkLWNocm9tZS0xOTJ4MTkyLnBuZyIsICJzaXplcyI6ICIxOTJ4MTkyIiwgInR5cGUiOiAiaW1hZ2UvcG5nIn0sIHsic3JjIjogImh0dHBzOi8vcXVpeG90aWNvZGUuZ2l0aHViLmlvL2RhdGEvcWh1Yi9hbmRyb2lkLWNocm9tZS01MTJ4NTEyLnBuZyIsICJzaXplcyI6ICI1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2UvcG5nIn1dLA0KICAgICJzdGFydF91cmwiOiAiLi8iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiI2YxZjVmOSIsICJ0aGVtZV9jb2xvciI6ICIjNGY0NmU1Ig0KfQ==">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="QHub">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -34,25 +34,25 @@
             --header-height: 64px; --transition-speed: 0.3s;
         }
         [data-theme="dark"] { --q-primary: #6366f1; --q-primary-hover: #4f46e5; --q-background: #0f172a; --q-surface: #1e293b; --q-on-surface: #e2e8f0; --q-on-surface-variant: #94a3b8; --q-outline: #334155; --q-highlight: #312e81; --q-highlight-text: #c7d2fe; --q-premium: #fcd34d; --q-on-premium: #1e293b; }
-        body { font-family: var(--font-family-sans); background-color: var(--q-background); color: var(--q-on-surface); overflow: hidden; }
+        body { font-family: var(--font-family-sans); background-color: var(--q-background); color: var(--q-on-surface); overflow: hidden; transition: background-color var(--transition-speed), color var(--transition-speed); }
         .q-app-container { display: flex; height: 100vh; }
         .q-activity-bar { width: var(--activity-bar-width); flex-shrink: 0; background-color: var(--q-surface); border-right: 1px solid var(--q-outline); display: flex; flex-direction: column; align-items: center; padding: 1rem 0; padding-bottom: calc(1rem + env(safe-area-inset-bottom)); gap: 0.5rem; z-index: 1100; }
         .activity-btn { position: relative; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: var(--radius-md); color: var(--q-on-surface-variant); cursor: pointer; transition: all 0.2s; }
         .activity-btn:hover { background-color: var(--q-highlight); color: var(--q-highlight-text); }
         .activity-btn.active { background-color: var(--q-primary); color: var(--q-primary-text); }
-        .q-sidebar { width: var(--sidebar-width); flex-shrink: 0; background-color: var(--q-surface); border-right: 1px solid var(--q-outline); padding: 1.5rem; display: flex; flex-direction: column; z-index: 1000; transition: width var(--transition-speed) ease, padding var(--transition-speed) ease; }
+        .q-sidebar { width: var(--sidebar-width); flex-shrink: 0; background-color: var(--q-surface); border-right: 1px solid var(--q-outline); padding: 1.5rem; display: flex; flex-direction: column; z-index: 1000; transition: transform var(--transition-speed) ease; }
         .q-main-content { flex-grow: 1; display: flex; flex-direction: column; height: 100vh; }
         .q-header { height: var(--header-height); flex-shrink: 0; background-color: var(--q-surface); border-bottom: 1px solid var(--q-outline); display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; z-index: 900; }
         .q-content-area { flex-grow: 1; overflow-y: auto; padding: 2rem; }
+        .webapp-container, .webapp-container iframe { width: 100%; height: 100%; border: none; background-color: #fff; border-radius: var(--radius-lg); }
         .q-card { background-color: var(--q-surface); border-radius: var(--radius-lg); padding: 1.5rem; box-shadow: var(--shadow-md); border: 1px solid var(--q-outline); }
         .q-modal-backdrop { position: fixed; inset: 0; background-color: rgba(0,0,0,0.5); backdrop-filter: blur(4px); z-index: 5000; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s; padding: 1rem; }
         .q-modal-backdrop.visible { display: flex; opacity: 1; }
         .q-modal-content { background-color: var(--q-surface); padding: 2rem; border-radius: var(--radius-lg); max-width: 500px; width: 100%; }
-        .q-sidebar.collapsed { width: 0; padding-left: 0; padding-right: 0; overflow: hidden; border-right-width: 0; }
         @media (max-width: 768px) {
             .q-modal-backdrop.visible { overflow-y: auto; align-items: flex-start; }
             .q-modal-content { width: 95%; margin-top: 5vh; max-height: 90vh; overflow-y: auto; padding: 1.5rem; }
-            .q-sidebar { position: fixed; left: var(--activity-bar-width); height: 100%; transform: translateX(-100%); transition: transform var(--transition-speed) ease; width: var(--sidebar-width) !important; } 
+            .q-sidebar { position: fixed; left: var(--activity-bar-width); height: 100%; transform: translateX(-100%); } 
             .q-sidebar.open { transform: translateX(0); box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1); } 
             .q-header { padding: 0 1rem; }
             .q-content-area { padding: 1rem; }
@@ -65,6 +65,21 @@
         .timeline-item { position: relative; padding-bottom: 2rem; } .timeline-item:last-child { padding-bottom: 0; }
         .timeline-icon { position: absolute; left: -2.25rem; top: 0; width: 2rem; height: 2rem; background-color: var(--q-highlight); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
         .timeline-icon .material-icons { color: var(--q-highlight-text); font-size: 1.25rem; }
+        .progress-bar-bg { background-color: var(--q-highlight); border-radius: var(--radius-full); }
+        .progress-bar-fill { background-color: var(--q-primary); transition: width 0.5s ease; }
+        
+        .theme-preview-card { border: 2px solid transparent; border-radius: var(--radius-lg); padding: 1rem; cursor: pointer; transition: all 0.2s; background-color: var(--q-surface); }
+        .theme-preview-card.active { border-color: var(--q-primary); box-shadow: 0 0 0 3px var(--q-highlight); }
+        .theme-preview-card:not(.active):hover { border-color: var(--q-primary-hover); }
+        .mini-hub-preview { width: 100%; height: 120px; border-radius: 0.5rem; display: flex; overflow: hidden; border: 1px solid var(--q-outline); }
+        .mini-activity-bar { width: 12px; flex-shrink: 0; }
+        .mini-sidebar { width: 40px; flex-shrink: 0; padding: 8px 4px; }
+        .mini-user-card { height: 20px; border-radius: 4px; margin-bottom: 8px; }
+        .mini-nav-item { height: 8px; border-radius: 2px; margin-bottom: 4px; }
+        .mini-main { flex-grow: 1; display: flex; flex-direction: column; }
+        .mini-header { height: 16px; flex-shrink: 0; border-bottom: 1px solid var(--q-outline); }
+        .mini-content { padding: 8px; }
+        .mini-card { height: 30px; border-radius: 4px; border-left-width: 3px; }
     </style>
 </head>
 <body>
@@ -72,27 +87,26 @@
     <div class="q-app-container">
         <div class="q-activity-bar" id="activityBar">
             <button class="activity-btn" data-view="dashboard" title="Dashboard"><span class="material-icons">dashboard</span></button>
-            <button class="activity-btn" data-view="qpolls" title="QPolls"><span class="material-icons">poll</span></button>
+            <button class="activity-btn" data-view="themestore" title="Theme Store"><span class="material-icons">palette</span></button>
             <button class="activity-btn" data-view="web" title="Web"><span class="material-icons">public</span></button>
             <button class="activity-btn" data-view="qcode" title="QCode Lernplattform"><span class="material-icons">school</span></button>
             <button class="activity-btn" data-view="qsounds" title="QSounds"><span class="material-icons">graphic_eq</span></button>
             <button class="activity-btn hidden" data-view="qpets" title="QPet's"><span class="material-icons">pets</span></button>
             <div class="flex-grow"></div>
-            <button class="activity-btn" id="betaBtn" title="Beta-Programme"><span class="material-icons">science</span></button>
+            <button class="activity-btn hidden" id="betaBtn" title="Beta Apps"><span class="material-icons">science</span></button>
             <button class="activity-btn" data-view="contact" title="Kontakt"><span class="material-icons">contact_support</span></button>
             <button class="activity-btn" data-view="status" title="Statuspage"><span class="material-icons">error</span></button>
             <button class="activity-btn" id="settingsBtn" title="Einstellungen"><span class="material-icons">settings</span></button>
         </div>
         
         <aside class="q-sidebar hidden" id="qHubSidebar"></aside>
-        
+
         <div class="q-main-content">
-            <div id="sidebarBackdrop" class="fixed inset-0 bg-black/30 z-[999] hidden md:hidden"></div>
             <header class="q-header">
                 <button id="mobileMenuBtn" class="md:hidden p-2"><span class="material-icons">menu</span></button>
                 <div id="headerTitle" class="text-xl font-bold"></div>
             </header>
-            <div class="q-content-area" id="mainContentArea"></div>
+            <main class="q-content-area" id="mainContentArea"></main>
         </div>
     </div>
 
@@ -101,20 +115,101 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const APP_PREFIX = 'qhub_v2.3.6_';
+        const APP_PREFIX = 'qhub_v2.9.0_';
         const SETTINGS_KEY = APP_PREFIX + 'settings';
-        const USER_DATA_KEY = APP_PREFIX + 'user_data';
-        const APP_VERSION = "2.3.6";
+        const APP_VERSION = "2.9.0";
 
-        const initialUserData = {
-             announcements: [ { id: "news-1", title: "Willkommen!", content: "Dies ist dein persönlicher Hub.", date: "2025-06-25", premium: false } ],
-             roadmap: [ { id: "rm-1", title: 'Sidebar-Verbesserung', description: 'Sidebar kann nun auf dem Desktop eingeklappt werden.', status: 'completed' } ],
-             changelog: [ 
-                 { version: "2.3.6", date: "2025-06-25", changes: ["Der Beta-Button ist nun immer sichtbar."] },
-                 { version: "2.3.5", date: "2025-06-25", changes: ["QHub ist jetzt ein App-Launcher. Alle externen Apps öffnen sich in einem neuen Tab.", "Der Beta-Button leitet nun direkt zur Beta-Seite weiter."] },
-            ]
+        // --- THEME DATA ---
+        const themes = {
+            'default-light': { name: 'QHub Light', base: 'light', colors: { '--q-primary': '#4f46e5', '--q-background': '#f1f5f9', '--q-surface': '#ffffff', '--q-on-surface': '#1e293b', '--q-highlight': '#e0e7ff' } },
+            'default-dark': { name: 'QHub Dark', base: 'dark', colors: { '--q-primary': '#6366f1', '--q-background': '#0f172a', '--q-surface': '#1e293b', '--q-on-surface': '#e2e8f0', '--q-highlight': '#312e81' } },
+            'sunset-glow': { name: 'Sunset Glow', base: 'dark', colors: { '--q-primary': '#f97316', '--q-background': '#1c1917', '--q-surface': '#292524', '--q-on-surface': '#e7e5e4', '--q-highlight': '#57534e' } },
+            'ocean-breeze': { name: 'Ocean Breeze', base: 'light', colors: { '--q-primary': '#0ea5e9', '--q-background': '#f0f9ff', '--q-surface': '#ffffff', '--q-on-surface': '#0c4a6e', '--q-highlight': '#e0f2fe' } },
+            'forest-calm': { name: 'Forest Calm', base: 'dark', colors: { '--q-primary': '#22c55e', '--q-background': '#141d18', '--q-surface': '#1a2e26', '--q-on-surface': '#d1fae5', '--q-highlight': '#203a2d' } },
+            'rose-quartz': { name: 'Rose Quartz', base: 'light', colors: { '--q-primary': '#ec4899', '--q-background': '#fdf2f8', '--q-surface': '#ffffff', '--q-on-surface': '#831843', '--q-highlight': '#fce7f3' } },
+            'cyber-punk': { name: 'Cyber Punk', base: 'dark', colors: { '--q-primary': '#d946ef', '--q-background': '#1a1b26', '--q-surface': '#24283b', '--q-on-surface': '#a9b1d6', '--q-highlight': '#414868' } },
+            'solar-flare': { name: 'Solar Flare', base: 'dark', colors: { '--q-primary': '#facc15', '--q-background': '#18181b', '--q-surface': '#27272a', '--q-on-surface': '#fde047', '--q-highlight': '#3f3f46' } },
+            'minty-fresh': { name: 'Minty Fresh', base: 'light', colors: { '--q-primary': '#10b981', '--q-background': '#f0fdfa', '--q-surface': '#ffffff', '--q-on-surface': '#047857', '--q-highlight': '#ccfbf1' } },
+            'nordic-night': { name: 'Nordic Night', base: 'dark', colors: { '--q-primary': '#88c0d0', '--q-background': '#2e3440', '--q-surface': '#3b4252', '--q-on-surface': '#eceff4', '--q-highlight': '#434c5e' } },
+            'lavender-dream': { name: 'Lavender Dream', base: 'light', colors: { '--q-primary': '#8b5cf6', '--q-background': '#f5f3ff', '--q-surface': '#ffffff', '--q-on-surface': '#5b21b6', '--q-highlight': '#ede9fe' } },
+            'cherry-blossom': { name: 'Cherry Blossom', base: 'light', colors: { '--q-primary': '#f472b6', '--q-background': '#fff1f2', '--q-surface': '#ffffff', '--q-on-surface': '#9d174d', '--q-highlight': '#fce7f3' } },
+            'slate-cool': { name: 'Slate Cool', base: 'dark', colors: { '--q-primary': '#64748b', '--q-background': '#1e293b', '--q-surface': '#334155', '--q-on-surface': '#f1f5f9', '--q-highlight': '#475569' } },
+            'sandstone': { name: 'Sandstone', base: 'light', colors: { '--q-primary': '#ca8a04', '--q-background': '#fefce8', '--q-surface': '#ffffff', '--q-on-surface': '#713f12', '--q-highlight': '#fef9c3' } },
+            'abyss': { name: 'Abyss', base: 'dark', colors: { '--q-primary': '#38bdf8', '--q-background': '#020617', '--q-surface': '#0f172a', '--q-on-surface': '#e0f2fe', '--q-highlight': '#1e293b' } },
+            'matcha': { name: 'Matcha Green', base: 'light', colors: { '--q-primary': '#84cc16', '--q-background': '#f7fee7', '--q-surface': '#ffffff', '--q-on-surface': '#3f6212', '--q-highlight': '#ecfccb' } },
+            'ruby-red': { name: 'Ruby Red', base: 'dark', colors: { '--q-primary': '#f43f5e', '--q-background': '#2a0f14', '--q-surface': '#40131d', '--q-on-surface': '#fda4af', '--q-highlight': '#591c28' } },
+            'honeycomb': { name: 'Honeycomb', base: 'light', colors: { '--q-primary': '#f59e0b', '--q-background': '#fffbeb', '--q-surface': '#ffffff', '--q-on-surface': '#92400e', '--q-highlight': '#fef3c7' } },
+            '8-bit-retro': { name: '8-Bit Retro', base: 'dark', hidden: true, colors: { '--q-primary': '#ff00ff', '--q-background': '#000000', '--q-surface': '#222222', '--q-on-surface': '#00ff00', '--q-highlight': '#444444' } }
         };
 
+        // --- TRANSLATION DATA ---
+        const translations = {
+            de: {
+                viewTitles: { dashboard: "Dashboard", web: "Web", qcode: "QCode Lernplattform", qsounds: "QSounds", qpets: "QPet's", contact: "Kontakt", status: "Statuspage", settings: "Einstellungen", beta: "Beta Apps", themestore: "Theme Store" },
+                sidebar: { sections: "Sektionen", themestore_cta: "Themes anpassen" },
+                dashboardModules: { announcements: { title: "Ankündigungen", none: "Keine Ankündigungen vorhanden." }, roadmap: { title: "Roadmap", none: "Keine Roadmap-Einträge vorhanden.", progress: "Fortschritt" }, changelog: { title: "Changelog", none: "Kein Changelog vorhanden.", version: "Version" } },
+                statusPage: { cannot_embed_title: "Die Status-Seite kann nicht eingebettet werden.", cannot_embed_desc: "Du kannst die Seite stattdessen direkt aufrufen.", open_button: "Status-Seite öffnen" },
+                settingsModal: { title: "Einstellungen", account: "Account", loggedInAs: "Angemeldet als", logout: "Abmelden", login: "Anmelden", username: "Benutzername", password: "Passwort / Einmal-Code", theme: "Theme", language: "Sprache", activeTheme: "Aktives Theme" },
+                toasts: { welcome: "Willkommen, {username}!", logout_success: "Erfolgreich abgemeldet.", login_error: "Ungültige Anmeldedaten.", user_not_found: "Benutzerdaten konnten nicht geladen werden", enter_username: "Bitte gib einen Benutzernamen ein.", enter_password: "Bitte gib ein Passwort oder einen Code ein.", theme_applied: "Theme '{themeName}' angewendet.", easter_egg: "Cheat-Code aktiviert! Retro-Modus freigeschaltet." },
+                login: { checking: "Prüfe..." },
+                themeStore: { non_premium_title: "Exklusiv für Premium-Nutzer", non_premium_desc: "Themes sind eine Premium-Funktion. Beantrage jetzt den Premium-Status, um deinen Hub individuell zu gestalten!", non_premium_button: "Premium beantragen", activate_button: "Aktivieren", suggestion_title: "Eine Idee für ein Theme?", suggestion_desc: "Wir lieben neue Ideen! Wenn du einen Vorschlag für ein cooles Theme hast, lass es uns wissen.", suggestion_button: "Vorschlag einreichen" }
+            },
+            en: {
+                viewTitles: { dashboard: "Dashboard", web: "Web", qcode: "QCode Learning Platform", qsounds: "QSounds", qpets: "QPet's", contact: "Contact", status: "Status Page", settings: "Settings", beta: "Beta Apps", themestore: "Theme Store" },
+                sidebar: { sections: "Sections", themestore_cta: "Customize Themes" },
+                dashboardModules: { announcements: { title: "Announcements", none: "No announcements available." }, roadmap: { title: "Roadmap", none: "No roadmap items available.", progress: "Progress" }, changelog: { title: "Changelog", none: "No changelog available.", version: "Version" } },
+                statusPage: { cannot_embed_title: "The status page cannot be embedded.", cannot_embed_desc: "You can visit the page directly instead.", open_button: "Open Status Page" },
+                settingsModal: { title: "Settings", account: "Account", loggedInAs: "Logged in as", logout: "Log out", login: "Log in", username: "Username", password: "Password / One-Time Code", theme: "Theme", language: "Language", activeTheme: "Active Theme" },
+                toasts: { welcome: "Welcome, {username}!", logout_success: "Successfully logged out.", login_error: "Invalid credentials.", user_not_found: "Could not load user data", enter_username: "Please enter a username.", enter_password: "Please enter a password or code.", theme_applied: "Theme '{themeName}' applied.", easter_egg: "Cheat code activated! Retro mode unlocked." },
+                login: { checking: "Checking..." },
+                themeStore: { non_premium_title: "Exclusive for Premium Users", non_premium_desc: "Themes are a premium feature. Apply for premium status now to customize your hub!", non_premium_button: "Apply for Premium", activate_button: "Activate", suggestion_title: "Have a theme idea?", suggestion_desc: "We love new ideas! If you have a suggestion for a cool theme, let us know.", suggestion_button: "Submit Suggestion" }
+            }
+        };
+        
+        const dynamicContent = {
+            announcements: [
+                { 
+                    id: "news-3", date: "2025-06-30", premium: false,
+                    translations: {
+                        de: { title: "Der Theme Store ist da!", content: "Premium-Nutzer können jetzt aus einer Vielzahl von Themes wählen, um QHub zu personalisieren. Schau im neuen 'Theme Store'-Tab vorbei!" },
+                        en: { title: "The Theme Store is here!", content: "Premium users can now choose from a variety of themes to personalize QHub. Check out the new 'Theme Store' tab!" }
+                    }
+                },
+                 { 
+                    id: "news-4", date: "2025-06-28", premium: false,
+                    translations: {
+                        de: { title: "Login-System verbessert", content: "Wir haben den Anmeldeprozess überarbeitet, um ihn zuverlässiger und sicherer zu machen. Dein Feedback ist uns wichtig!" },
+                        en: { title: "Login System Improved", content: "We have revised the login process to make it more reliable and secure. Your feedback is important to us!" }
+                    }
+                },
+            ],
+            roadmap: [
+                { 
+                    id: "rm-3", status: 'completed',
+                    translations: {
+                        de: { title: 'v2.8: Theme Store & Vorschau', description: 'Implementierung des Theme Stores mit Live-Vorschau-Kacheln.' },
+                        en: { title: 'v2.8: Theme Store & Previews', description: 'Implementation of the Theme Store with live preview tiles.' }
+                    }
+                },
+                { 
+                    id: "rm-1", status: 'in-progress', progress: 50,
+                    translations: {
+                        de: { title: 'v2.9: Dashboard-Widgets', description: 'Benutzer können bald Widgets auf ihrem Dashboard hinzufügen und anordnen.' },
+                        en: { title: 'v2.9: Dashboard Widgets', description: 'Users will soon be able to add and arrange widgets on their dashboard.' }
+                    }
+                },
+            ],
+            changelog: [
+                 { 
+                    version: "1.1.0", date: "2025-06-30",
+                    translations: {
+                        de: { changes: ["Theme Store mit vielen neuen Themes und Live-Vorschau implementiert.", "Login-System auf Live-URL umgestellt und stabilisiert.", "Changelog und Ankündigungen aktualisiert.", "Ein kleines Easter Egg für Entdecker hinzugefügt."] },
+                        en: { changes: ["Implemented Theme Store with many new themes and live previews.", "Switched login system to live URL and stabilized it.", "Updated changelog and announcements.", "Added a small easter egg for explorers."] }
+                    }
+                },
+            ],
+        };
+        
         const defaultSettings = {
             version: APP_VERSION,
             loggedIn: false,
@@ -122,41 +217,56 @@
             userAvatar: `https://placehold.co/96x96/e0e7ff/3730a3?text=G`,
             roles: [],
             theme: "light",
+            activeTheme: 'default-light',
+            language: "de",
             activeView: "dashboard",
-            sidebarCollapsed: false,
-            dashboard: {
-                sectionOrder: ["announcements", "roadmap", "changelog"],
-                layout: "2",
-            },
+            dashboard: { sectionOrder: ["announcements", "roadmap", "changelog"], layout: "2" },
+            unlockedEasterEgg: false
         };
 
         let settings = {};
-        let userData = {};
         const dom = { 
             activityBar: document.getElementById('activityBar'), 
             mainContentArea: document.getElementById('mainContentArea'), 
             headerTitle: document.getElementById('headerTitle'), 
             qHubSidebar: document.getElementById('qHubSidebar'), 
             mobileMenuBtn: document.getElementById('mobileMenuBtn'), 
-            sidebarBackdrop: document.getElementById('sidebarBackdrop'),
+            html: document.documentElement
         };
+        
+        function t(key, replacements = {}) {
+            const keys = key.split('.');
+            const lang = translations[settings.language] ? settings.language : 'de';
+            let result = keys.reduce((obj, k) => (obj || {})[k], translations[lang]);
+            if (typeof result !== 'string') {
+                result = keys.reduce((obj, k) => (obj || {})[k], translations.en) || key;
+            }
+            if(typeof result === 'string') {
+                for(const placeholder in replacements) {
+                    result = result.replace(`{${placeholder}}`, replacements[placeholder]);
+                }
+            }
+            return result || key;
+        }
 
         function init() {
-            loadState();
-            applySidebarState();
+            loadSettings();
             applyTheme();
+            applyLanguage();
             updateSpecialFeatures();
+            updateUIText();
             renderView(settings.activeView, true);
             setupEventListeners();
         }
         init();
 
-        function loadState() {
+        function loadSettings() {
             const storedSettings = localStorage.getItem(SETTINGS_KEY);
             settings = storedSettings ? { ...defaultSettings, ...JSON.parse(storedSettings) } : { ...defaultSettings };
-            const storedData = localStorage.getItem(USER_DATA_KEY);
-            userData = storedData ? JSON.parse(storedData) : { ...initialUserData };
             if (!Array.isArray(settings.roles)) settings.roles = [];
+            if (!settings.language || !translations[settings.language]) {
+                settings.language = 'de';
+            }
         }
         
         function saveSettings() {
@@ -168,215 +278,408 @@
             if (!isInitialLoad && settings.activeView === viewId) return;
             
             dom.activityBar.querySelectorAll('.activity-btn[data-view]').forEach(btn => btn.classList.toggle('active', btn.dataset.view === viewId));
+            dom.qHubSidebar.classList.remove('open');
+            dom.mainContentArea.innerHTML = ''; 
+            settings.activeView = viewId;
             
             dom.qHubSidebar.classList.add('hidden');
             dom.mobileMenuBtn.classList.add('hidden');
-            dom.mainContentArea.innerHTML = '';
-            settings.activeView = viewId;
-            let title = '';
+            
+            let content = '';
+            const title = t(`viewTitles.${viewId}`);
 
-            if (viewId === 'dashboard') {
-                title = "Dashboard";
-                dom.qHubSidebar.classList.remove('hidden');
-                dom.mobileMenuBtn.classList.remove('hidden');
-                renderDashboardSidebar();
-                renderDashboardContent();
+            switch(viewId) {
+                case 'dashboard':
+                    dom.mobileMenuBtn.classList.remove('hidden');
+                    dom.qHubSidebar.classList.remove('hidden');
+                    renderDashboardSidebar();
+                    renderDashboardContent();
+                    break;
+                case 'themestore':
+                    renderThemeStore();
+                    break;
+                case 'web': content = `<div class="webapp-container"><iframe src="https://quixoticode.github.io"></iframe></div>`; break;
+                case 'qcode': content = `<div class="webapp-container"><iframe src="https://quixoticode.github.io/app/QCode/"></iframe></div>`; break;
+                case 'qsounds': content = `<div class="webapp-container"><iframe src="https://quixoticode.github.io/app/QSounds/"></iframe></div>`; break;
+                case 'qpets': content = `<div class="webapp-container"><iframe src="https://quixoticode.github.io/app/pl"></iframe></div>`; break;
+                case 'contact': content = `<div class="webapp-container"><iframe src="https://quixoticode.github.io/contact"></iframe></div>`; break;
+                case 'status':
+                    content = `<div class="h-full flex flex-col items-center justify-center text-center p-4"><div class="q-card max-w-md"><span class="material-icons text-6xl text-gray-400 mb-4">link_off</span><h2 class="text-xl font-bold mb-2">${t('statusPage.cannot_embed_title')}</h2><p class="text-gray-600 dark:text-gray-300 mb-6">${t('statusPage.cannot_embed_desc')}</p><a href="https://status.quixoticode.de/status/network" target="_blank" class="inline-block px-6 py-3 rounded-lg font-semibold transition" style="background-color: var(--q-primary); color: var(--q-primary-text);">${t('statusPage.open_button')}</a></div></div>`;
+                    break;
             }
             
             dom.headerTitle.textContent = title;
+            document.title = "QHub - " + title;
+            if(content) dom.mainContentArea.innerHTML = content;
+            
             saveSettings();
         }
 
-        function applySidebarState() {
-            dom.qHubSidebar.classList.toggle('collapsed', settings.sidebarCollapsed);
+        function applyTheme() {
+            const themeData = themes[settings.activeTheme] || themes['default-light'];
+            dom.html.setAttribute('data-theme', themeData.base);
+            for (const [key, value] of Object.entries(themeData.colors)) {
+                dom.html.style.setProperty(key, value);
+            }
+        }
+        
+        function applyLanguage() { dom.html.lang = settings.language; }
+        
+        function updateUIText() {
+             dom.activityBar.querySelectorAll('.activity-btn[data-view]').forEach(btn => {
+                 btn.title = t(`viewTitles.${btn.dataset.view}`);
+             });
+             document.getElementById('betaBtn').title = t('viewTitles.beta');
+             document.getElementById('settingsBtn').title = t('viewTitles.settings');
         }
 
-        function toggleSidebar() {
-            settings.sidebarCollapsed = !settings.sidebarCollapsed;
-            applySidebarState();
-            saveSettings();
+        function updateSpecialFeatures() {
+            const hasPremium = settings.roles.includes('PREMIUM') || settings.roles.includes('OWNER');
+            const hasBeta = settings.roles.includes('BETA');
+            dom.activityBar.querySelector('[data-view="qpets"]').classList.toggle('hidden', !hasPremium);
+            dom.activityBar.querySelector('#betaBtn').classList.toggle('hidden', !hasBeta);
         }
 
         function renderDashboardSidebar() {
             const rolesHTML = settings.roles.map(role => `<div class="role-badge ${role.toLowerCase()}" title="${role}">${role}</div>`).join('');
-            const sectionsNav = settings.dashboard.sectionOrder.map(id => `<a href="#section-${id}" class="flex items-center gap-3 p-3 rounded-lg capitalize hover:bg-gray-100 dark:hover:bg-gray-700">${id}</a>`).join('');
+            const sectionsNav = settings.dashboard.sectionOrder.map(id => `<a href="#section-${id}" class="flex items-center gap-3 p-3 rounded-lg capitalize hover:bg-gray-100 dark:hover:bg-gray-700">${t('dashboardModules.'+id+'.title')}</a>`).join('');
+
             dom.qHubSidebar.innerHTML = `
-                <div class="flex items-center justify-between gap-3 mb-8">
-                    <div class="flex items-center gap-3"><span class="material-icons text-3xl" style="color: var(--q-primary);">hub</span><h1 class="text-2xl font-bold">QHub</h1></div>
-                    <button id="sidebarToggleBtn" class="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 hidden md:block"><span class="material-icons">${settings.sidebarCollapsed ? 'menu' : 'menu_open'}</span></button>
+                <div class="flex items-center gap-3 mb-8">
+                    <span class="material-icons text-3xl" style="color: var(--q-primary);">hub</span>
+                    <h1 class="text-2xl font-bold">QHub</h1>
                 </div>
                 <div class="p-4 rounded-lg mb-6 text-center" style="background-color: var(--q-highlight);">
-                    <img src="${settings.userAvatar}" class="w-16 h-16 rounded-full mx-auto mb-2 border-2 border-white shadow-md">
+                    <img src="${settings.userAvatar}" class="w-16 h-16 rounded-full mx-auto mb-2 border-2 border-white shadow-md cursor-pointer" id="avatarImg">
                     <h2 class="font-bold text-lg" style="color: var(--q-highlight-text);">${settings.username}</h2>
                     <div class="flex items-center justify-center gap-1 mt-2 flex-wrap">${rolesHTML}</div>
                 </div>
-                <nav class="flex-grow"><h3 class="px-3 text-sm font-semibold text-gray-400 uppercase tracking-wider mb-2">Sektionen</h3>${sectionsNav}</nav>`;
+                <div class="mb-6">
+                    <button id="themeStoreBtn" class="w-full flex items-center justify-center gap-3 p-3 rounded-lg font-semibold text-white transition" style="background-color: var(--q-primary); color: var(--q-primary-text);">
+                        <span class="material-icons">palette</span>
+                        <span>${t('sidebar.themestore_cta')}</span>
+                    </button>
+                </div>
+                <nav class="flex-grow">
+                    <h3 class="px-3 text-sm font-semibold text-gray-400 uppercase tracking-wider mb-2">${t('sidebar.sections')}</h3>
+                    ${sectionsNav}
+                </nav>`;
+            
+            document.getElementById('themeStoreBtn').addEventListener('click', () => renderView('themestore'));
         }
 
         function renderDashboardContent() {
-            dom.mainContentArea.innerHTML = `<div id="sectionsContainer" class="space-y-8"></div>`;
-            const sectionsContainer = document.getElementById('sectionsContainer');
-            const layoutClasses = { '1': 'grid-cols-1', '2': 'md:grid-cols-2', '3': 'lg:grid-cols-3' };
-            sectionsContainer.className = `grid gap-6 ${layoutClasses[settings.dashboard.layout] || 'grid-cols-1'}`;
-            const sectionMap = {
-                announcements: { title: 'Ankündigungen', icon: 'campaign', renderer: renderAnnouncementsContent },
-                roadmap: { title: 'Roadmap', icon: 'signpost', renderer: renderRoadmapContent },
-                changelog: { title: 'Changelog', icon: 'history', renderer: renderChangelogContent },
-            };
-            sectionsContainer.innerHTML = settings.dashboard.sectionOrder.map(id => sectionMap[id] ? createSectionHTML(id, sectionMap[id].title, sectionMap[id].icon, sectionMap[id].renderer) : '').join('');
+             dom.mainContentArea.innerHTML = `<div id="sectionsContainer" class="space-y-8"></div>`;
+             const sectionsContainer = document.getElementById('sectionsContainer');
+             const layoutClasses = { '1': 'grid-cols-1', '2': 'md:grid-cols-2', '3': 'lg:grid-cols-3' };
+             sectionsContainer.className = `grid gap-6 ${layoutClasses[settings.dashboard.layout] || 'grid-cols-1 md:grid-cols-2'}`;
+             const sectionMap = {
+                 announcements: { icon: 'campaign', renderer: renderAnnouncementsContent },
+                 roadmap: { icon: 'signpost', renderer: renderRoadmapContent },
+                 changelog: { icon: 'history', renderer: renderChangelogContent },
+             };
+             sectionsContainer.innerHTML = settings.dashboard.sectionOrder.map(id => sectionMap[id] ? createSectionHTML(id, t(`dashboardModules.${id}.title`), sectionMap[id].icon, sectionMap[id].renderer) : '').join('');
         }
         
-        function createSectionHTML(id, title, icon, contentRenderer) {
-            return `<section id="section-${id}" data-section-id="${id}"><div class="flex items-center justify-between mb-4"><h2 class="text-2xl font-bold flex items-center gap-3"><span class="material-icons text-3xl" style="color: var(--q-primary);">${icon}</span>${title}</h2></div><div>${contentRenderer()}</div></section>`;
+        function createSectionHTML(id, title, icon, renderer) {
+             return `<section id="section-${id}" data-section-id="${id}"><div class="flex items-center justify-between mb-4"><h2 class="text-2xl font-bold flex items-center gap-3"><span class="material-icons text-3xl" style="color: var(--q-primary);">${icon}</span>${title}</h2></div><div>${renderer()}</div></section>`;
         }
 
         function renderAnnouncementsContent() {
             const hasPremium = settings.roles.includes('PREMIUM') || settings.roles.includes('OWNER');
-            const items = (userData.announcements || []).filter(item => !item.premium || hasPremium);
-            return `<div class="space-y-4">${items.map(item => `<div class="q-card"><div class="flex justify-between items-center mb-2"><h3 class="font-bold text-lg">${item.title}</h3>${item.premium ? `<div class="role-badge premium"><span class="material-icons text-xs">star</span></div>` : ''}</div><p class="text-gray-600 mt-1">${item.content}</p><p class="text-xs text-gray-400 mt-4">${new Date(item.date).toLocaleDateString('de-DE')}</p></div>`).join('') || '<div class="q-card text-gray-500">Nichts Neues hier.</div>'}</div>`;
+            const items = dynamicContent.announcements.filter(item => !item.premium || hasPremium);
+            if (items.length === 0) return `<div class="q-card text-gray-500">${t('dashboardModules.announcements.none')}</div>`;
+
+            return `<div class="space-y-4">${items.map(item => {
+                const translation = item.translations[settings.language] || item.translations.en;
+                return `<div class="q-card">
+                    <div class="flex justify-between items-center mb-2">
+                        <h3 class="font-bold text-lg">${translation.title}</h3>
+                        ${item.premium ? `<div class="role-badge premium"><span class="material-icons text-xs">star</span></div>` : ''}
+                    </div>
+                    <p class="text-gray-600 mt-1">${translation.content}</p>
+                    <p class="text-xs text-gray-400 mt-4">${new Date(item.date).toLocaleDateString(settings.language)}</p>
+                </div>`;
+            }).join('')}</div>`;
         }
 
         function renderRoadmapContent() {
+            const items = dynamicContent.roadmap;
+            if (items.length === 0) return `<div class="q-card text-gray-500">${t('dashboardModules.roadmap.none')}</div>`;
+            
             const iconMap = { 'in-progress': 'construction', 'planned': 'flag', 'completed': 'check_circle', 'paused': 'pause_circle' };
-            return `<div class="q-card"><div class="timeline">${(userData.roadmap || []).map(item => `<div class="timeline-item"><div class="timeline-icon"><span class="material-icons">${iconMap[item.status] || 'info'}</span></div><h4 class="font-bold text-lg">${item.title}</h4><p class="text-gray-600 mt-1">${item.description}</p></div>`).join('') || '<div class="text-gray-500">Keine Roadmap vorhanden.</div>'}</div></div>`;
+            return `<div class="q-card"><div class="timeline">${items.map(item => {
+                const translation = item.translations[settings.language] || item.translations.en;
+                const progressHTML = (item.status === 'in-progress' && item.progress > 0) ? `<div class="mt-2"><div class="flex justify-between text-sm mb-1"><span>${t('dashboardModules.roadmap.progress')}</span><span>${item.progress}%</span></div><div class="w-full progress-bar-bg h-2 rounded-full overflow-hidden"><div class="h-2 progress-bar-fill" style="width: ${item.progress}%;"></div></div></div>` : '';
+                return `<div class="timeline-item">
+                    <div class="timeline-icon"><span class="material-icons">${iconMap[item.status] || 'info'}</span></div>
+                    <h4 class="font-bold text-lg">${translation.title}</h4>
+                    <p class="text-gray-600 mt-1">${translation.description}</p>
+                    ${progressHTML}
+                </div>`;
+            }).join('')}</div></div>`;
         }
         
         function renderChangelogContent() {
-            return `<div class="q-card space-y-6">${(userData.changelog || []).map(item => `<div><h4 class="font-bold text-lg">Version ${item.version} <span class="text-sm font-normal text-gray-500">- ${new Date(item.date).toLocaleDateString('de-DE')}</span></h4><ul class="list-disc list-inside mt-2 text-sm text-gray-600 space-y-1">${(item.changes || []).map(change => `<li>${change}</li>`).join('')}</ul></div>`).join('') || '<div class="text-gray-500">Kein Changelog vorhanden.</div>'}</div>`;
-        }
+            const items = dynamicContent.changelog;
+            if (items.length === 0) return `<div class="q-card text-gray-500">${t('dashboardModules.changelog.none')}</div>`;
 
-        function applyTheme() { document.documentElement.setAttribute('data-theme', settings.theme); }
+            return `<div class="q-card space-y-6">${items.map(item => {
+                const translation = item.translations[settings.language] || item.translations.en;
+                const changesHTML = (translation.changes || []).map(change => `<li>${change}</li>`).join('');
+                return `<div>
+                    <h4 class="font-bold text-lg">${t('dashboardModules.changelog.version')} ${item.version} <span class="text-sm font-normal text-gray-500">- ${new Date(item.date).toLocaleDateString(settings.language)}</span></h4>
+                    <ul class="list-disc list-inside mt-2 text-sm text-gray-600 space-y-1">${changesHTML}</ul>
+                </div>`;
+            }).join('')}</div>`;
+        }
         
-        function updateSpecialFeatures() {
-            const qpetsBtn = document.querySelector('[data-view="qpets"]');
+        function renderThemeStore() {
             const hasPremium = settings.roles.includes('PREMIUM') || settings.roles.includes('OWNER');
-            qpetsBtn.classList.toggle('hidden', !hasPremium);
-        }
+            let content = '';
 
-        // --- NEUE FUNKTION ZUM LADEN DER VERSION ---
-        function loadVersion() {
-            // Sucht nach der version.txt im selben Ordner wie diese HTML-Datei.
-            // Für /app/index.html sucht es nach /app/version.txt
-            fetch('version.txt')
-                .then(response => {
-                    if (!response.ok) throw new Error('Datei nicht gefunden');
-                    return response.text();
-                })
-                .then(version => {
-                    // Finde ALLE Platzhalter und setze den Text
-                    const versionDisplays = document.querySelectorAll('.app-version');
-                    versionDisplays.forEach(element => {
-                        element.textContent = version.trim();
-                    });
-                })
-                .catch(error => {
-                    console.error('Fehler beim Laden der Version:', error);
-                    const versionDisplays = document.querySelectorAll('.app-version');
-                    versionDisplays.forEach(element => {
-                        element.textContent = 'n/a';
+            if (hasPremium) {
+                const themeCards = Object.entries(themes)
+                    .filter(([id, theme]) => !theme.hidden || (theme.hidden && settings.unlockedEasterEgg))
+                    .map(([id, theme]) => {
+                    const isActive = settings.activeTheme === id;
+                    const previewStyles = `
+                        --q-primary: ${theme.colors['--q-primary']};
+                        --q-background: ${theme.colors['--q-background']};
+                        --q-surface: ${theme.colors['--q-surface']};
+                        --q-highlight: ${theme.colors['--q-highlight']};
+                        --q-outline: ${theme.base === 'dark' ? '#4b5563' : '#e5e7eb'};
+                    `;
+
+                    return `
+                        <div class="theme-preview-card ${isActive ? 'active' : ''}" data-theme-id="${id}">
+                            <div class="mini-hub-preview mb-3" style="${previewStyles}">
+                                <div class="mini-activity-bar" style="background-color: var(--q-surface);"></div>
+                                <div class="mini-sidebar" style="background-color: var(--q-surface);">
+                                    <div class="mini-user-card" style="background-color: var(--q-highlight);"></div>
+                                    <div class="mini-nav-item" style="background-color: var(--q-primary); opacity: 0.8;"></div>
+                                    <div class="mini-nav-item" style="background-color: var(--q-highlight);"></div>
+                                    <div class="mini-nav-item" style="background-color: var(--q-highlight);"></div>
+                                </div>
+                                <div class="mini-main" style="background-color: var(--q-background);">
+                                    <div class="mini-header" style="background-color: var(--q-surface);"></div>
+                                    <div class="mini-content">
+                                        <div class="mini-card" style="background-color: var(--q-surface); border-color: var(--q-primary);"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <h3 class="font-bold text-base mb-3 text-center">${theme.name}</h3>
+                            <button class="w-full p-2 text-center rounded-md text-sm font-semibold" 
+                                    style="background-color: var(--q-primary); color: var(--q-primary-text);"
+                                    onclick="event.stopPropagation(); document.querySelector('[data-theme-id=\\'${id}\\']').click();"
+                                    ${isActive ? 'disabled' : ''}>
+                                ${isActive ? t('settingsModal.activeTheme') : t('themeStore.activate_button')}
+                            </button>
+                        </div>
+                    `;
+                }).join('');
+
+                const suggestionHTML = `
+                    <div class="q-card md:col-span-2 lg:col-span-3 text-center">
+                         <span class="material-icons text-4xl mb-2" style="color: var(--q-primary);">lightbulb</span>
+                         <h3 class="text-xl font-bold mb-2">${t('themeStore.suggestion_title')}</h3>
+                         <p class="text-gray-600 dark:text-gray-300 mb-4">${t('themeStore.suggestion_desc')}</p>
+                         <button id="suggestionBtn" class="inline-block px-5 py-2 rounded-lg font-semibold transition text-sm" style="background-color: var(--q-primary); color: var(--q-primary-text);">
+                            ${t('themeStore.suggestion_button')}
+                         </button>
+                    </div>
+                `;
+
+                content = `<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">${themeCards}${suggestionHTML}</div>`;
+                dom.mainContentArea.innerHTML = content;
+
+                dom.mainContentArea.querySelectorAll('.theme-preview-card').forEach(card => {
+                    card.addEventListener('click', (e) => {
+                        const themeId = e.currentTarget.dataset.themeId;
+                        if (themeId && themeId !== settings.activeTheme) {
+                            settings.activeTheme = themeId;
+                            const themeData = themes[themeId] || themes['default-light'];
+                            settings.theme = themeData.base;
+                            applyTheme();
+                            saveSettings();
+                            renderThemeStore();
+                            showToast(t('toasts.theme_applied', { themeName: themes[themeId].name }), 'success');
+                        }
                     });
                 });
+                
+                dom.mainContentArea.querySelector('#suggestionBtn').addEventListener('click', () => renderView('contact'));
+
+            } else {
+                content = `
+                    <div class="h-full flex flex-col items-center justify-center text-center p-4">
+                        <div class="q-card max-w-md">
+                            <span class="material-icons text-6xl text-yellow-500 mb-4">workspace_premium</span>
+                            <h2 class="text-xl font-bold mb-2">${t('themeStore.non_premium_title')}</h2>
+                            <p class="text-gray-600 dark:text-gray-300 mb-6">${t('themeStore.non_premium_desc')}</p>
+                            <button id="requestPremiumBtn" class="inline-block px-6 py-3 rounded-lg font-semibold transition" style="background-color: var(--q-primary); color: var(--q-primary-text);">
+                                ${t('themeStore.non_premium_button')}
+                            </button>
+                        </div>
+                    </div>`;
+                dom.mainContentArea.innerHTML = content;
+                document.getElementById('requestPremiumBtn').addEventListener('click', () => renderView('contact'));
+            }
         }
 
         function setupEventListeners() {
-            const externalAppLinks = {
-                'qpolls': 'https://quixoticode.github.io/app/qpolls',
-                'web': 'https://quixoticode.github.io/',
-                'qcode': 'https://quixoticode.github.io/app/QCode/',
-                'qsounds': 'https://quixoticode.github.io/app/QSounds/',
-                'qpets': 'https://quixoticode.github.io/app/pl',
-                'contact': 'https://quixoticode.github.io/contact',
-                'status': 'https://status.quixoticode.de/status/network'
-            };
-
             dom.activityBar.addEventListener('click', e => {
                 const btn = e.target.closest('.activity-btn[data-view]');
-                if (!btn) return;
-                const viewId = btn.dataset.view;
-
-                if (externalAppLinks[viewId]) {
-                    window.open(externalAppLinks[viewId], '_blank');
-                    return;
-                }
-                
-                if(viewId === 'dashboard') {
-                    renderView(viewId);
-                }
+                if (btn) renderView(btn.dataset.view);
             });
-
-            document.getElementById('betaBtn').addEventListener('click', () => window.open('https://quixoticode.github.io/beta/', '_blank'));
+            document.getElementById('betaBtn').addEventListener('click', () => window.open('https://quixoticode.github.io/beta', '_blank'));
             document.getElementById('settingsBtn').addEventListener('click', renderAndShowSettingsModal);
-            
-            dom.mobileMenuBtn.addEventListener('click', () => {
-                dom.qHubSidebar.classList.add('open');
-                dom.sidebarBackdrop.classList.remove('hidden');
-            });
-            dom.sidebarBackdrop.addEventListener('click', () => {
-                dom.qHubSidebar.classList.remove('open');
-                dom.sidebarBackdrop.classList.add('hidden');
-            });
+            dom.mobileMenuBtn.addEventListener('click', () => dom.qHubSidebar.classList.toggle('open'));
 
-            dom.qHubSidebar.addEventListener('click', e => {
-                const toggleBtn = e.target.closest('#sidebarToggleBtn');
-                if (toggleBtn) {
-                    toggleSidebar();
-                    renderDashboardSidebar();
+            // Easter Egg Listener (Konami Code)
+            const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+            let konamiIndex = 0;
+            document.addEventListener('keydown', (e) => {
+                if (e.key === konamiCode[konamiIndex]) {
+                    konamiIndex++;
+                    if (konamiIndex === konamiCode.length) {
+                        konamiIndex = 0;
+                        if (!settings.unlockedEasterEgg) {
+                            settings.unlockedEasterEgg = true;
+                            settings.activeTheme = '8-bit-retro';
+                            applyTheme();
+                            saveSettings();
+                            showToast(t('toasts.easter_egg'), 'success');
+                            if (settings.activeView === 'themestore') {
+                                renderThemeStore();
+                            }
+                        }
+                    }
+                } else {
+                    konamiIndex = 0;
                 }
             });
         }
         
         function renderAndShowSettingsModal() {
-             const modal = document.getElementById('settingsModal');
+            const modal = document.getElementById('settingsModal');
+            const langOptions = [
+                { code: 'de', name: 'Deutsch', flag: 'https://flagcdn.com/de.svg' },
+                { code: 'en', name: 'English', flag: 'https://flagcdn.com/gb.svg' }
+            ];
+            
+            const activeThemeName = (themes[settings.activeTheme] || {}).name || 'Unknown';
+
             modal.innerHTML = `
                 <div class="q-modal-content">
-                    <div class="flex justify-between items-center"><h2 class="text-2xl font-bold">Einstellungen</h2><button id="closeSettingsModal" class="p-2 rounded-full">&times;</button></div>
-                    <div class="mt-6 border-t pt-6 space-y-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-bold">${t('settingsModal.title')}</h2>
+                        <button id="closeSettingsModal" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 material-icons">close</button>
+                    </div>
+                    <div class="space-y-6">
                         <div>
-                            <label class="font-semibold block mb-2">Account</label>
+                            <label class="font-semibold block mb-2">${t('settingsModal.account')}</label>
                             ${settings.loggedIn 
-                                ? `<div class="space-y-2"><div class="p-4 rounded-md bg-green-100 text-green-800 text-center">Angemeldet als ${settings.username}</div><button id="logoutBtn" class="w-full p-2 text-center border rounded-md hover:bg-red-100">Abmelden</button></div>` 
-                                : `<div class="space-y-4 p-4 border rounded-md"><h4 class="font-medium">Anmelden</h4><div><label class="text-sm">Benutzername</label><input id="loginUser" type="text" class="w-full p-2 border rounded mt-1" placeholder="Benutzername"></div><div><label class="text-sm">Passwort / Einmal-Code</label><input id="loginPass" type="password" class="w-full p-2 border rounded mt-1"></div><button id="loginBtn" class="w-full p-2 text-center bg-blue-600 text-white rounded-md hover:bg-blue-700">Anmelden</button></div>`
+                                ? `<div class="space-y-2"><div class="p-4 rounded-md bg-green-100 dark:bg-green-900 dark:text-green-100 text-green-800 text-center">${t('settingsModal.loggedInAs')} ${settings.username}</div><button id="logoutBtn" class="w-full p-2 text-center border rounded-md hover:bg-red-100 dark:hover:bg-red-800">${t('settingsModal.logout')}</button></div>` 
+                                : `<div class="space-y-4 p-4 border rounded-md">
+                                    <h4 class="font-medium">${t('settingsModal.login')}</h4>
+                                    <div><label class="text-sm">${t('settingsModal.username')}</label><input id="loginUser" type="text" class="w-full p-2 border rounded mt-1 bg-transparent" placeholder="z.B. owner, premium, user"></div>
+                                    <div><label class="text-sm">${t('settingsModal.password')}</label><input id="loginPass" type="password" class="w-full p-2 border rounded mt-1 bg-transparent" placeholder="password"></div>
+                                    <button id="loginBtn" class="w-full p-2 text-center text-white rounded-md" style="background-color: var(--q-primary); color: var(--q-primary-text);">${t('settingsModal.login')}</button>
+                                   </div>`
                             }
                         </div>
                         <div>
-                            <label for="themeSelector" class="font-semibold block mb-2">Theme</label>
-                            <select id="themeSelector" class="w-full p-2 border rounded"><option value="light">Light</option><option value="dark">Dark</option></select>
+                            <label class="font-semibold block mb-2">${t('settingsModal.theme')}</label>
+                            <div class="p-3 border rounded-md text-sm">
+                                ${t('settingsModal.activeTheme')}: <span class="font-bold">${activeThemeName}</span>
+                                <button id="modalThemeStoreBtn" class="text-sm ml-2 font-semibold" style="color: var(--q-primary);">Ändern</button>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="languageSelectorBtn" class="font-semibold block mb-2">${t('settingsModal.language')}</label>
+                            <div class="relative">
+                                <button id="languageSelectorBtn" class="w-full p-2 border rounded text-left flex justify-between items-center bg-transparent">
+                                    <span id="selectedLanguageText" class="flex items-center gap-2"></span>
+                                    <span class="material-icons">unfold_more</span>
+                                </button>
+                                <div id="languageDropdown" class="hidden absolute bottom-full mb-1 w-full rounded-md shadow-lg border z-10" style="background-color: var(--q-surface);">
+                                    ${langOptions.map(lang => `<div data-lang="${lang.code}" class="lang-option p-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer flex items-center gap-2">
+                                        <img src="${lang.flag}" width="20" alt="${lang.name} flag"> ${lang.name}
+                                    </div>`).join('')}
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <p class="text-xs text-gray-500 mt-4">Version: <span class="app-version font-mono">...</span></p>
                 </div>`;
             
-            modal.querySelector('#themeSelector').value = settings.theme;
             modal.querySelector('#closeSettingsModal').addEventListener('click', () => toggleModal('settingsModal', false));
-            modal.querySelector('#themeSelector').addEventListener('change', (e) => { settings.theme = e.target.value; applyTheme(); saveSettings(); });
+            modal.querySelector('#modalThemeStoreBtn').addEventListener('click', () => {
+                toggleModal('settingsModal', false);
+                renderView('themestore');
+            });
             modal.querySelector('#loginBtn')?.addEventListener('click', handleLogin);
             modal.querySelector('#logoutBtn')?.addEventListener('click', handleLogout);
 
-            toggleModal('settingsModal', true);
+            const langBtn = modal.querySelector('#languageSelectorBtn');
+            const langDropdown = modal.querySelector('#languageDropdown');
+            const selectedLangText = modal.querySelector('#selectedLanguageText');
+            
+            function updateLangButton() {
+                const currentLang = langOptions.find(l => l.code === settings.language) || langOptions[0];
+                selectedLangText.innerHTML = `<img src="${currentLang.flag}" width="20" alt="${currentLang.name} flag"> ${currentLang.name}`;
+            }
+            updateLangButton();
 
-            // --- KORREKTUR: Version laden, NACHDEM das Modal im DOM ist ---
-            loadVersion();
+            langBtn.addEventListener('click', () => langDropdown.classList.toggle('hidden'));
+            
+            modal.querySelectorAll('.lang-option').forEach(option => {
+                option.addEventListener('click', () => {
+                    const newLang = option.dataset.lang;
+                    langDropdown.classList.add('hidden');
+                    if (newLang !== settings.language) {
+                        settings.language = newLang;
+                        saveSettings();
+                        applyLanguage();
+                        updateUIText();
+                        renderView(settings.activeView, true);
+                        renderAndShowSettingsModal(); 
+                    }
+                });
+            });
+
+            toggleModal('settingsModal', true);
         }
 
         async function handleLogin() {
             const usernameInput = document.getElementById('loginUser').value.trim().toLowerCase();
             const passInput = document.getElementById('loginPass').value;
             const loginButton = document.getElementById('loginBtn');
-            if (!usernameInput || !passInput) return showToast('Bitte Felder ausfüllen.', 'error');
+
+            if (!usernameInput) { showToast(t('toasts.enter_username'), 'error'); return; }
+            if (!passInput) { showToast(t('toasts.enter_password'), 'error'); return; }
+
             loginButton.disabled = true;
-            loginButton.innerHTML = 'Prüfe...';
+            loginButton.innerHTML = t('login.checking');
+
             try {
                 const response = await fetch(`https://quixoticode.github.io/data/s/users.json`);
-                if (!response.ok) throw new Error(`Benutzerdaten nicht gefunden.`);
+                if (!response.ok) {
+                    throw new Error(`${t('toasts.user_not_found')} (${response.status})`);
+                }
+                
                 const data = await response.json();
                 let userFound = null;
                 let finalUsername = usernameInput;
+
                 if (data.users[usernameInput] && data.users[usernameInput].password === passInput) {
                     userFound = data.users[usernameInput];
                 } else if (data.one_time_codes[passInput] && data.one_time_codes[passInput].username.toLowerCase() === usernameInput) {
-                     userFound = data.users[data.one_time_codes[passInput].username.toLowerCase()];
-                     finalUsername = data.one_time_codes[passInput].username;
+                    const mappedUsername = data.one_time_codes[passInput].username.toLowerCase();
+                    userFound = data.users[mappedUsername];
+                    finalUsername = mappedUsername;
                 }
+
                 if (userFound) {
                     settings.loggedIn = true;
                     settings.username = finalUsername;
@@ -386,26 +689,30 @@
                     updateSpecialFeatures();
                     renderView('dashboard', true);
                     toggleModal('settingsModal', false);
-                    showToast(`Willkommen, ${settings.username}!`, 'success');
+                    showToast(t('toasts.welcome', {username: settings.username}), 'success');
                 } else {
-                    throw new Error('Ungültige Anmeldedaten.');
+                    throw new Error(t('toasts.login_error'));
                 }
             } catch (error) {
+                console.error("Login Error:", error);
                 showToast(error.message, 'error');
             } finally {
-                loginButton.disabled = false;
-                loginButton.innerHTML = 'Anmelden';
+                if(loginButton) {
+                   loginButton.disabled = false;
+                   loginButton.innerHTML = t('settingsModal.login');
+                }
             }
         }
 
         function handleLogout() {
-            const currentTheme = settings.theme;
-            settings = { ...defaultSettings, theme: currentTheme };
+            const currentLang = settings.language;
+            settings = { ...defaultSettings, language: currentLang };
             saveSettings();
+            applyTheme();
             updateSpecialFeatures();
             renderView('dashboard', true);
             toggleModal('settingsModal', false);
-            showToast('Erfolgreich abgemeldet.', 'info');
+            showToast(t('toasts.logout_success'), 'info');
         }
 
         function toggleModal(modalId, show) { document.getElementById(modalId).classList.toggle('visible', show); }
@@ -415,13 +722,14 @@
             const toast = document.createElement('div');
             toast.className = `px-4 py-3 rounded-lg text-white shadow-lg transition-all duration-300 transform translate-y-4 opacity-0`;
             toast.textContent = message;
-            if (type === 'success') toast.style.backgroundColor = `var(--q-primary)`;
+            if (type === 'success') toast.style.backgroundColor = `#10b981`; // Beta Green for success
             else if (type === 'error') toast.style.backgroundColor = `var(--q-danger)`;
             else toast.style.backgroundColor = `var(--q-on-surface-variant)`;
             container.appendChild(toast);
-            toast.offsetHeight;
-            toast.classList.remove('translate-y-4', 'opacity-0');
-            toast.classList.add('translate-y-0', 'opacity-100');
+            requestAnimationFrame(() => {
+                toast.classList.remove('translate-y-4', 'opacity-0');
+                toast.classList.add('translate-y-0', 'opacity-100');
+            });
             setTimeout(() => {
                 toast.classList.remove('translate-y-0', 'opacity-100');
                 toast.classList.add('translate-y-4', 'opacity-0');
