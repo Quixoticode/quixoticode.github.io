@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="de" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gamebubble - Deine Spielwiese</title>
+    
+    <!-- Tailwind CSS - Unser Werkzeugkasten für das Design -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts - Für eine schicke Schriftart -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        // Konfiguration für Tailwind CSS, um unsere eigene Schriftart und Farben zu nutzen
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        'brand-purple': '#6d28d9',
+                        'brand-dark': '#111827',
+                        'brand-light': '#f3f4f6',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- ===== EIGENE STILE & ANIMATIONEN ===== -->
+    <style>
+        /* Animation für das sanfte Einblenden von Elementen */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Animation für das "Hereingleiten" der Spiel-Karten */
+        @keyframes slideIn {
+            from { opacity: 0; transform: scale(0.95) translateY(30px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        /* Klasse, die wir mit JavaScript hinzufügen, um die Animation zu starten */
+        .is-visible {
+            animation: slideIn 0.6s ease-out forwards;
+        }
+
+        /* Wir wenden die fadeIn Animation auf die Hauptüberschrift und den Text an */
+        .hero-fade-in {
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        /* Verzögerung für den Text und den Button, damit es gestaffelt aussieht */
+        .hero-fade-in-p {
+            animation-delay: 0.2s;
+            opacity: 0; /* Startet unsichtbar */
+        }
+        .hero-fade-in-btn {
+            animation-delay: 0.4s;
+            opacity: 0; /* Startet unsichtbar */
+        }
+    </style>
+</head>
+<body class="bg-brand-dark text-brand-light font-sans">
+
+    <!-- ===== HEADER / NAVIGATION ===== -->
+    <header class="bg-gray-900/80 backdrop-blur-sm sticky top-0 z-50">
+        <nav class="container mx-auto flex items-center justify-between p-4">
+            <!-- Logo und Markenname -->
+            <a href="#" class="flex items-center gap-3">
+                <!-- HIER IST DEIN LOGO EINGEFÜGT -->
+                <img src="image.png" alt="Gamebubble Logo" class="h-12 w-12">
+                <span class="text-2xl font-bold text-white">Gamebubble</span>
+            </a>
+            <!-- Navigationslinks -->
+            <div class="hidden md:flex items-center gap-6 text-lg">
+                <a href="/app/" class="hover:text-brand-purple transition-colors">Home</a>
+                <a href="#game-gallery" class="hover:text-brand-purple transition-colors">Spiele</a>
+                <a href="/index.html" class="hover:text-brand-purple transition-colors">Über Uns</a>
+            </div>
+            <!-- "Spielen" Button -->
+            <a href="#game-gallery" class="bg-brand-purple text-white font-bold py-2 px-5 rounded-lg hover:bg-violet-700 transition-transform hover:scale-105">
+                Jetzt Spielen
+            </a>
+        </nav>
+    </header>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main>
+        <!-- Hero Sektion: Der erste Eindruck -->
+        <section class="container mx-auto text-center py-20 md:py-32 px-4">
+            <h1 class="text-5xl md:text-7xl font-bold leading-tight hero-fade-in">
+                Deine Welt der <span class="text-brand-purple">einzigartigen</span> Browser-Spiele.
+            </h1>
+            <p class="text-xl text-gray-400 mt-6 max-w-3xl mx-auto hero-fade-in hero-fade-in-p">
+                Tauche ein in handgemachte Abenteuer. Komplexe Welten und spannende Geschichten warten auf dich. Alles direkt in deinem Browser.
+            </p>
+            <a href="#game-gallery" class="mt-10 inline-block bg-brand-purple text-white font-bold py-4 px-8 rounded-lg text-xl hover:bg-violet-700 transition-transform hover:scale-105 hero-fade-in hero-fade-in-btn">
+                Entdecke die Spiele
+            </a>
+        </section>
+
+        <!-- Spiele-Galerie -->
+        <section id="game-gallery" class="py-20 bg-gray-900">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl font-bold text-center mb-12">Unsere Spiele</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                    <!-- Spiel-Karte 1: Assassin Game (mit 'game-card' Klasse für JS) -->
+                    <div class="game-card bg-brand-dark rounded-lg overflow-hidden shadow-lg hover:shadow-brand-purple/40 transition-shadow duration-300 group opacity-0">
+                        <div class="overflow-hidden h-56">
+                            <img src="https://placehold.co/600x400/1f2937/ffffff?text=Assassin+Game" alt="Vorschau von Assassin Game" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold mb-2">Shadow's Creed</h3>
+                            <p class="text-gray-400 mb-4">Schleiche durch die Schatten, erfülle Missionen und werde zum Meister-Assassinen in dieser düsteren Welt.</p>
+                            <button class="w-full bg-brand-purple text-white font-bold py-2 px-5 rounded-lg hover:bg-violet-700 transition-colors">
+                              <a href="assasin.html">Spielen</a>
+                            </button>
+                        </div>
+                    </div>
+
+                    
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="bg-gray-900 py-6 text-center">
+        <div class="container mx-auto">
+            <p class="text-gray-500">&copy; 2025 Gamebubble. Alle Rechte vorbehalten.</p>
+        </div>
+    </footer>
+
+    <!-- ===== EIGENES JAVASCRIPT ===== -->
+    <script>
+        // Diese Funktion sorgt dafür, dass die Spiel-Karten erst animiert werden,
+        // wenn sie in den sichtbaren Bereich des Nutzers scrollen.
+
+        // 1. Alle Elemente mit der Klasse 'game-card' auswählen
+        const cards = document.querySelectorAll('.game-card');
+
+        // 2. Den "Beobachter" (Intersection Observer) erstellen
+        // Das ist ein modernes JS-Feature, das sehr performant ist.
+        // Er schaut, ob ein Element in den Bildschirm kommt.
+        const observer = new IntersectionObserver(entries => {
+            // Für jeden Eintrag (jede Karte), den der Beobachter meldet...
+            entries.forEach(entry => {
+                // ...prüfen wir, ob er jetzt sichtbar ist (isIntersecting).
+                if (entry.isIntersecting) {
+                    // Wenn ja, fügen wir die Klasse 'is-visible' hinzu.
+                    // Diese Klasse startet unsere CSS-Animation (siehe <style>-Block oben).
+                    entry.target.classList.add('is-visible');
+                    // Danach hören wir auf, dieses spezielle Element zu beobachten,
+                    // damit die Animation nicht jedes Mal neu startet.
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            // Diese Option sorgt dafür, dass die Animation schon startet,
+            // wenn die Karte zu 10% sichtbar ist (nicht erst bei 100%).
+            threshold: 0.1 
+        });
+
+        // 3. Dem Beobachter sagen, welche Elemente er beobachten soll.
+        // Wir gehen durch jede unserer Karten und sagen: "Hey Beobachter, behalte diese im Auge!"
+        cards.forEach(card => {
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>

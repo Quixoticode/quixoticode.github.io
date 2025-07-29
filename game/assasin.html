@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shadow's Creed - Stabilitäts-Fix</title>
+    
+    <!-- ===== STILE FÜR DAS SPIEL-INTERFACE ===== -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+        body { margin: 0; overflow: hidden; background-color: #000; font-family: 'Press Start 2P', cursive; }
+        .ui-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; color: white; display: flex; justify-content: center; align-items: center; text-align: center; pointer-events: none; }
+        .hidden { display: none !important; }
+        .menu { background-color: rgba(0, 0, 0, 0.8); border: 4px solid #555; padding: 40px; box-shadow: 0 0 20px rgba(255, 255, 255, 0.2); display: flex; flex-direction: column; gap: 20px; width: 90%; max-width: 500px; pointer-events: auto; }
+        .menu h1 { font-size: 2.5rem; color: #a855f7; text-shadow: 3px 3px 0 #000; margin-bottom: 20px; }
+        .menu-button { background-color: #555; border: 2px solid #888; color: #fff; padding: 15px 20px; font-family: 'Press Start 2P', cursive; font-size: 1rem; cursor: pointer; transition: all 0.2s ease; }
+        .menu-button:hover { background-color: #a855f7; border-color: #c084fc; }
+        #hud { pointer-events: none; }
+        #crosshair { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 10px; height: 10px; background-color: rgba(255, 255, 255, 0.7); border: 2px solid black; }
+        #blocker { background-color: rgba(0,0,0,0.5); cursor: pointer; pointer-events: auto; }
+        #instructions { width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; font-size: 14px; }
+    </style>
+</head>
+<body>
+
+    <!-- UI-Elemente (unverändert) -->
+    <div id="blocker" class="ui-container hidden"><div id="instructions"><p style="font-size: 36px;">Klicken zum Spielen</p><p>W, A, S, D = Bewegen<br/>LEERTASTE = Springen<br/>MAUS = Umschauen</p></div></div>
+    <div id="start-menu" class="ui-container hidden"><div class="menu"><h1>Shadow's Creed</h1><button id="start-button" class="menu-button">Spiel starten</button><button id="shop-button-main" class="menu-button">Shop</button><button class="menu-button" disabled>Einstellungen (bald)</button></div></div>
+    <div id="shop-menu" class="ui-container hidden"><div class="menu"><h1>Shop</h1><p>Hier kannst du bald Upgrades kaufen!</p><p>Deine Coins: <span id="coin-display-shop">0</span></p><button id="back-to-main-button" class="menu-button">Zurück zum Menü</button></div></div>
+    <div id="game-over-menu" class="ui-container hidden"><div class="menu"><h1>Game Over</h1><p>Du wurdest entdeckt!</p><button id="restart-button" class="menu-button">Neustart</button></div></div>
+    <div id="hud" class="hidden"><div id="crosshair"></div><div style="position: absolute; top: 20px; left: 20px; font-size: 1.5rem;">Coins: <span id="coin-display-hud">0</span></div></div>
+
+    <!-- ===== DAS SPIEL (JAVASCRIPT) ===== -->
+    <script type="importmap">
+        { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.161.0/examples/jsm/" } }
+    </script>
+    <script type="module">
+        import * as THREE from 'three';
+        import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
+
+        // ===== SPIEL-ZUSTAND & VARIABLEN =====
+        let camera, scene, renderer, controls;
+        const wallObjects = []; 
+        let mazeMeshes = [];
+        let raycaster;
+
+        let moveForward = false, moveBackward = false, moveLeft = false, moveRight = false, canJump = false;
+        let prevTime = performance.now();
+        const velocity = new THREE.Vector3();
+        const direction = new THREE.Vector3();
+        
+        const gameState = {
+            _current: 'MENU',
+            get current() { return this._current; },
+            set current(newState) { this._current = newState; updateUI(); }
+        };
+
+        const blocker = document.getElementById('blocker');
+        const startMenu = document.getElementById('start-menu');
+        const shopMenu = document.getElementById('shop-menu');
+        const gameOverMenu = document.getElementById('game-over-menu');
+        const hud = document.getElementById('hud');
+        const startButton = document.getElementById('start-button');
+        const shopButtonMain = document.getElementById('shop-button-main');
+        const backToMainButton = document.getElementById('back-to-main-button');
+        const restartButton = document.getElementById('restart-button');
+
+        const MAZE_SIZE = 31; 
+        const CELL_SIZE = 15; 
+        const WALL_HEIGHT = 20;
+
+        const playerCollider = new THREE.Box3();
+        const playerSize = { width: 4, depth: 4 };
+
+        init();
+        animate();
+
+        function init() {
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x1e1b4b);
+            scene.fog = new THREE.Fog(0x1e1b4b, 0, 200);
+
+            const light = new THREE.HemisphereLight(0xeeeeff, 0x777788, 1.2);
+            scene.add(light);
+            const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            dirLight.position.set(50, 50, 50);
+            scene.add(dirLight);
+
+            controls = new PointerLockControls(camera, document.body);
+            controls.addEventListener('lock', () => { gameState.current = 'PLAYING'; });
+            controls.addEventListener('unlock', () => { if(gameState.current === 'PLAYING') gameState.current = 'MENU'; });
+            scene.add(controls.getObject());
+
+            document.addEventListener('keydown', (e) => {
+                switch (e.code) {
+                    case 'KeyW': moveForward = true; break;
+                    case 'KeyA': moveLeft = true; break;
+                    case 'KeyS': moveBackward = true; break;
+                    case 'KeyD': moveRight = true; break;
+                    case 'Space': if (canJump) velocity.y += 350; canJump = false; break;
+                }
+            });
+            document.addEventListener('keyup', (e) => {
+                switch (e.code) {
+                    case 'KeyW': moveForward = false; break;
+                    case 'KeyA': moveLeft = false; break;
+                    case 'KeyS': moveBackward = false; break;
+                    case 'KeyD': moveRight = false; break;
+                }
+            });
+
+            raycaster = new THREE.Raycaster(new THREE.Vector3(), new THREE.Vector3(0, -1, 0), 0, 10);
+
+            // FIX: Dem Boden einen Namen geben, um ihn sicher zu finden.
+            const floor = new THREE.Mesh(new THREE.PlaneGeometry(MAZE_SIZE * CELL_SIZE, MAZE_SIZE * CELL_SIZE), new THREE.MeshLambertMaterial({ color: 0x374151 }));
+            floor.rotation.x = -Math.PI / 2;
+            floor.name = 'floor'; // Name zugewiesen
+            scene.add(floor);
+
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
+
+            window.addEventListener('resize', onWindowResize);
+            
+            blocker.addEventListener('click', () => { controls.lock(); });
+            startButton.addEventListener('click', () => { generateLevel(); gameState.current = 'INSTRUCTIONS'; });
+            shopButtonMain.addEventListener('click', () => { gameState.current = 'SHOP'; });
+            backToMainButton.addEventListener('click', () => { gameState.current = 'MENU'; });
+            restartButton.addEventListener('click', () => { generateLevel(); gameState.current = 'INSTRUCTIONS'; });
+            
+            gameState.current = 'MENU';
+        }
+
+        function generateLevel() {
+            mazeMeshes.forEach(mesh => {
+                scene.remove(mesh);
+                mesh.geometry.dispose();
+                mesh.material.dispose();
+            });
+            mazeMeshes = [];
+            wallObjects.length = 0;
+
+            const mazeGrid = generateMaze(MAZE_SIZE, MAZE_SIZE);
+            const wallGeometry = new THREE.BoxGeometry(CELL_SIZE, WALL_HEIGHT, CELL_SIZE);
+            const wallMaterial = new THREE.MeshLambertMaterial({ color: 0x6b7280 });
+
+            for (let y = 0; y < MAZE_SIZE; y++) {
+                for (let x = 0; x < MAZE_SIZE; x++) {
+                    if (mazeGrid[y][x] === 1) {
+                        const wall = new THREE.Mesh(wallGeometry, wallMaterial);
+                        wall.position.set(
+                            (x - MAZE_SIZE / 2 + 0.5) * CELL_SIZE,
+                            WALL_HEIGHT / 2,
+                            (y - MAZE_SIZE / 2 + 0.5) * CELL_SIZE
+                        );
+                        scene.add(wall);
+                        const wallCollider = new THREE.Box3().setFromObject(wall);
+                        wallObjects.push(wallCollider);
+                        mazeMeshes.push(wall);
+                    }
+                }
+            }
+            
+            const startX = (1 - MAZE_SIZE / 2 + 0.5) * CELL_SIZE;
+            const startZ = (1 - MAZE_SIZE / 2 + 0.5) * CELL_SIZE;
+            controls.getObject().position.set(startX, 10, startZ);
+            velocity.set(0,0,0);
+        }
+
+        function generateMaze(width, height) {
+            const grid = Array(height).fill(null).map(() => Array(width).fill(1));
+            const directions = [[0, -1], [0, 1], [-1, 0], [1, 0]];
+            const shuffle = (array) => array.sort(() => Math.random() - 0.5);
+            function carve(x, y) {
+                grid[y][x] = 0;
+                shuffle(directions).forEach(dir => {
+                    const nx = x + dir[0] * 2;
+                    const ny = y + dir[1] * 2;
+                    if (nx >= 0 && nx < width && ny >= 0 && ny < height && grid[ny][nx] === 1) {
+                        grid[y + dir[1]][x + dir[0]] = 0;
+                        carve(nx, ny);
+                    }
+                });
+            }
+            carve(1, 1);
+            return grid;
+        }
+        
+        function updateUI() {
+            const state = gameState.current;
+            startMenu.classList.add('hidden'); shopMenu.classList.add('hidden');
+            gameOverMenu.classList.add('hidden'); blocker.classList.add('hidden');
+            hud.classList.add('hidden');
+            if (state === 'MENU') startMenu.classList.remove('hidden');
+            else if (state === 'SHOP') shopMenu.classList.remove('hidden');
+            else if (state === 'INSTRUCTIONS') blocker.classList.remove('hidden');
+            else if (state === 'PLAYING') hud.classList.remove('hidden');
+            else if (state === 'GAME_OVER') gameOverMenu.classList.remove('hidden');
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function checkCollisions() {
+            const player = controls.getObject();
+            playerCollider.setFromCenterAndSize(
+                player.position, 
+                new THREE.Vector3(playerSize.width, WALL_HEIGHT, playerSize.depth)
+            );
+            for (const wall of wallObjects) {
+                if (playerCollider.intersectsBox(wall)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            const time = performance.now();
+            const delta = (time - prevTime) / 1000;
+            
+            if (controls.isLocked) {
+                const oldPosition = controls.getObject().position.clone();
+
+                // --- Schwerkraft & Sprung (Y-Achse) ---
+                raycaster.ray.origin.copy(controls.getObject().position);
+                raycaster.ray.origin.y -= 10;
+                
+                // FIX: Den Boden sicher über seinen Namen finden.
+                const floor = scene.getObjectByName('floor');
+                let onGround = false;
+                if (floor) {
+                    const groundIntersections = raycaster.intersectObject(floor, false);
+                    onGround = groundIntersections.length > 0;
+                }
+
+                if (onGround) {
+                    velocity.y = Math.max(0, velocity.y);
+                    canJump = true;
+                }
+                
+                controls.getObject().position.y += velocity.y * delta;
+                
+                if (controls.getObject().position.y < 10) {
+                    velocity.y = 0;
+                    controls.getObject().position.y = 10;
+                    canJump = true;
+                }
+                 velocity.y -= 9.8 * 120.0 * delta;
+
+                // --- Bewegung (X- und Z-Achse) mit Kollision ---
+                velocity.x -= velocity.x * 10.0 * delta;
+                velocity.z -= velocity.z * 10.0 * delta;
+                direction.z = Number(moveForward) - Number(moveBackward);
+                direction.x = Number(moveRight) - Number(moveLeft);
+                direction.normalize();
+
+                if (moveForward || moveBackward) velocity.z -= direction.z * 400.0 * delta;
+                if (moveLeft || moveRight) velocity.x -= direction.x * 400.0 * delta;
+
+                controls.moveForward(-velocity.z * delta);
+                if (checkCollisions()) {
+                    controls.getObject().position.z = oldPosition.z;
+                }
+
+                controls.moveRight(-velocity.x * delta);
+                if (checkCollisions()) {
+                    controls.getObject().position.x = oldPosition.x;
+                }
+            }
+
+            prevTime = time;
+            renderer.render(scene, camera);
+        }
+    </script>
+</body>
+</html>
+```
+
+Ich habe einige Änderungen vorgenommen. Ich habe einen Absturz in der Animationsschleife behoben, der durch eine unsichere Bodenerkennung verursacht wurde. Das Spiel sollte jetzt stabil lauf
