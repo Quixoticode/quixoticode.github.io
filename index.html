@@ -1,225 +1,175 @@
 <!DOCTYPE html>
 <html lang="de" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quixoticode – Projekte, Code & Community</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="https://github.com/Quixoticode.png">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quixoticode – Projekte, Code & Community</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="https://github.com/Quixoticode.png">
 
-    <style>
-        :root {
-            --bg-color: #0A0F1A;
-            --card-color: #111827;
-            --border-color: #374151;
-            --text-primary: #E5E7EB;
-            --text-secondary: #9CA3AF;
-            --accent-primary: #3b82f6; /* blue-500 */
-            --accent-secondary: #60a5fa; /* blue-400 */
-            --glow-color-1: #2563eb;
-            --glow-color-2: #60a5fa;
-            
-            --shadow-color-accent: rgba(59, 130, 246, 0.25);
-            --shadow-color-beta: rgba(168, 85, 247, 0.25); /* purple-500 */
-            --shadow-color-github: rgba(156, 163, 175, 0.25); /* gray-400 */
-            --shadow-color-whatsapp: rgba(34, 197, 94, 0.25); /* green-500 */
-            --shadow-color-contact: rgba(99, 102, 241, 0.25); /* indigo-500 */
-            --shadow-color-links: rgba(20, 184, 166, 0.25); /* teal-500 */
-            --shadow-color-error: rgba(239, 68, 68, 0.25); /* red-500 */
+<style>
+:root {
+    --bg-color: #0A0F1A;
+    --card-color: #111827;
+    --border-color: #374151;
+    --text-primary: #E5E7EB;
+    --text-secondary: #9CA3AF;
+    --accent-primary: #3b82f6;
+    --accent-secondary: #60a5fa;
+    --glow-color-1: #2563eb;
+    --glow-color-2: #60a5fa;
+    --shadow-accent: rgba(59,130,246,0.25);
+    --shadow-beta: rgba(168,85,247,0.25);
+    --shadow-links: rgba(20,184,166,0.25);
+    --shadow-github: rgba(156,163,175,0.25);
+    --shadow-contact: rgba(99,102,241,0.25);
+    --shadow-error: rgba(239,68,68,0.25);
+}
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+}
+.glow {
+    animation: glow 3s infinite alternate;
+}
+@keyframes glow {
+    from { text-shadow: 0 0 5px var(--glow-color-1), 0 0 10px var(--glow-color-1), 0 0 15px var(--glow-color-2); }
+    to   { text-shadow: 0 0 10px var(--glow-color-2), 0 0 20px var(--glow-color-2), 0 0 30px var(--glow-color-1); }
+}
+.card-container { perspective: 1000px; }
+.card { transition: all 0.3s ease-in-out; transform-style: preserve-3d; will-change: transform, box-shadow; }
+.card-container:hover .card { transform: translateY(-5px) rotateX(5deg) scale(1.03); }
+.card:hover { box-shadow: 0 15px 30px -5px rgba(0,0,0,0.3), 0 0 15px var(--shadow-accent); }
+.discord-fab { background-color: #5865F2; }
+</style>
+
+<script>
+tailwind.config = {
+    theme: {
+        extend: {
+            colors: {
+                'dark-bg': 'var(--bg-color)',
+                'card-bg': 'var(--card-color)',
+                'border-custom': 'var(--border-color)',
+                'text-light': 'var(--text-primary)',
+                'text-secondary': 'var(--text-secondary)',
+                'accent-primary': 'var(--accent-primary)',
+                'accent-secondary': 'var(--accent-secondary)',
+            },
+            fontFamily: { sans: ['Inter','sans-serif'] },
         }
-        
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-primary);
-        }
-        .glow {
-            animation: glow 3s infinite alternate;
-        }
-        @keyframes glow {
-            from { text-shadow: 0 0 5px var(--glow-color-1), 0 0 10px var(--glow-color-1), 0 0 15px var(--glow-color-2); }
-            to   { text-shadow: 0 0 10px var(--glow-color-2), 0 0 20px var(--glow-color-2), 0 0 30px var(--glow-color-1); }
-        }
-        .card-container {
-            perspective: 1000px;
-        }
-        .card {
-            transition: all 0.3s ease-in-out;
-            transform-style: preserve-3d;
-            will-change: transform, box-shadow;
-        }
-        .card-container:hover .card {
-            transform: translateY(-5px) rotateX(5deg) scale(1.03);
-        }
-        .card:hover {
-            box-shadow: 0 15px 30px -5px rgba(0,0,0,0.3), 0 0 15px var(--shadow-color);
-            border-color: var(--border-hover-color);
-        }
-        .discord-fab {
-            background-color: #5865F2; /* Discord Brand Color */
-        }
-    </style>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'custom-dark': 'var(--bg-color)',
-                        'custom-card': 'var(--card-color)',
-                        'custom-border': 'var(--border-color)',
-                        'custom-light': 'var(--text-primary)',
-                        'custom-secondary': 'var(--text-secondary)',
-                        'custom-accent': 'var(--accent-primary)',
-                        'accent-secondary': 'var(--accent-secondary)',
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                }
-            }
-        }
-    </script>
+    }
+}
+</script>
 </head>
-<body class="bg-custom-dark text-custom-light">
 
-    <!-- Header & Navigation -->
-    <header class="bg-custom-dark/80 backdrop-blur-sm sticky top-0 z-50 border-b border-custom-border/50">
-        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex items-center">
-                    <a href="/" class="flex-shrink-0 flex items-center gap-3">
-                        <img class="h-8 w-8 rounded-full ring-2 ring-custom-accent" src="https://github.com/Quixoticode.png" alt="Quixoticode Logo">
-                        <span class="font-bold text-xl text-white hidden sm:block">Quixoticode</span>
-                    </a>
-                </div>
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-4">
-                        <a href="/" class="text-custom-accent bg-custom-card px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Home</a>
-                        <a href="https://quixoticode.github.io/app" class="text-gray-300 hover:bg-custom-card hover:text-white px-3 py-2 rounded-md text-sm font-medium">Programme</a>
-                        <a href="https://quixoticode.github.io/beta" class="text-gray-300 hover:bg-custom-card hover:text-white px-3 py-2 rounded-md text-sm font-medium">Beta</a>
-                        <a href="/link/" class="text-gray-300 hover:bg-custom-card hover:text-white px-3 py-2 rounded-md text-sm font-medium">Links & Community</a>
-                        <a href="https://quixoticode.github.io/contact" class="text-gray-300 hover:bg-custom-card hover:text-white px-3 py-2 rounded-md text-sm font-medium">Kontakt</a>
-                        <a href="https://github.com/Quixoticode/" target="_blank" rel="noopener noreferrer" class="text-gray-300 hover:bg-custom-card hover:text-white px-3 py-2 rounded-md text-sm font-medium">GitHub</a>
-                    </div>
-                </div>
-                <div class="-mr-2 flex md:hidden">
-                    <!-- Mobile menu button -->
-                    <button type="button" id="mobile-menu-button" class="bg-custom-card inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
-                        <span class="sr-only">Menü öffnen</span>
-                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
-                        <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
-                    </button>
-                </div>
-            </div>
-        </nav>
-        <div class="md:hidden hidden" id="mobile-menu">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="/" class="text-custom-accent bg-custom-card block px-3 py-2 rounded-md text-base font-medium" aria-current="page">Home</a>
-                <a href="https://quixoticode.github.io/app" class="text-gray-300 hover:bg-custom-card hover:text-white block px-3 py-2 rounded-md text-base font-medium">Programme</a>
-                <a href="https://quixoticode.github.io/beta" class="text-gray-300 hover:bg-custom-card hover:text-white block px-3 py-2 rounded-md text-base font-medium">Beta</a>
-                <a href="/link/" class="text-gray-300 hover:bg-custom-card hover:text-white block px-3 py-2 rounded-md text-base font-medium">Links & Community</a>
-                <a href="https://quixoticode.github.io/contact" class="text-gray-300 hover:bg-custom-card hover:text-white block px-3 py-2 rounded-md text-base font-medium">Kontakt</a>
-                <a href="https://github.com/Quixoticode/" target="_blank" rel="noopener noreferrer" class="text-gray-300 hover:bg-custom-card hover:text-white block px-3 py-2 rounded-md text-base font-medium">GitHub</a>
-            </div>
+<body class="bg-dark-bg text-text-light">
+
+<!-- Header & Navigation -->
+<header class="bg-dark-bg/80 backdrop-blur-sm sticky top-0 z-50 border-b border-border-custom/50">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+        <a href="/" class="flex items-center gap-3">
+            <img class="h-8 w-8 rounded-full ring-2 ring-accent-primary" src="https://github.com/Quixoticode.png" alt="Quixoticode Logo">
+            <span class="font-bold text-xl hidden sm:block">Quixotic Studios</span>
+        </a>
+        <div class="hidden md:flex items-center space-x-4">
+            <a href="/" class="px-3 py-2 rounded-md text-sm font-medium text-accent-primary bg-card-bg">Home</a>
+            <a href="/app" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-card-bg hover:text-white">Programme</a>
+            <a href="/beta" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-card-bg hover:text-white">Beta</a>
+            <a href="/link" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-card-bg hover:text-white">Links & Community</a>
+            <a href="/contact" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-card-bg hover:text-white">Kontakt</a>
+            <a href="https://github.com/Quixoticode/" target="_blank" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-card-bg hover:text-white">GitHub</a>
+            <a href="https://apply.quixoticode.de" target="_blank" class="px-3 py-2 rounded-md text-sm font-medium text-white bg-accent-primary hover:bg-accent-secondary">Jobs ansehen</a>
         </div>
-    </header>
-
-    <div class="max-w-7xl mx-auto w-full text-center px-4 sm:px-6 lg:px-8">
-        <header class="my-16 md:my-24">
-            <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-custom-accent glow mb-5">
-                Willkommen bei <strong>Quixoticode</strong>
-            </h1>
-            <p class="text-lg sm:text-xl text-custom-secondary max-w-3xl mx-auto leading-relaxed">
-                Dein Portal zu einem Universum aus <span class="text-accent-secondary font-medium">innovativen Tools, kreativen Projekten und digitalen Ideen</span>.
-            </p>
-        </header>
-
-        <main class="w-full">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                
-                <!-- QHub Card -->
-                <div class="card-container">
-                    <a href="https://quixoticode.github.io/app" class="card bg-custom-card border border-custom-border/50 rounded-xl p-6 group flex flex-col items-center text-center" style="--shadow-color: var(--shadow-color-accent); --border-hover-color: var(--accent-primary);">
-                        <div class="mb-4 text-custom-accent"><svg class="w-12 h-12" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" /></svg></div>
-                        <h3 class="text-xl font-semibold text-custom-light mb-2">QHub Anwendungen</h3>
-                        <p class="text-custom-secondary text-sm">Entdecke meine neuesten Programme und Tools.</p>
-                    </a>
-                </div>
-
-                <!-- Beta Program Card -->
-                <div class="card-container">
-                    <a href="https://quixoticode.github.io/beta" class="card bg-custom-card border border-custom-border/50 rounded-xl p-6 group flex flex-col items-center text-center" style="--shadow-color: var(--shadow-color-beta); --border-hover-color: #a855f7;">
-                        <div class="mb-4 text-purple-400"><svg class="w-12 h-12" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672L13.684 16.6m0 0l-2.51 2.225.569-9.47 5.227 7.917-3.286-.672zm-7.518-.267A8.25 8.25 0 1120.25 10.5M8.288 14.212A5.25 5.25 0 1117.25 10.5" /></svg></div>
-                        <h3 class="text-xl font-semibold text-custom-light mb-2">Beta Programme</h3>
-                        <p class="text-custom-secondary text-sm">Teste neue Features vor allen anderen.</p>
-                    </a>
-                </div>
-
-                <!-- Links & Community Card -->
-                <div class="card-container">
-                    <a href="/link/" class="card bg-custom-card border border-custom-border/50 rounded-xl p-6 group flex flex-col items-center text-center" style="--shadow-color: var(--shadow-color-links); --border-hover-color: #14b8a6;">
-                        <div class="mb-4 text-teal-400"><svg class="w-12 h-12" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" /></svg></div>
-                        <h3 class="text-xl font-semibold text-custom-light mb-2">Anleitungen & Links</h3>
-                        <p class="text-custom-secondary text-sm">Zentrale Anlaufstelle für Anleitungen und Community-Links.</p>
-                    </a>
-                </div>
-
-                <!-- GitHub Card -->
-                <div class="card-container">
-                    <a href="https://github.com/Quixoticode/" target="_blank" rel="noopener noreferrer" class="card bg-custom-card border border-custom-border/50 rounded-xl p-6 group flex flex-col items-center text-center" style="--shadow-color: var(--shadow-color-github); --border-hover-color: #9ca3af;">
-                        <div class="mb-4"><img src="https://github.com/Quixoticode.png" alt="GitHub Profilbild" class="w-12 h-12 rounded-full ring-2 ring-gray-600"></div>
-                        <h3 class="text-xl font-semibold text-custom-light mb-2">Mein GitHub Profil</h3>
-                        <p class="text-custom-secondary text-sm">Sieh dir den Code hinter meinen Projekten an.</p>
-                    </a>
-                </div>
-                
-                <!-- Contact Card -->
-                <div class="card-container">
-                    <a href="https://quixoticode.github.io/contact" class="card bg-custom-card border border-custom-border/50 rounded-xl p-6 group flex flex-col items-center text-center" style="--shadow-color: var(--shadow-color-contact); --border-hover-color: #6366f1;">
-                        <div class="mb-4 text-indigo-400"><svg class="w-12 h-12" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg></div>
-                        <h3 class="text-xl font-semibold text-custom-light mb-2">Kontakt & Formulare</h3>
-                        <p class="text-custom-secondary text-sm">Für Anfragen oder zur Registrierung.</p>
-                    </a>
-                </div>
-
-                <!-- Error Page Card -->
-                <div class="card-container">
-                    <a href="/404.html" class="card bg-custom-card border border-custom-border/50 rounded-xl p-6 group flex flex-col items-center text-center" style="--shadow-color: var(--shadow-color-error); --border-hover-color: #ef4444;">
-                        <div class="mb-4 text-red-500"><svg class="w-12 h-12" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" /></svg></div>
-                        <h3 class="text-xl font-semibold text-custom-light mb-2">Fehlerseite (404)</h3>
-                        <p class="text-custom-secondary text-sm">Ein Blick hinter die Kulissen des Nichts.</p>
-                    </a>
-                </div>
-            </div>
-        </main>
-        
-        <footer class="mt-16 md:mt-24 py-10 border-t border-custom-border/50 text-center">
-            <p class="text-sm text-custom-secondary">
-                &copy; 2025 Quixoticode – Wo Code auf Kreativität trifft.<br>
-                Mit Leidenschaft entwickelt und auf GitHub Pages gehostet.
-            </p>
-        </footer>
+        <!-- Mobile Menu -->
+        <div class="md:hidden">
+            <button id="mobile-menu-button" class="p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none">
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </button>
+        </div>
+    </nav>
+    <div id="mobile-menu" class="md:hidden hidden px-2 pt-2 pb-3 space-y-1">
+        <a href="https://quixoticode.de" class="block px-3 py-2 rounded-md text-base font-medium text-accent-primary bg-card-bg">Home</a>
+        <a href="https://quixoticode.de/app" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-card-bg hover:text-white">Programme</a>
+        <a href="https://quixoticode.de/beta" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-card-bg hover:text-white">Beta</a>
+        <a href="https://quixoticode.de/link" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-card-bg hover:text-white">Links & Community</a>
+        <a href="https://quixoticode.de/contact" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-card-bg hover:text-white">Kontakt</a>
+        <a href="https://github.com/Quixoticode/" target="_blank" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-card-bg hover:text-white">GitHub</a>
+        <a href="https://apply.quixoticode.de" target="_blank" class="block px-3 py-2 rounded-md text-base font-medium bg-accent-primary hover:bg-accent-secondary text-white">Jobs ansehen</a>
     </div>
+</header>
 
-    <!-- Floating Discord Button -->
-    <a href="https://discord.gg/quixoticode" target="_blank" rel="noopener noreferrer" title="Join our Discord" class="discord-fab fixed bottom-6 right-6 w-16 h-16 rounded-full flex items-center justify-center text-white shadow-lg transition-transform duration-300 hover:scale-110 group">
-        <svg class="w-8 h-8" role="img" viewBox="0 0 248 204" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path d="M216.856 16.142c-22.33-12.47-46.432-20.284-71.16-22.14C144.27 -7.33 142.042 11.23 145.234 22.47c33.02 11.832 58.34 32.14 74.346 57.106 2.473-5.282 4.23-10.74 5.283-16.37C224.863 63.22 229.82 29.35 216.857 16.143zM81.08 22.47C84.27 11.23 82.044-7.33 80.618-6.14C55.885 2.144 31.782 9.957 9.453 22.47c-12.968 13.21-7.998 47.08-7.998 47.08.97 5.63 2.812 11.088 5.282 16.37C23.05 54.61 48.37 34.3 81.39 22.47zM92.77 123.868c-10.492 0-19.16-8.58-19.16-19.16s8.67-19.16 19.16-19.16c10.49 0 19.16 8.58 19.16 19.16.002 10.58-8.67 19.16-19.16 19.16zm62.46 0c-10.49 0-19.16-8.58-19.16-19.16s8.67-19.16 19.16-19.16c10.492 0 19.16 8.58 19.16 19.16s-8.67 19.16-19.16 19.16zM124.032 186.25c-58.46-13.21-74.345-57.1-74.345-57.1 0-41.24 33.02-74.344 33.02-74.344 33.02-22.14 71.158-22.14 71.158-22.14s38.132 0 71.157 22.14c0 0 33.02 33.102 33.02 74.343 0 0-15.886 43.89-74.347 57.1-5.63.97-11.258.97-16.89 0z"></path></svg>
-        <span class="absolute right-full mr-4 px-2 py-1 bg-gray-800 text-white text-xs rounded-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Join Discord</span>
-    </a>
+<!-- Hero Section -->
+<section class="max-w-7xl mx-auto text-center px-4 sm:px-6 lg:px-8 my-16 md:my-24">
+    <h1 class="text-5xl md:text-6xl font-extrabold text-accent-primary glow mb-4">Willkommen bei <strong>Quixotic Studios</strong></h1>
+    <p class="text-lg md:text-xl text-text-secondary max-w-3xl mx-auto">Entdecke ein Universum aus <span class="text-accent-secondary font-medium">innovativen Tools, kreativen Projekten und digitalen Ideen</span>.</p>
+</section>
 
+<!-- Main Cards -->
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Card Template -->
+        <div class="card-container">
+            <a href="https://quixoticode.de/app" class="card bg-card-bg border border-border-custom/50 rounded-xl p-6 flex flex-col items-center text-center" style="--shadow-color: var(--shadow-accent)">
+                <div class="mb-4 text-accent-primary">
+                    <svg class="w-12 h-12" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-text-light mb-2">QHub Anwendungen</h3>
+                <p class="text-text-secondary text-sm">Entdecke meine neuesten Programme und Tools.</p>
+            </a>
+        </div>
 
-    <script>
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const openIcon = mobileMenuButton.querySelector('svg:first-child');
-        const closeIcon = mobileMenuButton.querySelector('svg:last-child');
+        <!-- Weitere Cards können einfach kopiert und angepasst werden -->
+        <div class="card-container">
+            <a href="https://quixoticode.de/beta" class="card bg-card-bg border border-border-custom/50 rounded-xl p-6 flex flex-col items-center text-center" style="--shadow-color: var(--shadow-beta)">
+                <div class="mb-4 text-purple-400">
+                    <svg class="w-12 h-12" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672L13.684 16.6m0 0l-2.51 2.225.569-9.47 5.227 7.917-3.286-.672zm-7.518-.267A8.25 8.25 0 1120.25 10.5M8.288 14.212A5.25 5.25 0 1117.25 10.5"/>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-text-light mb-2">Beta Programme</h3>
+                <p class="text-text-secondary text-sm">Teste neue Features vor allen anderen.</p>
+            </a>
+        </div>
 
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-            openIcon.classList.toggle('hidden');
-            closeIcon.classList.toggle('hidden');
-        });
-    </script>
+        <div class="card-container">
+            <a href="https://quixoticode.de/link" class="card bg-card-bg border border-border-custom/50 rounded-xl p-6 flex flex-col items-center text-center" style="--shadow-color: var(--shadow-links)">
+                <div class="mb-4 text-teal-400">
+                    <svg class="w-12 h-12" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"/>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-text-light mb-2">Anleitungen & Links</h3>
+                <p class="text-text-secondary text-sm">Zentrale Anlaufstelle für Anleitungen und Community-Links.</p>
+            </a>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="mt-16 md:mt-24 py-10 border-t border-border-custom/50 text-center">
+    <p class="text-sm text-text-secondary">
+        &copy; 2025 Quixotic Studios – Wo Code auf Kreativität trifft.<br>
+        Mit Leidenschaft entwickelt. Besuche uns auch auf <a href="https://apply.quixoticode.de" class="text-accent-primary hover:text-accent-secondary">Jobs</a>.
+    </p>
+</footer>
+
+<!-- Floating Discord Button -->
+<a href="https://discord.gg/quixoticode" target="_blank" rel="noopener noreferrer" class="discord-fab fixed bottom-6 right-6 w-16 h-16 rounded-full flex items-center justify-center text-white shadow-lg transition-transform duration-300 hover:scale-110 group">
+    <svg class="w-8 h-8" viewBox="0 0 248 204" fill="currentColor"><path d="M216.856 16.142c-22.33-12.47-46.432-20.284-71.16-22.14C144.27 -7.33 142.042 11.23 145.234 22.47c33.02 11.832 58.34 32.14 74.346 57.106 2.473-5.282 4.23-10.74 5.283-16.37C224.863 63.22 229.82 29.35 216.857 16.143zM81.08 22.47C84.27 11.23 82.044-7.33 80.618-6.14C55.885 2.144 31.782 9.957 9.453 22.47c-12.968 13.21-7.998 47.08-7.998 47.08.97 5.63 2.812 11.088 5.282 16.37C23.05 54.61 48.37 34.3 81.39 22.47zM92.77 123.868c-10.492 0-19.16-8.58-19.16-19.16s8.67-19.16 19.16-19.16c10.49 0 19.16 8.58 19.16 19.16.002 10.58-8.67 19.16-19.16 19.16zm62.46 0c-10.49 0-19.16-8.58-19.16-19.16s8.67-19.16 19.16-19.16c10.492 0 19.16 8.58 19.16 19.16s-8.67 19.16-19.16 19.16zM124.032 186.25c-58.46-13.21-74.345-57.1-74.345-57.1 0-41.24 33.02-74.344 33.02-74.344 33.02-22.14 71.158-22.14 71.158-22.14s38.132 0 71.157 22.14c0 0 33.02 33.102 33.02 74.343 0 0-15.886 43.89-74.347 57.1-5.63.97-11.258.97-16.89 0z"></path></svg>
+</a>
+
+<script>
+const mobileButton = document.getElementById('mobile-menu-button');
+const mobileMenu = document.getElementById('mobile-menu');
+mobileButton.addEventListener('click', () => {
+    mobileMenu.classList.toggle('hidden');
+});
+</script>
+
 </body>
 </html>
