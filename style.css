@@ -1,0 +1,55 @@
+     @keyframes bgZoom {
+     from {
+     background-size: 100%; /* normal */
+     background-position: center center;
+     }
+     to {
+        background-size: 120%; /* leicht vergrößert */
+        background-position: center top;
+        }
+     }
+ 
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+
+      /* Hintergrundbild einfügen */
+      background: url("img/bg.png") no-repeat center center fixed;
+      background-size: cover;
+
+      color: #fff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+
+      animation: bgZoom 20s ease-in-out infinite alternate;
+    }
+
+    .container {
+      max-width: 600px;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.6); /* dunkler Hintergrund, damit Text lesbar bleibt */
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    }
+
+    h1 {
+      font-size: 2em;
+      margin-bottom: 10px;
+      color: #23a6d5;
+    }
+
+    p {
+      font-size: 1.1em;
+      margin: 5px 0;
+    }
+
+    .date {
+      margin-top: 15px;
+      font-weight: bold;
+      color: #23d5ab;
+    }
